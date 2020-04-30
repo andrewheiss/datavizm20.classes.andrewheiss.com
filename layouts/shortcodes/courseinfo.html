@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-4">
+        <h3>Instructor</h3>
+
+        <ul class="icon-list">
+            <li><i class="fas fa-user"></i> <a href="{{ .Site.Params.instructor.url }}" target="_blank" rel="noopener"> {{ .Site.Params.instructor.name }}</a></li>
+            <li><i class="fas fa-university"></i> {{ .Site.Params.instructor.office }}</li>
+            <li><i class="fas fa-envelope"></i> <a href="mailto:{{ .Site.Params.instructor.email }}"> {{ .Site.Params.instructor.email }}</a></li>
+            <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/{{ .Site.Params.instructor.twitter }}" target="_blank" rel="noopener"> @{{ .Site.Params.instructor.twitter }}</a></li>
+            <li><i class="fas fa-calendar-check"></i> <a href="{{ .Site.Params.instructor.appointment_url }}" target="_blank" rel="noopener"> Schedule an appointment</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-4">
+        <h3>Course details</h3>
+
+        <ul class="icon-list">
+            <li><i class="far fa-calendar"></i> {{ .Site.Params.course.days }}</li>
+            <li><i class="far fa-calendar-alt"></i> {{ .Site.Params.course.dates }}</li>
+            <li><i class="far fa-clock"></i> {{ .Site.Params.course.time }}</li>
+            <li><i class="fas fa-university"></i> {{ .Site.Params.course.location }}</li>
+            {{ if isset .Site.Params.course "slack" }}<li><i class="fab fa-slack"></i> <a href="{{ .Site.Params.course.slack }}" target="_blank" rel="noopener">Slack</a></li>{{ end }}
+        </ul>
+    </div>
+
+    <div class="col-md-4 contact-policy">
+        <h3>Contacting me</h3>
+
+        <p>{{ .Site.Params.instructor.contact_policy | markdownify}}</p>
+    </div>
+</div>

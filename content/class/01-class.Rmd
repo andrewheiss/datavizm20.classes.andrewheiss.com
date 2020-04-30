@@ -1,0 +1,35 @@
+---
+title: "Truth, Beauty, and Data + R and tidyverse"
+linktitle: "1: Truth, beauty, and data + the tidyverse"
+date: "2020-05-11"
+class_date: "2020-05-11"
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+menu:
+  class:
+    parent: Class sessions
+    weight: 1
+type: docs
+weight: 1
+# pdf: "/slides/PMAP-8521_2020-01-15.pdf"
+# thumb: "/slides/PMAP-8521_2020-01-15.png"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Slides
+
+`r blogdown::shortcode("slides")`
+
+## R stuff
+
+[Take a super short survey!](https://andhs.co/survey)
+
+Download all the R stuff we did today if you want to try it on your own computer: [<i class="fas fa-file-archive"></i> `week1.zip`](/projects/week-1.zip)
+
+## Clearest and muddiest things
+
+`r blogdown::shortcode("feedback")`

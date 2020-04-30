@@ -1,0 +1,17 @@
+---
+title: "Truth, Beauty, and Data + R and tidyverse"
+linktitle: "1: Truth, beauty, and data + the tidyverse"
+date: "2020-05-11"
+read_date: "2020-05-11"
+menu:
+  reading:
+    parent: Readings
+    weight: 1
+type: docs
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
+---
+
+## Required
+
+- The [syllabus](/syllabus/) and [assignments](/assignment/) pages for this class

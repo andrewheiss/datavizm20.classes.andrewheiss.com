@@ -1,0 +1,128 @@
+---
+title: Using R Markdown
+date: "2020-01-13"
+menu:
+  reference:
+    parent: Reference
+    weight: 2
+type: docs
+weight: 2
+output:
+  blogdown::html_page:
+      toc: TRUE
+      fig_caption: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#key-terms">Key terms</a></li>
+<li><a href="#add-chunks">Add chunks</a></li>
+<li><a href="#chunk-names">Chunk names</a></li>
+<li><a href="#chunk-options">Chunk options</a></li>
+<li><a href="#inline-chunks">Inline chunks</a></li>
+<li><a href="#output-formats">Output formats</a></li>
+</ul>
+</div>
+
+<p><a href="https://rmarkdown.rstudio.com/">R Markdown</a> is <a href="/reference/markdown/">regular Markdown</a> with R code and output sprinkled in. You can do everything you can with <a href="/reference/markdown/">regular Markdown</a>, but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even <a href="https://rmarkdown.rstudio.com/flexdashboard/index.html">interactive dashboards</a> with R Markdown. This whole course website is created with R Markdown (and <a href="https://bookdown.org/yihui/blogdown/">a package named <strong>blogdown</strong></a>).</p>
+<p>The <a href="https://rmarkdown.rstudio.com/">documentation for R Markdown</a> is extremely comprehensive, and their <a href="https://rmarkdown.rstudio.com/lesson-1.html">tutorials</a> and <a href="https://rmarkdown.rstudio.com/lesson-15.html">cheatsheets</a> are excellent—rely on those.</p>
+<p>Here are the most important things you’ll need to know about R Markdown in this class:</p>
+<div id="key-terms" class="section level2">
+<h2>Key terms</h2>
+<ul>
+<li><p><strong>Document</strong>: A Markdown file where you type stuff</p></li>
+<li><p><strong>Chunk</strong>: A piece of R code that is included in your document. It looks like this:</p>
+<pre class="markdown"><code>```{r}
+# Code goes here
+```</code></pre>
+<p>There must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not knit correctly.</p></li>
+<li><p><strong>Knit</strong>: When you “knit” a document, R runs each of the chunks sequentially and converts the output of each chunk into Markdown. R then runs the knitted document through <a href="https://pandoc.org/">pandoc</a> to convert it to HTML or PDF or Word (or whatever output you’ve selected).</p>
+<p>You can knit by clicking on the “Knit” button at the top of the editor window, or by pressing <code>⌘⇧K</code> on macOS or <code>control + shift + K</code> on Windows.</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p></li>
+</ul>
+</div>
+<div id="add-chunks" class="section level2">
+<h2>Add chunks</h2>
+<p>There are three ways to insert chunks:</p>
+<ul>
+<li><p>Press <code>⌘⌥I</code> on macOS or <code>control + alt + I</code> on Windows</p></li>
+<li><p>Click on the “Insert” button at the top of the editor window</p>
+<p><img src="/img/reference/insert-chunk.png" width="30%" /></p></li>
+<li><p>Manually type all the backticks and curly braces (don’t do this)</p></li>
+</ul>
+</div>
+<div id="chunk-names" class="section level2">
+<h2>Chunk names</h2>
+<p>You can add names to chunks to make it easier to navigate your document. If you click on the little dropdown menu at the bottom of your editor in RStudio, you can see a table of contents that shows all the headings and chunks. If you name chunks, they’ll appear in the list. If you don’t include a name, the chunk will still show up, but you won’t know what it does.</p>
+<p><img src="/img/reference/chunk-toc.png" width="40%" /></p>
+<p>To add a name, include it immediately after the <code>{r</code> in the first line of the chunk. Names cannot contain spaces, but they can contain underscores and dashes. <strong>All chunk names in your document must be unique.</strong></p>
+<pre class="markdown"><code>```{r name-of-this-chunk}
+# Code goes here
+```</code></pre>
+</div>
+<div id="chunk-options" class="section level2">
+<h2>Chunk options</h2>
+<p>There are a bunch of different options you can set for each chunk. You can see a complete list in the <a href="https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">RMarkdown Reference Guide</a> or at <a href="https://yihui.org/knitr/options/"><strong>knitr</strong>’s website</a>.</p>
+<p>Options go inside the <code>{r}</code> section of the chunk:</p>
+<pre class="markdown"><code>```{r name-of-this-chunk, warning=FALSE, message=FALSE}
+# Code goes here
+```</code></pre>
+<p>The most common chunk options are these:</p>
+<ul>
+<li><code>fig.width=5</code> and <code>fig.height=3</code> (<em>or whatever number you want</em>): Set the dimensions for figures</li>
+<li><code>echo=FALSE</code>: The code is not shown in the final document, but the results are</li>
+<li><code>message=FALSE</code>: Any messages that R generates (like all the notes that appear after you load a package) are omitted</li>
+<li><code>warning=FALSE</code>: Any warnings that R generates are omitted</li>
+<li><code>include=FALSE</code>: The chunk still runs, but the code and results are not included in the final document</li>
+</ul>
+<p>You can also set chunk options by clicking on the little gear icon in the top right corner of any chunk:</p>
+<p><img src="/img/reference/chunk-options.png" width="70%" /></p>
+</div>
+<div id="inline-chunks" class="section level2">
+<h2>Inline chunks</h2>
+<p>You can also include R output directly in your text, which is really helpful if you want to report numbers from your analysis. To do this, use <code>`r r_code_here`</code>.</p>
+<p>It’s generally easiest to calculate numbers in a regular chunk beforehand and then use an inline chunk to display the value in your text. For instance, this document…</p>
+<pre class="markdown"><code>```{r find-avg-mpg, echo=FALSE}
+avg_mpg &lt;- mean(mtcars$mpg)
+```
+
+The average fuel efficiency for cars from 1974 was `r round(avg_mpg, 1)` miles per gallon.</code></pre>
+<p>… would knit into this:</p>
+<blockquote>
+<p>The average fuel efficiency for cars from 1974 was 20.1 miles per gallon.</p>
+</blockquote>
+</div>
+<div id="output-formats" class="section level2">
+<h2>Output formats</h2>
+<p>You can specify what kind of document you create when you knit in the <a href="/reference/markdown/#front-matter">YAML front matter</a>.</p>
+<pre class="yaml"><code>title: &quot;My document&quot;
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default</code></pre>
+<p>You can also click on the down arrow on the “Knit” button to choose the output <em>and</em> generate the appropriate YAML. If you click on the gear icon next to the “Knit” button and choose “Output options”, you change settings for each specific output type, like default figure dimensions or whether or not a table of contents is included.</p>
+<p><img src="/img/reference/output-options.png" width="35%" /></p>
+<p>The first output type listed under <code>output:</code> will be what is generated when you click on the “Knit” button or press the keyboard shortcut (<code>⌘⇧K</code> on macOS; <code>control + shift + K</code> on Windows). If you choose a different output with the “Knit” button menu, that output will be moved to the top of the <code>output</code> section.</p>
+<p>The indentation of the YAML section matters, especially when you have settings nested under each output type. Here’s what a typical <code>output</code> section might look like:</p>
+<pre class="yaml"><code>---
+title: &quot;My document&quot;
+author: &quot;My name&quot;
+date: &quot;January 13, 2020&quot;
+output: 
+  html_document: 
+    toc: yes
+    fig_caption: yes
+    fig_height: 8
+    fig_width: 10
+  pdf_document: 
+    latex_engine: xelatex  # More modern PDF typesetting engine
+    toc: yes
+  word_document: 
+    toc: yes
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---</code></pre>
+</div>

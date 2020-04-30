@@ -1,0 +1,8 @@
+{{ if .Page.Params.pdf}}
+<p><a href="{{ .Page.Params.pdf }}">Download the slides from today’s class</a>.</p>
+<figure class="slide-thumb">
+    <a href="{{ .Page.Params.pdf }}"><img src="{{ .Page.Params.thumb }}" alt="First slide" /></a>
+</figure>
+{{ else }}
+<p>The slides from today will be posted here after class.</p>
+{{ end }}

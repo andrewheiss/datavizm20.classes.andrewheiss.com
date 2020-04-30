@@ -1,0 +1,330 @@
+---
+title: Syllabus
+slug: syllabus
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+    fig_caption: false
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#course-objectives">Course objectives</a></li>
+<li><a href="#course-philosophy">Course philosophy</a></li>
+<li><a href="#important-pep-talk">Important pep talk!</a></li>
+<li><a href="#course-materials">Course materials</a>
+<ul>
+<li><a href="#books">Books</a></li>
+<li><a href="#articles-book-chapters-and-other-materials">Articles, book chapters, and other materials</a></li>
+<li><a href="#r-and-rstudio">R and RStudio</a></li>
+<li><a href="#online-help">Online help</a></li>
+</ul></li>
+<li><a href="#course-policies">Course policies</a>
+<ul>
+<li><a href="#course-evaluation-and-evolution">Course evaluation and evolution</a></li>
+<li><a href="#student-hours">Student hours</a></li>
+<li><a href="#class-conduct-and-expectations">Class conduct and expectations</a></li>
+<li><a href="#laptops">Laptops</a></li>
+<li><a href="#counseling-and-psychological-services-cps">Counseling and Psychological Services (CPS)</a></li>
+<li><a href="#basic-needs-security">Basic needs security</a></li>
+<li><a href="#children-in-class">Children in class</a></li>
+<li><a href="#laurens-promise">Lauren’s Promise</a></li>
+<li><a href="#academic-honesty">Academic honesty</a></li>
+<li><a href="#special-needs">Special needs</a></li>
+</ul></li>
+<li><a href="#assignments-and-grades">Assignments and grades</a></li>
+<li><a href="#star-wars">Star Wars</a></li>
+</ul>
+</div>
+
+{{% courseinfo %}}
+<div id="course-objectives" class="section level2">
+<h2>Course objectives</h2>
+<p>By the end of this course, you (1) will be literate in the language of causal inference, (2) will communicate evaluation outcomes clearly, and (3) will understand the ethics and limits of data analysis by designing, critiquing, coding, and running rigorous, valid, and feasible evaluations of public sector programs focused on society’s most pressing problems.</p>
+<p>Specifically, you’ll be able to:</p>
+<ul>
+<li>Explain the philosophy of causation</li>
+<li>Identify and diagram program logic models</li>
+<li>Outline theories of change with directed acyclic graphs (DAGs)</li>
+<li>Summarize key threats to causal inference, identify these threats in evaluations, and mitigate these threats with research design</li>
+<li>Develop rigorous and valid statistical measures</li>
+<li>Run statistical models</li>
+<li>Explain the theory, research design, methods, and results of evaluations to all types of stakeholders, from highly trained econometricians to the general public</li>
+<li>Share your analyses and data with the public</li>
+<li>Identify ethical issues and limits in data science and program evaluation</li>
+<li>Become curious and confident in consuming and producing evaluations</li>
+</ul>
+</div>
+<div id="course-philosophy" class="section level2">
+<h2>Course philosophy</h2>
+<p>Classical statistics classes spend substantial time covering probability theory, null hypothesis testing, and other statistical tests first developed hundreds of years ago. Some classes don’t use software or actual real data and instead live in the world of mathematical proofs. They can be math-heavy and full of often unintuitive concepts and equations.</p>
+<p>In this class, we will take the opposite approach. We <em>begin</em> with data and learn how to tidy, wrangle, manipulate, and visualize it with code. Later in the semester we’ll turn to the powerful toolbox of causal inference approaches, but continue to keep the focus on data as we do so.</p>
+<p>In other words, there’s way less of this:</p>
+<p><span class="math display">\[
+f(x) = \dfrac{1}{\sqrt{2\pi}} e^{-\frac12 x^2}
+\]</span></p>
+<p>And way more of this:</p>
+<pre class="r"><code>summary_monthly_temp &lt;- weather %&gt;% 
+  group_by(month) %&gt;% 
+  summarize(mean = mean(temp), 
+            std_dev = sd(temp))</code></pre>
+<p>Over the last decade there has been a revolution in statistical and scientific computing. Open source languages like R and Python have overtaken older (and expensive!) corporate software packages like SAS and SPSS, and there are now thousands of books and blog posts and other online resources with excellent tutorials about how to analyze pretty much any kind of data.</p>
+<p>This class will expose you to <a href="https://cran.r-project.org/">R</a>—one of the most popular, sought-after, and in-demand statistical programming languages. Armed with the foundation of R skills you’ll learn in this class, you’ll know enough to be able to find how to analyze any sort of data-based question in the future.</p>
+</div>
+<div id="important-pep-talk" class="section level2">
+<h2>Important pep talk!</h2>
+<p>I <em>promise</em> you can succeed in this class.</p>
+<p>Learning R can be difficult at first—it’s like learning a new language, just like Spanish, French, or Chinese. Hadley Wickham—the chief data scientist at RStudio and the author of some amazing R packages you’ll be using like <code>ggplot2</code>—<a href="https://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/">made this wise observation</a>:</p>
+<blockquote>
+<p>It’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.</p>
+</blockquote>
+<p>Even experienced programmers and evaluators find themselves bashing their heads against seemingly intractable errors. If you’re finding yourself taking way too long hitting your head against a wall and not understanding, take a break, talk to classmates, e-mail me, etc.</p>
+<p><img src="/img/syllabus/hosrt_error_tweet.png" width="60%" /></p>
+<p><a href="https://twitter.com/allison_horst/status/1213275783675822080"><img src="/img/syllabus/gator_error.jpg" alt="Alison Horst: Gator error" /></a></p>
+</div>
+<div id="course-materials" class="section level2">
+<h2>Course materials</h2>
+<p>Most of the readings in this class are free.</p>
+<div id="books" class="section level3">
+<h3>Books</h3>
+<p>We will only use one physical textbook. There are three official textbooks for the class:</p>
+<ul>
+<li><span class="citation"><span class="citeproc-not-found" data-reference-id="wb-eval"><strong>???</strong></span></span> (<a href="https://openknowledge.worldbank.org/handle/10986/25030"><strong>Free!</strong></a>)</li>
+<li><span class="citation"><span class="citeproc-not-found" data-reference-id="mixtape"><strong>???</strong></span></span> (<a href="https://www.scunning.com/mixtape.html"><strong>Also free!</strong></a>)</li>
+<li><span class="citation"><span class="citeproc-not-found" data-reference-id="AngristPischke:2015"><strong>???</strong></span></span> (<strong><span>$25</span> used or <span>$30</span> new at <a href="https://www.amazon.com/Mastering-Metrics-Path-Cause-Effect/dp/0691152845/">Amazon</a>)</strong></li>
+</ul>
+<p>The World Bank’s <em>Impact Evaluation in Practice</em> will be our main textbook. It’s written at a general, easy-to-understand level with relatively minimal math. <em>Mastering ’Metrics</em> goes into more depth about the mechanics of different causal inference approaches and has a bit more math, but it’s still fairly accessible. <em>Causal Inference: The Mixtape</em> has even more math, but hopefully not an excessively terrifying amount.</p>
+<p><em>You do not need to understand all the equations and notation.</em> If your eyes start to gloss over the Greek letters and subscripts, it’s okay. Try to learn them, but don’t stress out about it too much.</p>
+</div>
+<div id="articles-book-chapters-and-other-materials" class="section level3">
+<h3>Articles, book chapters, and other materials</h3>
+<p>There will also occasionally be additional articles and videos to read and watch. When this happens, links to these other resources will be included on the reading page for that week.</p>
+</div>
+<div id="r-and-rstudio" class="section level3">
+<h3>R and RStudio</h3>
+<p>You will do all of your analysis with the open source (and free!) programming language <a href="https://cran.r-project.org/">R</a>. You will use <a href="https://www.rstudio.com/">RStudio</a> as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.</p>
+<p>R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free <a href="http://rstudio.cloud/">RStudio.cloud</a> service, which lets you run a full instance of RStudio in your web browser. This means you won’t have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.</p>
+<p>RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis. Over the course of the semester, you’ll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn’t necessary, but it’s helpful.</p>
+<p>You can <a href="/reference/install/">find instructions for installing R, RStudio, and all the tidyverse packages here.</a></p>
+</div>
+<div id="online-help" class="section level3">
+<h3>Online help</h3>
+<p>Data science and statistical programming can be difficult. Computers are stupid and little errors in your code can cause hours of headache (even if you’ve been doing this stuff for years!).</p>
+<p>Fortunately there are tons of online resources to help you with this. Two of the most important are <a href="https://stackoverflow.com/">StackOverflow</a> (a Q&amp;A site with hundreds of thousands of answers to all sorts of programming questions) and <a href="https://community.rstudio.com/">RStudio Community</a> (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).</p>
+</div>
+</div>
+<div id="course-policies" class="section level2">
+<h2>Course policies</h2>
+<p><strong>Be nice. Be honest. Don’t cheat.</strong></p>
+<p>We will also follow <a href="https://codeofconduct.gsu.edu/">Georgia State’s Code of Conduct</a>.</p>
+<div id="course-evaluation-and-evolution" class="section level3">
+<h3>Course evaluation and evolution</h3>
+<p>This syllabus reflects a plan for the semester. Deviations may become necessary as the semester progresses.</p>
+<p>Because this is a new class (and because this is the first time this course has been taught with R at the Andrew Young School), there will be inevitable bumps along the way. Please be patient as we get everything ironed out!</p>
+<p>I’d <em>love</em> your help to help improve the class as we go. To facilitate this, I have a couple requests:</p>
+<ol style="list-style-type: decimal">
+<li><p>At the end of every class, there will be a link to an anonymous Google Form with a few quick questions asking about the clearest and muddiest things from that day. Please fill this out regularly. It will be hard to remember, since we get out so late, but it’s extraordinarily helpful for me.</p></li>
+<li><p>At some point in the middle of the semester, someone from GSU’s <a href="https://cetl.gsu.edu/">Center for Excellence in Teaching and Learning (CETL)</a> will come and run a 25 minute <a href="https://cetl.gsu.edu/services/instructional-support/group-instructional-feedback-technique-gift/">Group Instructional Feedback Technique (GIFT)</a> session, where I’ll step out and you’ll all talk to them about the class. Don’t worry—the people from CETL are super nice :)</p></li>
+</ol>
+<p>Also, please take the time to fill out the official GSU course evaluation at the end of the semester!</p>
+</div>
+<div id="student-hours" class="section level3">
+<h3>Student hours</h3>
+<p>Please watch this video:</p>
+<iframe src="https://player.vimeo.com/video/270014784" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="display: block; margin: 0 auto 1rem;">
+</iframe>
+<p>Student hours are set times dedicated to all of you (most professors call these “office hours”; I don’t<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>). This means that I will be in my office (wistfully) waiting for you to come by with whatever questions you have. This is the best and easiest way to find me outside of class and the best chance for discussing class material and concerns. Please come by!</p>
+<p>Outside of regularly scheduled student hours, <a href="https://calendly.com/andrewheiss/meeting/">you can easily make an appointment with me online</a>.</p>
+<p>This can be a difficult class. <strong>Do not suffer in silence!</strong> Come talk to me!</p>
+</div>
+<div id="class-conduct-and-expectations" class="section level3">
+<h3>Class conduct and expectations</h3>
+<p>Here are the rules, expectations, and policies that we came up with collectively:</p>
+<ul>
+<li><strong>Late work</strong>: You will lose 1 point per day for each day an assigment or problem set is late. After 1 week, I will send a reminder e-mail. After 2 weeks, you will receive no points.</li>
+<li><strong>Technology use</strong>: Use phones, computers, etc. responsibly. You’re all adults.</li>
+<li><strong>Participation</strong>: Ensure that you are engaged and participate in class. Engagement is defined by you—if that means commenting and answering questions, neat; if it means sitting quietly and being focused, also neat.</li>
+</ul>
+</div>
+<div id="laptops" class="section level3">
+<h3>Laptops</h3>
+<p>This is a computer-heavy course and each class session will require extensive laptop use. Occasionally I may ask that laptops be closed for some in-class activities, but in general you will be expected to use your computer. <em>Use your computer responsibly in class.</em></p>
+</div>
+<div id="counseling-and-psychological-services-cps" class="section level3">
+<h3>Counseling and Psychological Services (CPS)</h3>
+<p>Life at GSU can be complicated and challenging. You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. <a href="https://education.gsu.edu/cps/">Counseling and Psychological Services (CPS)</a> provides free, <em>confidential</em> support for students who are struggling with mental health and emotional challenges. The CPS office is staffed by professional psychologists who are attuned to the needs of all types of college and professional students. Please do not hesitate to contact CPS for assistance—getting help is a smart and courageous thing to do.</p>
+</div>
+<div id="basic-needs-security" class="section level3">
+<h3>Basic needs security</h3>
+<p>If you have difficulty affording groceries or accessing sufficient food to eat every day, or if you lack a safe and stable place to live, and you believe this may affect your performance in this course, please contact the <a href="https://deanofstudents.gsu.edu/">Dean of Students</a> for support. They can provide a host of services including free groceries from the <a href="https://nutrition.gsu.edu/panther-pantry/">Panther Pantry</a> and assisting with homelessness with the <a href="https://deanofstudents.gsu.edu/student-assistance/embark/">Embark Network</a>. Additionally, please talk to me if you are comfortable in doing so. This will enable me to provide any resources that I might possess.</p>
+</div>
+<div id="children-in-class" class="section level3">
+<h3>Children in class</h3>
+<p>I applaud all of you who go to graduate school with children! It is difficult to balance academic, work, and family commitments, and I want you to succeed. Here are my policies regarding children in class:</p>
+<ol style="list-style-type: decimal">
+<li>All breastfeeding babies are welcome in class as often as necessary.</li>
+<li>Non-nursing babies and older children are welcome whenever alternate arrangements cannot be made. As a parent of five young children, I understand that babysitters fall through, partners have conflicting schedules, children get sick, and other issues arise that leave parents with few other options.</li>
+<li>In cases where children come to class, I invite parents/caregivers to sit close to the door so as to more easily excuse yourself to attend to your child’s needs. Non-parents in the class: please reserve seats near the door for your parenting classmates.</li>
+<li>All students are expected to join with me in creating a welcoming environment that is respectful of your classmates who bring children to class.</li>
+</ol>
+<p>I understand that sleep deprivation and exhaustion are among the most difficult aspects of parenting young children. The struggle of balancing school, work, childcare, and graduate school is tiring, and I will do my best to accommodate any such issues while maintaining the same high expectations for all students enrolled in the class. <strong><em>Please do not hesitate to contact me with any questions or concerns.</em></strong></p>
+</div>
+<div id="laurens-promise" class="section level3">
+<h3>Lauren’s Promise</h3>
+<p><strong>I will listen and believe you if someone is threatening you.</strong></p>
+<p>Lauren McCluskey, a 21-year-old honors student athlete, <a href="https://www.sltrib.com/opinion/commentary/2019/02/10/commentary-failing-lauren/">was murdered on October 22, 2018 by a man she briefly dated on the University of Utah campus</a>. We must all take action to ensure that this never happens again.</p>
+<p>If you are in immediate danger, call 911 or GSU police (404-413-3333).</p>
+<p>If you are experiencing sexual assault, domestic violence, or stalking, please report it to me and I will connect you to resources or call <a href="https://counselingcenter.gsu.edu/crisis-services/concern-self/immediate-help/">GSU’s Counseling and Psychological Services</a> (404-413-1640).</p>
+<p>Any form of sexual harassment or violence will not be excused or tolerated at Georgia State. GSU has instituted procedures to respond to violations of these laws and standards, programs aimed at the prevention of such conduct, and intervention on behalf of the victims. Georgia State University Police officers will treat victims of sexual assault, domestic violence, and stalking with respect and dignity. Advocates on campus and in the community can help with victims’ physical and emotional health, reporting options, and academic concerns.</p>
+</div>
+<div id="academic-honesty" class="section level3">
+<h3>Academic honesty</h3>
+<p>Violation of <a href="https://deanofstudents.gsu.edu/faculty-staff-resources/academic-honesty/">GSU’s Policy on Academic Honesty</a> will result in an F in the course and possible disciplinary action.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> All violations will be formally reported to the Dean of Students.</p>
+</div>
+<div id="special-needs" class="section level3">
+<h3>Special needs</h3>
+<p>Students who wish to request accommodation for a disability may do so by registering with the <a href="https://disability.gsu.edu/">Office of Disability Services</a>. Students may only be accommodated upon issuance by the Office of Disability Services of a signed <a href="https://disability.gsu.edu/services/how-to-register/">Accommodation Plan</a> and are responsible for providing a copy of that plan to instructors of all classes in which accommodations are sought.</p>
+<p>Students with special needs should then make an appointment with me during the first week of class to discuss any accommodations that need to be made.</p>
+</div>
+</div>
+<div id="assignments-and-grades" class="section level2">
+<h2>Assignments and grades</h2>
+<p>You can find descriptions for all the assignments on the <a href="/assignment/">assignments page</a>.</p>
+<div class="centered-table">
+<table style="width:68%;">
+<colgroup>
+<col width="41%" />
+<col width="12%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Assignment</th>
+<th align="center">Points</th>
+<th align="center">Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Preparation (≈ 15.5 × 14)</td>
+<td align="center">210</td>
+<td align="center">21%</td>
+</tr>
+<tr class="even">
+<td align="left">Problem sets (6 × 40)</td>
+<td align="center">240</td>
+<td align="center">24%</td>
+</tr>
+<tr class="odd">
+<td align="left">Evaluation assignments (4 ×
+30)</td>
+<td align="center">120</td>
+<td align="center">12%</td>
+</tr>
+<tr class="even">
+<td align="left">Code-through</td>
+<td align="center">30</td>
+<td align="center">3%</td>
+</tr>
+<tr class="odd">
+<td align="left">Exam 1</td>
+<td align="center">100</td>
+<td align="center">10%</td>
+</tr>
+<tr class="even">
+<td align="left">Exam 2</td>
+<td align="center">100</td>
+<td align="center">10%</td>
+</tr>
+<tr class="odd">
+<td align="left">Final project</td>
+<td align="center">200</td>
+<td align="center">20%</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="center">1000</td>
+<td align="center">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="centered-table">
+
+
+<table style="width:49%;">
+<colgroup>
+<col width="11%" />
+<col width="13%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Grade</th>
+<th align="center">Range</th>
+<th align="left">Grade</th>
+<th align="center">Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="center">93–100%</td>
+<td align="left">C</td>
+<td align="center">73–76%</td>
+</tr>
+<tr class="even">
+<td align="left">A−</td>
+<td align="center">90–92%</td>
+<td align="left">C−</td>
+<td align="center">70–72%</td>
+</tr>
+<tr class="odd">
+<td align="left">B+</td>
+<td align="center">87–89%</td>
+<td align="left">D+</td>
+<td align="center">67–69%</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="center">83–86%</td>
+<td align="left">D</td>
+<td align="center">63–66%</td>
+</tr>
+<tr class="odd">
+<td align="left">B−</td>
+<td align="center">80–82%</td>
+<td align="left">D−</td>
+<td align="center">60–62%</td>
+</tr>
+<tr class="even">
+<td align="left">C+</td>
+<td align="center">77–79%</td>
+<td align="left">F</td>
+<td align="center">&lt; 60%</td>
+</tr>
+</tbody>
+</table>
+<div>
+
+
+</div>
+<div id="star-wars" class="section level2">
+<h2>Star Wars</h2>
+<p>Once you have read this entire syllabus and <a href="/assignment/">the assignments page</a>, please <a href="mailto:aheiss@gsu.edu">click here</a> and e-mail me a picture of a <em>cute</em> Star Wars character.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Brownie points if it’s animated.</p>
+{{% figure src="https://media.giphy.com/media/j4q4h9uWKWwnYT1k3Z/giphy.gif" alt="Baby Yoda with IG-11" lightbox="false" %}}
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There’s fairly widespread misunderstanding about what office hours actually are! <a href="https://www.chronicle.com/article/Can-This-Man-Change-How-Elite/245714/">Many students often think that they are the times I <em>shouldn’t</em> be disturbed</a>, which is the exact opposite of what they’re for.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>So seriously, just don’t cheat or plagiarize!<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Baby Yoda, Babu Frik, porgs, etc. are all super fair game.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

@@ -1,0 +1,136 @@
+lessons:
+  - title: '<span class="fake-header-table">Evaluation and causation</span>'
+    header: True
+
+  - title: '<i class="fas fa-university"></i> **Evaluation, data science, the causal revolution, and the tidyverse**'
+    date: "January 15"
+    reading: "01-reading"
+    class: "01-class"
+
+  - title: '<i class="fas fa-university"></i> **Regression and inference**'
+    date: "January 22"
+    reading: "02-reading"
+    class: "02-class"
+    
+  - title: "Problem set 1"
+    date: "January 22/29"
+    assignment: "01-problem-set"
+    
+  - title: '<i class="fas fa-university"></i> **Theories of change and logic models**'
+    date: "January 29"
+    reading: "03-reading"
+    class: "03-class"
+
+  - title: "Problem set 2"
+    date: "January 29"
+    assignment: "02-problem-set"
+    
+  - title: '<i class="fas fa-university"></i> **Measurement and DAGs**'
+    date: "February 5"
+    reading: "04-reading"
+    class: "04-class"
+
+  - title: "Evaluation: Background and theory"
+    date: "February 5"
+    assignment: "01-eval-background-theory"
+
+  - title: '<i class="fas fa-university"></i> **DAGs and potential outcomes**'
+    date: "February 12"
+    reading: "05-reading"
+    class: "05-class"
+
+  - title: "Evaluation: Measurement"
+    date: "February 12"
+    assignment: "02-eval-measurement"
+    
+  - title: '<i class="fas fa-university"></i> **Threats to validity**'
+    date: "February 19"
+    reading: "06-reading"
+    class: "06-class"
+
+  - title: "Evaluation: Causal model"
+    date: "February 19"
+    assignment: "03-eval-dag"
+    
+  - title: '<i class="fas fa-star"></i> **Exam 1**'
+    date: "February 20–26"
+
+  - title: '<span class="fake-header-table">Tools and methods</span>'
+    header: True
+    
+  - title: '<i class="fas fa-university"></i> **Randomization and matching**'
+    date: "February 26"
+    reading: "07-reading"
+    class: "07-class"
+
+  - title: "Evaluation: Threats to validity"
+    date: "February 26"
+    assignment: "04-eval-threats"
+
+  - title: '<i class="fas fa-university"></i> **Difference-in-differences I**'
+    date: "March 4"
+    reading: "08-reading"
+    class: "08-class"
+
+  - title: "Problem set 3"
+    date: "March 11"
+    assignment: "03-problem-set"
+
+  - title: '<i class="fas fa-university"></i> **Difference-in-differences II**'
+    date: "March 11"
+    reading: "09-reading"
+    class: "09-class"
+
+  - title: "Problem set 4"
+    date: "March 14"
+    assignment: "04-problem-set"
+    
+  - title: '**Cancelled because of COVID-19**'
+    date: "March 25"
+
+  - title: "Problem set 5"
+    date: "April 22"
+    assignment: "05-problem-set"
+
+  - title: '<i class="fas fa-university"></i> **Regression discontinuity I & II**'
+    date: "April 1"
+    reading: "11-reading"
+    class: "11-class"
+
+  - title: "Problem set 6"
+    date: "April 22"
+    assignment: "06-problem-set"
+    
+  - title: '<i class="fas fa-university"></i> **Instrumental variables I & II**'
+    date: "April 8"
+    reading: "12-reading"
+    class: "12-class"
+
+  - title: "Problem set 7"
+    date: "April 22"
+    assignment: "07-problem-set"
+    
+  - title: '<i class="fas fa-star"></i> **Exam 2**'
+    date: "April 12–April 22"
+
+  - title: '<span class="fake-header-table">Applied evaluation</span>'
+    header: True
+
+  - title: '<i class="fas fa-university"></i> **Planning and running evaluations + other types of evaluation**'
+    date: "April 15"
+    reading: "13-reading"
+
+  - title: '<i class="fas fa-university"></i> **Ethics and open science**'
+    date: "April 22"
+    reading: "14-reading"
+
+  - title: "~~Code-through due~~ **Cancelled because of COVID-19**"
+    date: "April 22"
+    assignment: "code-through"
+
+  - title: '<span class="fake-header-table">Final</span>'
+    header: True
+
+  - title: "**Final project due** (submit online by 7:00 PM)"
+    date: "April 29"
+    assignment: "final-project"

@@ -1,0 +1,19 @@
+---
+title: "Final project"
+date: "2020-04-29"
+due_date: "2020-04-29"
+due_time: "7:00 PM"
+menu:
+  assignment:
+    parent: Other projects
+    weight: 2
+weight: 2
+type: docs
+output:
+  blogdown::html_page:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+Instructions here.

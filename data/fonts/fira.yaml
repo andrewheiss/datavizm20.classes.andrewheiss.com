@@ -1,0 +1,11 @@
+# Font style metadata
+name: Fira and Overpass
+
+# Optional Google font URL
+google_fonts: 'Fira+Sans+Condensed:400,400i,700,700i|Overpass:400,400i,700,700i'
+
+# Font families
+heading_font: Fira Sans Condensed
+body_font: Overpass
+nav_font: Overpass
+mono_font: 'Consolas, "Liberation Mono", Menlo, Courier, monospace'

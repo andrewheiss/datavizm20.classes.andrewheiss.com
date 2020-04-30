@@ -1,0 +1,85 @@
+---
+title: Assignment details
+menu:
+  assignment:
+    parent: Assignments
+    weight: 1
+type: docs
+weight: 1
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+## Preparation
+
+You will get the most out of this class if you (1) attend class, (2) complete all the readings, and (3) engage^[Take detailed notes, work through the example code and try to understand it, have vivid dreams about statistics, etc.]  with the readings.^[Also (4) ask for help!]
+
+To encourage attendance and preparation, I use an honor-system-based self-reporting system. At the beginning of every class, I will post a quiz on iCollege with the following questions:
+
+1. Are you here in class today?
+    - Yes (*3.5 points*)
+    - No (*0 points*)
+2. How much of today's reading did you finish?
+    - 100% (*6 points*)
+    - 75–99% (*5 points*)
+    - 50–74% (*4 points*)
+    - 11–49% (*2 points*)
+    - 0–10% (*0 points*)
+3. How well did you read?
+    - I was engaged and read carefully (*6 points*)
+    - I was fairly engaged and read fairly carefully (*4 points*)
+    - I skimmed it (*2 points*)
+    - I didn't read it at all (*0 points*)
+
+Each day is worth 15.5 points. *It is unlikely that you'll score a 15.5 every day.*^[But it would be amazing if you did!] Your total preparation score will naturally shift up at the end of the semester, though, since the preparation category is worth 210 points rather than 217 (15.5 × 14), so be honest—there's wiggle room in the point system for honesty.
+
+
+## Problem sets
+
+To practice writing R code, running inferential models, and thinking about causation, you will complete a series of problem sets. 
+
+There are 7 problem sets on the schedule. **I will keep the highest grades for 6 of them.** That is, I will drop the lowest score (even if it's a zero). This means you can skip one of the problem sets. You need to show that you made a good faith effort to work each question. I will not grade these in detail. The problem sets will be graded using a check system:
+
+- ✔+: (*44 points (110%) in gradebook*) Problem set is 100% completed. Every question was attempted and answered, and most answers are correct. Document is clean and easy to follow. Work is exceptional. I will not assign these often.
+- ✔: (*37 points (93%) in gradebook*) Problem set is 70–99% complete and most answers are correct. **This is the expected level of performance.**
+- ✔−: (*20 points (50%) in gradebook*) Problem set is less than 70% complete and/or most answers are incorrect. This indicates that you need to improve next time. I will hopefully not asisgn these often.
+
+You may (and should!) work together on the problem sets, but *you must turn in your own answers.* You cannot work in groups of more than **four** people, and you must note who participated in the group in your assignment.
+
+
+## Evaluation assignments
+
+For your [final project](/assignment/final-project/), you will conduct a pre-registered evaluation of a social program using synthetic data. To (1) give you practice with the principles of program evaluation, research design, measurement, and causal diagrams, and (2) help you with the foundation of your final project, you will complete a set of four evaluation-related assignments. 
+
+Ideally these will become major sections of your final project. However, there is no requirement that the programs you use in these assignments must be the same as the final project. If, through these assignments, you discover that your initially chosen program is too simple, too complex, too boring, etc., you can change at any time.
+
+These assignments will be graded using the same check system from the problem sets, but scaled down to 30 points.
+
+
+## Code-through
+
+The objectives of this class include "Become curious and confident in consuming and producing evaluations," "Run statistical models," and "Share your analyses and data with the public." To help you with this, you will write a code-through tutorial of some program evaluation principle or approach.
+
+One of the reasons R is so popular is because the R community is exceptionally generous and open and sharing.^[So are Python and other modern open source languages too.] The internet is full of tutorials and code-throughs where people explain how to do something interesting with R.
+
+You will write one code-through or tutorial during the semester on a of your choice (related to program evaluation and causal inference, of course). You will complete this on your own, but you can get help from your team (but you can't all write about the same topic). [You can find the instructions for the assignment here.](/assignment/code-through/)
+
+This assignment will be graded using the same check system from the problem sets, but scaled down to 30 points.
+
+
+## Exams
+
+There will be two exams covering (1) program evaluation, design, and causation, and (2) the core statistical tools of program evaluation and causal inference.
+
+You will take these exams online through iCollege. The exams will be timed, but you can use notes and readings and [the Google](https://www.youtube.com/watch?v=AQ45fO1uiOQ). You must take the exams on your own though, and not talk to anyone about them.^[Again, be honest.]
+
+
+## Final project
+
+At the end of the course, you will demonstrate your knowledge of program evaluation and causal inference by completing a final project.
+
+[Complete details for the final project are here.](/assignment/final-project/)
+
+There is no final exam. This project is your final exam.
