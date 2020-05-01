@@ -1,3 +1,24 @@
+// Plasma colors
+$colors-dark: (
+    #0D0887,  /* Blue Trust */
+    #5601A4,  /* Aubergine Perl */
+    #900DA4,  /* Violet Eggplant */
+    #BF3984,  /* Medium Red Violet */
+    #E16462,  /* Briquette */
+    #F89441,  /* Chat Orange */
+    #FCCE25   /* Lemon Punch */
+);
+
+$colors-light: (
+    #B2B1F9,  /* Winterspring Lilac */
+    #CBB5FF,  /* Lavender Tonic */
+    #EFB3FF,  /* Euphoria */
+    #FFC0DC,  /* Sweet Romance */
+    #FFD0CF,  /* Girlie */
+    #FFDFD1,  /* Soft Orange Bloom */
+    #FFF0D4   /* Biogenic Sand */
+);
+
 h1, h2 {
     font-weight: 700;
 }
@@ -9,6 +30,10 @@ h1 {
 h2 {
     font-size: 1.8rem;
     margin-top: 2.75rem;
+}
+
+kbd {
+    font-size: 75%;
 }
 
 .article-container {
@@ -119,4 +144,69 @@ td.mid-table-header {
 
 .article-style .slide-thumb {
     margin-top: 0;
+}
+
+div.note,
+div.fyi,
+div.puzzle,
+div.warning {
+    position: relative;
+    padding: 1em 1em 1em 100px;
+    margin: 1em 0;
+    min-height: 120px;
+}
+
+div.note:before,
+div.fyi:before,
+div.puzzle:before,
+div.warning:before {
+    position: absolute;
+    font-family: "FontAwesome";
+    font-size: 70px;
+    top: 0;
+    opacity: 0.5;
+}
+
+div.note {
+    color: nth($colors-dark, 1);
+    background-color: nth($colors-light, 1);
+    border: dotted 4px nth($colors-dark, 1);
+}
+
+div.note:before {
+    content: "\f0eb";
+    left: 30px;
+}
+
+div.fyi {
+    color: nth($colors-dark, 3);
+    background-color: nth($colors-light, 3);
+    border: dotted 4px nth($colors-dark, 3);
+}
+
+div.fyi:before {
+    content: "\f05a";
+    left: 20px;
+}
+
+div.puzzle {
+    color: nth($colors-dark, 4);
+    background-color: nth($colors-light, 4);
+    border: dotted 4px nth($colors-dark, 4);
+}
+
+div.puzzle:before {
+    content: "\f12e";
+    left: 20px;
+}
+
+div.warning {
+    color: #FFFFFF;
+    background-color: nth($colors-dark, 6);
+    border: dotted 4px #FFFFFF;
+}
+
+div.warning:before {
+    content: "\f071";
+    left: 14px;
 }
