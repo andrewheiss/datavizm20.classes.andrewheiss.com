@@ -1,0 +1,11 @@
+---
+title: Class details
+menu:
+  class:
+    parent: Class details
+    weight: 1
+type: docs
+weight: 1
+---
+
+I will post all the materials (slides, example code, in-class activities, etc.) from each class session on the day of the class. I typically don't post the slides before class, but they will be posted after.

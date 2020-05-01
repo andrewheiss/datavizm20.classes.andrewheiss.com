@@ -1,0 +1,47 @@
+---
+title: "Truth, beauty, and data + R and tidyverse"
+linktitle: "1: Truth, beauty, and data + the tidyverse"
+date: "2020-05-11"
+class_date: "2020-05-11"
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+menu:
+  class:
+    parent: Class sessions
+    weight: 1
+type: docs
+weight: 1
+# pdf: "/slides/PMAP-8521_2020-01-15.pdf"
+# thumb: "/slides/PMAP-8521_2020-01-15.png"
+editor_options: 
+  chunk_output_type: console
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#slides">Slides</a></li>
+</ul>
+</div>
+
+<div id="example" class="section level2">
+<h2>Example</h2>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth() +
+  labs(x = &quot;Displacement&quot;)</code></pre>
+<p><img src="/example/01-example_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="slides" class="section level2">
+<h2>Slides</h2>
+<pre class="r"><code>knitr::include_url(&quot;/slides/01-slides.html&quot;)</code></pre>
+<iframe src="/slides/01-slides.html" width="672" height="400px">
+</iframe>
+</div>

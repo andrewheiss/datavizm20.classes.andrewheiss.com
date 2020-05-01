@@ -1,136 +1,121 @@
 lessons:
-  - title: '<span class="fake-header-table">Evaluation and causation</span>'
+  - title: '<span class="fake-header-table">Foundations</span>'
     header: True
 
-  - title: '<i class="fas fa-university"></i> **Evaluation, data science, the causal revolution, and the tidyverse**'
-    date: "January 15"
-    reading: "01-reading"
-    class: "01-class"
+  - title: '<i class="fas fa-university"></i> **Truth, beauty, and data + R and tidyverse**'
+    session: 1
+    date: "May 11"
+    content: "01-content"
+    lesson: "01-lesson"
+    example: "01-example"
 
-  - title: '<i class="fas fa-university"></i> **Regression and inference**'
-    date: "January 22"
-    reading: "02-reading"
-    class: "02-class"
-    
-  - title: "Problem set 1"
-    date: "January 22/29"
-    assignment: "01-problem-set"
-    
-  - title: '<i class="fas fa-university"></i> **Theories of change and logic models**'
-    date: "January 29"
-    reading: "03-reading"
-    class: "03-class"
+  - title: '<i class="fas fa-university"></i> **Graphic design**'
+    session: 2
+    date: "May 12"
+    content: "02-content"
+    lesson: "02-lesson"
+    example: "02-example"
+ 
+  - title: '<i class="fas fa-university"></i> **Mapping data to graphics**'
+    session: 3
+    date: "May 13"
+    content: "03-content"
+    lesson: "03-lesson"
+    example: "03-example"
 
   - title: "Problem set 2"
-    date: "January 29"
-    assignment: "02-problem-set"
-    
-  - title: '<i class="fas fa-university"></i> **Measurement and DAGs**'
-    date: "February 5"
-    reading: "04-reading"
-    class: "04-class"
+    date: "May ??"
+    assignment: "02-assignment"
 
-  - title: "Evaluation: Background and theory"
-    date: "February 5"
-    assignment: "01-eval-background-theory"
-
-  - title: '<i class="fas fa-university"></i> **DAGs and potential outcomes**'
-    date: "February 12"
-    reading: "05-reading"
-    class: "05-class"
-
-  - title: "Evaluation: Measurement"
-    date: "February 12"
-    assignment: "02-eval-measurement"
-    
-  - title: '<i class="fas fa-university"></i> **Threats to validity**'
-    date: "February 19"
-    reading: "06-reading"
-    class: "06-class"
-
-  - title: "Evaluation: Causal model"
-    date: "February 19"
-    assignment: "03-eval-dag"
-    
-  - title: '<i class="fas fa-star"></i> **Exam 1**'
-    date: "February 20–26"
-
-  - title: '<span class="fake-header-table">Tools and methods</span>'
-    header: True
-    
-  - title: '<i class="fas fa-university"></i> **Randomization and matching**'
-    date: "February 26"
-    reading: "07-reading"
-    class: "07-class"
-
-  - title: "Evaluation: Threats to validity"
-    date: "February 26"
-    assignment: "04-eval-threats"
-
-  - title: '<i class="fas fa-university"></i> **Difference-in-differences I**'
-    date: "March 4"
-    reading: "08-reading"
-    class: "08-class"
-
-  - title: "Problem set 3"
-    date: "March 11"
-    assignment: "03-problem-set"
-
-  - title: '<i class="fas fa-university"></i> **Difference-in-differences II**'
-    date: "March 11"
-    reading: "09-reading"
-    class: "09-class"
-
-  - title: "Problem set 4"
-    date: "March 14"
-    assignment: "04-problem-set"
-    
-  - title: '**Cancelled because of COVID-19**'
-    date: "March 25"
-
-  - title: "Problem set 5"
-    date: "April 22"
-    assignment: "05-problem-set"
-
-  - title: '<i class="fas fa-university"></i> **Regression discontinuity I & II**'
-    date: "April 1"
-    reading: "11-reading"
-    class: "11-class"
-
-  - title: "Problem set 6"
-    date: "April 22"
-    assignment: "06-problem-set"
-    
-  - title: '<i class="fas fa-university"></i> **Instrumental variables I & II**'
-    date: "April 8"
-    reading: "12-reading"
-    class: "12-class"
-
-  - title: "Problem set 7"
-    date: "April 22"
-    assignment: "07-problem-set"
-    
-  - title: '<i class="fas fa-star"></i> **Exam 2**'
-    date: "April 12–April 22"
-
-  - title: '<span class="fake-header-table">Applied evaluation</span>'
+  - title: '<span class="fake-header-table">Core types of graphics</span>'
     header: True
 
-  - title: '<i class="fas fa-university"></i> **Planning and running evaluations + other types of evaluation**'
-    date: "April 15"
-    reading: "13-reading"
+  - title: '<i class="fas fa-university"></i> **Amounts and proportions**'
+    session: 4
+    date: "May 14"
+    content: "04-content"
+    lesson: "04-lesson"
+    example: "04-example"
 
-  - title: '<i class="fas fa-university"></i> **Ethics and open science**'
-    date: "April 22"
-    reading: "14-reading"
+  - title: '<i class="fas fa-university"></i> **Themes**'
+    session: 5
+    date: "May 15"
+    content: "05-content"
+    lesson: "05-lesson"
+    example: "05-example"
+    
+  - title: '<i class="fas fa-university"></i> **Uncertainty**'
+    session: 6
+    date: "May 18"
+    content: "06-content"
+    lesson: "06-lesson"
+    example: "06-example"
+   
+  - title: '<i class="fas fa-university"></i> **Relationships**'
+    session: 7
+    date: "May 19"
+    content: "07-content"
+    lesson: "07-lesson"
+    example: "07-example"
 
-  - title: "~~Code-through due~~ **Cancelled because of COVID-19**"
-    date: "April 22"
-    assignment: "code-through"
+  - title: '<i class="fas fa-university"></i> **Comparisons**'
+    session: 8
+    date: "May 20"
+    content: "08-content"
+    lesson: "08-lesson"
+    example: "08-example"
 
-  - title: '<span class="fake-header-table">Final</span>'
+  - title: '<i class="fas fa-university"></i> **Annotating**'
+    session: 9
+    date: "May 21"
+    content: "09-content"
+    lesson: "09-lesson"
+    example: "09-example"
+
+  - title: '<span class="fake-header-table">Special applications</span>'
     header: True
 
-  - title: "**Final project due** (submit online by 7:00 PM)"
-    date: "April 29"
-    assignment: "final-project"
+  - title: '<i class="fas fa-university"></i> **Interactivity**'
+    session: 10
+    date: "May 22"
+    content: "10-content"
+    lesson: "10-lesson"
+    example: "10-example"
+    
+  - title: '<i class="fas fa-university"></i> **Time**'
+    session: 11
+    date: "May 26"
+    content: "11-content"
+    lesson: "11-lesson"
+    example: "11-example"
+
+  - title: '<i class="fas fa-university"></i> **Space**'
+    session: 12
+    date: "May 27"
+    content: "12-content"
+    lesson: "12-lesson"
+    example: "12-example"
+
+  - title: '<i class="fas fa-university"></i> **Text**'
+    session: 13
+    date: "May 28"
+    content: "13-content"
+    lesson: "13-lesson"
+    example: "13-example"
+
+  - title: '<i class="fas fa-university"></i> **Enhancing graphics**'
+    session: 14
+    date: "May 29"
+    content: "14-content"
+    lesson: "14-lesson"
+    example: "14-example"
+
+  - title: '<span class="fake-header-table">Conclusions</span>'
+    header: True
+
+  - title: '<i class="fas fa-university"></i> **Truth, beauty, and data revisited**'
+    session: 15
+    date: "June 1"
+    content: "15-content"
+    lesson: "15-lesson"
+    example: "15-example"

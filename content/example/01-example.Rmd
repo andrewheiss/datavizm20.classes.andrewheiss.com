@@ -1,0 +1,38 @@
+---
+title: "Truth, beauty, and data + R and tidyverse"
+linktitle: "1: Truth, beauty, and data + the tidyverse"
+date: "2020-05-11"
+class_date: "2020-05-11"
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+menu:
+  class:
+    parent: Class sessions
+    weight: 1
+type: docs
+weight: 1
+# pdf: "/slides/PMAP-8521_2020-01-15.pdf"
+# thumb: "/slides/PMAP-8521_2020-01-15.png"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Example
+
+```{r message=FALSE}
+library(ggplot2)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth() +
+  labs(x = "Displacement")
+```
+
+## Slides
+
+```{r}
+knitr::include_url("/slides/01-slides.html")
+```

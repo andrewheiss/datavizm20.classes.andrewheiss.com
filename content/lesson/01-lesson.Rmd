@@ -1,5 +1,5 @@
 ---
-title: "Truth, Beauty, and Data + R and tidyverse"
+title: "Truth, beauty, and data + R and tidyverse"
 linktitle: "1: Truth, beauty, and data + the tidyverse"
 date: "2020-05-11"
 class_date: "2020-05-11"
@@ -22,7 +22,7 @@ editor_options:
 
 ## Slides
 
-`r blogdown::shortcode("slides")`
+`r blogdown::shortcode("slide-buttons")`
 
 ## R stuff
 
