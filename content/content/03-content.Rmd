@@ -4,8 +4,8 @@ linktitle: "3: Mapping data to graphics"
 date: "2020-05-13"
 read_date: "2020-05-13"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 3
 type: docs
 bibliography: "../../static/bib/references.bib"

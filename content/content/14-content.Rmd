@@ -4,8 +4,8 @@ linktitle: "14: Enhancing graphics"
 date: "2020-05-29"
 read_date: "2020-05-29"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 14
 type: docs
 bibliography: "../../static/bib/references.bib"

@@ -4,8 +4,8 @@ linktitle: "13: Text"
 date: "2020-05-28"
 read_date: "2020-05-28"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 13
 type: docs
 bibliography: "../../static/bib/references.bib"

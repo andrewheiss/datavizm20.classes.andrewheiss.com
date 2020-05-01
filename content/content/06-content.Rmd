@@ -4,8 +4,8 @@ linktitle: "6: Uncertainty"
 date: "2020-05-18"
 read_date: "2020-05-18"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 6
 type: docs
 bibliography: "../../static/bib/references.bib"

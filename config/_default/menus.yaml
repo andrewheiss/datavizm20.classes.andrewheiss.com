@@ -20,8 +20,13 @@ main:
   - name: Reference
     url: /reference/
     weight: 7
-assignment:
-  - name: Assignments
+content:
+  - name: Overview
     weight: 1
-  - name: Projects
+  - name: Course content
+    weight: 2
+lesson:
+  - name: Overview
+    weight: 1
+  - name: Lessons
     weight: 2

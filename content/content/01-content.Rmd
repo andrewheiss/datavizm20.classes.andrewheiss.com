@@ -4,8 +4,8 @@ linktitle: "1: Truth, beauty, and data + the tidyverse"
 date: "2020-05-11"
 read_date: "2020-05-11"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 1
 type: docs
 bibliography: "../../static/bib/references.bib"

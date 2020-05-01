@@ -4,8 +4,8 @@ linktitle: "2: Graphic design"
 date: "2020-05-12"
 read_date: "2020-05-12"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 2
 type: docs
 bibliography: "../../static/bib/references.bib"

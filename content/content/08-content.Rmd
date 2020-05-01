@@ -4,8 +4,8 @@ linktitle: "8: Comparisons"
 date: "2020-05-20"
 read_date: "2020-05-20"
 menu:
-  reading:
-    parent: Content
+  content:
+    parent: Course content
     weight: 8
 type: docs
 bibliography: "../../static/bib/references.bib"
