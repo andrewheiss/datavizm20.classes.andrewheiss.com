@@ -1,0 +1,51 @@
+---
+title: "Truth, beauty, and data + R and tidyverse"
+linktitle: "1: Truth, beauty, and data + the tidyverse"
+date: "2020-05-11"
+read_date: "2020-05-11"
+menu:
+  reading:
+    parent: Readings
+    weight: 1
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+slides: "01-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- The [syllabus](/syllabus/) and [assignments](/assignment/) pages for this class
+- Forthcoming
+
+
+## Slides
+
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "First section", 1, TRUE,
+  "Second section", 6, FALSE,
+  "Third section", 8, FALSE
+)
+
+slide_tabs(sections, "/slides/01-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
+
+
+## Videos
+
+Videos go here.
