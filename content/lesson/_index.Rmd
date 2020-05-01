@@ -1,11 +1,24 @@
 ---
-title: Class details
+title: Interactive lessons
 menu:
-  class:
-    parent: Class details
+  lesson:
+    parent: Overview
     weight: 1
 type: docs
 weight: 1
+shiny: true
 ---
 
-I will post all the materials (slides, example code, in-class activities, etc.) from each class session on the day of the class. I typically don't post the slides before class, but they will be posted after.
+Each class session has an interactive lesson that you will work through ***after*** doing the readings and watching the lecture. These lessons are a central part of the class—they will teach you how to use **ggplot2** and other packages in the **tidyverse** to create beautiful and truthful visualizations with R.
+
+Interactive code sections look like this. Make changes in the text box and click on the green "Run Code" button to see the results. Sometimes there will be a button with a hint or solution.
+
+:::puzzle
+**Your turn**: Modify the code here to show the relationship between health and wealth for 2002 instead of 2007.
+:::
+
+```{r echo=FALSE}
+blogdown::shortcode("learnr", 
+                    url = "https://andrewheiss.shinyapps.io/datavizm20_00-lesson-example/", 
+                    id = "learnr-00-lesson-example1")
+```

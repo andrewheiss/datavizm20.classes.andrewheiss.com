@@ -1,0 +1,1 @@
+<iframe style="margin:0 auto; min-width: 100%;" {{ with .Get "id"}}id="{{.}}"{{ end }} class="interactive" {{ with .Get "url"}}src="{{.}}"{{ end }} scrolling="no" frameborder="no" {{ with .Get "id"}}onload='iFrameResize({}, "#{{.}}")'{{ end }}></iframe>
