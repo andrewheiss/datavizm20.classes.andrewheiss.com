@@ -1,0 +1,301 @@
+// Inferno colors
+// $colors-dark: (
+//     #4D016B,  /* Dark purple */
+//     #81056F,  /* Purple */
+//     #B1165F,  /* Pink */
+//     #E0343E,  /* Red */
+//     #FF6000,  /* Orange */
+//     #FFBC00,  /* Yellow */
+//     #42159D   /* Blue */
+// );
+
+// $colors-light: (
+//     #E8AFFE,  /* Dark purple */
+//     #FCB7F2,  /* Purple */
+//     #F8C8DE,  /* Pink */
+//     #F9D6D8,  /* Red */
+//     #FFDFCC,  /* Orange */
+//     #FFF2CC,  /* Yellow */
+//     #E3D8FA  /* Blue */ 
+// );
+
+// Plasma colors
+$colors-dark: (
+    #0D0887,  /* Blue Trust */
+    #5601A4,  /* Aubergine Perl */
+    #900DA4,  /* Violet Eggplant */
+    #BF3984,  /* Medium Red Violet */
+    #E16462,  /* Briquette */
+    #F89441,  /* Chat Orange */
+    #FCCE25   /* Lemon Punch */
+);
+
+$colors-light: (
+    #B2B1F9,  /* Winterspring Lilac */
+    #CBB5FF,  /* Lavender Tonic */
+    #EFB3FF,  /* Euphoria */
+    #FFC0DC,  /* Sweet Romance */
+    #FFD0CF,  /* Girlie */
+    #FFDFD1,  /* Soft Orange Bloom */
+    #FFF0D4   /* Biogenic Sand */
+);
+
+
+/* 
+Typography
+*/
+.remark-slide-content {
+    font-size: 40px;  /* Base font size */
+    padding: 1em 1em 1em 1em;
+}
+
+.remark-slide-content p {
+    margin: 0.5em 0;
+}
+
+.remark-slide-content h1 {
+    font-size: 1.7em;
+    line-height: 1em;
+    margin-top: 0;
+    text-align: center;
+}
+
+.huge {
+    font-size: 2.2em;
+}
+
+.large {
+    font-size: 1.7em;
+}
+
+.normal {
+    font-size: 1em;
+}
+
+.medium {
+    font-size: 1.4em;
+}
+
+.SMALL {
+    /* CURSE YOU LATEX */
+    font-size: 0.9em;
+}
+
+.small {
+    font-size: 0.8em;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.remark-slide-number {
+    font-size: 15px;
+}
+
+
+/* 
+Main title and section title slides
+*/
+.main-title {
+    color: #FFFFFF;
+}
+
+.main-title {
+    text-align: center;
+}
+
+.main-title h1 {
+    font-weight: 900;
+    font-size: 2.8em;
+    line-height: 1.2;
+    margin-bottom: 2em;
+}
+
+.main-title p {
+    font-size: 0.8em;
+}
+
+.main-title .class-info {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: calc(0% + 0.5em);
+}
+
+.section-title h1 {
+    color: #FFFFFF;
+    font-size: 2.3em;
+}
+
+
+/* 
+Three column layout
+*/
+.pull-left-3 {
+    float: left;
+    width: 30%;
+    padding: 0 2.5% 0 0;
+}
+
+.pull-middle-3 {
+    float: left;
+    width: 30%;
+    padding: 0 2.5%;
+}
+
+.pull-right-3 {
+    float: right;
+    width: 30%;
+    padding: 0 0 0 2.5%;
+}
+
+.pull-right-3 ~ * {
+    clear: both;
+}
+
+
+/* 
+Slides with title bars at the top
+*/
+.title {
+    padding-top: 0em;
+    border-top: 110px solid #777777;
+}
+
+.title h1 {
+    margin-top: -85px;
+    margin-bottom: 50px;
+}
+
+// Change the color of the top bar. This generates the following CSS:
+//
+// .title-N {
+//     border-top-color: $colors-dark[N];
+// }
+@each $current-color in $colors-dark {
+    $i: index($colors-dark, $current-color);
+
+    .title-#{$i} {
+        border-top-color: $current-color;
+    }
+}
+
+@each $current-color in $colors-light {
+    $i: index($colors-light, $current-color);
+
+    .title-inv-#{$i} {
+        border-top-color: $current-color;
+    }
+}
+
+
+/* 
+Coloring and inverse coloring in title bars and content boxes
+*/
+
+// This generates the following CSS:
+//
+// .box-N,
+// .section-title-N {
+//     background-color: $colors-dark[N];
+// }
+@each $current-color in $colors-dark {
+    $i: index($colors-dark, $current-color);
+
+    .box-#{$i},
+    .section-title-#{$i} {
+        background-color: $current-color;
+    }
+}
+
+// This generates the following CSS:
+//
+// .box-inv-N {
+//     background-color: $colors-light[N];
+// }
+@each $current-color in $colors-light {
+    $i: index($colors-light, $current-color);
+
+    .box-inv-#{$i} {
+        background-color: $current-color;
+    }
+}
+
+// This generates the following CSS:
+//
+// .box-inv-N,
+// .title-inv-N h1 {
+//     color: $colors-dark[N];
+// }
+@each $current-color in $colors-dark {
+    $i: index($colors-dark, $current-color);
+
+    .box-inv-#{$i},
+    .title-inv-#{$i} h1 {
+        color: $current-color;
+    }
+}
+
+// Make all h1s in section titles and titles use white text
+// This uses @extend to make a comma-separated list of properties, like so:
+// .section-title h1, .title-1 h1, .title-2 h1, ...
+%white-text {
+    color: #FFFFFF;
+}
+
+.section-title h1 {
+    @extend %white-text;
+}
+
+@for $i from 1 through length($colors-dark) {
+    .title-#{$i} h1 {
+        @extend %white-text;
+    }
+}
+
+// Make all dark boxes use white text. The %selector is a placeholder.
+@for $i from 1 through length($colors-dark) {
+    .box-#{$i} {
+        @extend %white-text;
+    }
+}
+
+// Settings for all the boxes, based on the %box-settings placeholder
+%box-settings {
+    margin: 0em auto;
+    overflow: hidden;
+    padding: 0.1em 0.4em;
+    font-weight: 600;
+    display: table;
+    text-align: center;
+}
+
+@for $i from 1 through length($colors-dark) {
+    .box-#{$i}, .box-inv-#{$i} {
+        @extend %box-settings;
+    }
+}
+
+
+/* Corner ribbon */
+/* Adapted from https://codepen.io/eode9/pen/twkKm */
+.corner-ribbon {
+    width: 425px;
+    position: fixed;
+    top: auto;
+    bottom: 50px;
+    left: -85px;
+    transform: rotate(35deg);
+    -webkit-transform: rotate(35deg);
+    box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+    text-align: center;
+    font-size: 0.6em;
+    padding: 0.25em 0;
+    background: nth($colors-dark, 4);
+    color: #FFFFFF;
+}

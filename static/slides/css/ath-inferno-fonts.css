@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,300;0,400;0,600;0,900;1,300;1,400;1,600;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+body, h1, h2, h3 {
+  font-family: 'Fira Sans Condensed', sans;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+.remark-code, .remark-inline-code {
+  font-family: 'Inconsolata', 'Lucida Console', Monaco, monospace;
+}

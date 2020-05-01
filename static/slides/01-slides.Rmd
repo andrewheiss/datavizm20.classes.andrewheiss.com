@@ -1,0 +1,225 @@
+---
+title: "Example stuff"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      # beforeInit: "libs/offline-mathjax.js"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+
+# sass::sass(
+#   sass::sass_file("css/ath-slides.scss"),
+#   output = "css/ath-slides.css",
+#   options = sass::sass_options(
+#     # output_style = "compressed"
+#   )
+# )
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+library(scales)
+library(broom)
+```
+
+class: center middle main-title section-title-6
+
+# Testing these<br>neat slides
+
+.class-info[
+
+**Session 1**
+
+.light[PMAP 8521: Program Evaluation for Public Service<br>
+Andrew Young School of Policy Studies<br>
+Spring 2020]
+
+]
+
+---
+
+class: title title-1
+
+# Box test
+
+.box-1[Something important]
+
+.box-2[Something important]
+
+.box-3[Something important]
+
+.box-4[Something important]
+
+.box-5[Something important]
+
+.box-6[Something important]
+
+.box-7[Something important]
+
+---
+
+class: title title-inv-1
+
+# Inverted box test
+
+.box-inv-1[Something important]
+
+.box-inv-2[Something important]
+
+.box-inv-3[Something important]
+
+.box-inv-4[Something important]
+
+.box-inv-5[Something important]
+
+.box-inv-6[Something important]
+
+.box-inv-7[Something important]
+
+---
+
+name: outline
+class: title title-inv-6
+
+# Plan for today
+
+--
+
+.box-4.medium[Endogeneity & exogeneity]
+
+--
+
+.box-5.medium[Instruments]
+
+--
+
+.box-2.medium[Using instruments]
+
+--
+
+.box-7.medium[IV with R]
+
+--
+
+.box-3.medium[Treatment effects & compliance]
+
+???
+
+*Important* notes go here.
+
+---
+
+class: center middle section-title section-title-4 animated fadeIn
+
+# Endogeneity & exogeneity
+
+---
+
+layout: true
+class: title title-4
+
+---
+
+# Does education cause higher earnings?
+
+```{r echo=FALSE, fig.width=7, fig.height=2.5, out.width="85%"}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth() +
+  labs(x = "Displacement")
+```
+
+
+.medium[
+$$
+\color{#FF851B}{\text{Earnings}_i} = \beta_0 + \beta_1 \color{#0074D9}{\text{Education}_i} + \epsilon_i
+$$
+]
+
+---
+
+# Split exogeneity and endogeneity
+
+.box-inv-4[What if we could somehow separate education into its endogenous and exogenous parts?]
+
+&nbsp; 
+
+.SMALL[
+$$
+\begin{aligned}
+\text{Earnings}_i =& \beta_0 + \beta_1 \text{Education}_i + \epsilon_i \\
+& \beta_0 + \beta_1 (\text{Education}_i^\text{exog.} + \text{Education}_i^\text{endog.}) + \epsilon_i \\
+& \beta_0 + \beta_1 \text{Education}_i^\text{exog.} + \underbrace{\beta_1 \text{Education}_i^{\text{endog.}} + \epsilon_i}_{w_i} \\
+& \beta_0 + \beta_1 \text{Education}_i^\text{exog.} + w_i
+\end{aligned}
+$$
+]
+
+---
+
+# Two columns with a title
+
+.pull-left[
+
+.box-5.medium.full-width[Stuff on this side]
+
+]
+
+.pull-right[
+
+.box-5.medium[And more stuff on *this* side]
+
+]
+
+.box-inv-5[Where does this go?]
+
+---
+
+# Three columns with a title
+
+.pull-left-3[
+
+Something here.
+
+]
+
+.pull-middle-3[
+
+Something here in the middle.
+
+]
+
+.pull-right-3[
+
+Something else here.
+
+]
+
+---
+
+# Slide with headings
+
+## Subheading
+
+.box-5[This is a slide with headings]
+
+## Another subheading
+
+.box-3[This too has a box]
+
+### Level 3!!!
+
+.box-6[Hey.]
