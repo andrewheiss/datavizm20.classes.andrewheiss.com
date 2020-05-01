@@ -1,0 +1,46 @@
+---
+title: "Truth, beauty, and data revisited"
+linktitle: "15: Truth, beauty, and data revisited"
+date: "2020-06-01"
+read_date: "2020-06-01"
+menu:
+  reading:
+    parent: Content
+    weight: 15
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "15-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> Chapter 12 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-book"></i> [Chapter 26](https://serialmentor.com/dataviz/telling-a-story.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fab fa-youtube"></i> Ben Wellington, ["Making data mean more through storytelling"](https://www.youtube.com/watch?v=6xsvGYIxJok)
+- <i class="fab fa-vimeo"></i> Jonathan Schwabish, ["Better Data Communication,"](https://vimeo.com/230757062) National Bureau of Economic Research
+- <i class="fas fa-external-link-square-alt"></i> [Why People Make Bad Charts (and What to Do When it Happens)](https://flowingdata.com/2018/06/28/why-people-make-bad-charts-and-what-to-do-when-it-happens/)
+
+### Questions to reflect on
+
+**Important!** The memo for this last week is a little different. Write **150–200** words about the storytelling readings, and then write **400ish** words exploring a few of these summative questions:
+
+- What is truth?
+- How do we find truth?
+- Are facts truth?
+- What's the difference between content and form?
+- Does beauty matter when describing truth?
+- How does any of this philosophical humanities stuff relate to data visualization?
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

@@ -1,0 +1,33 @@
+---
+title: "Enhancing graphics"
+linktitle: "14: Enhancing graphics"
+date: "2020-05-29"
+read_date: "2020-05-29"
+menu:
+  reading:
+    parent: Content
+    weight: 14
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "14-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> [Chapter 14](https://serialmentor.com/dataviz/proportional-ink.html), [Chapter 15](https://serialmentor.com/dataviz/overlapping-points.html), [Chapter 16](https://serialmentor.com/dataviz/color-pitfalls.html), [Chapter 22](https://serialmentor.com/dataviz/avoid-line-drawings.html), and [Chapter 23](https://serialmentor.com/dataviz/no-3d.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> [Chapter 8](http://socviz.co/refineplots.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+- Browse through recent visualizations at [The Pudding](https://pudding.cool/) ([like this one!](https://pudding.cool/2018/08/pockets/)), [FiveThirtyEight](https://fivethirtyeight.com/), [Vox](https://www.vox.com/), [Christopher Ingraham's articles at the Washington Post](https://www.washingtonpost.com/people/christopher-ingraham/?utm_term=.3bfc09eea703), [WSJ Graphics](https://graphics.wsj.com/), and the [New York Times's TheUpshot](https://www.nytimes.com/section/upshot). Most (if not all) of these graphics were made in R and exported for enhancement in Illustrator or [D3](https://d3js.org/).
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

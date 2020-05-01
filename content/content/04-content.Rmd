@@ -1,0 +1,42 @@
+---
+title: "Amounts and proportions"
+linktitle: "4: Amounts and proportions"
+date: "2020-05-14"
+read_date: "2020-05-14"
+menu:
+  reading:
+    parent: Content
+    weight: 4
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "04-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> [Chapter 6](https://serialmentor.com/dataviz/visualizing-amounts.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> Chapter 6 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-book"></i> [Chapter 10](https://serialmentor.com/dataviz/visualizing-proportions.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-external-link-square-alt"></i> [Engaging Readers with Square Pie/Waffle Charts](https://eagereyes.org/blog/2008/engaging-readers-with-square-pie-waffle-charts)
+- <i class="fas fa-external-link-square-alt"></i> [Understanding Pie Charts](https://eagereyes.org/techniques/pie-charts)
+- <i class="fas fa-external-link-square-alt"></i> [Square pie chart beats out the rest in perception study](https://flowingdata.com/2016/07/15/square-pie-chart-beats-out-the-rest-in-perception-study/)
+- TODO: COVID-19 per capita vs. total, etc.
+
+### Questions to reflect on
+
+- How do these types of visualizations help or hinder our search for truth in data?
+- TODO
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

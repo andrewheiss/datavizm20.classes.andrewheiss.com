@@ -1,0 +1,40 @@
+---
+title: "Mapping data to graphics"
+linktitle: "3: Mapping data to graphics"
+date: "2020-05-13"
+read_date: "2020-05-13"
+menu:
+  reading:
+    parent: Content
+    weight: 3
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "03-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fab fa-youtube"></i> Hans Rosling, ["200 Countries, 200 Years, 4 Minutes"](https://www.youtube.com/watch?v=jbkSRLYSojo)
+- <i class="fas fa-book"></i> [Chapter 2](https://serialmentor.com/dataviz/aesthetic-mapping.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> [Chapter 3](http://socviz.co/makeplot.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+
+### Questions to reflect on
+
+- Why is it important to visualize variables and data?
+- What does it mean to map data to graph aesthetics?
+- How are grammar of graphics aesthetics (i.e. `aes()` in ggplot) related to Tufte's data-to-ink ratio?
+- What data was mapped to which aesthetics in Rosling's video?
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

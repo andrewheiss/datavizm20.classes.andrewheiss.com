@@ -1,0 +1,45 @@
+---
+title: "Relationships"
+linktitle: "7: Relationships"
+date: "2020-05-19"
+read_date: "2020-05-19"
+menu:
+  reading:
+    parent: Content
+    weight: 7
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "07-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> Chapter 9 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-book"></i> [Chapter 12](https://serialmentor.com/dataviz/visualizing-associations.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-external-link-square-alt"></i> Kieran Healy, ["Two y-axes"](https://kieranhealy.org/blog/archives/2016/01/16/two-y-axes/)
+- <i class="fas fa-external-link-square-alt"></i> [Two Alternatives to Using a Second Y-Axis](http://stephanieevergreen.com/two-alternatives-to-using-a-second-y-axis/) & [Illusion of success](http://junkcharts.typepad.com/junk_charts/2006/06/illusion_of_suc.html) & [Dissecting two axes](http://junkcharts.typepad.com/junk_charts/2006/01/dissecting_two_.html)
+- <i class="fas fa-external-link-square-alt"></i> [Dual-Scaled Axes in Graphs: Are They Ever the Best Solution?](http://www.perceptualedge.com/articles/visual_business_intelligence/dual-scaled_axes.pdf) [@Few:2008]
+
+### Recommended
+
+- <i class="far fa-file-pdf"></i> ["A Study on Dual-Scale Data Charts"](https://www.lri.fr/~isenberg/publications/papers/Isenberg_2011_ASO.pdf) [@IsenbergBezerianosDragicevic:2011]
+
+### Questions to reflect on
+
+- How can you correctly and honestly communicate relationships between variables? How can you communicate the uncertainty in those relationships?
+- What are the dangers of visualizing two variables?
+- When is it appropriate to use two y-axes?
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

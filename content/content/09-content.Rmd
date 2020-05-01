@@ -1,0 +1,32 @@
+---
+title: "Annotations"
+linktitle: "9: Annotations"
+date: "2020-05-21"
+read_date: "2020-05-21"
+menu:
+  reading:
+    parent: Content
+    weight: 9
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "09-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> [Chapter 17](https://serialmentor.com/dataviz/redundant-coding.html), [Chapter 18](https://serialmentor.com/dataviz/multi-panel-figures.html), [Chapter 19](https://serialmentor.com/dataviz/figure-titles-captions.html), and [Chapter 21](https://serialmentor.com/dataviz/small-axis-labels.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> [Chapter 5](http://socviz.co/workgeoms.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

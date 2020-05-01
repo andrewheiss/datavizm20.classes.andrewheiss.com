@@ -65,7 +65,7 @@ lessons:
     lesson: "08-lesson"
     example: "08-example"
 
-  - title: '<i class="fas fa-university"></i> **Annotating**'
+  - title: '<i class="fas fa-university"></i> **Annotations**'
     session: 9
     date: "May 21"
     content: "09-content"

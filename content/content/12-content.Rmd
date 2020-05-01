@@ -1,0 +1,49 @@
+---
+title: "Space"
+linktitle: "12: Space"
+date: "2020-05-27"
+read_date: "2020-05-27"
+menu:
+  reading:
+    parent: Content
+    weight: 12
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "12-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> Chapter 10 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-book"></i> [Chapter 7](http://socviz.co/maps.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+
+It looks like this is a lot of reading, but lots of these are short videos or tweets or interactive websites, so don't worry!
+
+- <i class="fab fa-youtube"></i> [Why all world maps are wrong](https://www.youtube.com/watch?v=kIID5FDi2JQ)
+- <i class="fas fa-external-link-square-alt"></i> [The True Size Of…](https://thetruesize.com)
+- <i class="fas fa-external-link-square-alt"></i> [Map projections](https://xkcd.com/977/)
+- <i class="fab fa-youtube"></i> [Gall-Peters Projection](https://www.youtube.com/watch?v=vVX-PrBRtTY)
+- <i class="fas fa-external-link-square-alt"></i> ["When Maps Lie"](https://www.citylab.com/design/2015/06/when-maps-lie/396761/)
+- <i class="fas fa-external-link-square-alt"></i> [Animated Mercator distortion](https://twitter.com/neilrkaye/status/1050740679008296967)
+- <i class="fas fa-external-link-square-alt"></i> ["These Twisted Maps Prove That America Isn't a Red Country"](https://newrepublic.com/article/115550/cartograms-are-important-inforgraphic-tool)
+- <i class="fas fa-external-link-square-alt"></i> ["The next great fake news threat? Bot-designed maps"](https://www.fastcompany.com/90230916/the-next-great-fake-news-threat-bot-designed-maps)
+- <i class="fas fa-external-link-square-alt"></i> ["New World Map That Accurately Shows Earth in 2D Created by Scientists"](https://www.newsweek.com/equal-earth-map-continents-accurate-2d-1102404)
+
+### Questions to reflect on
+
+- How can you know if a map projection is truthful or misleading?
+- What's wrong (or not wrong) with using points on maps? Choropleths? Lines?
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.

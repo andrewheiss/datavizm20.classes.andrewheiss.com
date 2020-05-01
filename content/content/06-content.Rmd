@@ -1,0 +1,43 @@
+---
+title: "Uncertainty"
+linktitle: "6: Uncertainty"
+date: "2020-05-18"
+read_date: "2020-05-18"
+menu:
+  reading:
+    parent: Content
+    weight: 6
+type: docs
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+# slides: "06-slides"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Readings
+
+- <i class="fas fa-book"></i> [Chapter 7](https://serialmentor.com/dataviz/histograms-density-plots.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> Chapters 4, 7, and 11 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-external-link-square-alt"></i> [Why It's So Hard for Us to Visualize Uncertainty](https://hbr.org/2016/11/why-its-so-hard-for-us-to-visualize-uncertainty)
+- <i class="fab fa-youtube"></i> [Amanda Cox's keynote address at the 2017 OpenVis Conf](https://www.youtube.com/watch?v=0L1tGo-DvD0)
+- <i class="fas fa-external-link-square-alt"></i> [Communicating Uncertainty When Lives Are on the Line](https://eagereyes.org/blog/2017/communicating-uncertainty-when-lives-are-on-the-line)
+- <i class="fas fa-external-link-square-alt"></i> [Showing uncertainty during the live election forecast](https://flowingdata.com/2016/11/15/showing-uncertainty-during-the-live-election-forecast/) & [Trolling the uncertainty dial](https://flowingdata.com/2017/06/27/trolling-the-uncertainty-dial/)
+
+### Questions to reflect on
+
+- Why is it important to deal with uncertainty in data?
+- What was good or bad about the New York Times' 2016 live election guage?
+- Why is it so hard to visualize uncertainty?
+- Why is it so hard to communicate uncertainty to others?
+
+
+## Slides
+
+Slides go here
+
+
+## Videos
+
+Videos go here.
