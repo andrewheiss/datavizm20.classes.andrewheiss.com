@@ -146,6 +146,19 @@ td.mid-table-header {
     margin-top: 0;
 }
 
+
+.bg-class {
+    background-color: nth($colors-dark, 6);
+}
+
+.bg-content {
+    background-color: nth($colors-dark, 5);
+}
+
+.bg-assignment {
+    background-color: nth($colors-dark, 7);
+}
+
 div.note,
 div.fyi,
 div.puzzle,

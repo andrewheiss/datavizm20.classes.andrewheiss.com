@@ -5,16 +5,16 @@ name: "Plasma"
 light: true
 
 # Primary
-primary: "#CF4446"
+primary: "#E16462"
 
 # Links
-link: "#CF4446"
+link: "#E16462"
 link_hover: "#F6D645"
 
 # Menu
 menu_primary: "#fff"
-menu_text: "#CF4446"
-menu_text_active: "#FB9E07"
+menu_text: "#E16462"
+menu_text_active: "#F89441"
 menu_title: "#494949"
 
 # Home sections

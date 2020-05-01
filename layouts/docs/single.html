@@ -27,20 +27,20 @@
                     <h1>{{ .Title }}</h1>
 
                     {{ if isset .Params "due_date" }}
-                    <div class="due-date p-2 mb-3 bg-primary text-white">
+                    <div class="due-date p-2 mb-3 bg-assignment text-white">
                         Due by <strong>{{ .Params.due_time }}</strong> on {{ dateFormat "Monday, January 2, 2006" .Params.due_date }}
                     </div>
                     {{ end }}
 
                     {{ if isset .Params "read_date" }}
-                    <div class="due-date p-2 mb-3 bg-primary text-white">
-                        Read before class on {{ dateFormat "Monday, January 2, 2006" .Params.read_date }}
+                    <div class="due-date p-2 mb-3 bg-content text-white">
+                        Content for {{ dateFormat "Monday, January 2, 2006" .Params.read_date }}
                     </div>
                     {{ end }}
 
                     {{ if isset .Params "class_date" }}
-                    <div class="due-date p-2 mb-3 bg-secondary text-white">
-                        Materials from class on {{ dateFormat "Monday, January 2, 2006" .Params.class_date }}
+                    <div class="due-date p-2 mb-3 bg-class text-white">
+                        Lesson for {{ dateFormat "Monday, January 2, 2006" .Params.class_date }}
                     </div>
                     {{ end }}
 
