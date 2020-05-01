@@ -1,8 +1,8 @@
 ---
-title: "Introduction to R and the tidyverse"
-linktitle: "1: Introduction to R and the tidyverse"
-date: "2020-05-11"
-class_date: "2020-05-11"
+title: "Time"
+linktitle: "11: Time"
+date: "2020-05-26"
+class_date: "2020-05-26"
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-syllabus-no-bib.csl
 output:
@@ -11,9 +11,9 @@ output:
 menu:
   lesson:
     parent: Lessons
-    weight: 1
+    weight: 11
 type: docs
-weight: 1
+weight: 11
 editor_options: 
   chunk_output_type: console
 ---
