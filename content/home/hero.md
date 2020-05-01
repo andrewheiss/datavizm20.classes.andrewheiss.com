@@ -5,7 +5,7 @@ headless: true
 active: true
 weight: 10
 
-title: "Data Visualization with R"
+title: "Data Visualization"
 
 # Hero image (optional). Enter filename of an image in the `static/img/` folder.
 hero_media: dataviz_hires.png
@@ -13,8 +13,8 @@ hero_media: dataviz_hires.png
 design:
   background:
     # Background gradient
-    gradient_start: '#A52C60'
-    gradient_end: '#CF4446'
+    gradient_start: '#DA413E'
+    gradient_end: '#E16462'
 
     # Text color (true=light or false=dark).
     text_color_light: true
