@@ -22,3 +22,5 @@ blogdown::shortcode("learnr",
                     url = "https://andrewheiss.shinyapps.io/datavizm20_00-lesson-example/", 
                     id = "learnr-00-lesson-example1")
 ```
+
+If you're curious how this works, each interactive code section is a miniature [Shiny](https://shiny.rstudio.com/) app hosted at [shinyapps.io](https://www.shinyapps.io/). Each app uses [**learnr**](https://rstudio.github.io/learnr/) to provide interactivity, and these **learnr** apps are embedded in this website with some [HTML and Javascript wizardry](https://desiree.rbind.io/post/2020/learnr-iframes/).
