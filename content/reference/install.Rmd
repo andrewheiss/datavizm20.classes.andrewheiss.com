@@ -1,6 +1,6 @@
 ---
 title: Installing R, RStudio, tidyverse, and tinytex
-date: "2019-12-17"
+date: "2020-05-01"
 menu:
   reference:
     parent: Reference
@@ -16,7 +16,7 @@ output:
 library(knitr)
 ```
 
-<span class="newthought">You will do all of your work</span> in this class with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
+You will do all of your work in this class with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
 
 
 ## RStudio.cloud
@@ -39,11 +39,11 @@ First you need to install R itself (the engine).
 1. Go to the CRAN (Collective R Archive Network)^[It's a goofy name, but CRAN is where most R packages—and R itself—lives.] website: <https://cran.r-project.org/>
 2. Click on "Download R for `XXX`", where `XXX` is either Mac or Windows:
 
-    ```{r, echo=FALSE, out.width="75%"}
+    ```{r, echo=FALSE, out.width="60%"}
     include_graphics("/img/install/install-r-links.png", error = FALSE)
     ```
 
-    - If you use macOS, scroll down to the first `.pkg` file in the list of files (in this picture, it's `R-3.5.1.pkg`; as of right now, the current version is 3.6.1) and download it.
+    - If you use macOS, scroll down to the first `.pkg` file in the list of files (in this picture, it's `R-4.0.0.pkg`; as of right now, the current version is also 4.0.0) and download it.
     
         ```{r, echo=FALSE, out.width="100%"}
         include_graphics("/img/install/install-r-mac.png", error = FALSE)
@@ -57,16 +57,24 @@ First you need to install R itself (the engine).
 
 3. Double click on the downloaded file (check your `Downloads` folder). Click yes through all the prompts to install like any other program.
 
+4. If you use macOS, [download and install XQuartz](https://www.xquartz.org/). You do not need to do this on Windows.
+
 
 ### Install RStudio
 
 Next, you need to install RStudio, the nicer graphical user interface (GUI) for R (the dashboard). Once R and RStudio are both installed, you can ignore R and only use RStudio. RStudio will use R automatically and you won't ever have to interact with it directly.
 
 1. Go to the free download location on RStudio's website: <https://www.rstudio.com/products/rstudio/download/#download>
-2. Select the installer that corresponds with your computer's operating system (Windows or macOS):
+2. The website should automatically detect your operating system (macOS or Windows) and show a big download button for it:
+
+    ```{r, echo=FALSE, out.width="50%"}
+    include_graphics("/img/install/install-r-rstudio1.png", error = FALSE)
+    ```
+    
+    If not, scroll down a little to the large table and choose the version of RStudio that matches your operating system.
 
     ```{r, echo=FALSE, out.width="100%"}
-    include_graphics("/img/install/install-r-rstudio.png", error = FALSE)
+    include_graphics("/img/install/install-r-rstudio2.png", error = FALSE)
     ```
 
 3. Double click on the downloaded file (again, check your `Downloads` folder). Click yes through all the prompts to install like any other program.
@@ -82,7 +90,7 @@ R packages are easy to install with RStudio. Select the packages panel, click on
 include_graphics("/img/install/install-r-package-panel.png", error = FALSE)
 ```
 
-This can sometimes be tedious when you're installing lots of packages, though. [The tidyverse](https://www.tidyverse.org/)^[A universe of packages centered around tidy data, including `ggplot2`] for instance, consists of dozens of packages that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time. 
+This can sometimes be tedious when you're installing lots of packages, though. [The tidyverse](https://www.tidyverse.org/), for instance, consists of dozens of packages (including **ggplot2**) that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.
 
 Go to the packages panel in RStudio, click on "Install," type "tidyverse", and press enter. You'll see a bunch of output in the RStudio console as all the tidyverse packages are installed.
 

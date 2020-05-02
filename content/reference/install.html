@@ -1,6 +1,6 @@
 ---
 title: Installing R, RStudio, tidyverse, and tinytex
-date: "2019-12-17"
+date: "2020-05-01"
 menu:
   reference:
     parent: Reference
@@ -27,7 +27,7 @@ output:
 </ul>
 </div>
 
-<p><span class="newthought">You will do all of your work</span> in this class with the open source (and free!) programming language <a href="https://cran.r-project.org/">R</a>. You will use <a href="https://www.rstudio.com/">RStudio</a> as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.</p>
+<p>You will do all of your work in this class with the open source (and free!) programming language <a href="https://cran.r-project.org/">R</a>. You will use <a href="https://www.rstudio.com/">RStudio</a> as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.</p>
 <div id="rstudio.cloud" class="section level2">
 <h2>RStudio.cloud</h2>
 <p>R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free <a href="http://rstudio.cloud/">RStudio.cloud</a> service <em>initially</em>, which lets you run a full instance of RStudio in your web browser. This means you won’t have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.</p>
@@ -43,14 +43,15 @@ output:
 <ol style="list-style-type: decimal">
 <li><p>Go to the CRAN (Collective R Archive Network)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> website: <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a></p></li>
 <li><p>Click on “Download R for <code>XXX</code>”, where <code>XXX</code> is either Mac or Windows:</p>
-<p><img src="/img/install/install-r-links.png" width="75%" /></p>
+<p><img src="/img/install/install-r-links.png" width="60%" /></p>
 <ul>
-<li><p>If you use macOS, scroll down to the first <code>.pkg</code> file in the list of files (in this picture, it’s <code>R-3.5.1.pkg</code>; as of right now, the current version is 3.6.1) and download it.</p>
+<li><p>If you use macOS, scroll down to the first <code>.pkg</code> file in the list of files (in this picture, it’s <code>R-4.0.0.pkg</code>; as of right now, the current version is also 4.0.0) and download it.</p>
 <p><img src="/img/install/install-r-mac.png" width="100%" /></p></li>
 <li><p>If you use Windows, click “base” (or click on the bolded “install R for the first time” link) and download it.</p>
 <p><img src="/img/install/install-r-windows.png" width="100%" /></p></li>
 </ul></li>
 <li><p>Double click on the downloaded file (check your <code>Downloads</code> folder). Click yes through all the prompts to install like any other program.</p></li>
+<li><p>If you use macOS, <a href="https://www.xquartz.org/">download and install XQuartz</a>. You do not need to do this on Windows.</p></li>
 </ol>
 </div>
 <div id="install-rstudio" class="section level3">
@@ -58,8 +59,10 @@ output:
 <p>Next, you need to install RStudio, the nicer graphical user interface (GUI) for R (the dashboard). Once R and RStudio are both installed, you can ignore R and only use RStudio. RStudio will use R automatically and you won’t ever have to interact with it directly.</p>
 <ol style="list-style-type: decimal">
 <li><p>Go to the free download location on RStudio’s website: <a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a></p></li>
-<li><p>Select the installer that corresponds with your computer’s operating system (Windows or macOS):</p>
-<p><img src="/img/install/install-r-rstudio.png" width="100%" /></p></li>
+<li><p>The website should automatically detect your operating system (macOS or Windows) and show a big download button for it:</p>
+<p><img src="/img/install/install-r-rstudio1.png" width="50%" /></p>
+<p>If not, scroll down a little to the large table and choose the version of RStudio that matches your operating system.</p>
+<p><img src="/img/install/install-r-rstudio2.png" width="100%" /></p></li>
 <li><p>Double click on the downloaded file (again, check your <code>Downloads</code> folder). Click yes through all the prompts to install like any other program.</p></li>
 </ol>
 <p>Double click on RStudio to run it (check your applications folder or start menu).</p>
@@ -68,7 +71,7 @@ output:
 <h3>Install <code>tidyverse</code></h3>
 <p>R packages are easy to install with RStudio. Select the packages panel, click on “Install,” type the name of the package you want to install, and press enter.</p>
 <p><img src="/img/install/install-r-package-panel.png" width="40%" /></p>
-<p>This can sometimes be tedious when you’re installing lots of packages, though. <a href="https://www.tidyverse.org/">The tidyverse</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for instance, consists of dozens of packages that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.</p>
+<p>This can sometimes be tedious when you’re installing lots of packages, though. <a href="https://www.tidyverse.org/">The tidyverse</a>, for instance, consists of dozens of packages (including <strong>ggplot2</strong>) that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.</p>
 <p>Go to the packages panel in RStudio, click on “Install,” type “tidyverse”, and press enter. You’ll see a bunch of output in the RStudio console as all the tidyverse packages are installed.</p>
 <p><img src="/img/install/install-r-tidyverse.png" width="60%" /></p>
 <p>Notice also that RStudio will generate a line of code for you and run it: <code>install.packages("tidyverse")</code>. You can also just paste and run this instead of using the packages panel.</p>
@@ -90,6 +93,5 @@ output:
 <hr />
 <ol>
 <li id="fn1"><p>It’s a goofy name, but CRAN is where most R packages—and R itself—lives.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>A universe of packages centered around tidy data, including <code>ggplot2</code><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
