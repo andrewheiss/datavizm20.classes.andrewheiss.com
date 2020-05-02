@@ -1,0 +1,20 @@
+---
+title: "Text"
+linktitle: "13: Text"
+date: "2020-05-28"
+due_date: "2020-05-28"
+due_time: "11:59 PM"
+output:
+  blogdown::html_page:
+    toc: true
+menu:
+  assignment:
+    parent: Exercises
+    weight: 13
+type: docs
+weight: 13
+editor_options: 
+  chunk_output_type: console
+---
+
+A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.

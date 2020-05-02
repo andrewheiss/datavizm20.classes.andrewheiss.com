@@ -1,13 +1,13 @@
 ---
-title: "Final project"
-date: "2020-06-05"
-due_date: "2020-06-05"
+title: "Mini project 2"
+date: "2020-05-29"
+due_date: "2020-05-29"
 due_time: "11:59 PM"
 menu:
   assignment:
     parent: Projects
-    weight: 3
-weight: 3
+    weight: 2
+weight: 2
 type: docs
 output:
   blogdown::html_page:
@@ -16,4 +16,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-Instructions for the final project will go here.
+Instructions for the second mini project will go here.

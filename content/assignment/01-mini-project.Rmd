@@ -1,14 +1,14 @@
 ---
-title: "Assignment 1"
-date: "2020-01-22"
-due_date: "2020-01-22"
+title: "Mini project 1"
+date: "2020-05-22"
+due_date: "2020-05-22"
 due_time: "11:59 PM"
 menu:
   assignment:
-    parent: Problem sets
+    parent: Projects
     weight: 1
-type: docs
 weight: 1
+type: docs
 output:
   blogdown::html_page:
     toc: true
@@ -16,5 +16,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-Instructions here.
+Instructions for the first mini project will go here.

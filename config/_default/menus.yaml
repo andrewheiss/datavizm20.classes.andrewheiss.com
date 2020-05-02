@@ -35,3 +35,10 @@ example:
     weight: 1
   - name: Examples
     weight: 2
+assignment:
+  - name: Overview
+    weight: 1
+  - name: Projects
+    weight: 2
+  - name: Exercises
+    weight: 3

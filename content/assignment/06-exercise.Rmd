@@ -1,0 +1,20 @@
+---
+title: "Uncertainty"
+linktitle: "6: Uncertainty"
+date: "2020-05-18"
+due_date: "2020-05-18"
+due_time: "11:59 PM"
+output:
+  blogdown::html_page:
+    toc: true
+menu:
+  assignment:
+    parent: Exercises
+    weight: 6
+type: docs
+weight: 6
+editor_options: 
+  chunk_output_type: console
+---
+
+A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.
