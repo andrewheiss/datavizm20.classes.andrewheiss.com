@@ -2,7 +2,7 @@ lessons:
   - title: '<span class="fake-header-table">Foundations</span>'
     header: True
 
-  - title: '**Truth, beauty, and data + R and tidyverse**'
+  - title: 'Truth, beauty, and data + R and tidyverse'
     session: 1
     date: "May 11"
     content: "01-content"
@@ -10,7 +10,7 @@ lessons:
     example: "01-example"
     assignment: "01-exercise"
 
-  - title: '**Graphic design**'
+  - title: 'Graphic design'
     session: 2
     date: "May 12"
     content: "02-content"
@@ -18,7 +18,7 @@ lessons:
     example: "02-example"
     assignment: "02-exercise"
  
-  - title: '**Mapping data to graphics**'
+  - title: 'Mapping data to graphics'
     session: 3
     date: "May 13"
     content: "03-content"
@@ -29,7 +29,7 @@ lessons:
   - title: '<span class="fake-header-table">Core types of graphics</span>'
     header: True
 
-  - title: '**Amounts and proportions**'
+  - title: 'Amounts and proportions'
     session: 4
     date: "May 14"
     content: "04-content"
@@ -37,7 +37,7 @@ lessons:
     example: "04-example"
     assignment: "04-exercise"
 
-  - title: '**Themes**'
+  - title: 'Themes'
     session: 5
     date: "May 15"
     content: "05-content"
@@ -45,7 +45,7 @@ lessons:
     example: "05-example"
     assignment: "05-exercise"
     
-  - title: '**Uncertainty**'
+  - title: 'Uncertainty'
     session: 6
     date: "May 18"
     content: "06-content"
@@ -53,7 +53,7 @@ lessons:
     example: "06-example"
     assignment: "06-exercise"
    
-  - title: '**Relationships**'
+  - title: 'Relationships'
     session: 7
     date: "May 19"
     content: "07-content"
@@ -61,7 +61,7 @@ lessons:
     example: "07-example"
     assignment: "07-exercise"
 
-  - title: '**Comparisons**'
+  - title: 'Comparisons'
     session: 8
     date: "May 20"
     content: "08-content"
@@ -69,7 +69,7 @@ lessons:
     example: "08-example"
     assignment: "08-exercise"
 
-  - title: '**Annotations**'
+  - title: 'Annotations'
     session: 9
     date: "May 21"
     content: "09-content"
@@ -84,7 +84,7 @@ lessons:
   - title: '<span class="fake-header-table">Special applications</span>'
     header: True
 
-  - title: '**Interactivity**'
+  - title: 'Interactivity'
     session: 10
     date: "May 22"
     content: "10-content"
@@ -92,7 +92,7 @@ lessons:
     example: "10-example"
     assignment: "10-exercise"
     
-  - title: '**Time**'
+  - title: 'Time'
     session: 11
     date: "May 26"
     content: "11-content"
@@ -100,7 +100,7 @@ lessons:
     example: "11-example"
     assignment: "11-exercise"
 
-  - title: '**Space**'
+  - title: 'Space'
     session: 12
     date: "May 27"
     content: "12-content"
@@ -108,7 +108,7 @@ lessons:
     example: "12-example"
     assignment: "12-exercise"
 
-  - title: '**Text**'
+  - title: 'Text'
     session: 13
     date: "May 28"
     content: "13-content"
@@ -116,7 +116,7 @@ lessons:
     example: "13-example"
     assignment: "13-exercise"
 
-  - title: '**Enhancing graphics**'
+  - title: 'Enhancing graphics'
     session: 14
     date: "May 29"
     content: "14-content"
@@ -131,7 +131,7 @@ lessons:
   - title: '<span class="fake-header-table">Conclusions</span>'
     header: True
 
-  - title: '**Truth, beauty, and data revisited**'
+  - title: 'Truth, beauty, and data revisited'
     session: 15
     date: "June 1"
     content: "15-content"
