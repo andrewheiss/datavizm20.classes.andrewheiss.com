@@ -1,17 +1,17 @@
 ---
-title: "Introduction to R and the tidyverse"
-linktitle: "1: Introduction to R and the tidyverse"
-date: "2020-05-11"
-class_date: "2020-05-11"
+title: "Enhancing graphics"
+linktitle: "14: Enhancing graphics"
+date: "2020-05-29"
+class_date: "2020-05-29"
 output:
   blogdown::html_page:
     toc: true
 menu:
   example:
     parent: Examples
-    weight: 1
+    weight: 14
 type: docs
-weight: 1
+weight: 14
 editor_options: 
   chunk_output_type: console
 ---

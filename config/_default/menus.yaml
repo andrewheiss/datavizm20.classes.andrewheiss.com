@@ -30,3 +30,8 @@ lesson:
     weight: 1
   - name: Lessons
     weight: 2
+example:
+  - name: Overview
+    weight: 1
+  - name: Examples
+    weight: 2
