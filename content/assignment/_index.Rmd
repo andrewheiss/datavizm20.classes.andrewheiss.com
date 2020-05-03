@@ -35,9 +35,9 @@ The course content for each day will also include a set of questions specific to
 
 I will grade these memos using a check system:
 
-- ✔+: (*XX points (115%) in gradebook*) Reflection shows phenomenal thought and engagement with the course content. I will not assign these often.
-- ✔: (*XX points (100%) in gradebook*) Reflection is thoughtful, well-written, and shows engagement with the course content. This is the expected level of performance.
-- ✔−: (*XX points (50%) in gradebook*) Reflection is hastily composed, too short, and/or only cursorily engages with the course content. This grade signals that you need to improve next time. I will hopefully not assign these often.
+- ✔+: (*11.5 points (115%) in gradebook*) Reflection shows phenomenal thought and engagement with the course content. I will not assign these often.
+- ✔: (*10 points (100%) in gradebook*) Reflection is thoughtful, well-written, and shows engagement with the course content. This is the expected level of performance.
+- ✔−: (*5 points (50%) in gradebook*) Reflection is hastily composed, too short, and/or only cursorily engages with the course content. This grade signals that you need to improve next time. I will hopefully not assign these often.
 
 Notice that is essentially a pass/fail or completion-based system. I'm not grading your writing ability, I'm not counting the exact number of words you're writing, and I'm not looking for encyclopedic citations of every single reading to prove that you did indeed read everything. I'm looking for thoughtful engagement, that's all. Do good work and you'll get a ✓.
 
@@ -50,9 +50,9 @@ Each class session has [interactive lessons](/lesson/) and [fully annotated exam
 
 To practice working with **ggplot2** and making data-based graphics, you will complete a brief set of exercises for each class session. These exercises will have 1–3 short tasks that are directly related to the topic for the day. You need to show that you made a good faith effort to work each question. The problem sets will also be graded using a check system:
 
-- ✔+: (*XX points (115%) in gradebook*) Exercises are 100% completed. Every task was attempted and answered, and most answers are correct. Knitted document is clean and easy to follow. Work is exceptional. I will not assign these often.
-- ✔: (*XX points (100%) in gradebook*) Exercises are 70–99% complete and most answers are correct. This is the expected level of performance.
-- ✔−: (*XX points (50%) in gradebook*) Exercises are less than 70% complete and/or most answers are incorrect. This indicates that you need to improve next time. I will hopefully not assign these often.
+- ✔+: (*11.5 points (115%) in gradebook*) Exercises are 100% completed. Every task was attempted and answered, and most answers are correct. Knitted document is clean and easy to follow. Work is exceptional. I will not assign these often.
+- ✔: (*10 points (100%) in gradebook*) Exercises are 70–99% complete and most answers are correct. This is the expected level of performance.
+- ✔−: (*5 points (50%) in gradebook*) Exercises are less than 70% complete and/or most answers are incorrect. This indicates that you need to improve next time. I will hopefully not assign these often.
 
 Note that this is also essentially a pass/fail system. I'm not grading your coding ability, I'm not checking each line of code to make sure it produces some exact final figure, and I'm not looking for perfect. Also note that a ✓ does not require 100% completion—you will sometimes get stuck with weird errors that you can't solve, or the demands of pandemic living might occasionally become overwhelming. I'm looking for good faith effort, that's all. Try hard, do good work, and you'll get a ✓.
 
@@ -67,9 +67,9 @@ To give you practice with the data and design principles you'll learn in this cl
 
 The mini projects will be graded using a check system:
 
-- ✔+: (*XX points (115%) in gradebook*) Project is phenomenally well-designed and uses advanced R techniques. The project uncovers an important story that is not readily apparent from just looking at the raw data. I will not assign these often.
-- ✔: (*XX points (100%) in gradebook*) Project is fine, follows most design principles, answers a question from the data, and uses R correctly. This is the expected level of performance.
-- ✔−: (*XX points (50%) in gradebook*) Project is missing large components, is poorly designed, does not answer a relevant question, and/or uses R incorrectly. This indicates that you need to improve next time. I will hopefully not assign these often.
+- ✔+: (*85 points (≈115%) in gradebook*) Project is phenomenally well-designed and uses advanced R techniques. The project uncovers an important story that is not readily apparent from just looking at the raw data. I will not assign these often.
+- ✔: (*75 points (100%) in gradebook*) Project is fine, follows most design principles, answers a question from the data, and uses R correctly. This is the expected level of performance.
+- ✔−: (*37.5 points (50%) in gradebook*) Project is missing large components, is poorly designed, does not answer a relevant question, and/or uses R incorrectly. This indicates that you need to improve next time. I will hopefully not assign these often.
 
 Because these mini projects give you practice for the final project, I will provide you with substantial feedback on your design and code.
 

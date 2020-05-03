@@ -10,7 +10,7 @@ output:
     fig_caption: false
 ---
 
-```{r load-libraries, message=FALSE, warning=FALSE, include=FALSE}
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 library(dplyr)
 library(tibble)
 library(pander)
@@ -18,58 +18,33 @@ library(pander)
 
 `r blogdown::shortcode("courseinfo")`
 
+
 ## Course objectives
 
-By the end of this course, you (1) will be literate in the language of causal inference, (2) will communicate evaluation outcomes clearly, and (3) will understand the ethics and limits of data analysis by designing, critiquing, coding, and running rigorous, valid, and feasible evaluations of public sector programs focused on society’s most pressing problems. 
+**Data rarely speaks for itself.** On their own, the facts contained in raw data are difficult to understand, and in the absence of beauty and order, it is impossible to understand the truth that the data shows.
 
-Specifically, you'll be able to:
+In this class, you'll learn how to use industry-standard graphic and data design techniques to create beautiful, understandable visualizations and uncover truth in data.
 
-- Explain the philosophy of causation
-- Identify and diagram program logic models 
-- Outline theories of change with directed acyclic graphs (DAGs)
-- Summarize key threats to causal inference, identify these threats in evaluations, and mitigate these threats with research design
-- Develop rigorous and valid statistical measures
-- Run statistical models
-- Explain the theory, research design, methods, and results of evaluations to all types of stakeholders, from highly trained econometricians to the general public
-- Share your analyses and data with the public
-- Identify ethical issues and limits in data science and program evaluation
-- Become curious and confident in consuming and producing evaluations
+By the end of this course, you will become (1) literate in data and graphic design principles, and (2) an ethical data communicator, by producing beautiful, powerful, and clear visualizations of your own data. Specifically, you should:
 
+- Understand the principles of data and graphic design
+- Evaluate the credibility, ethics, and aesthetics of data visualizations
+- Create well-designed data visualizations with appropriate tools
+- Share data and graphics in open forums
+- Be curious and confident in consuming and producing data visualizations
 
-## Course philosophy
+This class will expose you to [R](https://cran.r-project.org/)—one of the most popular, sought-after, and in-demand statistical programming languages. Armed with the foundation of R skills you'll learn in this class, you'll know enough to be able to find how to visualize and analyze any sort of data-based question in the future.
 
-Classical statistics classes spend substantial time covering probability theory, null hypothesis testing, and other statistical tests first developed hundreds of years ago. Some classes don't use software or actual real data and instead live in the world of mathematical proofs. They can be math-heavy and full of often unintuitive concepts and equations. 
-
-In this class, we will take the opposite approach. We *begin* with data and learn how to tidy, wrangle, manipulate, and visualize it with code. Later in the semester we'll turn to the powerful toolbox of causal inference approaches, but continue to keep the focus on data as we do so. 
-
-In other words, there's way less of this:
-
-$$
-f(x) = \dfrac{1}{\sqrt{2\pi}} e^{-\frac12 x^2}
-$$
-
-And way more of this:
-
-```{r code-example, eval=FALSE}
-summary_monthly_temp <- weather %>% 
-  group_by(month) %>% 
-  summarize(mean = mean(temp), 
-            std_dev = sd(temp))
-```
-
-Over the last decade there has been a revolution in statistical and scientific computing. Open source languages like R and Python have overtaken older (and expensive!) corporate software packages like SAS and SPSS, and there are now thousands of books and blog posts and other online resources with excellent tutorials about how to analyze pretty much any kind of data. 
-
-This class will expose you to [R](https://cran.r-project.org/)—one of the most popular, sought-after, and in-demand statistical programming languages. Armed with the foundation of R skills you'll learn in this class, you'll know enough to be able to find how to analyze any sort of data-based question in the future.
 
 ## Important pep talk!
 
 I *promise* you can succeed in this class.
 
-Learning R can be difficult at first—it's like learning a new language, just like Spanish, French, or Chinese. Hadley Wickham—the chief data scientist at RStudio and the author of some amazing R packages you'll be using like `ggplot2`—[made this wise observation](https://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/): 
+Learning R can be difficult at first—it's like learning a new language, just like Spanish, French, or Chinese. Hadley Wickham—the chief data scientist at RStudio and the author of some amazing R packages you'll be using like **ggplot2**—[made this wise observation](https://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/): 
 
-> It’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.
+> It's easy when you start out programming to get really frustrated and think, "Oh it's me, I'm really stupid," or, "I'm not made out to program." But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It's just a natural part of programming. So, it happens to everyone and gets less and less over time. Don't blame yourself. Just take a break, do something fun, and then come back and try again later.
 
-Even experienced programmers and evaluators find themselves bashing their heads against seemingly intractable errors. If you're finding yourself taking way too long hitting your head against a wall and not understanding, take a break, talk to classmates, e-mail me, etc. 
+Even experienced programmers find themselves bashing their heads against seemingly intractable errors. If you're finding yourself taking way too long hitting your head against a wall and not understanding, take a break, talk to classmates, e-mail me, etc. 
 
 ```{r echo=FALSE, out.width="60%"}
 # https://twitter.com/allison_horst/status/1213275783675822080
@@ -81,31 +56,35 @@ knitr::include_graphics("/img/syllabus/hosrt_error_tweet.png", error = FALSE)
 
 ## Course materials
 
-Most of the readings in this class are free. 
+All of the readings and software in this class are **free**. There are free online version of all the textbooks, R and RStudio are inherently free, and GSU provides [free access to Adobe Illustrator](https://technology.gsu.edu/technology-services/it-services/software-computer-purchase/software-download-and-purchase/adobe-creative-cloud/).
 
-### Books
+### Books, articles, and other materials
 
-We will only use one physical textbook. There are three official textbooks for the class:
+We'll rely heavily on these books, which are all available online (**for free!**). I recommend getting the printed versions of these books if you are interested, but it is not required.
 
-- [@wb-eval] ([**Free!**](https://openknowledge.worldbank.org/handle/10986/25030))
-- [@mixtape] ([**Also free!**](https://www.scunning.com/mixtape.html))
-- [@AngristPischke:2015] (**<span>$25</span> used or <span>$30</span> new at [Amazon](https://www.amazon.com/Mastering-Metrics-Path-Cause-Effect/dp/0691152845/))**
+- [@Cairo:2016]
 
-The World Bank's *Impact Evaluation in Practice* will be our main textbook. It's written at a general, easy-to-understand level with relatively minimal math. *Mastering 'Metrics* goes into more depth about the mechanics of different causal inference approaches and has a bit more math, but it's still fairly accessible. *Causal Inference: The Mixtape* has even more math, but hopefully not an excessively terrifying amount.
+    > <span>$27</span> used, <span>$32</span> new at [Amazon](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075). A **free** eBook version is available through GSU's library through O'Reilly's Higher Education database. The easiest way to access it is to visit a special URL (<http://go.oreilly.com/georgia-state-university>), log in with your GSU account, and then search for "The Truthful Art".
 
-*You do not need to understand all the equations and notation.* If your eyes start to gloss over the Greek letters and subscripts, it's okay. Try to learn them, but don't stress out about it too much.
+- [@Healy:2018]
 
-### Articles, book chapters, and other materials
+    > [**FREE** online](http://socviz.co/); <span>$30</span> used, <span>$36</span> new at [Amazon](https://www.amazon.com/Data-Visualization-Introduction-Kieran-Healy/dp/0691181624/).
 
-There will also occasionally be additional articles and videos to read and watch. When this happens, links to these other resources will be included on the reading page for that week.
+- [@Wilke:2018]
+
+    > [**FREE** online](https://serialmentor.com/dataviz/); <span>$32</span> new at [Amazon](https://www.amazon.com/Fundamentals-Data-Visualization-Informative-Compelling/dp/1492031089). An eBook version is also available through [the O'Reilly database](http://go.oreilly.com/georgia-state-university), but you can just use [the online version](https://serialmentor.com/dataviz/).
+
+There will occasionally be additional articles and videos to read and watch. When this happens, links to these other resources will be included on the content page for that session.
+
+I also highly recommend subscribing to the [R Weekly newsletter](https://rweekly.org/). This e-mail is sent every Monday and is full of helpful tutorials about how to do stuff with R.
 
 ### R and RStudio
 
-You will do all of your analysis with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
+You will do all of your analysis with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. **Think of R as an engine and RStudio as a car dashboard**—R handles all the calculations produces the actual statistics and graphical output, while RStudio provides a nice interface for running R code.
 
-R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [RStudio.cloud](http://rstudio.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.
+R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [RStudio.cloud](http://rstudio.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for examples, exercises, and mini projects.
 
-RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn't necessary, but it's helpful.
+RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis and graphics. You also can't use your own custom fonts with RStudio.cloud. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn't 100% necessary, but it's helpful.
 
 You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/reference/install/)
 
@@ -115,6 +94,12 @@ Data science and statistical programming can be difficult. Computers are stupid 
 
 Fortunately there are tons of online resources to help you with this. Two of the most important are [StackOverflow](https://stackoverflow.com/) (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and [RStudio Community](https://community.rstudio.com/) (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).
 
+If you use Twitter, post R-related questions and content with [#rstats](https://twitter.com/search?q=%23rstats). The community there is exceptionally generous and helpful.
+
+Searching for help with R on Google can sometimes be tricky because the program name is, um, a single letter. Google is generally smart enough to figure out what you mean when you search for "r scatterplot", but if it does struggle, try searching for "rstats" instead (e.g. "rstats scatterplot"). Also, since most of your R work will deal with **ggplot2**, it's often easier to just search for that instead of the letter "r" (e.g. "ggplot scatterplot"). 
+
+Additionally, we have a class chatroom at [Slack](https://byudatavizf2018.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, exercises, and mini projects. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
+
 
 ## Course policies
 
@@ -122,19 +107,7 @@ Fortunately there are tons of online resources to help you with this. Two of the
 
 We will also follow [Georgia State's Code of Conduct](https://codeofconduct.gsu.edu/).
 
-### Course evaluation and evolution
-
-This syllabus reflects a plan for the semester. Deviations may become necessary as the semester progresses.
-
-Because this is a new class (and because this is the first time this course has been taught with R at the Andrew Young School), there will be inevitable bumps along the way. Please be patient as we get everything ironed out!
-
-I’d *love* your help to help improve the class as we go. To facilitate this, I have a couple requests:
-
-1. At the end of every class, there will be a link to an anonymous Google Form with a few quick questions asking about the clearest and muddiest things from that day. Please fill this out regularly. It will be hard to remember, since we get out so late, but it’s extraordinarily helpful for me.
-
-2. At some point in the middle of the semester, someone from GSU’s [Center for Excellence in Teaching and Learning (CETL)](https://cetl.gsu.edu/) will come and run a 25 minute [Group Instructional Feedback Technique (GIFT)](https://cetl.gsu.edu/services/instructional-support/group-instructional-feedback-technique-gift/) session, where I’ll step out and you’ll all talk to them about the class. Don’t worry—the people from CETL are super nice :)
-
-Also, please take the time to fill out the official GSU course evaluation at the end of the semester!
+This syllabus reflects a plan for the mini-mester. Deviations may become necessary as the course progresses.
 
 ### Student hours
 
@@ -142,11 +115,9 @@ Please watch this video:
 
 <iframe src="https://player.vimeo.com/video/270014784" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="display: block; margin: 0 auto 1rem;"></iframe>
 
-Student hours are set times dedicated to all of you (most professors call these "office hours"; I don't^[There's fairly widespread misunderstanding about what office hours actually are! [Many students often think that they are the times I *shouldn't* be disturbed](https://www.chronicle.com/article/Can-This-Man-Change-How-Elite/245714/), which is the exact opposite of what they're for.]). This means that I will be in my office (wistfully) waiting for you to come by with whatever questions you have. This is the best and easiest way to find me outside of class and the best chance for discussing class material and concerns. Please come by!
+Student hours are set times dedicated to all of you (most professors call these "office hours"; I don't^[There's fairly widespread misunderstanding about what office hours actually are! [Many students often think that they are the times I *shouldn't* be disturbed](https://www.chronicle.com/article/Can-This-Man-Change-How-Elite/245714/), which is the exact opposite of what they're for!]). This means that I will be ~~in my office~~ at home (wistfully) waiting for you to ~~come by~~ talk to me remotely with whatever questions you have. This is the best and easiest way to find me and the best chance for discussing class material and concerns.
 
-Outside of regularly scheduled student hours, [you can easily make an appointment with me online](https://calendly.com/andrewheiss/meeting/). 
-
-This can be a difficult class. **Do not suffer in silence!** Come talk to me!
+Because of the pandemic, we cannot meet in person. I can meet you online via Webex. Use this link for regular student hours: <https://gsumeetings.webex.com/meet/aheiss>. You can also easily [make an appointment You can also find me through e-mail and Slack. 
 
 ### Class conduct and expectations
 
@@ -156,29 +127,26 @@ Here are the rules, expectations, and policies that we came up with collectively
 - **Technology use**: Use phones, computers, etc. responsibly. You're all adults.
 - **Participation**: Ensure that you are engaged and participate in class. Engagement is defined by you—if that means commenting and answering questions, neat; if it means sitting quietly and being focused, also neat. 
 
-### Laptops
 
-This is a computer-heavy course and each class session will require extensive laptop use. Occasionally I may ask that laptops be closed for some in-class activities, but in general you will be expected to use your computer. *Use your computer responsibly in class.*
+### Learning during a pandemic
+
+Life absolutely sucks right now. 
+
+You most likely know people who have lost their jobs, have tested positive for COVID-19, have been hospitalized, or perhaps have even died. You all have increased (or possibly decreased) work responsibilities and increased family care responsibilities—you might be caring for extra people (young and/or old!) right now, and you are likely facing uncertain job prospects (or have been laid off!). 
+
+**I'm fully committed to making sure that you learn everything you were hoping to learn from this class!** I will make whatever accommodations I can to help you finish your exercises, do well on your projects, and learn and understand the class material. Under ordinary conditions, I am flexible and lenient with grading and course expectations when students face difficult challenges. Under pandemic conditions, that flexibility and leniency is intensified.
+
+If you feel like you're behind or not understanding everything, **do not suffer in silence!** Talk to me! *Please* sign up for a time to meet with me during student hours at <https://calendly.com/andrewheiss/meeting/>. I'm also available through e-mail and Slack. Remember, this is the only Slack account where I've enabled notifications!
+
+I want you to learn lots of things from this class (Graphic design! Fancy charts! R! ggplot!), but I primarily want you to stay healthy, balanced, and grounded during this crisis. 
 
 ### Counseling and Psychological Services (CPS)
 
-Life at GSU can be complicated and challenging. You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CPS)](https://education.gsu.edu/cps/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CPS office is staffed by professional psychologists who are attuned to the needs of all types of college and professional students. Please do not hesitate to contact CPS for assistance—getting help is a smart and courageous thing to do.
+Life at GSU can be complicated and challenging (especially during a pandemic!). You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CPS)](https://education.gsu.edu/cps/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CPS office is staffed by professional psychologists who are attuned to the needs of all types of college and professional students. Please do not hesitate to contact CPS for assistance—getting help is a smart and courageous thing to do.
 
 ### Basic needs security
 
 If you have difficulty affording groceries or accessing sufficient food to eat every day, or if you lack a safe and stable place to live, and you believe this may affect your performance in this course, please contact the [Dean of Students](https://deanofstudents.gsu.edu/) for support. They can provide a host of services including free groceries from the [Panther Pantry](https://nutrition.gsu.edu/panther-pantry/) and assisting with homelessness with the [Embark Network](https://deanofstudents.gsu.edu/student-assistance/embark/). Additionally, please talk to me if you are comfortable in doing so. This will enable me to provide any resources that I might possess.
-
-### Children in class
-
-I applaud all of you who go to graduate school with children! It is difficult to balance academic, work, and family commitments, and I want you to succeed. Here are my policies regarding children in class:
-
-1. All breastfeeding babies are welcome in class as often as necessary.
-2. Non-nursing babies and older children are welcome whenever alternate arrangements cannot be made. As a parent of five young children, I understand that babysitters fall through, partners have conflicting schedules, children get sick, and other issues arise that leave parents with few other options.
-3. In cases where children come to class, I invite parents/caregivers to sit close to the door so as to more easily excuse yourself to attend to your child's needs. Non-parents in the class: please reserve seats near the door for your parenting classmates.
-4. All students are expected to join with me in creating a welcoming environment that is respectful of your classmates who bring children to class.
-
-I understand that sleep deprivation and exhaustion are among the most difficult aspects of parenting young children. The struggle of balancing school, work, childcare, and graduate school is tiring, and I will do my best to accommodate any such issues while maintaining the same high expectations for all students enrolled in the class. ***Please do not hesitate to contact me with any questions or concerns.***
-
 
 ### Lauren's Promise
 
@@ -209,26 +177,24 @@ You can find descriptions for all the assignments on the [assignments page](/ass
 
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
-  ~Points,   ~Assignment,
-  210        , "Preparation (≈ 15.5 × 14)",
-  6 * 40     , "Problem sets (6 × 40)",
-  4 * 30     , "Evaluation assignments (4 × 30)",
-  30         , "Code-through",
-  100        , "Exam 1",
-  100        , "Exam 2",
-  200        , "Final project"
+  ~Points,  ~Assignment,
+  15 * 10 , "Reflections (15 × 10)",
+  15 * 10 , "Exercises (15 × 10)",
+  75      , "Mini project 1",
+  75      , "Mini project 2",
+  200     , "Final project"
 ) %>%
   mutate(Percent = Points / sum(Points),
          Percent = scales::percent(Percent))
 
 grading <- tribble(
-  ~Grade, ~Range, ~Grade1, ~Range1,
+  ~Grade, ~Range,  ~Grade1, ~Range1,
   "A",  "93–100%", "C",  "73–76%",
-  "A−", "90–92%", "C−", "70–72%",
-  "B+", "87–89%", "D+", "67–69%",
-  "B",  "83–86%", "D",  "63–66%",
-  "B−", "80–82%", "D−", "60–62%",
-  "C+", "77–79%", "F",  "< 60%"
+  "A−", "90–92%",  "C−", "70–72%",
+  "B+", "87–89%",  "D+", "67–69%",
+  "B",  "83–86%",  "D",  "63–66%",
+  "B−", "80–82%",  "D−", "60–62%",
+  "C+", "77–79%",  "F",  "< 60%"
 )
 ```
 
