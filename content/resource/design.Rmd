@@ -1,0 +1,58 @@
+---
+title: Design
+menu:
+  resource:
+    parent: Resources
+type: docs
+weight: 1
+output:
+  blogdown::html_page:
+      toc: TRUE
+---
+
+## Accessibility
+
+- [**Vischeck**](http://www.vischeck.com/vischeck/vischeckImage.php): Simulate how your images look for people with different forms of colorblindness (web-based)
+- [**Color Oracle**](http://colororacle.org/index.html): Simulate how your images look for people with different forms of colorblindness (desktop-based, more types of colorblindness)
+
+## Colors
+
+- [**Adobe Color**](https://color.adobe.com): Create, share, and explore rule-based and custom color palettes.
+- [**ColourLovers**](http://www.colourlovers.com/): Like Facebook for color palettes.
+- [**viridis**](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html): Percetually uniform color scales.
+- [**Scientific Colour-Maps**](http://www.fabiocrameri.ch/colourmaps.php): Perceptually uniform color scales like viridis. Use them in R with [**scico**](https://github.com/thomasp85/scico).
+- [**ColorBrewer**](http://colorbrewer2.org/): Sequential, diverging, and qualitative color palettes that take accessibility into account.
+- [**Colorgorical**](http://vrl.cs.brown.edu/color): Create color palettes based on fancy mathematical rules for perceptual distance.
+- [**Colorpicker for data**](http://tristen.ca/hcl-picker/): More fancy mathematical rules for color palettes ([explanation](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)).
+- [**iWantHue**](http://tools.medialab.sciences-po.fr/iwanthue/): Yet another perceptual distance-based color palette builder.
+- [**Photochrome**](https://photochrome.io/): Word-based color pallettes.
+- [**PolicyViz Design Color Tools**](https://policyviz.com/better-presentations/design-resources/design-color-tools/): Large collection of useful color resources
+
+
+## Fonts
+
+- [**Google Fonts**](https://fonts.google.com/): Huge collection of free, well-made fonts.
+- [**The Ultimate Collection of Google Font Pairings**](https://www.reliablepsd.com/ultimate-google-font-pairings/): A list of great, well-designed font pairings from all those fonts hosted by Google (for when you're looking for good contrasting or complementary fonts).
+
+
+## Graphic assets
+
+### Images
+
+- Use the Creative Commons filters on Google Images or Flickr
+- [**Unsplash**](https://unsplash.com/)
+- [**Pexels**](https://www.pexels.com/)
+- [**Pixabay**](https://pixabay.com/)
+- [**StockSnap.io**](https://stocksnap.io/)
+- [**Burst**](https://burst.shopify.com/)
+- [**freephotos.cc**](https://freephotos.cc/)
+
+### Vectors
+
+- [**Noun Project**](https://thenounproject.com/): Thousands of free simple vector images
+- [**aiconica**](http://aiconica.net/): 1,000+ vector icons
+- [**Vecteezy**](https://www.vecteezy.com/): Thousands of free vector images
+
+### Vectors, photos, videos, and other assets
+
+- [**Stockio**](https://www.stockio.com/)

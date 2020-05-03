@@ -1,0 +1,61 @@
+---
+title: R
+menu:
+  resource:
+    parent: Resources
+type: docs
+weight: 3
+output:
+  blogdown::html_page:
+      toc: TRUE
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#learning-r">Learning R</a></li>
+<li><a href="#r-in-the-wild">R in the wild</a></li>
+</ul>
+</div>
+
+<div id="learning-r" class="section level2">
+<h2>Learning R</h2>
+<p>I highly recommend subscribing to the <a href="https://rweekly.org/">R Weekly newsletter</a>. This e-mail is sent every Monday and is full of helpful tutorials about how to do stuff with R.</p>
+<p>Searching for help with R on Google can sometimes be tricky because the program name is a single letter. Google is generally smart enough to figure out what you mean when you search for “r scatterplot”, but if it does struggle, try searching for “rstats” instead (e.g. “rstats scatterplot”). Also, since most of your R work in this class will deal with <strong>ggplot2</strong>, it’s often easier to just search for that instead of the letter “r” (e.g. “ggplot scatterplot”).</p>
+<p>If you use Twitter, post R-related questions and content with <a href="https://twitter.com/search?q=%23rstats">#rstats</a>. The community there is exceptionally generous and helpful. Also check out <a href="https://stackoverflow.com/">StackOverflow</a> (a Q&amp;A site with hundreds of thousands of answers to all sorts of programming questions) and <a href="https://community.rstudio.com/">RStudio Community</a> (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).</p>
+<p>These resources are also really really helpful:</p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/"><strong>R for Data Science</strong></a>: A free online book for learning the basics of R and the tidyverse.</li>
+<li><a href="https://www.rstudio.com/resources/cheatsheets/"><strong>R and RStudio cheat sheets</strong></a>: A large collection of simple cheat sheets for RStudio, <strong>ggplot2</strong>, and other R-related things.</li>
+<li><a href="http://stat545.com/"><strong>Stat 545</strong></a>: <a href="https://twitter.com/JennyBryan">Dr. Jenny Bryan</a> at RStudio has an entire introductory course in R, visualization, and data analysis online.</li>
+<li><a href="http://www2.stat.duke.edu/courses/Fall17/sta112.01/"><strong>STA 112FS: Data Science</strong></a>: <a href="https://twitter.com/minebocek">Dr. Mine Çetinkaya-Rundel</a> at the University of Edinburgh / Duke University has an entire introductory course in R, visualization, and data science online.</li>
+<li><a href="http://cslu.ohsu.edu/~bedricks/courses/cs631/"><strong>CSE 631: Principles &amp; Practice of Data Visualization</strong></a>: Yet another introductory course for R and ggplot2 by <a href="https://twitter.com/apreshill">Dr. Alison Presmanes Hill</a> at RStudio.</li>
+</ul>
+</div>
+<div id="r-in-the-wild" class="section level2">
+<h2>R in the wild</h2>
+<p>A popular (and increasingly standard) way for sharing your analyses and visualizations is to post an annotated explanation of your process somewhere online. RStudio allows you to publish knitted HTML files directly to <a href="http://rpubs.com/">RPubs</a>, but you can also post your output to a blog or other type of website.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Reading these kinds of posts is one of the best ways to learn R, since they walk you through each step of the process <em>and</em> show the code and output.</p>
+<p>Here are some of the best examples I’ve come across:</p>
+<ul>
+<li><a href="http://varianceexplained.org/r/trump-tweets/">Text analysis of Trump’s tweets confirms he writes only the (angrier) Android half</a> (with a <a href="http://varianceexplained.org/r/trump-followup/">follow-up</a>)</li>
+<li><a href="https://rudeboybert.github.io/fivethirtyeight/articles/bob_ross.html">Bob Ross - Joy of Painting</a></li>
+<li><a href="https://rudeboybert.github.io/fivethirtyeight/articles/bechdel.html">Bechdel analysis using the tidyverse</a>: There are also a bunch of other examples <a href="https://rudeboybert.github.io/fivethirtyeight/articles/">using data from FiveThirtyEight</a>.</li>
+<li><a href="http://rpubs.com/Jwhitman/Final_Project">Sexism on the Silver Screen: Exploring film’s gender divide</a></li>
+<li><a href="http://soc301s2017.netlify.com/group_projects/group5">Comparison of Quentin Tarantino Movies by Box Office and the Bechdel Test</a></li>
+<li><a href="https://juliasilge.com/blog/who-came-to-vote/">Who came to vote in Utah’s caucuses?</a></li>
+<li><a href="https://juliasilge.com/blog/health-care-indicators/">Health care indicators in Utah counties</a></li>
+<li><a href="https://juliasilge.com/blog/song-lyrics-across/">Song lyrics across the United States</a></li>
+<li><a href="http://blog.karawoo.com/2016/09/22/A-decade-ish-of-listening-to-Sigur-Ros">A decade (ish) of listening to Sigur Rós</a></li>
+<li><a href="http://rpubs.com/ry_lisa_elana/chicago">When is Tom peeping these days?</a>: There are a also bunch of final projects from other R and data visualization classes <a href="http://soc301s2017.netlify.com/group-projects/">here</a> and <a href="https://rudeboybert.github.io/MATH116/PS/final_project/final_project_outline.html#past_examples">here</a>.</li>
+<li><a href="https://rud.is/b/2017/09/18/mapping-fall-foliage-with-sf/">Mapping Fall Foliage</a></li>
+<li><a href="https://rud.is/b/2017/07/25/r%E2%81%B6-general-attys-distributions/">General (Attys) Distributions</a></li>
+<li><a href="https://rud.is/b/2017/06/18/r%E2%81%B6-disproving-approval/">Disproving Approval</a></li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you want to be really fancy, you can use <a href="https://bookdown.org/yihui/blogdown/">blogdown</a>, which makes a complete website with R Markdown files. That’s actually how this site is built (<a href="https://github.com/andrewheiss/datavizm20.classes.andrewheiss.com">see the source code</a>). You can build your own site <a href="https://apreshill.rbind.io/post/up-and-running-with-blogdown/">with this tutorial</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

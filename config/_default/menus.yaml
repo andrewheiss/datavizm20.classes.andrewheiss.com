@@ -17,8 +17,8 @@ main:
   - name: Assignments
     url: /assignment/
     weight: 6
-  - name: Reference
-    url: /reference/
+  - name: Resources
+    url: /resource/
     weight: 7
 content:
   - name: Overview
@@ -42,3 +42,8 @@ assignment:
     weight: 2
   - name: Exercises
     weight: 3
+resource:
+  - name: Resources
+    weight: 1
+  - name: Guides
+    weight: 2
