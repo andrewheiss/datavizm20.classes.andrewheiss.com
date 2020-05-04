@@ -20,6 +20,13 @@ main:
   - name: Resources
     url: /resource/
     weight: 7
+  - name: '<i class="fab fa-slack"></i>'
+    url: "https://gsudatavizm2020.slack.com"
+    weight: 8
+  - name: '<i class="fab fa-r-project"></i>'
+    url: "https://rstudio.cloud/"
+    weight: 9
+
 content:
   - name: Overview
     weight: 1

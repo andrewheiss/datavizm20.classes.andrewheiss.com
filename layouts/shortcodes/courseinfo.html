@@ -18,7 +18,7 @@
             <li><i class="far fa-calendar"></i> {{ .Site.Params.course.days }}</li>
             <li><i class="far fa-calendar-alt"></i> {{ .Site.Params.course.dates }}</li>
             <li><i class="far fa-clock"></i> {{ .Site.Params.course.time }}</li>
-            <li><i class="fas fa-university"></i> {{ .Site.Params.course.location }}</li>
+            {{ if isset .Site.Params.course "location" }}<li><i class="fas fa-university"></i> {{ .Site.Params.course.location }}</li>{{end}}
             {{ if isset .Site.Params.course "slack" }}<li><i class="fab fa-slack"></i> <a href="{{ .Site.Params.course.slack }}" target="_blank" rel="noopener">Slack</a></li>{{ end }}
         </ul>
     </div>

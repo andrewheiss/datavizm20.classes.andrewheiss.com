@@ -99,7 +99,7 @@ instructor:
   github: andrewheiss
   office: "357 Andrew Young School"
   contact_policy: >-
-    E-mail is the best way to get in contact with me. I will try to respond to all course-related e-mails within 24 hours (*really*), but also remember that life can be busy and chaotic for everyone (including me!), so if I don't respond to your e-mail right away, don't worry!
+    E-mail and Slack are the best ways to get in contact with me. I will try to respond to all course-related e-mails and Slack messages awithin 24 hours (*really*), but also remember that life can be busy and chaotic for everyone (including me!), so if I don't respond right away, don't worry!
   appointment_url: https://calendly.com/andrewheiss/meeting/
 
 course:
@@ -107,10 +107,11 @@ course:
   semester: "Maymester 2020"
   days: "Every day"
   time: "Whenever"
-  location: "Online only (thanks, COVID-19, for ruining everything)"
+  # location: "Online only (thanks, COVID-19, for ruining everything)"
   dates: "May 11–June 1, 2020"
   github: "andrewheiss/datavizm20.classes.andrewheiss.com"
   copyrightYear: "2020"
+  slack: "https://gsudatavizm2020.slack.com"
 
 university: 
   name: Georgia State University
