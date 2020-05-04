@@ -1,6 +1,6 @@
-# Program Evaluation for Public Service (PMAP 8521—Spring 2020)
+# Data Visualization with R (PMAP May 2020)
 
-![Program evaluation image](static/img/social-image.png)
+![Data visualization image](static/img/social-image.png)
 
 ## Theme
 

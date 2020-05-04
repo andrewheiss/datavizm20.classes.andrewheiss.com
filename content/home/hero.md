@@ -20,7 +20,7 @@ design:
     text_color_light: true
 
 cta_note:
-  label: May 2020<br>Andrew Young School of Policy Studies<br>Georgia State University
+  label: PMAP 8921 • May 2020<br>Andrew Young School of Policy Studies<br>Georgia State University
 ---
 
-**Combine research design, causal inference, and econometric tools to measure the effects of social programs**
+**Use R, ggplot2, and the principles of graphic design to create beautiful and truthful visualizations of data**

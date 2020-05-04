@@ -98,7 +98,7 @@ If you use Twitter, post R-related questions and content with [#rstats](https://
 
 Searching for help with R on Google can sometimes be tricky because the program name is, um, a single letter. Google is generally smart enough to figure out what you mean when you search for "r scatterplot", but if it does struggle, try searching for "rstats" instead (e.g. "rstats scatterplot"). Also, since most of your R work will deal with **ggplot2**, it's often easier to just search for that instead of the letter "r" (e.g. "ggplot scatterplot"). 
 
-Additionally, we have a class chatroom at [Slack](https://byudatavizf2018.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, exercises, and mini projects. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
+Additionally, we have a class chatroom at [Slack](https://gsudatavizm2020.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, exercises, and mini projects. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
 
 
 ## Course policies

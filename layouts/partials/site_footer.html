@@ -19,8 +19,8 @@
 
             <p>
                 <i class="far fa-calendar-alt"></i> {{ .Site.Params.course.days }} &emsp;&emsp;
-                <i class="far fa-clock"></i> {{ .Site.Params.course.time }} <br>
-                <i class="fas fa-university"></i> {{ .Site.Params.course.location }}
+                <i class="far fa-clock"></i> {{ .Site.Params.course.time }} 
+                {{ if isset .Site.Params.course "location" }}<br><i class="fas fa-university"></i> {{ .Site.Params.course.location }}{{end}}
             </p>
         </div>
 
