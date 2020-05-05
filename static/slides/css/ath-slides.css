@@ -284,11 +284,11 @@ Coloring and inverse coloring in title bars and content boxes
   color: #FCCE25;
 }
 
-.section-title h1, .title-1 h1, .title-2 h1, .title-3 h1, .title-4 h1, .title-5 h1, .title-6 h1, .title-7 h1, .box-1, .box-2, .box-3, .box-4, .box-5, .box-6, .box-7 {
+.box-7, .box-6, .box-5, .box-4, .box-3, .box-2, .box-1, .title-7 h1, .title-6 h1, .title-5 h1, .title-4 h1, .title-3 h1, .title-2 h1, .title-1 h1, .section-title h1 {
   color: #FFFFFF;
 }
 
-.box-1, .box-inv-1, .box-2, .box-inv-2, .box-3, .box-inv-3, .box-4, .box-inv-4, .box-5, .box-inv-5, .box-6, .box-inv-6, .box-7, .box-inv-7 {
+.box-7, .box-inv-7, .box-6, .box-inv-6, .box-5, .box-inv-5, .box-4, .box-inv-4, .box-3, .box-inv-3, .box-2, .box-inv-2, .box-1, .box-inv-1 {
   margin: 0em auto;
   overflow: hidden;
   padding: 0.1em 0.4em;
@@ -314,4 +314,3 @@ Coloring and inverse coloring in title bars and content boxes
   background: #BF3984;
   color: #FFFFFF;
 }
-

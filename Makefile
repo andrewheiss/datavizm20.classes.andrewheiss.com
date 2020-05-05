@@ -1,19 +1,9 @@
 OUTPUTDIR=public
 SSH_TARGET=cloud:/home/andrew/sites/datavizm20.classes/public_html
 
-.PHONY : all clean serve build deploy thumb_slides zip_projects
+.PHONY : all clean serve build deploy zip_projects
 
-all: thumb_slides zip_projects build
-
-
-# Automatic thumbnails ----------------------------------------------------
-TO_THUMB = $(wildcard static/slides/*.pdf)
-THUMB_TARGETS = $(addsuffix .png,$(basename $(TO_THUMB)))
-
-%.png: %.pdf
-	convert -thumbnail 1000 -background white -units PixelsPerInch -density 144 $<[0] $@
-
-thumb_slides: $(THUMB_TARGETS)
+all: zip_projects build
 
 
 # Automatic project zipping -----------------------------------------------
@@ -52,8 +42,11 @@ zip_projects: $(ZIP_TARGETS)
 clean:
 	rm -rf public/
 
-# build: thumb_slides zip_projects
-build: 
+static/slides/css/ath-slides.css:
+	sass static/slides/css/ath-slides.scss > static/slides/css/ath-slides.css
+
+# build: 
+build: static/slides/css/ath-slides.css zip_projects
 	Rscript -e "blogdown::build_site()"
 
 serve: build
