@@ -86,7 +86,7 @@ R is free, but it can sometimes be a pain to install and configure. To make life
 
 RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis and graphics. You also can't use your own custom fonts with RStudio.cloud. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn't 100% necessary, but it's helpful.
 
-You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/reference/install/)
+You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/resource/install/)
 
 ### Online help
 
