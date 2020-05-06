@@ -1,0 +1,35 @@
+---
+title: "Unzipping files"
+date: "2020-05-06"
+menu:
+  resource:
+    parent: Guides
+type: docs
+weight: 4
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>Because RStudio projects typically consist of multiple files (R scripts, datasets, graphical output, etc.) the easiest way to distribute them to you for examples, assignments, and projects is to combine all the different files in to a single compressed collection called a <strong>zip file</strong>. When you unzip a zipped file, your operating system extracts all the files that are contained inside into a new folder on your computer.</p>
+<p>Unzipping files on macOS is trivial, but unzipping files on Windows can mess you up if you don’t pay careful attention. Here’s a helpful guide to unzipping files on both macOS and Windows.</p>
+<div id="unzipping-files-on-macos" class="section level2">
+<h2>Unzipping files on macOS</h2>
+<p>Double click on the downloaded <code>.zip</code> file. macOS will automatically create a new folder with the same name as the <code>.zip</code> file, and all the file’s contents will be inside. Double click on the RStudio Project file (<code>.Rproj</code>) to get started.</p>
+<p><img src="/img/unzipping/unzip-mac.png" width="60%" /></p>
+</div>
+<div id="unzipping-files-on-windows" class="section level2">
+<h2>Unzipping files on Windows</h2>
+<p><em><strong>tl;dr</strong>: Right click on the <code>.zip</code> file, select “Extract All…”, and work with the resulting unzipped folder.</em></p>
+<p>Unlike macOS, Windows does <em>not</em> automatically unzip things for you. If you double click on the <code>.zip</code> file, Windows will show you what’s inside, but it will do so without actually extracting anything. This <del>can be</del> is incredibly confusing! Here’s what it looks like—the only clues that this folder is really a <code>.zip</code> file are that there’s a “Compressed Folder Tools” tab at the top, and there’s a “Ratio” column that shows how much each file is compressed.</p>
+<p><img src="/img/unzipping/inside-zip-windows.png" width="80%" /></p>
+<p>It is very tempting to try to open files from this view. However, if you do, things will break and you won’t be able to correctly work with any of the files in the zipped folder. If you open the R Project file, for instance, RStudio will point to a bizarre working directory buried deep in some temporary folder:</p>
+<p><img src="/img/unzipping/temp-wd-windows.png" width="60%" /></p>
+<p>You most likely won’t be able to open any data files or save anything, which will be frustrating.</p>
+<p>Instead, you need to right click on the <code>.zip</code> file and select “Extract All…”:</p>
+<p><img src="/img/unzipping/extract-windows-1.png" width="60%" /></p>
+<p>Then choose where you want to unzip all the files and click on “Extract”</p>
+<p><img src="/img/unzipping/extract-windows-2.png" width="60%" /></p>
+<p>You should then finally have a real folder with all the contents of the zipped file. Open the R Project file and RStudio will point to the correct working directory and everything will work.</p>
+<p><img src="/img/unzipping/extract-windows-3.png" width="60%" /></p>
+</div>
