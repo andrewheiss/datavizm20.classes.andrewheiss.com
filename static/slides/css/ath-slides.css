@@ -43,6 +43,10 @@ Typography
   font-size: 0.8em;
 }
 
+.tiny {
+  font-size: 0.5em;
+}
+
 .light {
   font-weight: 300;
 }
@@ -53,6 +57,52 @@ Typography
 
 .remark-slide-number {
   font-size: 15px;
+}
+
+figure {
+  margin: 15px;
+}
+
+figcaption {
+  font-size: 0.5em;
+}
+
+.pull-left h2,
+.pull-right h2,
+.pull-left-3 h2,
+.pull-middle-3 h2,
+.pull-right-3 h2 {
+  margin-top: 0.3em;
+}
+
+.cell-left {
+  text-align: left;
+}
+
+.cell-right {
+  text-align: right;
+}
+
+.cell-center {
+  text-align: center;
+}
+
+.frame {
+  border: 1px #000000 solid;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.bg-full {
+  background-size: cover;
+}
+
+.sp-after {
+  margin-bottom: 1em !important;
+}
+
+.sp-after-half {
+  margin-bottom: 0.7em !important;
 }
 
 /* 
@@ -183,6 +233,65 @@ Slides with title bars at the top
   border-top-color: #FFF0D4;
 }
 
+/*
+General color classes
+*/
+.color-1 {
+  color: #0D0887;
+}
+
+.color-2 {
+  color: #5601A4;
+}
+
+.color-3 {
+  color: #900DA4;
+}
+
+.color-4 {
+  color: #BF3984;
+}
+
+.color-5 {
+  color: #E16462;
+}
+
+.color-6 {
+  color: #F89441;
+}
+
+.color-7 {
+  color: #FCCE25;
+}
+
+.color-light-1 {
+  color: #B2B1F9;
+}
+
+.color-light-2 {
+  color: #CBB5FF;
+}
+
+.color-light-3 {
+  color: #EFB3FF;
+}
+
+.color-light-4 {
+  color: #FFC0DC;
+}
+
+.color-light-5 {
+  color: #FFD0CF;
+}
+
+.color-light-6 {
+  color: #FFDFD1;
+}
+
+.color-light-7 {
+  color: #FFF0D4;
+}
+
 /* 
 Coloring and inverse coloring in title bars and content boxes
 */
@@ -295,6 +404,49 @@ Coloring and inverse coloring in title bars and content boxes
   font-weight: 600;
   display: table;
   text-align: center;
+}
+
+.float-left {
+  text-align: left;
+}
+
+.float-right {
+  text-align: right;
+}
+
+.float-left .box-1, .float-left .box-inv-1,
+.float-right .box-1, .float-right .box-inv-1 {
+  display: inline;
+}
+
+.float-left .box-2, .float-left .box-inv-2,
+.float-right .box-2, .float-right .box-inv-2 {
+  display: inline;
+}
+
+.float-left .box-3, .float-left .box-inv-3,
+.float-right .box-3, .float-right .box-inv-3 {
+  display: inline;
+}
+
+.float-left .box-4, .float-left .box-inv-4,
+.float-right .box-4, .float-right .box-inv-4 {
+  display: inline;
+}
+
+.float-left .box-5, .float-left .box-inv-5,
+.float-right .box-5, .float-right .box-inv-5 {
+  display: inline;
+}
+
+.float-left .box-6, .float-left .box-inv-6,
+.float-right .box-6, .float-right .box-inv-6 {
+  display: inline;
+}
+
+.float-left .box-7, .float-left .box-inv-7,
+.float-right .box-7, .float-right .box-inv-7 {
+  display: inline;
 }
 
 /* Corner ribbon */

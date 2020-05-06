@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "02-slides"
+slides: "02-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -33,7 +33,32 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Graphic design", "1", TRUE,
+  "Truth, beauty, stories, design", "truth-beauty-design", FALSE,
+  "Graphic design and CRAP", "design-crap", FALSE,
+  "Contrast", "contrast", FALSE,
+  "Repetition", "repetition", FALSE,
+  "Alignment", "alignment", FALSE,
+  "Proximity", "proximity", FALSE,
+  "Image types", "image-types", FALSE
+)
+
+slide_tabs(sections, "/slides/02-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
+
 
 
 ## Videos

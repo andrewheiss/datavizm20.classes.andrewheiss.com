@@ -21,23 +21,23 @@
 
 // Plasma colors
 $colors-dark: (
-    #0D0887,  /* Blue Trust */
-    #5601A4,  /* Aubergine Perl */
-    #900DA4,  /* Violet Eggplant */
-    #BF3984,  /* Medium Red Violet */
-    #E16462,  /* Briquette */
-    #F89441,  /* Chat Orange */
-    #FCCE25   /* Lemon Punch */
+    #0D0887,  /* 1: Blue Trust */
+    #5601A4,  /* 2: Aubergine Perl */
+    #900DA4,  /* 3: Violet Eggplant */
+    #BF3984,  /* 4: Medium Red Violet */
+    #E16462,  /* 5: Briquette */
+    #F89441,  /* 6: Chat Orange */
+    #FCCE25   /* 7: Lemon Punch */
 );
 
 $colors-light: (
-    #B2B1F9,  /* Winterspring Lilac */
-    #CBB5FF,  /* Lavender Tonic */
-    #EFB3FF,  /* Euphoria */
-    #FFC0DC,  /* Sweet Romance */
-    #FFD0CF,  /* Girlie */
-    #FFDFD1,  /* Soft Orange Bloom */
-    #FFF0D4   /* Biogenic Sand */
+    #B2B1F9,  /* 1: Winterspring Lilac */
+    #CBB5FF,  /* 2: Lavender Tonic */
+    #EFB3FF,  /* 3: Euphoria */
+    #FFC0DC,  /* 4: Sweet Romance */
+    #FFD0CF,  /* 5: Girlie */
+    #FFDFD1,  /* 6: Soft Orange Bloom */
+    #FFF0D4   /* 7: Biogenic Sand */
 );
 
 
@@ -85,6 +85,10 @@ Typography
     font-size: 0.8em;
 }
 
+.tiny {
+    font-size: 0.5em;
+}
+
 .light {
     font-weight: 300;
 }
@@ -97,6 +101,51 @@ Typography
     font-size: 15px;
 }
 
+figure {
+    margin: 15px;
+}
+
+figcaption {
+    font-size: 0.5em;
+}
+
+.pull-left h2,
+.pull-right h2,
+.pull-left-3 h2,
+.pull-middle-3 h2,
+.pull-right-3 h2 {
+    margin-top: 0.3em;
+}
+
+.cell-left {
+    text-align: left;
+}
+
+.cell-right {
+    text-align: right;
+}
+
+.cell-center {
+    text-align: center;
+}
+
+.frame {
+    border: 1px #000000 solid;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.bg-full {
+    background-size: cover;
+}
+
+.sp-after {
+    margin-bottom: 1em !important;
+}
+
+.sp-after-half {
+    margin-bottom: 0.7em !important;
+}
 
 /* 
 Main title and section title slides
@@ -193,6 +242,31 @@ Slides with title bars at the top
     }
 }
 
+/*
+General color classes
+*/
+
+// This generates the following CSS:
+//
+// .color-N {
+//     color: $colors-dark[N];
+// }
+@each $current-color in $colors-dark {
+    $i: index($colors-dark, $current-color);
+
+    .color-#{$i} {
+        color: $current-color;
+    }
+}
+
+@each $current-color in $colors-light {
+    $i: index($colors-light, $current-color);
+
+    .color-light-#{$i} {
+        color: $current-color;
+    }
+}
+
 
 /* 
 Coloring and inverse coloring in title bars and content boxes
@@ -241,6 +315,7 @@ Coloring and inverse coloring in title bars and content boxes
     }
 }
 
+
 // Make all h1s in section titles and titles use white text
 // This uses @extend to make a comma-separated list of properties, like so:
 // .section-title h1, .title-1 h1, .title-2 h1, ...
@@ -278,6 +353,21 @@ Coloring and inverse coloring in title bars and content boxes
 @for $i from 1 through length($colors-dark) {
     .box-#{$i}, .box-inv-#{$i} {
         @extend %box-settings;
+    }
+}
+
+.float-left {
+    text-align: left;
+}
+
+.float-right {
+    text-align: right;
+}
+
+@for $i from 1 through length($colors-dark) {
+    .float-left .box-#{$i}, .float-left .box-inv-#{$i},
+    .float-right .box-#{$i}, .float-right .box-inv-#{$i} {
+        display: inline;
     }
 }
 
