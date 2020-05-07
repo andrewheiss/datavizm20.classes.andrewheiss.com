@@ -139,12 +139,40 @@ figcaption {
     background-size: cover;
 }
 
+.bg-y-75 {
+    background-position-y: 75%;
+}
+
 .sp-after {
     margin-bottom: 1em !important;
 }
 
 .sp-after-half {
     margin-bottom: 0.7em !important;
+}
+
+.remark-code,
+.remark-inline-code {
+    font-size: 0.75em;
+}
+
+/* Side-by-side code/plot stuff https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/ */
+.left-code {
+    color: #777;
+    width: 48%;
+    height: 92%;
+    float: left;
+}
+
+.right-plot {
+    width: 50%;
+    float: right;
+    padding-left: 1%;
+}
+
+.left-code .remark-code,
+.left-code .remark-inline-code {
+    font-size: 0.5em;
 }
 
 /* 
