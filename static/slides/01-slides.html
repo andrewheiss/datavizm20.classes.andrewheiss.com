@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Truth, beauty, and data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-08" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Truth, beauty,&lt;br&gt;and data
+
+.class-info[
+
+**Session 1**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after-half[Facts, truth, and beauty]
+
+--
+
+.box-3.medium.sp-after-half[Data, truth, and beauty]
+
+--
+
+.box-6.medium.sp-after-half[Beautiful visualizations]
+
+--
+
+.box-7.medium[Class details]
+
+
+---
+
+layout: false
+name: facts-truth-beauty
+class: center middle section-title section-title-2 animated fadeIn
+
+# Facts, truth, and beauty
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# What is truth?
+
+.box-inv-2.medium[Core principles of the universe?]
+
+--
+
+.box-inv-2.medium[Underlying trends in society?]
+
+--
+
+.box-inv-2.medium[Something transcendental?]
+
+--
+
+.box-inv-2.medium[Reality?]
+
+---
+
+# How do we find truth?
+
+.box-inv-2.medium[Science!]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/ndgt-scientism.png" alt="Neil deGrasse Tyson on science" title="Neil deGrasse Tyson on science" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+[Original tweet](https://twitter.com/neiltyson/status/345551599382446081)
+
+---
+
+# But wait!
+
+.box-inv-2.medium.sp-after[Beware of scientism!]
+
+.box-2["… promotion of science as the best or only&lt;br&gt;objective means by which society should determine&lt;br&gt;normative and epistemological values"]
+
+???
+
+[Wikipedia](https://en.wikipedia.org/wiki/Scientism)
+
+---
+
+# Science is not the only way
+
+.box-inv-2.medium[Art]
+
+.box-inv-2.medium[Music]
+
+.box-inv-2.medium[Literature]
+
+.box-inv-2.medium[Religion]
+
+.box-inv-2.medium[Nature]
+
+???
+
+None of these methods deal with raw facts, though!
+
+---
+
+# Nothing here is factual…
+
+.box-inv-2[…but it all reveals truth]
+
+.pull-left[
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/01/les-mis.jpg" alt="ZZZ" title="ZZZ" width="100%"&gt;
+  &lt;figcaption&gt;Cosette&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/01/King_Lear.jpg" alt="King Lear" title="King Lear" width="100%"&gt;
+  &lt;figcaption&gt;Ling Lear&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/01/beethoven.png" alt="ZZZ" title="ZZZ" width="100%"&gt;
+  &lt;figcaption&gt;Beethoven's 9th symphony&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Sources: 
+
+- [Cosette](https://commons.wikimedia.org/wiki/File:Cosette-sweeping-les-miserables-albert-bellenger-1886.jpg)
+- [King Lear](https://commons.wikimedia.org/wiki/File:King_Lear.jpg)
+- [Beethoven](https://commons.wikimedia.org/wiki/File:Beethoven,_Symphony_No._9,_finale,_bars_116-123.png)
+
+---
+
+layout: false
+class: middle
+
+.box-2.huge[Facts ≠ truth]
+
+---
+
+class: middle
+
+.box-2.large.sp-after[Where does truth come when&lt;br&gt;there are no facts?]
+
+--
+
+.box-inv-2.huge[Beauty]
+
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Beauty in science
+
+.pull-left.center[
+
+&lt;figure&gt;
+  &lt;img src="img/01/beautiful-question.jpg" alt="Frank Wilczek's A Beautiful Question" title="Frank Wilczek's A Beautiful Question" width="60%"&gt;
+&lt;/figure&gt;
+
+]
+
+.box-inv-2.medium[This is also true for science and math&lt;br&gt;and other more&lt;br&gt;factual realms]
+
+---
+
+# Rhetoric and beauty
+
+.box-inv-2[λόγος&amp;emsp;•&amp;emsp;λέξις]
+
+.box-inv-2.tiny.sp-after[Logos&amp;emsp;•&amp;emsp;Lexis]
+
+.box-inv-2[Res&amp;emsp;•&amp;emsp;Verba]
+
+.box-inv-2[Essence&amp;emsp;•&amp;emsp;Structure]
+
+.box-inv-2.sp-after[Content&amp;emsp;•&amp;emsp;Form]
+
+.box-2.medium[Truth&amp;emsp;•&amp;emsp;Beauty]
+
+???
+
+One is the underlying metaphysical meaning—what the author or artist intends. The other is *how* they convey that message—what it looks like, what they used, etc.
+
+---
+
+# Content + form
+
+.box-inv-2.large[Art is how we translate core,&lt;br&gt;essential **content** (or truth!)&lt;br&gt;to different **forms**&lt;br&gt;for specific **audiences**.]
+
+---
+
+# Truth is beautiful
+
+.box-inv-2.medium[Truth ≠ facts]
+
+.box-inv-2.medium.sp-after[Truth comes from aesthetic&lt;br&gt;combination of content and form]
+
+.box-2.medium[Facts require beauty to be true]
+
+---
+
+layout: false
+name: data-truth-beauty
+class: center middle section-title section-title-3 animated fadeIn
+
+# Data, truth, and beauty
+
+---
+
+layout: true
+class: title title-3
+
+---
+
+# Just show me the data!
+
+
+
+--
+
+.pull-left-3.small-code[
+
+```r
+head(my_data, 10)
+```
+
+```
+## # A tibble: 10 x 2
+##        x     y
+##    &lt;dbl&gt; &lt;dbl&gt;
+##  1  55.4  97.2
+##  2  51.5  96.0
+##  3  46.2  94.5
+##  4  42.8  91.4
+##  5  40.8  88.3
+##  6  38.7  84.9
+##  7  35.6  79.9
+##  8  33.1  77.6
+##  9  29.0  74.5
+## 10  26.2  71.4
+```
+]
+
+--
+
+.pull-middle-3.small-code[
+
+```r
+mean(my_data$x)
+```
+
+```
+*## [1] 54.26327
+```
+
+```r
+mean(my_data$y)
+```
+
+```
+*## [1] 47.83225
+```
+
+```r
+cor(my_data$x, my_data$y)
+```
+
+```
+*## [1] -0.06447185
+```
+]
+
+--
+
+.pull-right-3[
+&amp;nbsp;
+
+.box-inv-3[Seems reasonable]
+
+&amp;nbsp;
+
+.box-inv-3[Seems reasonable]
+
+&amp;nbsp;
+
+.box-inv-3[No correlation]
+]
+
+---
+
+# oh no
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/DinoSequentialSmaller.gif" alt="Datasaurus Dozen" title="Datasaurus Dozen" width="100%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://www.autodeskresearch.com/publications/samestats" target="_blank"&gt;The Datasaurus Dozen&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Raw data is not enough
+
+.box-inv-3.small[Each of these has the same mean, standard deviation, variance, and correlation]
+
+&lt;img src="01-slides_files/figure-html/plot-full-dozen-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Humans love patterns
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/pattern-processing.png" alt="Pattern processing" title="Pattern processing" width="100%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://doi.org/10.3389/fnins.2014.00265" target="_blank"&gt;https://doi.org/10.3389/fnins.2014.00265&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# (Sometimes we love them too much)
+
+--
+
+.center[
+.box-inv-3.sp-after[**Pareidolia**: seeing patterns that aren't there.]
+]
+
+--
+
+.pull-left-3[
+![](img/01/pareidolia-1.jpg)
+]
+
+--
+
+.pull-middle-3[
+![](img/01/pareidolia-2.jpg)
+]
+
+--
+
+.pull-right-3[
+![](img/01/pareidolia-3.jpg)
+]
+
+---
+
+# Beauty is necessary to see patterns
+
+.pull-left[
+
+&lt;figure&gt;
+  &lt;img src="img/01/amount-diffs-table.png" alt="Amount donated table" title="Amount donated table" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/01/amount-diffs.png" alt="Amount donated graph" title="Amount donated graph" width="85%"&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+layout: false
+name: beautiful-visualizations
+class: center middle section-title section-title-6 animated fadeIn
+
+# Beautiful visualizations
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6.medium[Truthful]
+
+.box-inv-6.medium[Functional]
+
+.box-inv-6.medium[Beautiful]
+
+.box-inv-6.medium[Insightful]
+
+.box-inv-6.medium[Enlightening]
+
+.box-6.tiny[Alberto Cairo, *The Truthful Art*]
+
+???
+
+Alberto Cairo, *The Truthful Art*:
+
+&gt; 1. It is truthful, as it’s based on thorough and honest research.
+&gt; 
+&gt; 2. It is functional, as it constitutes an accurate depiction of the data, and it’s built in a way that lets people do meaningful operations based on it (seeing change in time).
+&gt; 
+&gt; 3. It is beautiful, in the sense of being attractive, intriguing, and even aesthetically pleasing for its intended audience—scientists, in the first place, but the general public, too.
+&gt; 
+&gt; 4. It is insightful, as it reveals evidence that we would have a hard time seeing otherwise.
+&gt; 
+&gt; 5. It is enlightening because if we grasp and accept the evidence it depicts, it will change our minds for the better.
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6["Graphical excellence is the **well-designed presentation of interesting data**—a matter of substance, of statistics, and of design … [It] consists of complex ideas communicated with clarity, precision, and efficiency. … [It] is that which **gives to the viewer the greatest number of ideas in the shortest time with the least ink in the smallest space** … [It] is nearly always multivariate … And graphical excellence requires **telling the truth about the data**."]
+
+.box-6.tiny[Edward Tufte, *The Visual Display of Quantitative Information*, p. 51]
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6.medium[Good aesthetics]
+
+--
+
+.box-inv-6.medium[No substantive issues]
+
+--
+
+.box-inv-6.medium[No perceptual issues]
+
+--
+
+.box-inv-6.medium[Honesty + good judgment]
+
+.box-6.tiny[Kieran Healy, *Data Visualization: A Practical Introduction*]
+
+---
+
+# What's wrong?
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/pie-genus.png" alt="Distribution of genus" title="Distribution of genus" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's wrong?
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/changing-face-of-america.png" alt="Changing face of America" title="Changing face of America" width="45%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's wrong?
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/how-stuff-works-recidivism.png" alt="Recidivism pie chart" title="Recidivism pie chart" width="45%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's right?
+
+.pull-left[
+
+&lt;img src="01-slides_files/figure-html/flatten-the-curve-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/01/bergstrom-tweet.png" alt="Carl Bergstrom tweet" title="Carl Bergstrom tweet" width="80%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://twitter.com/CT_Bergstrom/status/1235865328074153986" target="_blank"&gt;Thread by Carl T. Bergstrom&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+???
+
+[Carl Bergstrom on the flatten the curve visualization](https://twitter.com/CT_Bergstrom/status/1235865328074153986)
+
+---
+
+layout: false
+name: class-details
+class: center middle section-title section-title-7 animated fadeIn
+
+# Class details
+
+---
+
+layout: true
+class: title title-7
+
+---
+
+# Goal for the class
+
+.center[
+.box-inv-7.huge[Recognize and create beautiful and truthful visualizations with real world data]
+]
+
+---
+
+# Plan for the class
+
+&amp;nbsp;
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/dataviz-flowchart.png" alt="Class flowchart" title="Class flowchart" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Class technology
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/complexity-chart@4x.png" alt="Complexity chart" title="Complexity chart" width="65%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Class technology
+
+.pull-left-3.center[
+
+&lt;figure&gt;
+  &lt;img src="img/01/Rlogo.png" alt="R logo" title="R logo" width="80%"&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;img src="img/01/rstudio-logo.png" alt="R logo" title="R logo" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-middle-3[
+
+&lt;figure&gt;
+  &lt;img src="img/01/ggplot-logo.png" alt="ggplot logo" title="ggplot logo" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right-3[
+
+&amp;nbsp;
+
+&lt;figure&gt;
+  &lt;img src="img/03/ggplot-layers@4x.png" alt="ggplot logo" title="ggplot logo" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# The tidyverse
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/01/tidyverse.png" alt="The tidyverse" title="The tidyverse" width="50%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Sucking
+
+.center[
+.box-inv-7.medium[“There is no way of knowing nothing about a subject to knowing something about a subject without going through a period of much frustration and suckiness.”]
+
+.box-inv-7.medium[**“Push through. You’ll suck less.”**]
+
+.box-inv-7.tiny[Hadley Wickham, author of **ggplot2**]
+]
+
+???
+
+[Source for quote](https://twitter.com/Akbaritabar/status/1022057084802748416)
+
+---
+
+# Sucking
+
+&amp;nbsp;
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/01/sucking-first-step.jpg" alt="Sucking at something is the first step towards being sort of good at something" title="Sucking at something is the first step towards being sort of good at something" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/01/sucking-nyt.png" alt="It's great to suck at something" title="It's great to suck at something" width="100%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://www.nytimes.com/2017/04/28/opinion/its-great-to-suck-at-surfing.html" target="_blank"&gt;Karen Rinaldi, "(It's Great to) Suck at Something"&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

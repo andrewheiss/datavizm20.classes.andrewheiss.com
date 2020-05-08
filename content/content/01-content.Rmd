@@ -44,9 +44,11 @@ source(here::here("R", "slide_tabs.R"))
 
 sections <- tibble::tribble(
   ~name, ~slide, ~active,
-  "First section", 1, TRUE,
-  "Second section", 6, FALSE,
-  "Third section", 8, FALSE
+  "Truth, beauty, and data", "1", TRUE,
+  "Facts, truth, and beauty", "facts-truth-beauty", FALSE,
+  "Data, truth, and beauty", "data-truth-beauty", FALSE,
+  "Beautiful visualizations", "beautiful-visualizations", FALSE,
+  "Class details", "class-details", FALSE,
 )
 
 slide_tabs(sections, "/slides/01-slides.html")

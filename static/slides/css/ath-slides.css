@@ -133,6 +133,11 @@ figcaption {
   font-size: 0.5em;
 }
 
+.small-code .remark-code,
+.small-code .remark-inline-code {
+  font-size: 0.5em;
+}
+
 /* 
 Main title and section title slides
 */

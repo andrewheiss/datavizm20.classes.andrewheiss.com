@@ -1,5 +1,5 @@
 ---
-title: "Example stuff"
+title: "Truth, beauty, and data"
 author: "Andrew Heiss"
 date: "`r Sys.Date()`"
 output:
@@ -13,213 +13,712 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       ratio: "16:9"
+      navigation:
+        scroll: false
       # beforeInit: "libs/offline-mathjax.js"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
                       fig.retina = 3, fig.align = "center")
-
-# sass::sass(
-#   sass::sass_file("css/ath-slides.scss"),
-#   output = "css/ath-slides.css",
-#   options = sass::sass_options(
-#     # output_style = "compressed"
-#   )
-# )
 ```
 
 ```{r packages-data, include=FALSE}
 library(tidyverse)
-library(scales)
-library(broom)
 ```
 
-class: center middle main-title section-title-6
+class: center middle main-title section-title-4
 
-# Testing these<br>neat slides
+# Truth, beauty,<br>and data
 
 .class-info[
 
 **Session 1**
 
-.light[PMAP 8521: Program Evaluation for Public Service<br>
+.light[PMAP 8921: Data Visualization with R<br>
 Andrew Young School of Policy Studies<br>
-Spring 2020]
+May 2020]
 
 ]
 
 ---
 
-class: title title-1
-
-# Box test
-
-.box-1[Something important]
-
-.box-2[Something important]
-
-.box-3[Something important]
-
-.box-4[Something important]
-
-.box-5[Something important]
-
-.box-6[Something important]
-
-.box-7[Something important]
-
----
-
-class: title title-inv-1
-
-# Inverted box test
-
-.box-inv-1[Something important]
-
-.box-inv-2[Something important]
-
-.box-inv-3[Something important]
-
-.box-inv-4[Something important]
-
-.box-inv-5[Something important]
-
-.box-inv-6[Something important]
-
-.box-inv-7[Something important]
-
----
-
 name: outline
-class: title title-inv-6
+class: title title-inv-7
 
 # Plan for today
 
 --
 
-.box-4.medium[Endogeneity & exogeneity]
+.box-2.medium.sp-after-half[Facts, truth, and beauty]
 
 --
 
-.box-5.medium[Instruments]
+.box-3.medium.sp-after-half[Data, truth, and beauty]
 
 --
 
-.box-2.medium[Using instruments]
+.box-6.medium.sp-after-half[Beautiful visualizations]
 
 --
 
-.box-7.medium[IV with R]
+.box-7.medium[Class details]
 
---
-
-.box-3.medium[Treatment effects & compliance]
-
-???
-
-*Important* notes go here.
 
 ---
 
-class: center middle section-title section-title-4 animated fadeIn
+layout: false
+name: facts-truth-beauty
+class: center middle section-title section-title-2 animated fadeIn
 
-# Endogeneity & exogeneity
+# Facts, truth, and beauty
 
 ---
 
 layout: true
-class: title title-4
+class: title title-2
 
 ---
 
-# Does education cause higher earnings?
+# What is truth?
 
-```{r echo=FALSE, fig.width=7, fig.height=2.5, out.width="85%"}
-ggplot(mpg, aes(x = displ, y = hwy)) +
-  geom_point(aes(color = drv)) +
-  geom_smooth() +
-  labs(x = "Displacement")
-```
+.box-inv-2.medium[Core principles of the universe?]
 
+--
 
-.medium[
-$$
-\color{#FF851B}{\text{Earnings}_i} = \beta_0 + \beta_1 \color{#0074D9}{\text{Education}_i} + \epsilon_i
-$$
+.box-inv-2.medium[Underlying trends in society?]
+
+--
+
+.box-inv-2.medium[Something transcendental?]
+
+--
+
+.box-inv-2.medium[Reality?]
+
+---
+
+# How do we find truth?
+
+.box-inv-2.medium[Science!]
+
+.center[
+<figure>
+  <img src="img/01/ndgt-scientism.png" alt="Neil deGrasse Tyson on science" title="Neil deGrasse Tyson on science" width="70%">
+</figure>
 ]
 
----
+???
 
-# Split exogeneity and endogeneity
-
-.box-inv-4[What if we could somehow separate education into its endogenous and exogenous parts?]
-
-&nbsp; 
-
-.SMALL[
-$$
-\begin{aligned}
-\text{Earnings}_i =& \beta_0 + \beta_1 \text{Education}_i + \epsilon_i \\
-& \beta_0 + \beta_1 (\text{Education}_i^\text{exog.} + \text{Education}_i^\text{endog.}) + \epsilon_i \\
-& \beta_0 + \beta_1 \text{Education}_i^\text{exog.} + \underbrace{\beta_1 \text{Education}_i^{\text{endog.}} + \epsilon_i}_{w_i} \\
-& \beta_0 + \beta_1 \text{Education}_i^\text{exog.} + w_i
-\end{aligned}
-$$
-]
+[Original tweet](https://twitter.com/neiltyson/status/345551599382446081)
 
 ---
 
-# Two columns with a title
+# But wait!
+
+.box-inv-2.medium.sp-after[Beware of scientism!]
+
+.box-2["… promotion of science as the best or only<br>objective means by which society should determine<br>normative and epistemological values"]
+
+???
+
+[Wikipedia](https://en.wikipedia.org/wiki/Scientism)
+
+---
+
+# Science is not the only way
+
+.box-inv-2.medium[Art]
+
+.box-inv-2.medium[Music]
+
+.box-inv-2.medium[Literature]
+
+.box-inv-2.medium[Religion]
+
+.box-inv-2.medium[Nature]
+
+???
+
+None of these methods deal with raw facts, though!
+
+---
+
+# Nothing here is factual…
+
+.box-inv-2[…but it all reveals truth]
 
 .pull-left[
 
-.box-5.medium.full-width[Stuff on this side]
+.pull-left[
+<figure>
+  <img src="img/01/les-mis.jpg" alt="ZZZ" title="ZZZ" width="100%">
+  <figcaption>Cosette</figcaption>
+</figure>
+]
+
+.pull-right[
+<figure>
+  <img src="img/01/King_Lear.jpg" alt="King Lear" title="King Lear" width="100%">
+  <figcaption>Ling Lear</figcaption>
+</figure>
+]
 
 ]
 
 .pull-right[
-
-.box-5.medium[And more stuff on *this* side]
-
+<figure>
+  <img src="img/01/beethoven.png" alt="ZZZ" title="ZZZ" width="100%">
+  <figcaption>Beethoven's 9th symphony</figcaption>
+</figure>
 ]
 
-.box-inv-5[Where does this go?]
+???
+
+Sources: 
+
+- [Cosette](https://commons.wikimedia.org/wiki/File:Cosette-sweeping-les-miserables-albert-bellenger-1886.jpg)
+- [King Lear](https://commons.wikimedia.org/wiki/File:King_Lear.jpg)
+- [Beethoven](https://commons.wikimedia.org/wiki/File:Beethoven,_Symphony_No._9,_finale,_bars_116-123.png)
 
 ---
 
-# Three columns with a title
+layout: false
+class: middle
 
-.pull-left-3[
+.box-2.huge[Facts ≠ truth]
 
-Something here.
+---
+
+class: middle
+
+.box-2.large.sp-after[Where does truth come when<br>there are no facts?]
+
+--
+
+.box-inv-2.huge[Beauty]
+
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Beauty in science
+
+.pull-left.center[
+
+<figure>
+  <img src="img/01/beautiful-question.jpg" alt="Frank Wilczek's A Beautiful Question" title="Frank Wilczek's A Beautiful Question" width="60%">
+</figure>
 
 ]
+
+.box-inv-2.medium[This is also true for science and math<br>and other more<br>factual realms]
+
+---
+
+# Rhetoric and beauty
+
+.box-inv-2[λόγος&emsp;•&emsp;λέξις]
+
+.box-inv-2.tiny.sp-after[Logos&emsp;•&emsp;Lexis]
+
+.box-inv-2[Res&emsp;•&emsp;Verba]
+
+.box-inv-2[Essence&emsp;•&emsp;Structure]
+
+.box-inv-2.sp-after[Content&emsp;•&emsp;Form]
+
+.box-2.medium[Truth&emsp;•&emsp;Beauty]
+
+???
+
+One is the underlying metaphysical meaning—what the author or artist intends. The other is *how* they convey that message—what it looks like, what they used, etc.
+
+---
+
+# Content + form
+
+.box-inv-2.large[Art is how we translate core,<br>essential **content** (or truth!)<br>to different **forms**<br>for specific **audiences**.]
+
+---
+
+# Truth is beautiful
+
+.box-inv-2.medium[Truth ≠ facts]
+
+.box-inv-2.medium.sp-after[Truth comes from aesthetic<br>combination of content and form]
+
+.box-2.medium[Facts require beauty to be true]
+
+---
+
+layout: false
+name: data-truth-beauty
+class: center middle section-title section-title-3 animated fadeIn
+
+# Data, truth, and beauty
+
+---
+
+layout: true
+class: title title-3
+
+---
+
+# Just show me the data!
+
+```{r load-datasaurus-dozen, echo=FALSE}
+dozen <- read_tsv("data/DatasaurusDozen.tsv")
+my_data <- dozen %>% 
+  filter(dataset == "dino") %>% 
+  select(x, y)
+```
+
+--
+
+.pull-left-3.small-code[
+```{r head-datasaurus}
+head(my_data, 10)
+```
+]
+
+--
+
+.pull-middle-3.small-code[
+```{r summary-datasaurus, highlight.output=1}
+mean(my_data$x)
+mean(my_data$y)
+cor(my_data$x, my_data$y)
+```
+]
+
+--
+
+.pull-right-3[
+&nbsp;
+
+.box-inv-3[Seems reasonable]
+
+&nbsp;
+
+.box-inv-3[Seems reasonable]
+
+&nbsp;
+
+.box-inv-3[No correlation]
+]
+
+---
+
+# oh no
+
+.center[
+<figure>
+  <img src="img/01/DinoSequentialSmaller.gif" alt="Datasaurus Dozen" title="Datasaurus Dozen" width="100%">
+  <figcaption><a href="https://www.autodeskresearch.com/publications/samestats" target="_blank">The Datasaurus Dozen</a></figcaption>
+</figure>
+]
+
+---
+
+# Raw data is not enough
+
+.box-inv-3.small[Each of these has the same mean, standard deviation, variance, and correlation]
+
+```{r plot-full-dozen, echo=FALSE, fig.dim=c(10, 4), out.width="100%"}
+ggplot(filter(dozen, dataset != "bullseye"), aes(x = x, y = y)) +
+  geom_point(size = 1) +
+  facet_wrap(vars(dataset))
+```
+
+
+---
+
+# Humans love patterns
+
+.center[
+<figure>
+  <img src="img/01/pattern-processing.png" alt="Pattern processing" title="Pattern processing" width="100%">
+  <figcaption><a href="https://doi.org/10.3389/fnins.2014.00265" target="_blank">https://doi.org/10.3389/fnins.2014.00265</a></figcaption>
+</figure>
+]
+
+---
+
+# (Sometimes we love them too much)
+
+--
+
+.center[
+.box-inv-3.sp-after[**Pareidolia**: seeing patterns that aren't there.]
+]
+
+--
+
+.pull-left-3[
+![](img/01/pareidolia-1.jpg)
+]
+
+--
+
+.pull-middle-3[
+![](img/01/pareidolia-2.jpg)
+]
+
+--
+
+.pull-right-3[
+![](img/01/pareidolia-3.jpg)
+]
+
+---
+
+# Beauty is necessary to see patterns
+
+.pull-left[
+
+<figure>
+  <img src="img/01/amount-diffs-table.png" alt="Amount donated table" title="Amount donated table" width="100%">
+</figure>
+
+]
+
+--
+
+.pull-right.center[
+
+<figure>
+  <img src="img/01/amount-diffs.png" alt="Amount donated graph" title="Amount donated graph" width="85%">
+</figure>
+
+]
+
+---
+
+layout: false
+name: beautiful-visualizations
+class: center middle section-title section-title-6 animated fadeIn
+
+# Beautiful visualizations
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6.medium[Truthful]
+
+.box-inv-6.medium[Functional]
+
+.box-inv-6.medium[Beautiful]
+
+.box-inv-6.medium[Insightful]
+
+.box-inv-6.medium[Enlightening]
+
+.box-6.tiny[Alberto Cairo, *The Truthful Art*]
+
+???
+
+Alberto Cairo, *The Truthful Art*:
+
+> 1. It is truthful, as it’s based on thorough and honest research.
+> 
+> 2. It is functional, as it constitutes an accurate depiction of the data, and it’s built in a way that lets people do meaningful operations based on it (seeing change in time).
+> 
+> 3. It is beautiful, in the sense of being attractive, intriguing, and even aesthetically pleasing for its intended audience—scientists, in the first place, but the general public, too.
+> 
+> 4. It is insightful, as it reveals evidence that we would have a hard time seeing otherwise.
+> 
+> 5. It is enlightening because if we grasp and accept the evidence it depicts, it will change our minds for the better.
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6["Graphical excellence is the **well-designed presentation of interesting data**—a matter of substance, of statistics, and of design … [It] consists of complex ideas communicated with clarity, precision, and efficiency. … [It] is that which **gives to the viewer the greatest number of ideas in the shortest time with the least ink in the smallest space** … [It] is nearly always multivariate … And graphical excellence requires **telling the truth about the data**."]
+
+.box-6.tiny[Edward Tufte, *The Visual Display of Quantitative Information*, p. 51]
+
+---
+
+# What makes a great visualization?
+
+.box-inv-6.medium[Good aesthetics]
+
+--
+
+.box-inv-6.medium[No substantive issues]
+
+--
+
+.box-inv-6.medium[No perceptual issues]
+
+--
+
+.box-inv-6.medium[Honesty + good judgment]
+
+.box-6.tiny[Kieran Healy, *Data Visualization: A Practical Introduction*]
+
+---
+
+# What's wrong?
+
+.center[
+<figure>
+  <img src="img/01/pie-genus.png" alt="Distribution of genus" title="Distribution of genus" width="60%">
+</figure>
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's wrong?
+
+.center[
+<figure>
+  <img src="img/01/changing-face-of-america.png" alt="Changing face of America" title="Changing face of America" width="45%">
+</figure>
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's wrong?
+
+.center[
+<figure>
+  <img src="img/01/how-stuff-works-recidivism.png" alt="Recidivism pie chart" title="Recidivism pie chart" width="45%">
+</figure>
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+---
+
+# What's right?
+
+.pull-left[
+
+```{r flatten-the-curve, echo=FALSE, fig.dim=c(4.8, 3.75), out.width="100%"}
+high_mean <- 12
+high_sd <- 4
+flat_mean <- 35
+flat_sd <- 12
+
+ggplot(tibble(x = c(0, 70)), aes(x = x)) +
+  stat_function(geom = "area", fun = dnorm, n = 1000, 
+                args = list(mean = high_mean, sd = high_sd),
+                fill = "#FF4136", alpha = 0.8) +
+  stat_function(geom = "area", fun = dnorm, n = 1000, 
+                args = list(mean = flat_mean, sd = flat_sd),
+                fill = "#0074D9", alpha = 0.8) +
+  geom_hline(yintercept = dnorm(flat_mean, flat_mean, flat_sd), 
+             linetype = "61", color = "grey75") +
+  annotate(geom = "text", x = qnorm(0.5, high_mean, high_sd), 
+           y = dnorm(qnorm(0.5, high_mean, high_sd), high_mean, high_sd) / 2, 
+           label = "Without\nprotective\nmeasures", color = "white", size = 3,
+           family = "Fira Sans Condensed", fontface = "bold") +
+  annotate(geom = "text", x = qnorm(0.5, flat_mean, sd = flat_sd), 
+           y = dnorm(qnorm(0.5, flat_mean, sd = flat_sd), flat_mean, sd = flat_sd) / 2, 
+           label = "With protective\nmeasures", color = "white", size = 3,
+           family = "Fira Sans Condensed", fontface = "bold") +
+  annotate(geom = "text", x = 45, y = dnorm(flat_mean, flat_mean, sd = flat_sd), 
+           label = "Healthcare system capacity", vjust = -0.5, hjust = 0, size = 3,
+           family = "Fira Sans Condensed", fontface = "bold") +
+  labs(x = "Time since first case", 
+       y = "# of\ncases",
+       title = "Flatten the curve!", 
+       subtitle = "Slow down community spread by social distancing",
+       caption = "Adapted from the CDC and The Economist\nVisit flattenthecurve.com") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_minimal(base_family = "Fira Sans Condensed Light") +
+  theme(panel.grid = element_blank(),
+        axis.line = element_line(color = "black"),
+        axis.text = element_blank(),
+        axis.title = element_text(family = "Fira Sans Condensed", face = "bold"),
+        axis.title.y = element_text(angle = 0, vjust = 0.5),
+        plot.title = element_text(family = "Fira Sans Condensed", face = "bold", size = rel(1.7)),
+        plot.subtitle = element_text(size = rel(1.2), color = "grey50"),
+        plot.caption = element_text(color = "grey50"))
+```
+
+]
+
+???
+
+- Aesthetic issues
+- Substantive issues
+- Perceptual issues
+- Honesty + judgment issues
+
+--
+
+.pull-right.center[
+
+<figure>
+  <img src="img/01/bergstrom-tweet.png" alt="Carl Bergstrom tweet" title="Carl Bergstrom tweet" width="80%">
+  <figcaption><a href="https://twitter.com/CT_Bergstrom/status/1235865328074153986" target="_blank">Thread by Carl T. Bergstrom</a></figcaption>
+</figure>
+
+]
+
+???
+
+[Carl Bergstrom on the flatten the curve visualization](https://twitter.com/CT_Bergstrom/status/1235865328074153986)
+
+---
+
+layout: false
+name: class-details
+class: center middle section-title section-title-7 animated fadeIn
+
+# Class details
+
+---
+
+layout: true
+class: title title-7
+
+---
+
+# Goal for the class
+
+.center[
+.box-inv-7.huge[Recognize and create beautiful and truthful visualizations with real world data]
+]
+
+---
+
+# Plan for the class
+
+&nbsp;
+
+.center[
+<figure>
+  <img src="img/01/dataviz-flowchart.png" alt="Class flowchart" title="Class flowchart" width="100%">
+</figure>
+]
+
+---
+
+# Class technology
+
+.center[
+<figure>
+  <img src="img/01/complexity-chart@4x.png" alt="Complexity chart" title="Complexity chart" width="65%">
+</figure>
+]
+
+---
+
+# Class technology
+
+.pull-left-3.center[
+
+<figure>
+  <img src="img/01/Rlogo.png" alt="R logo" title="R logo" width="80%">
+</figure>
+
+<figure>
+  <img src="img/01/rstudio-logo.png" alt="R logo" title="R logo" width="100%">
+</figure>
+
+]
+
+--
 
 .pull-middle-3[
 
-Something here in the middle.
+<figure>
+  <img src="img/01/ggplot-logo.png" alt="ggplot logo" title="ggplot logo" width="100%">
+</figure>
 
 ]
 
+--
+
 .pull-right-3[
 
-Something else here.
+&nbsp;
+
+<figure>
+  <img src="img/03/ggplot-layers@4x.png" alt="ggplot logo" title="ggplot logo" width="100%">
+</figure>
 
 ]
 
 ---
 
-# Slide with headings
+# The tidyverse
 
-## Subheading
+.center[
+<figure>
+  <img src="img/01/tidyverse.png" alt="The tidyverse" title="The tidyverse" width="50%">
+</figure>
+]
 
-.box-5[This is a slide with headings]
+---
 
-## Another subheading
+# Sucking
 
-.box-3[This too has a box]
+.center[
+.box-inv-7.medium[“There is no way of knowing nothing about a subject to knowing something about a subject without going through a period of much frustration and suckiness.”]
 
-### Level 3!!!
+.box-inv-7.medium[**“Push through. You’ll suck less.”**]
 
-.box-6[Hey.]
+.box-inv-7.tiny[Hadley Wickham, author of **ggplot2**]
+]
+
+???
+
+[Source for quote](https://twitter.com/Akbaritabar/status/1022057084802748416)
+
+---
+
+# Sucking
+
+&nbsp;
+
+.pull-left[
+<figure>
+  <img src="img/01/sucking-first-step.jpg" alt="Sucking at something is the first step towards being sort of good at something" title="Sucking at something is the first step towards being sort of good at something" width="100%">
+</figure>
+]
+
+--
+
+.pull-right[
+<figure>
+  <img src="img/01/sucking-nyt.png" alt="It's great to suck at something" title="It's great to suck at something" width="100%">
+  <figcaption><a href="https://www.nytimes.com/2017/04/28/opinion/its-great-to-suck-at-surfing.html" target="_blank">Karen Rinaldi, "(It's Great to) Suck at Something"</a></figcaption>
+</figure>
+]
