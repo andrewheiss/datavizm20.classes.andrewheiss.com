@@ -4,7 +4,7 @@
     <title>Mapping data to graphics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Andrew Heiss" />
-    <meta name="date" content="2020-05-07" />
+    <meta name="date" content="2020-05-08" />
     <script src="libs/header-attrs-2.1/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
@@ -584,6 +584,8 @@ Layer analogy borrowed from [Thomas Lin Pedersen](https://www.data-imaginist.com
 &lt;img src="03-slides_files/figure-html/scale-example-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
+--
+
 .pull-right[
 
 .box-inv-2.small[`scale_color_viridis_d()`]
@@ -631,6 +633,8 @@ Layer analogy borrowed from [Thomas Lin Pedersen](https://www.data-imaginist.com
 &lt;img src="03-slides_files/figure-html/facet-example-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
+--
+
 .pull-right[
 
 .box-inv-2.small[`facet_wrap(vars(continent, year))`]
@@ -677,6 +681,8 @@ Layer analogy borrowed from [Thomas Lin Pedersen](https://www.data-imaginist.com
 
 &lt;img src="03-slides_files/figure-html/coord-example-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
+
+--
 
 .pull-right[
 
@@ -781,6 +787,8 @@ ggplot(gapminder_2007,
 
 &lt;img src="03-slides_files/figure-html/theme-example-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
+
+--
 
 .pull-right[
 
@@ -1304,7 +1312,11 @@ class: title title-6
 
 .box-inv-6.medium[For `ggplot()` to work,&lt;br&gt;your data needs to be in a **tidy** format]
 
+--
+
 .box-6[This doesn't mean that it's clean—&lt;br&gt;it refers to the *structure* of the data]
+
+--
 
 .box-6[All the packages in the **tidyverse** work best with&lt;br&gt;tidy data; that why it's called that!]
 
@@ -1314,9 +1326,15 @@ class: title title-6
 
 .box-inv-6[Each variable has its own column]
 
+--
+
 .box-inv-6[Each observation has its own row]
 
+--
+
 .box-inv-6[Each value has its own cell]
+
+--
 
 .center[
 &lt;figure&gt;
@@ -1380,6 +1398,8 @@ Figure by Garrick Aden-Buie in [**tidyexplain**](https://github.com/gadenbuie/ti
 ???
 
 Figure by Garrick Aden-Buie in [**tidyexplain**](https://github.com/gadenbuie/tidyexplain)
+
+--
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>

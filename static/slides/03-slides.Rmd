@@ -701,6 +701,8 @@ ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size =
 ```
 ]
 
+--
+
 .pull-right[
 
 .box-inv-2.small[`scale_color_viridis_d()`]
@@ -757,6 +759,8 @@ ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size =
   facet_wrap(vars(continent))
 ```
 ]
+
+--
 
 .pull-right[
 
@@ -815,6 +819,8 @@ ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size =
   coord_cartesian(ylim = c(70, 80), xlim = c(10000, 30000))
 ```
 ]
+
+--
 
 .pull-right[
 
@@ -928,6 +934,8 @@ ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size =
   theme_dark()
 ```
 ]
+
+--
 
 .pull-right[
 
@@ -1441,7 +1449,11 @@ class: title title-6
 
 .box-inv-6.medium[For `ggplot()` to work,<br>your data needs to be in a **tidy** format]
 
+--
+
 .box-6[This doesn't mean that it's clean—<br>it refers to the *structure* of the data]
+
+--
 
 .box-6[All the packages in the **tidyverse** work best with<br>tidy data; that why it's called that!]
 
@@ -1451,9 +1463,15 @@ class: title title-6
 
 .box-inv-6[Each variable has its own column]
 
+--
+
 .box-inv-6[Each observation has its own row]
 
+--
+
 .box-inv-6[Each value has its own cell]
+
+--
 
 .center[
 <figure>
@@ -1517,3 +1535,5 @@ Figure by Garrick Aden-Buie in [**tidyexplain**](https://github.com/gadenbuie/ti
 ???
 
 Figure by Garrick Aden-Buie in [**tidyexplain**](https://github.com/gadenbuie/tidyexplain)
+
+--

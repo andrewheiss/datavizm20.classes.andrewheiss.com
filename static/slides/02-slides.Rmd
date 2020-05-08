@@ -15,6 +15,8 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       ratio: "16:9"
+      navigation:
+        scroll: false
       # beforeInit: "libs/offline-mathjax.js"
 ---
 
@@ -59,6 +61,8 @@ class: title title-inv-7
 --
 
 .box-7.medium[Graphic design and CRAP]
+
+--
 
 .pull-left.float-right[
 .box-1[Contrast]
@@ -125,9 +129,15 @@ class: title title-3
 
 .box-inv-3[Truth comes from **aesthetic** combination of content and form.]
 
+--
+
 .box-inv-3[Raw facts must be communicated through some form.]
 
+--
+
 .box-inv-3.sp-after[**Beauty** shapes that form.]
+
+--
 
 .box-3.medium[There are aesthetic principles we can<br>follow to create beauty—and truth.]
 
@@ -148,7 +158,11 @@ class: title title-7
 
 # Principles of design
 
+--
+
 .box-inv-7.medium[There are thousands of books and<br>centuries of debate and theory about<br>what makes good design.]
+
+--
 
 .box-7.medium[For this class, the easiest<br>and most memorable distillation<br>of these principles is **CRAP**.]
 
@@ -157,6 +171,7 @@ class: title title-7
 # CRAP
 
 .pull-left[
+
 .box-7[Use these principles as a checklist when creating and critiquing designed objects:]
 
 .box-1[Contrast]
@@ -166,6 +181,7 @@ class: title title-7
 .box-inv-1[Alignment]
 
 .box-4[Proximity]
+
 ]
 
 .pull-right.center[
@@ -187,6 +203,8 @@ name: contrast
 # Contrast
 
 .box-inv-1.large[If two items are not exactly<br>the same, make them different.<br>Really different.]
+
+--
 
 .box-7.large[**Don't be a wimp.**]
 
@@ -234,6 +252,8 @@ name: contrast
 <span style="font-size: 0.9em; font-family: 'Times', serif;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
 
 ]
+
+--
 
 .pull-right.frame[
 
@@ -293,6 +313,8 @@ name: contrast
 
 ]
 
+--
+
 .pull-right.frame[
 
 <span style="font-size: 1.3em; font-family: 'Source Sans Pro'; font-weight: 600;">Here’s a heading</span>
@@ -308,6 +330,8 @@ name: contrast
 .box-inv-1[Use contrasting sizes]
 
 &nbsp;
+
+--
 
 .box-1[<span style="font-size: 3em;">Huge</span>&emsp;&emsp;<span style="font-size: 2em;">Big</span>&emsp;&emsp;Regular&emsp;&emsp;<span style="font-size: 0.7em;">Small</span>&emsp;&emsp;<span style="font-size: 0.3em;">Tiny</span>]
 
@@ -366,6 +390,8 @@ Photo by [Brad Huchteman](https://unsplash.com/photos/sR1Kz2auNJE) on Unsplash
 
 .box-1[Values close to each other use similar colors,<br>and values far from each other use different colors]
 
+--
+
 .box-inv-1.medium[Colorblind-safe colors]
 
 .box-1[8% of men & 0.05% of women have some form of color blindness]
@@ -382,6 +408,8 @@ Photo by [Brad Huchteman](https://unsplash.com/photos/sR1Kz2auNJE) on Unsplash
   <figcaption>Traditional palettes vs. viridis</figcaption>
 </figure>
 ]
+
+--
 
 .pull-right[
 <figure>
@@ -412,6 +440,8 @@ ggplot(counties_ga) +
 </figure>
 ]
 
+--
+
 .pull-middle-3[
 <figure>
 ```{r ga2, echo=FALSE, fig.width=5, fig.height=6}
@@ -424,6 +454,8 @@ ggplot(counties_ga) +
 <figcaption>Georgia counties filled by area, viridis::viridis palette</figcaption>
 </figure>
 ]
+
+--
 
 .pull-right-3[
 <figure>
@@ -459,11 +491,17 @@ name: repetition
 
 .box-4.medium[Colors]
 
+--
+
 .box-4.medium[Fonts]
 
 .box-inv-4.sp-after[Families, weights, sizes]
 
+--
+
 .box-4.medium[Graphical elements]
+
+--
 
 .box-4.medium[Alignments]
 
@@ -504,6 +542,8 @@ name: alignment
   <figcaption>Bad alignment</figcaption>
 </figure>
 ]
+
+--
 
 .pull-right[
 <figure>
@@ -555,6 +595,8 @@ Source: Robin Williams, *The Non-Designer's Design Book*
 
 ]
 
+--
+
 .pull-right.frame[
 
 <p style="font-size: 0.7em; text-align: right; font-weight: bold;">Chapter 1</p>
@@ -586,12 +628,16 @@ name: proximity
 
 .box-inv-4[Use white space, color, location, contrast, repetition,<br>alignment, etc. to make visually distinct groupings]
 
+--
+
 .pull-left[
 <figure>
   <img src="img/02/proximity-bad.png" alt="Bad proximity" title="Bad proximity" width="100%">
   <figcaption>Bad proximity; no logical groupings</figcaption>
 </figure>
 ]
+
+--
 
 .pull-right[
 <figure>
@@ -681,6 +727,8 @@ class: title title-5
 .box-5.small[**PNG/GIF**: Images<br>with limited colors]
 
 ]
+
+--
 
 .pull-right[
 
@@ -863,6 +911,8 @@ class: title title-5
 
 # What programs do I use?
 
+--
+
 .pull-left-3.center[
 
 ## Photos/bitmaps
@@ -888,6 +938,8 @@ class: title title-5
 
 ]
 
+--
+
 .pull-middle-3.center[
 
 ## Vectors
@@ -912,6 +964,8 @@ class: title title-5
 ]
 
 ]
+
+--
 
 .pull-right-3.center[
 
