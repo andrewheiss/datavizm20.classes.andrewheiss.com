@@ -19,5 +19,68 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#task-1-make-an-rstudio-project">Task 1: Make an RStudio Project</a></li>
+<li><a href="#task-2-make-an-r-markdown-file-with-a-plot-in-it">Task 2: Make an R Markdown file with a plot in it</a></li>
+</ul>
+</div>
 
-<p>A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.</p>
+<div id="task-1-make-an-rstudio-project" class="section level2">
+<h2>Task 1: Make an RStudio Project</h2>
+<ol style="list-style-type: decimal">
+<li><p>Use either RStudio.cloud or RStudio on your computer (preferably RStudio on your computer! <a href="/resource/install/">Follow these instructions to get started!</a>) to create a new RStudio Project.</p></li>
+<li><p>Create a folder named “data” in the project folder you just made.</p></li>
+<li><p>Download this CSV file and place it in that folder:</p></li>
+</ol>
+<ul>
+<li><a href="/data/cars.csv"><i class="fas fa-file-csv"></i> <code>cars.csv</code></a></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>In RStudio, go to “File” &gt; “New File…” &gt; “R Markdown…” and click “OK” in the dialog without changing anything.</p></li>
+<li><p>Delete all the placeholder text in that new file and replace it with this:</p>
+<pre class="text"><code>---
+title: &quot;Exercise 1&quot;
+author: &quot;Put your name here&quot;
+output: html_document
+---
+
+# Reflection
+
+Replace this text with your reflection
+
+
+# My first plot
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+cars &lt;- read_csv(&quot;data/cars.csv&quot;)
+```
+
+Replace this line with a code chunk and use it to create a plot.
+</code></pre></li>
+<li><p>Save the R Markdown file with some sort of name (<strong>without any spaces!</strong>)</p></li>
+<li><p>Your project folder should look something like this:</p>
+<p><img src="/img/assignments/project-structure.png" width="30%" /></p></li>
+</ol>
+</div>
+<div id="task-2-make-an-r-markdown-file-with-a-plot-in-it" class="section level2">
+<h2>Task 2: Make an R Markdown file with a plot in it</h2>
+<ol style="list-style-type: decimal">
+<li><p>Add your reading reflection to the appropriate place in the R Markdown file. You can type directly in RStudio if you want (though there’s no spell checker), or you can type it in Word or Google Docs and then paste it into RStudio.</p></li>
+<li><p>Remove the text that says “Replace this line with a code chunk” and insert a new R code chunk. Either type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS, or use the “Insert Chunk” menu:</p>
+<p><img src="/img/assignments/insert-chunk-button.png" width="19%" /></p></li>
+<li><p>Use <code>ggplot()</code> to create a scatterplot using the <code>mpg</code> dataset. Use whatever variables you want. Type the code to create the plot in the new empty chunk.</p></li>
+<li><p>Knit your document as a Word file (or PDF if you’re brave and <a href="/resource/install/#install-tinytex">installed LaTeX</a>). Use the “Knit” menu:</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p></li>
+<li><p>Upload the knitted document to iCollege.</p></li>
+<li><p>🎉 Party! 🎉</p></li>
+</ol>
+<div class="fyi">
+<p>You’ll be doing this same process for all your future exercises. Each exercise will involve an R Markdown file. You can either create a new RStudio Project directory for all your work:</p>
+<p><img src="/img/reference/rproj-one-folder.png" width="30%" /></p>
+<p>Or you can create individual projects for each assignment and mini-project:</p>
+<p><img src="/img/reference/rproj-multiple-folders.png" width="30%" /></p>
+</div>
+</div>

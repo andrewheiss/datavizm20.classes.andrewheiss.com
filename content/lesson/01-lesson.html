@@ -20,5 +20,74 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#part-1-the-basics-of-r-and-dplyr">Part 1: The basics of R and dplyr</a></li>
+<li><a href="#part-2-getting-familiar-with-rstudio">Part 2: Getting familiar with RStudio</a></li>
+<li><a href="#part-3-rstudio-projects">Part 3: RStudio Projects</a></li>
+<li><a href="#part-4-getting-familiar-with-r-markdown">Part 4: Getting familiar with R Markdown</a></li>
+</ul>
+</div>
 
-<p>Interactive code lessons and walkthroughs will go here. This is where you’ll learn all sorts of fun things.</p>
+<div id="part-1-the-basics-of-r-and-dplyr" class="section level2">
+<h2>Part 1: The basics of R and dplyr</h2>
+<p>For the first part of today’s lesson, you need to work through a few of RStudio’s introductory primers. You’ll do these in your browser and type code and see results there.</p>
+<p>You’ll learn some of the basics of R, as well as some powerful methods for manipulating data with the <strong>dplyr</strong> package.</p>
+<p>Complete these:</p>
+<ul>
+<li><strong>The Basics</strong>
+<ul>
+<li><a href="https://rstudio.cloud/learn/primers/1.1">Visualization Basics</a></li>
+<li><a href="https://rstudio.cloud/learn/primers/1.2">Programming Basics</a></li>
+</ul></li>
+<li><strong>Work with Data</strong>
+<ul>
+<li><a href="https://rstudio.cloud/learn/primers/2.1">Working with Tibbles</a></li>
+<li><a href="https://rstudio.cloud/learn/primers/2.2">Isolating Data with dplyr</a></li>
+<li><a href="https://rstudio.cloud/learn/primers/2.3">Deriving Information with dplyr</a></li>
+</ul></li>
+</ul>
+<p>The content from these primers comes from the (free and online!) book <a href="https://r4ds.had.co.nz/"><em>R for Data Science</em> by Garrett Grolemund and Hadley Wickham</a>. I highly recommend the book as a reference and for continuing to learn and use R in the future (like running regression models and other types of statistical analysis)</p>
+</div>
+<div id="part-2-getting-familiar-with-rstudio" class="section level2">
+<h2>Part 2: Getting familiar with RStudio</h2>
+<p>The RStudio primers you just worked through are a great introduction to writing and running R code, but you typically won’t type code in a browser when you work with R. Instead, you’ll use a nicer programming environment like RStudio, which lets you type and save code in scripts, run code from those scripts, and see the output of that code, all in the same program.</p>
+<p>To get familiar with RStudio, watch this video:</p>
+<p>asdf</p>
+</div>
+<div id="part-3-rstudio-projects" class="section level2">
+<h2>Part 3: RStudio Projects</h2>
+<p>One of the most powerful and useful aspects of RStudio is its ability to manage projects.</p>
+<p>When you first open R, it is “pointed” at some folder on your computer, and anything you do will be relative to that folder. The technical term for this is a “working directory.”</p>
+<p>When you first open RStudio, look in the area right at the top of the Console pane to see your current working directory. Most likely you’ll see something cryptic: <code>~/</code></p>
+<p><img src="/img/lesson/working-directory.png" width="50%" /></p>
+<p>That tilde sign (<code>~</code>) is a shortcut that stands for your user directory. On Windows this is <code>C:\Users\your_user_name\</code>; on macOS this is <code>/Users/your_user_name/</code>. With the working directory set to <code>~/</code>, R is “pointed” at that folder, and anything you save will end up in that folder, and R will expect any data that you load to be there too.</p>
+<p>It’s always best to point R at some other directory. If you don’t use RStudio, you need to manually set the working directory to where you want it with <code>setwd()</code>, and many R scripts in the wild include something like <code>setwd("C:\Users\bill\Desktop\Important research project")</code> at the beginning to change the directory. <strong>THIS IS BAD THOUGH</strong> (<a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">see here for an explanation</a>). If you ever move that directory somewhere else, or run the script on a different computer, or share the project with someone, the path will be wrong and nothing will run and you will be sad.</p>
+<p>The best way to deal with working directories with RStudio is to use RStudio Projects. These are special files that RStudio creates for you that end in a <code>.Rproj</code> extension. When you open one of these speical files, a new RStudio instance will open up and be pointed at the correct directory automatically. If you move the folder later or open it on a different computer, it will work just fine and you will not be sad.</p>
+<p><a href="https://r4ds.had.co.nz/workflow-projects.html">Read this super short chapter on RStudio projects.</a></p>
+</div>
+<div id="part-4-getting-familiar-with-r-markdown" class="section level2">
+<h2>Part 4: Getting familiar with R Markdown</h2>
+<p>To ensure that the analysis and graphics you make are reproducible, you’ll do the majority of your work in this class using <strong>R Markdown</strong> files.</p>
+<p>Do the following things:</p>
+<ol style="list-style-type: decimal">
+<li>Watch this video:</li>
+</ol>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://player.vimeo.com/video/178485416?color=428bca" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+</div>
+<p> </p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Skim through the content at these pages:</p>
+<ul>
+<li><a href="/resource/markdown/">Using Markdown</a></li>
+<li><a href="/resource/rmarkdown/">Using R Markdown</a></li>
+<li><a href="http://rmarkdown.rstudio.com/lesson-2.html">How it Works</a></li>
+<li><a href="http://rmarkdown.rstudio.com/lesson-3.html">Code Chunks</a></li>
+<li><a href="http://rmarkdown.rstudio.com/lesson-4.html">Inline Code</a></li>
+<li><a href="http://rmarkdown.rstudio.com/lesson-8.html">Markdown Basics</a> (The <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown Reference Guide</a> is super useful here.)</li>
+<li><a href="http://rmarkdown.rstudio.com/lesson-9.html">Output Formats</a></li>
+</ul></li>
+</ol>
+</div>

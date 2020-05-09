@@ -16,4 +16,18 @@ editor_options:
   chunk_output_type: console
 ---
 
-Fully worked out code examples will go here, along with video of me live coding them.
+```{r write-data, include=FALSE}
+readr::write_csv(gapminder::gapminder, here::here("static", "data", "gapminder.csv"))
+```
+
+## Basic process for working with RStudio
+
+For this example, I'm going to create a new RStudio project, download some data, put the data in the project, and make a graph of it using R Markdown. You'll follow this same process any time you start a new project or exercise.
+
+To follow along, download this CSV file here (you may need to right click on it and select "Save As…"):
+
+- [<i class="fas fa-file-csv"></i> `gapminder.csv`](/data/gapminder.csv)
+
+Here's a video walkthrough of how to get started:
+
+ASDF

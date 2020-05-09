@@ -17,4 +17,91 @@ editor_options:
   chunk_output_type: console
 ---
 
-A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.
+```{r write-data, include=FALSE}
+readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
+```
+
+## Task 1: Make an RStudio Project
+
+1. Use either RStudio.cloud or RStudio on your computer (preferably RStudio on your computer! [Follow these instructions to get started!](/resource/install/)) to create a new RStudio Project.
+
+2. Create a folder named "data" in the project folder you just made.
+
+3. Download this CSV file and place it in that folder:
+
+- [<i class="fas fa-file-csv"></i> `cars.csv`](/data/cars.csv)
+
+4. In RStudio, go to "File" > "New File…" > "R Markdown…" and click "OK" in the dialog without changing anything.
+
+5. Delete all the placeholder text in that new file and replace it with this:
+
+    ````text
+    ---
+    title: "Exercise 1"
+    author: "Put your name here"
+    output: html_document
+    ---
+    
+    # Reflection
+    
+    Replace this text with your reflection
+    
+    
+    # My first plot
+    
+    `r ''````{r load-libraries-data, warning=FALSE, message=FALSE}
+    library(tidyverse)
+    
+    cars <- read_csv("data/cars.csv")
+    ```
+    
+    Replace this line with a code chunk and use it to create a plot.
+    
+    ````
+
+6. Save the R Markdown file with some sort of name (**without any spaces!**)
+
+7. Your project folder should look something like this:
+
+```{r project-structure, echo=FALSE, out.width="30%", indent="    "}
+knitr::include_graphics("/img/assignments/project-structure.png", error = FALSE)
+```
+
+
+## Task 2: Make an R Markdown file with a plot in it
+
+1. Add your reading reflection to the appropriate place in the R Markdown file. You can type directly in RStudio if you want (though there's no spell checker), or you can type it in Word or Google Docs and then paste it into RStudio.
+
+2. Remove the text that says "Replace this line with a code chunk" and insert a new R code chunk. Either type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS, or use the "Insert Chunk" menu:
+
+```{r insert-chunk-button, echo=FALSE, out.width="19%", indent="    "}
+knitr::include_graphics("/img/assignments/insert-chunk-button.png", error = FALSE)
+```
+
+3. Use `ggplot()` to create a scatterplot using the `mpg` dataset. Use whatever variables you want. Type the code to create the plot in the new empty chunk.
+
+4. Knit your document as a Word file (or PDF if you're brave and [installed LaTeX](/resource/install/#install-tinytex)). Use the "Knit" menu:
+
+```{r knit-button, echo=FALSE, out.width="30%", indent="    "}
+knitr::include_graphics("/img/assignments/knit-button.png", error = FALSE)
+```
+
+5. Upload the knitted document to iCollege.
+
+6. `r emo::ji("tada")` Party! `r emo::ji("tada")`
+
+
+:::fyi
+You'll be doing this same process for all your future exercises. Each exercise will involve an R Markdown file. You can either create a new RStudio Project directory for all your work:
+
+```{r single-directory, echo=FALSE, out.width="30%"}
+knitr::include_graphics("/img/reference/rproj-one-folder.png", error = FALSE)
+```
+
+Or you can create individual projects for each assignment and mini-project:
+
+```{r multiple-directories, echo=FALSE, out.width="30%",}
+knitr::include_graphics("/img/reference/rproj-multiple-folders.png", error = FALSE)
+```
+
+:::

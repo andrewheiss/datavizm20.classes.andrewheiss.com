@@ -18,4 +18,75 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+## Part 1: The basics of R and dplyr
+
+For the first part of today's lesson, you need to work through a few of RStudio's introductory primers. You'll do these in your browser and type code and see results there.
+
+You'll learn some of the basics of R, as well as some powerful methods for manipulating data with the **dplyr** package. 
+
+Complete these:
+
+- **The Basics**
+	- [Visualization Basics](https://rstudio.cloud/learn/primers/1.1)
+	- [Programming Basics](https://rstudio.cloud/learn/primers/1.2)
+- **Work with Data**
+	- [Working with Tibbles](https://rstudio.cloud/learn/primers/2.1)
+	- [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2)
+	- [Deriving Information with dplyr](https://rstudio.cloud/learn/primers/2.3)
+
+The content from these primers comes from the (free and online!) book [*R for Data Science* by Garrett Grolemund and Hadley Wickham](https://r4ds.had.co.nz/). I highly recommend the book as a reference and for continuing to learn and use R in the future (like running regression models and other types of statistical analysis)
+
+
+## Part 2: Getting familiar with RStudio
+
+The RStudio primers you just worked through are a great introduction to writing and running R code, but you typically won't type code in a browser when you work with R. Instead, you'll use a nicer programming environment like RStudio, which lets you type and save code in scripts, run code from those scripts, and see the output of that code, all in the same program.
+
+To get familiar with RStudio, watch this video: 
+
+asdf
+
+
+## Part 3: RStudio Projects
+
+One of the most powerful and useful aspects of RStudio is its ability to manage projects. 
+
+When you first open R, it is "pointed" at some folder on your computer, and anything you do will be relative to that folder. The technical term for this is a "working directory."
+
+When you first open RStudio, look in the area right at the top of the Console pane to see your current working directory. Most likely you'll see something cryptic: `~/`
+
+```{r working-directory, echo=FALSE, out.width="50%"}
+knitr::include_graphics("/img/lesson/working-directory.png", error = FALSE)
+```
+
+That tilde sign (`~`) is a shortcut that stands for your user directory. On Windows this is `C:\Users\your_user_name\`; on macOS this is `/Users/your_user_name/`. With the working directory set to `~/`, R is "pointed" at that folder, and anything you save will end up in that folder, and R will expect any data that you load to be there too.
+
+It's always best to point R at some other directory. If you don't use RStudio, you need to manually set the working directory to where you want it with `setwd()`, and many R scripts in the wild include something like `setwd("C:\Users\bill\Desktop\Important research project")` at the beginning to change the directory. **THIS IS BAD THOUGH** ([see here for an explanation](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)). If you ever move that directory somewhere else, or run the script on a different computer, or share the project with someone, the path will be wrong and nothing will run and you will be sad.
+
+The best way to deal with working directories with RStudio is to use RStudio Projects. These are special files that RStudio creates for you that end in a `.Rproj` extension. When you open one of these speical files, a new RStudio instance will open up and be pointed at the correct directory automatically. If you move the folder later or open it on a different computer, it will work just fine and you will not be sad.
+
+[Read this super short chapter on RStudio projects.](https://r4ds.had.co.nz/workflow-projects.html)
+
+
+## Part 4: Getting familiar with R Markdown
+
+To ensure that the analysis and graphics you make are reproducible, you'll do the majority of your work in this class using **R Markdown** files.
+
+Do the following things: 
+
+1. Watch this video:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://player.vimeo.com/video/178485416?color=428bca" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen></iframe>
+</div>
+
+&nbsp;
+
+2. Skim through the content at these pages:
+
+    - [Using Markdown](/resource/markdown/)
+    - [Using R Markdown](/resource/rmarkdown/)
+    - [How it Works](http://rmarkdown.rstudio.com/lesson-2.html)
+    - [Code Chunks](http://rmarkdown.rstudio.com/lesson-3.html)
+    - [Inline Code](http://rmarkdown.rstudio.com/lesson-4.html)
+    - [Markdown Basics](http://rmarkdown.rstudio.com/lesson-8.html) (The [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is super useful here.)
+    - [Output Formats](http://rmarkdown.rstudio.com/lesson-9.html)
