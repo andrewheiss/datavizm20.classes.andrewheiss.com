@@ -45,3 +45,9 @@ If you download and unzip this file, you can follow along too (but you don't hav
 <div class="embed-responsive embed-responsive-16by9">
 <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/5Z8FQtDVlYQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+
+## Final versions
+
+```{r safe-kids-finished, echo=FALSE, out.width="100%"}
+knitr::include_graphics("/img/examples/combined-output@2x.png", error = FALSE)
+```
