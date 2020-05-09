@@ -18,4 +18,137 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+## File types
+
+Recall from the [last section of the lecture](/slides/02-slides.html#image-types) that you'll typically work with one of two image file types: bitmap images and vector images.
+
+Bitmaps store image information as tiny squares, or pixels. Specific files types compress these images in different ways: JPEG files smudge together groups of similarly colored pixels to save repetition, while PNG and GIF files look for fields of the exact same color.
+
+```{r bitmap-example, echo=FALSE, out.width="30%"}
+knitr::include_graphics("/slides/img/02/example-bitmap.png", error = FALSE)
+```
+
+You use bitmap images for things that go on the internet and when you place images in Word (technically modern versions of Word can handle some types of vector images, but that support isn't universal yet). 
+
+Vector images, on the other hand, do not store image information as pixels. Instead, these use mathematical formulas to draw lines and curves and fill areas with specific colors. This makes them a little more complicated to draw and create, but it also means that you can scale them up or down infinitely—a vector image will look just as crisp on a postage stamp as it would on a billboard. 
+
+```{r vector-example, echo=FALSE, out.width="30%"}
+knitr::include_graphics("/slides/img/02/example-vector.png", error = FALSE)
+```
+
+Here are some general guidelines:
+
+- If an image has lots of colors (like a photograph), you should use a bitmap file type designed for lots of colors, like JPEG. This is the case regardless of where the image will ultimately end up. If you're putting it on the internet, it needs to be a JPEG. If you're blowing it up to fit on a billboard, it will still need to be a JPEG (and you have to use a fancy super high quality camera to get a high enough resolution for that kind of expansion)
+
+- If an image has a few colors and some text and is not a photograph *and* you're using the image in Word or on the internet, you should use a bitmap file type designed for carefully compressing a few colors, like PNG.
+
+- If an image has a few colors and some text and is not a photograph *and* you're planning on using it in multiple sizes (like a logo), or using it in fancier production software like Adobe InDesign (for print) or Adobe After Effects (for video), you should use a vector file type like PDF or SVG.
+
+
+## Select the best file type
+
+Practice deciding what kind of file type you should use by looking at these images and choosing what you think works the best.
+
+```{r include=FALSE}
+library(checkdown)
+```
+
+<div class="question">
+
+```{r atlanta-sign, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/atlanta-sign.jpg", error = FALSE)
+```
+
+```{r atlanta-sign-question, echo=FALSE, results="asis"}
+check_question("JPG", options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 1,
+               right = "Correct! This is a photograph, so it should be a JPG. It might seem a little tricky since there are so few colors, but it still needs to be a JPG because the black paint on the brick is actually a range of thousands of different shades of black pixels.",
+               wrong = "Not quite—this image has a lot of colors in it…")
+```
+
+</div>
+
+---
+
+<div class="question">
+
+```{r gsu-logo, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/gsu-logo.png", error = FALSE)
+```
+
+```{r gsu-logo-question, echo=FALSE, results="asis"}
+check_question(c("PNG", "PDF"), options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 2,
+               right = "Correct! This is a logo with a few colors in it, so it’s vector-based. If you use a PDF of the logo, you can rescale it infinitely big or small. If you use a PNG, it will work nicely online.",
+               wrong = "Not quite—this image doesn’t have a lot of colors in it…")
+```
+
+</div>
+
+---
+
+<div class="question">
+
+```{r pie-chart, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/pie_chart.png", error = FALSE)
+```
+
+```{r pie-chart-question, echo=FALSE, results="asis"}
+check_question(c("PNG", "PDF"), options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 3,
+               right = "Correct! This is a grpah with a few colors in it, so should be vector-based. If you’re using this in a fancy publication or report, use a PDF. If you’e using Word or HTML, use a PNG.",
+               wrong = "Not quite—this image doesn’t have a lot of colors in it…")
+```
+
+</div>
+
+---
+
+<div class="question">
+
+```{r solo, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/solo.jpg", error = FALSE)
+```
+
+```{r solo-question, echo=FALSE, results="asis"}
+check_question("JPG", options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 4,
+               right = "Correct! This has a ton of colors in it and is mostly a photograph. You may have been thrown off by the text in the bottom section, or the stylized shapes of the Millennium Falcon’s windows at the top. Those shapes and the text are both vector-based, but because the majority of the image is a photogrpah, it still needs to be saved as a JPG. To keep the text nice and crisp, it needs to be exported at a high resolution.",
+               wrong = "Not quite—this image has a lot of colors in it…")
+```
+
+</div>
+
+---
+
+<div class="question">
+
+```{r butterflies, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/butterflies.png", error = FALSE)
+```
+
+```{r butterflies-question, echo=FALSE, results="asis"}
+check_question(c("PNG", "PDF"), options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 5,
+               right = "Correct! Even though this is very colorful, it should be a PNG or PDF, since it’s vector-based and not a photograph. ",
+               wrong = "Not quite—this image doesn’t have a lot of colors in it…")
+```
+
+</div>
+
+---
+
+<div class="question">
+
+```{r atlanta-night, echo=FALSE, out.width="60%"}
+knitr::include_graphics("/img/lesson/file-types/atlanta-night.jpg", error = FALSE)
+```
+
+```{r atlanta-night-question, echo=FALSE, results="asis"}
+check_question("JPG", options = c("PNG", "JPG", "PDF"), type = "radio", 
+               button_label = "Check answer", question_id = 6,
+               right = "Correct! This is a photograph and should be a JPG.",
+               wrong = "Not quite—this image has a lot of colors in it…")
+```
+
+</div>

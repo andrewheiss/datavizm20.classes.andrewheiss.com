@@ -43,7 +43,9 @@ The RStudio primers you just worked through are a great introduction to writing 
 
 To get familiar with RStudio, watch this video: 
 
-asdf
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cnQ-v1UUWyE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 
 ## Part 3: RStudio Projects
@@ -90,3 +92,9 @@ Do the following things:
     - [Inline Code](http://rmarkdown.rstudio.com/lesson-4.html)
     - [Markdown Basics](http://rmarkdown.rstudio.com/lesson-8.html) (The [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is super useful here.)
     - [Output Formats](http://rmarkdown.rstudio.com/lesson-9.html)
+
+3. Watch this video:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fT5xI1cmE2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>

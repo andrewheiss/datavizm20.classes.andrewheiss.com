@@ -163,6 +163,25 @@ td.mid-table-header {
     background-color: nth($colors-dark, 7);
 }
 
+.question form {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.question p[id^="result_"] {
+    color: nth($colors-dark, 4);
+    padding-top: 1em;
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.question label {
+    padding-left: 0.4em;
+    font-weight: bold;
+}
+
 div.note,
 div.fyi,
 div.puzzle,
