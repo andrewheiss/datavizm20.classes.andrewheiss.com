@@ -38,7 +38,7 @@ Redesign the poster for the BYU Student Wellness Center workshop. Use whatever p
 
 To save you from retyping everything, I've included all the text and Student Wellness hex logo in the zip file below:
 
-- [<i class="fas fa-file-archive"></i> `03-exercise.zip`](/projects/03-exercise.zip)
+- [<i class="fas fa-file-archive"></i> `02-exercise.zip`](/projects/02-exercise.zip)
 
 I didn't include the Instagram logo. If you want to use that, go find one online. You don't have to use it. You don't have to use the big paragraph of text either—you can rewrite it to shrink it down if you want.
 

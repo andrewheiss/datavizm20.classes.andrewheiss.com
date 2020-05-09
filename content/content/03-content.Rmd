@@ -26,7 +26,6 @@ output:
 
 - Why is it important to visualize variables and data?
 - What does it mean to map data to graph aesthetics?
-- How are grammar of graphics aesthetics (i.e. `aes()` in ggplot) related to Tufte's data-to-ink ratio?
 - What data was mapped to which aesthetics in Rosling's video?
 
 

@@ -29,7 +29,7 @@ readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
 
 3. Download this CSV file and place it in that folder:
 
-- [<i class="fas fa-file-csv"></i> `cars.csv`](/data/cars.csv)
+    - [<i class="fas fa-file-csv"></i> `cars.csv`](/data/cars.csv)
 
 4. In RStudio, go to "File" > "New File…" > "R Markdown…" and click "OK" in the dialog without changing anything.
 
