@@ -18,5 +18,226 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#live-coding-example">Live coding example</a></li>
+<li><a href="#complete-code">Complete code</a>
+<ul>
+<li><a href="#load-and-clean-data">Load and clean data</a></li>
+<li><a href="#histograms">Histograms</a></li>
+<li><a href="#points">Points</a></li>
+<li><a href="#boxplots">Boxplots</a></li>
+<li><a href="#summaries">Summaries</a></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>For this example, I’m going to use real world data to demonstrate the typical process for loading data, cleaning it up a bit, and mapping specific columns of the data onto the parts of a graph using the grammar of graphics and <code>ggplot()</code>.</p>
+<p>The data I’ll use comes from the BBC’s corporate charity, <a href="https://www.bbcchildreninneed.co.uk/">BBC Children in Need</a>, which makes grants to smaller UK nonprofit organizations that work on issues related to childhood poverty. An organization in the UK named <a href="https://www.threesixtygiving.org/">360Giving</a> helps nonprofits and foundations publish data about their grant giving activities in an open and standardized way, and (as of May 2020) <a href="http://data.threesixtygiving.org/">they list data from 126 different charities</a>, including BBC Children in Need.</p>
+<p>If you want to follow along with this example (highly recommended!), you can download the data directly from <a href="http://data.threesixtygiving.org/">360Giving</a> or by using this link:</p>
+<ul>
+<li><a href="/data/360-giving-data.xlsx"><i class="fas fa-file-excel"></i> <code>360-giving-data.xlsx</code></a></li>
+</ul>
+<div id="live-coding-example" class="section level2">
+<h2>Live coding example</h2>
+<p>Video here.</p>
+</div>
+<div id="complete-code" class="section level2">
+<h2>Complete code</h2>
+<p><em>(This is a slightly cleaned up version of the code from the video.)</em></p>
+<div id="load-and-clean-data" class="section level3">
+<h3>Load and clean data</h3>
+<p>First, we need to load a few libraries: <strong>tidyverse</strong> (as always), along with <strong>readxl</strong> for reading Excel files and <strong>lubridate</strong> for working with dates:</p>
+<pre class="r"><code># Load libraries
+library(tidyverse)  # For ggplot, dplyr, and friends
+library(readxl)     # For reading Excel files
+library(lubridate)  # For working with dates</code></pre>
+<p>We’ll then load the original Excel file. I placed this file in a folder named <code>data</code> in my RStudio Project folder for this example. I like to read original data into an object named <code>whatever_raw</code> just in case it takes a long time to load (that way I don’t have to keep reloading it every time I add a new column or do anything else with it). It’s also good practice to keep a pristine, untouched copy of your data.</p>
+<pre class="r"><code># Load the original Excel file
+bbc_raw &lt;- read_excel(&quot;data/360-giving-data.xlsx&quot;)</code></pre>
+<p>There may be some errors reading the file—you can ignore those in this case.</p>
+<p>Next we’ll add a couple columns and clean up the data a little. In the video I did this non-linearly—I came back to the top of the document to add columns when I needed them and then reran the chunk to create the data.</p>
+<p>We’ll extract the year from the Award Date column, rename some of the longer-named columns, and make a new column that shows the duration of grants. We’ll also get rid of 2015 since there are so few observations then.</p>
+<p>Note the strange use of <code>`</code>s around column names like <code>`Award Date`</code>. This is because R technically doesn’t allow special characters like spaces in column names. If there are spaces, you have to wrap the column names in backticks. Because typing backticks all the time gets tedious, we’ll use <code>rename()</code> to rename some of the columns:</p>
+<pre class="r"><code>bbc &lt;- bbc_raw %&gt;% 
+  # Extract the year from the award date
+  mutate(grant_year = year(`Award Date`)) %&gt;% 
+  # Rename some columns
+  rename(grant_amount = `Amount Awarded`,
+         grant_program = `Grant Programme:Title`,
+         grant_duration = `Planned Dates:Duration (months)`) %&gt;% 
+  # Make a new text-based version of the duration column, recoding months
+  # between 12-23, 23-35, and 36+. The case_when() function here lets us use
+  # multiple if/else conditions at the same time.
+  mutate(grant_duration_text = case_when(
+    grant_duration &gt;= 12 &amp; grant_duration &lt; 24 ~ &quot;1 year&quot;,
+    grant_duration &gt;= 24 &amp; grant_duration &lt; 36 ~ &quot;2 years&quot;,
+    grant_duration &gt;= 36 ~ &quot;3 years&quot;
+  )) %&gt;% 
+  # Get rid of anything before 2016
+  filter(grant_year &gt; 2015) %&gt;% 
+  # Make a categorical version of the year column
+  mutate(grant_year_category = factor(grant_year))</code></pre>
+</div>
+<div id="histograms" class="section level3">
+<h3>Histograms</h3>
+<p>First let’s look at the distribution of grant amounts with a histogram. Map <code>grant_amount</code> to the x-axis and don’t map anything to the y-axis, since <code>geom_histogram()</code> will calculate the y-axis values for us:</p>
+<pre class="r"><code>ggplot(data = bbc, mapping = aes(x = grant_amount)) +
+  geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-basic-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Notice that ggplot warns you about bin widths. By default it will divide the data into 30 equally spaced bins, which will most likely not be the best for your data. You should <em>always</em> set your own bin width to something more appropriate. There are no rules for correct bin widths. Just don’t have them be too wide:</p>
+<pre class="r"><code>ggplot(data = bbc, mapping = aes(x = grant_amount)) +
+  geom_histogram(binwidth = 100000)</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-wide-bin-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Or too small:</p>
+<pre class="r"><code>ggplot(data = bbc, mapping = aes(x = grant_amount)) +
+  geom_histogram(binwidth = 500)</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-tiny-bins-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>£10,000 seems to fit well. It’s often helpful to add a white border to the histogram bars, too:</p>
+<pre class="r"><code>ggplot(data = bbc, mapping = aes(x = grant_amount)) +
+  geom_histogram(binwidth = 10000, color = &quot;white&quot;)</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-good-bins-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We can map other variables onto the plot, like mapping <code>grant_year_category</code> to the fill aesthetic:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_amount, fill = grant_year_category)) +
+  geom_histogram(binwidth = 10000, color = &quot;white&quot;)</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-bad-fill-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>That gets really hard to interpret though, so we can facet by year with <code>facet_wrap()</code>:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_amount, fill = grant_year_category)) +
+  geom_histogram(binwidth = 10000, color = &quot;white&quot;) +
+  facet_wrap(vars(grant_year))</code></pre>
+<p><img src="/example/03-example_files/figure-html/hist-facet-fill-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Neat!</p>
+</div>
+<div id="points" class="section level3">
+<h3>Points</h3>
+<p>Next let’s look at the data using points, mapping year to the x-axis and grant amount to the y-axis:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount)) +
+  geom_point()</code></pre>
+<p><img src="/example/03-example_files/figure-html/points-initial-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We have some serious overplotting here, with dots so thick that it looks like lines. We can fix this a couple different ways. First, we can make the points semi-transparent using <code>alpha</code>, which ranges from 0 (completely invisible) to 1 (completely solid).</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount)) +
+  geom_point(alpha = 0.1)</code></pre>
+<p><img src="/example/03-example_files/figure-html/points-alpha-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We can also randomly space the points to spread them out using <code>position_jitter()</code>:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount)) +
+  geom_point(position = position_jitter())</code></pre>
+<p><img src="/example/03-example_files/figure-html/points-jitter-default-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>One issue with this, though, is that the points are jittered along the x-axis (which is fine, since they’re all within the same year) <em>and</em> the y-axis (which is bad, since the amounts are actual numbers). We can tell ggplot to only jitter in one direction by specifying the <code>height</code> argument—we don’t want any up-and-down jittering:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount)) +
+  geom_point(position = position_jitter(height = 0))</code></pre>
+<p><img src="/example/03-example_files/figure-html/points-jitter-horizontal-only-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>There are some weird clusters around £30,000 and below. Let’s map <code>grant_program</code> to the color aesthetic, which has two categories—regular grants and small grants—and see if that helps explain why:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount, color = grant_program)) +
+  geom_point(position = position_jitter(height = 0))</code></pre>
+<p><img src="/example/03-example_files/figure-html/points-jitter-color-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>It does! We appear to have two different distributions of grants: small grants have a limit of £30,000, while regular grants have a much higher average amount.</p>
+</div>
+<div id="boxplots" class="section level3">
+<h3>Boxplots</h3>
+<p>We can add summary information to the plot by only changing the <code>geom</code> we’re using. Switch from <code>geom_point()</code> to <code>geom_boxplot()</code>:</p>
+<pre class="r"><code>ggplot(bbc, aes(x = grant_year_category, y = grant_amount, color = grant_program)) +
+  geom_boxplot()</code></pre>
+<p><img src="/example/03-example_files/figure-html/boxplot-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="summaries" class="section level3">
+<h3>Summaries</h3>
+<p>We can also make smaller summarized datasets with <strong>dplyr</strong> functions like <code>group_by()</code> and <code>summarize()</code> and plot those. First let’s look at grant totals, averages, and counts over time:</p>
+<pre class="r"><code>bbc_by_year &lt;- bbc %&gt;% 
+  group_by(grant_year) %&gt;%  # Make invisible subgroups for each year
+  summarize(total = sum(grant_amount),  # Find the total awarded in each group
+            avg = mean(grant_amount),  # Find the average awarded in each group
+            number = n())  # n() is a special function that shows the number of rows in each group
+
+# Look at our summarized data
+bbc_by_year</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   grant_year    total    avg number
+##        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;
+## 1       2016 17290488 78238.    221
+## 2       2017 62394278 59765.   1044
+## 3       2018 61349392 60205.   1019
+## 4       2019 41388816 61136.    677</code></pre>
+<p>Because we used <code>summarize()</code>, R shrank our data down significantly. We now only have a row for each of the subgroups we made: one for each year. We can plot this smaller data. We’ll use <code>geom_col()</code> for now (but in tomorrow’s session you’ll learn why this is actually bad for averages!)</p>
+<pre class="r"><code># Plot our summarized data
+ggplot(bbc_by_year, aes(x = grant_year, y = avg)) +
+  geom_col()</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-summaries-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(bbc_by_year, aes(x = grant_year, y = total)) +
+  geom_col()</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-summaries-2.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(bbc_by_year, aes(x = grant_year, y = number)) +
+  geom_col()</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-summaries-3.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Based on these charts, it looks like 2016 saw the largest average grant amount. In all other years, grants averaged around £60,000, but in 2016 it jumped up to £80,000. If we look at total grants, though, we can see that there were far fewer grants awarded in 2016—only 221! 2017 and 2018 were much bigger years with far more money awarded.</p>
+<p>We can also use multiple aesthetics to reveal more information from the data. First we’ll make a new small summary dataset and group by both year and grant program. With those groups, we’ll again calculate the total, average, and number.</p>
+<pre class="r"><code>bbc_year_size &lt;- bbc %&gt;% 
+  group_by(grant_year, grant_program) %&gt;% 
+  summarize(total = sum(grant_amount),
+            avg = mean(grant_amount),
+            number = n())
+
+bbc_year_size</code></pre>
+<pre><code>## # A tibble: 8 x 5
+## # Groups:   grant_year [4]
+##   grant_year grant_program    total    avg number
+##        &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;
+## 1       2016 Main Grants   16405586 86345.    190
+## 2       2016 Small Grants    884902 28545.     31
+## 3       2017 Main Grants   48502923 90154.    538
+## 4       2017 Small Grants  13891355 27453.    506
+## 5       2018 Main Grants   47347789 95652.    495
+## 6       2018 Small Grants  14001603 26721.    524
+## 7       2019 Main Grants   33019492 96267.    343
+## 8       2019 Small Grants   8369324 25058.    334</code></pre>
+<p>Next we’ll plot the data, mapping the <code>grant_program</code> column to the <code>fill</code> aesthetic:</p>
+<pre class="r"><code>ggplot(bbc_year_size, aes(x = grant_year, y = total, fill = grant_program)) +
+  geom_col()</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-size-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>By default, ggplot will stack the different fill colors within the same bar, but this makes it a little hard to make comparisons. While we can see that the average small grant amount was a little bigger in 2017 than in 2019, it’s harder to compare average main grant amount, since the bottoms of those sections don’t align.</p>
+<p>To fix this, we can use <code>position_dodge()</code> to tell the columns to fit side-by-side:</p>
+<pre class="r"><code>ggplot(bbc_year_size, aes(x = grant_year, y = total, fill = grant_program)) +
+  geom_col(position = position_dodge())</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-size-dodge-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Instead of dodging, we can also facet by <code>grant_program</code> to separate the bars:</p>
+<pre class="r"><code>ggplot(bbc_year_size, aes(x = grant_year, y = total, fill = grant_program)) +
+  geom_col() +
+  facet_wrap(vars(grant_program))</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-size-facet-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We can put these in one column if we want:</p>
+<pre class="r"><code>ggplot(bbc_year_size, aes(x = grant_year, y = total, fill = grant_program)) +
+  geom_col() +
+  facet_wrap(vars(grant_program), ncol = 1)</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-size-col-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Finally, we can include even more variables! We have a lot of aesthetics we can work with (<code>size</code>, <code>alpha</code>, <code>color</code>, <code>fill</code>, <code>linetype</code>, etc.), as well as facets, so let’s add one more to show the duration of the awarded grant.</p>
+<p>First we’ll make another smaller summarized dataset, grouping by year, program, and duration and summarizing the total, average, and number of awards.</p>
+<pre class="r"><code>bbc_year_size_duration &lt;- bbc %&gt;% 
+  group_by(grant_year, grant_program, grant_duration_text) %&gt;% 
+  summarize(total = sum(grant_amount),
+            avg = mean(grant_amount),
+            number = n())
+
+bbc_year_size_duration</code></pre>
+<pre><code>## # A tibble: 21 x 6
+## # Groups:   grant_year, grant_program [8]
+##    grant_year grant_program grant_duration_text    total    avg number
+##         &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;
+##  1       2016 Main Grants   2 years                97355 48678.      2
+##  2       2016 Main Grants   3 years             16308231 86746.    188
+##  3       2016 Small Grants  3 years               884902 28545.     31
+##  4       2017 Main Grants   1 year                 59586 29793       2
+##  5       2017 Main Grants   2 years               825732 82573.     10
+##  6       2017 Main Grants   3 years             47617605 90528.    526
+##  7       2017 Small Grants  1 year                 10000 10000       1
+##  8       2017 Small Grants  2 years               245227 18864.     13
+##  9       2017 Small Grants  3 years             13636128 27716.    492
+## 10       2018 Main Grants   1 year                118134 59067       2
+## # … with 11 more rows</code></pre>
+<p>Next, we’ll fill by grant program and facet by duration and show the total number of grants awarded</p>
+<pre class="r"><code>ggplot(bbc_year_size_duration, aes(x = grant_year, y = number, fill = grant_program)) +
+  geom_col(position = position_dodge(preserve = &quot;single&quot;)) +
+  facet_wrap(vars(grant_duration_text), ncol = 1)</code></pre>
+<p><img src="/example/03-example_files/figure-html/plot-year-size-duration-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>The vast majority of BBC Children in Need’s grants last for 3 years. Super neat.</p>
+</div>
+</div>
