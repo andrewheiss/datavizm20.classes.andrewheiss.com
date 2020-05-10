@@ -9,6 +9,8 @@ weight: 4
 
 There are a ton of places to find data related to public policy and administration (as well as data on pretty much any topic you want) online:
 
+- [Data is Plural newsletter](): Jeremy Singer-Vine sends a weekly newsletter of the most interesting public datasets he's found. You should subscribe to it. [He also has an archive of all the datasets he's highlighted.](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0)
+
 - [**Google Dataset Search**](https://toolbox.google.com/datasetsearch): Google indexes thousands of public datasets; search for them here.
 
 - [**Kaggle**](https://www.kaggle.com/datasets): Kaggle hosts machine learning competitions where people compete to create the fastest, most efficient, most predictive algorithms. A byproduct of these competitions is a host of fascinating datasets that are generally free and open to the public. See, for example, [the European Soccer Database](https://www.kaggle.com/hugomathien/soccer), the [Salem Witchcraft Dataset](https://www.kaggle.com/rtatman/salem-witchcraft-dataset) or results from an [Oreo flavors taste test](https://www.kaggle.com/rtatman/oreo-flavors-tastetest-ratings).
