@@ -5,7 +5,14 @@ date: "Put the date here"
 output: html_document
 ---
 
-# Load and clean data
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Lord of the Rings
+
+## Load and clean data
 
 First we load, restructure, and clean the data.
 
@@ -34,7 +41,7 @@ lotr <- lotr_wide %>%
 ```
 
 
-# Race
+## Race
 
 Does a certain race dominate the entire trilogy? (hint: group by `Race`)
 
@@ -43,7 +50,7 @@ Does a certain race dominate the entire trilogy? (hint: group by `Race`)
 ```
 
 
-# Gender and film
+## Gender and film
 
 Does a certain gender dominate a movie? (lolz of course it does, but still, graph it) (Hint: group by both `Gender` and `Film`.) Experiment with filling by `Gender` or `Film` and faceting by `Gender` or `Film`.
 
@@ -52,7 +59,7 @@ Does a certain gender dominate a movie? (lolz of course it does, but still, grap
 ```
 
 
-# Race and film
+## Race and film
 
 Does the dominant race differ across the three movies? (Hint: group by both `Race` and `Film`.) Experiment with filling by `Race` or `Film` and faceting by `Race` or `Film`.
 
@@ -61,7 +68,7 @@ Does the dominant race differ across the three movies? (Hint: group by both `Rac
 ```
 
 
-# Race and gender and film
+## Race and gender and film
 
 Create a plot that visualizes the number of words spoken by race, gender, and film simultaneously. Use the complete tidy `lotr` data frame. You don't need to create a new summarized dataset (with `group_by(Race, Gender, Film)`) because the original data already has a row for each of those (you could make a summarized dataset, but it would be identical to the full version).
 
