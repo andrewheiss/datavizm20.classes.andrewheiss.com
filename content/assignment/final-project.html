@@ -18,5 +18,135 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#data-from-the-internet">Data from the internet</a>
+<ul>
+<li><a href="#nonprofit-management">Nonprofit management</a></li>
+<li><a href="#federal-state-and-local-government-management">Federal, state, and local government management</a></li>
+<li><a href="#business-management">Business management</a></li>
+</ul></li>
+<li><a href="#instructions">Instructions</a></li>
+<li><a href="#final-deliverables">Final deliverables</a></li>
+<li><a href="#past-examples">Past examples</a>
+<ul>
+<li><a href="#travel-runs-in-yellowstone">Travel runs in Yellowstone</a></li>
+<li><a href="#firefighter-fatalities">Firefighter fatalities</a></li>
+<li><a href="#scripture-use-by-the-killers">Scripture use by <em>The Killers</em></a></li>
+<li><a href="#utah-nonprofits">Utah nonprofits</a></li>
+<li><a href="#buckethead">Buckethead</a></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Instructions for the final project will go here.</p>
+<p>You made it to the end of our whirlwind tour of data visualization principles! Congratulations!</p>
+<p>Now you get to show off all the tools you learned with a beautiful, truthful, narrative visualization.</p>
+<p>For your final project, you will take a dataset, explore it, tinker with it, and tell a nuanced story about it using at least three graphs.</p>
+<p>I want this project to be as useful for you and your future career as possible—you’ll hopefully want to show off your final project in a portfolio or during job interviews.</p>
+<p>Accordingly, you have some choice in what data you can use for this project. I’ve found several different high-quality datasets online related to the core MPA/MPP tracks. <strong>You do not have to choose a dataset in your given field</strong> (especially if you’re not an MPA or MPP student!) Choose whatever one you are most interested in or will have the most fun with.</p>
+<div id="data-from-the-internet" class="section level2">
+<h2>Data from the internet</h2>
+<p><a href="/resource/data/">Go to this list of data sources</a> and find something interesting! The things in the “Data is Plural” newsletter are often especially interesting and fun. Here are some different high-quality datasets that students have worked with before:</p>
+<div id="nonprofit-management" class="section level3">
+<h3>Nonprofit management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/crawford/us-charities-and-nonprofits">U.S. Charities and Non-profits</a>: All of the charities and nonprofits registered with the IRS. This is actually split into six separate files. You can combine them all into one massive national database with <code>bind_rows()</code>, or filter the data to include specific states (or a single state). It all depends on the story you’re telling. Source: IRS.</li>
+<li><a href="https://data.world/causebot/grant-2010-to-2016">Nonprofit Grants 2010 to 2016</a>: Nonprofit grants made in the US as listed in Schedule I of the IRS 990 tax form between 2010 to 2016. Source: IRS.</li>
+</ul>
+</div>
+<div id="federal-state-and-local-government-management" class="section level3">
+<h3>Federal, state, and local government management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/kwullum/deadly-traffic-accidents-in-the-uk-2015">Deadly traffic accidents in the UK (2015)</a>: List of all traffic-related deaths in the UK in 2015. Source: <a href="https://data.gov.uk/dataset/road-accidents-safety-data/resource/ceb00cff-443d-4d43-b17a-ee13437e9564">data.gov.uk</a>.</li>
+<li><a href="https://www.kaggle.com/fema/firefighter-fatalities">Firefighter Fatalities in the United States</a>: Name, rank, and cause of death for all firefighters killed since 2000. Source: FEMA.</li>
+<li><a href="https://www.kaggle.com/fema/federal-disasters">Federal Emergencies and Disasters, 1953–Present</a>: Every federal emergency or disaster declared by the President of the United States since 1953. Source: FEMA.</li>
+<li><a href="https://www.kaggle.com/START-UMD/gtd">Global Terrorism Database (1970–2016)</a>: 170,000 terrorist attacks worldwide, 1970-2016. Source: National Consortium for the Study of Terrorism and Responses to Terrorism (START), University of Maryland.</li>
+<li><a href="https://data.world/cityofaustin/i26j-ai4z">City of Austin 311 Unified Data</a>: All 311 calls to the City of Austin since 2014. Source: City of Austin.</li>
+</ul>
+</div>
+<div id="business-management" class="section level3">
+<h3>Business management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/jiashenliu/515k-hotel-reviews-data-in-europe">515K Hotel Reviews Data in Europe</a>: 515,000 customer reviews and scoring of 1,493 luxury hotels across Europe. Source: Booking.com.</li>
+<li><a href="https://www.kaggle.com/chasebank/bank-deposits">Chase Bank Branch Deposits, 2010–2016</a>: Records for every branch of Chase Bank in the United States. This dataset is not quite tidy and will require a little bit of reshaping with <code>gather()</code> or <code>pivot_longer()</code>, since there are individual columns of deposits per year. Source: Chase Bank.</li>
+</ul>
+</div>
+</div>
+<div id="instructions" class="section level2">
+<h2>Instructions</h2>
+<p>Here’s what you’ll need to do:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Download</strong> a dataset and explore it. Many of these datasets are large and will not open (well) in Excel, so you’ll need to load the CSV file into R with <code>read_csv()</code>. Most of these datasets have nice categorical variables that you can use for grouping and summarizing, and many have time components too, so you can look at trends. Your past problem sets and in-class examples will come in handy here.</p></li>
+<li><p><strong>Find</strong> a story in the data. Explore that story and make sure it’s true and insightful.</p></li>
+<li><p>Use R to <strong>create</strong> multiple graphs to tell the story. You can make as many graphs as you want, but you must use at least <strong>three</strong> different chart types (i.e. don’t just make three scatterplots or three maps).</p></li>
+<li><p>Export these figures as PDF files, place them in Adobe Illustrator (or InDesign or Gravit Designer or Inkscape), and <strong>make</strong> one combined graphic or handout where you tell the complete story. You have a lot of latitude in how you do this. You can make a graphic-heavy one-page handout. You can make something along the lines of the <a href="https://www.wired.co.uk/article/nuclear-power-reactors-global">this</a>, with one big graphic + smaller subgraphics + explanatory text. Just don’t make a <a href="https://medium.com/@kazarnowicz/why-infographics-are-bad-3a2fa49673e2">goofy infographic</a>. Whatever you do, the final figure must include all the graphics, must have some explanatory text to help summarize the narrative, and must be well designed.</p></li>
+<li><p><strong>Export</strong> the final graphic from Illustrator as a PDF and a PNG.</p></li>
+<li><p><strong>Write</strong> a memo using R Markdown to introduce, frame, and describe your story and figure. <a href="/files/your_name_finalproject.Rmd">Use this template to get started</a>. You should include the following in the memo:</p>
+<ul>
+<li>Executive summary</li>
+<li>Background information and summary of the data</li>
+<li>Explanation, description, and code for each individual figure</li>
+<li>Explanation and description for the final figure</li>
+<li>Final figure should be included as an image (remember <code>![Caption goes here](path/to/file.png)</code>)</li>
+</ul></li>
+</ol>
+<p>Remember to follow R Markdown etiquette rules and style—don’t have it output extraneous messages or warnings, include summary tables in nice tables, adjust the dimensions for your figures, and remove the placeholder text that’s in the template already (i.e. I don’t want to see stuff like “Describe and show how you cleaned and reshaped the data” in the final report.)</p>
+<p><strong>You should <a href="/projects/example_final.zip">download a full example of what a final project might look like</a></strong> (but don’t make your final combined visualization look exactly like this—show some creativity!)</p>
+</div>
+<div id="final-deliverables" class="section level2">
+<h2>Final deliverables</h2>
+<p>Upload the following files to iCollege:</p>
+<ol style="list-style-type: decimal">
+<li>A memo introducing and describing your final graphic (see full instructions above)</li>
+<li>A standalone PDF of your graphic exported from Illustrator</li>
+<li>A standalone PNG of your graphic exported from Illustrator</li>
+</ol>
+<p><strong>No late work will be accepted for this project since it’s the last project and it counts as your final.</strong></p>
+<p>I will use <a href="/files/final-project-rubric.xlsx">this rubric</a> to grade the final product:</p>
+<ul>
+<li><a href="/files/final-project-rubric.xlsx"><i class="fas fa-file-excel"></i> <code>final-project-rubric.xlsx</code></a></li>
+</ul>
+<p>I am happy to give feedback and help along the way—please don’t hesitate to get help! My goal is for you to have a beautiful graphic in the end that you’ll want to show off to all your friends, family, neighbors, employers, and strangers on the street—I’m not trying to trip you up or give you trick questions!</p>
+<p>And that’s it. <strong>You’re done!</strong> Go out into the world now and make beautiful, insightful, and truthful graphics.</p>
+<p><a href="https://24ways.org/2010/go-forth-and-make-awesomeness/"><strong>Go forth and make awesomeness.</strong></a></p>
+</div>
+<div id="past-examples" class="section level2">
+<h2>Past examples</h2>
+<p><a href="/projects/example_final.zip">Download a full example of what a final project might look like.</a></p>
+<p>Here are some great examples of student projects from past versions of this class.</p>
+<div id="travel-runs-in-yellowstone" class="section level3">
+<h3>Travel runs in Yellowstone</h3>
+<p><a href="/files/past-projects/yellowstone-travel/final_memo.pdf"><i class="fas fa-file-pdf"></i> Project description</a> 
+<a href="/files/past-projects/yellowstone-travel/final.pdf"><i class="fas fa-file-pdf"></i> Final PDF</a> 
+<a href="/files/past-projects/yellowstone-travel/final.png"><i class="far fa-image"></i> Final PNG</a></p>
+<p><a href="/files/past-projects/yellowstone-travel/final.pdf"><img src="/files/past-projects/yellowstone-travel/final.png" alt="Yellowstone travel final project" /></a></p>
+</div>
+<div id="firefighter-fatalities" class="section level3">
+<h3>Firefighter fatalities</h3>
+<p><a href="/files/past-projects/firefighters/final_memo.pdf"><i class="fas fa-file-pdf"></i> Project description</a> 
+<a href="/files/past-projects/firefighters/final.pdf"><i class="fas fa-file-pdf"></i> Final PDF</a> 
+<a href="/files/past-projects/firefighters/final.png"><i class="far fa-image"></i> Final PNG</a></p>
+<p><a href="/files/past-projects/firefighters/final.pdf"><img src="/files/past-projects/firefighters/final.png" alt="Firefighter fatalities final project" /></a></p>
+</div>
+<div id="scripture-use-by-the-killers" class="section level3">
+<h3>Scripture use by <em>The Killers</em></h3>
+<p><a href="/files/past-projects/killers-scripture/final_memo.pdf"><i class="fas fa-file-pdf"></i> Project description</a> 
+<a href="/files/past-projects/killers-scripture/final.pdf"><i class="fas fa-file-pdf"></i> Final PDF</a> 
+<a href="/files/past-projects/killers-scripture/final.png"><i class="far fa-image"></i> Final PNG</a></p>
+<p><a href="/files/past-projects/killers-scripture/final.pdf"><img src="/files/past-projects/killers-scripture/final.png" alt="Firefighter fatalities final project" /></a></p>
+</div>
+<div id="utah-nonprofits" class="section level3">
+<h3>Utah nonprofits</h3>
+<p><a href="/files/past-projects/utah-nonprofits/final_memo.pdf"><i class="fas fa-file-pdf"></i> Project description</a> 
+<a href="/files/past-projects/utah-nonprofits/final.pdf"><i class="fas fa-file-pdf"></i> Final PDF</a> 
+<a href="/files/past-projects/utah-nonprofits/final.png"><i class="far fa-image"></i> Final PNG</a></p>
+<p><a href="/files/past-projects/utah-nonprofits/final.pdf"><img src="/files/past-projects/utah-nonprofits/final.png" alt="Firefighter fatalities final project" /></a></p>
+</div>
+<div id="buckethead" class="section level3">
+<h3>Buckethead</h3>
+<p><a href="/files/past-projects/buckethead/final_memo.pdf"><i class="fas fa-file-pdf"></i> Project description</a> 
+<a href="/files/past-projects/buckethead/final.pdf"><i class="fas fa-file-pdf"></i> Final PDF</a> 
+<a href="/files/past-projects/buckethead/final.png"><i class="far fa-image"></i> Final PNG</a></p>
+<p><a href="/files/past-projects/buckethead/final.pdf"><img src="/files/past-projects/buckethead/final.png" alt="Firefighter fatalities final project" /></a></p>
+</div>
+</div>

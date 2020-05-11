@@ -1,0 +1,43 @@
+---
+title: "Your title here"
+author: "Your name here"
+date: "Date here"
+output: 
+  html_document: 
+    fig_caption: yes
+  pdf_document: 
+    latex_engine: xelatex
+    dev: cairo_pdf
+---
+
+# Executive summary
+
+What is (are) your main question(s)? What is your story? What does the final graphic show?
+
+
+# Data background
+
+Explain where the data came from, what agency or company made it, how it is structured, what it shows, etc.
+
+
+# Data cleaning
+
+Describe and show how you cleaned and reshaped the data
+
+
+# Individual figures
+
+## Figure 1
+
+Describe and show how you created the first figure. Why did you choose this figure type? What did you do to ensure it follows Cairo's principles from *A Truthful Art* and Robin Williams's CRAP?
+
+## Figure 2
+
+## Etc.
+
+
+# Final figure
+
+Show the final figure that you created in Inkscape or Illustrator/InDesign. Describe why you designed it the way you did? Why did you choose those colors, fonts, and other design elements? Does it convey truth?
+
+![Caption for your final figure](images/name_of_figure)

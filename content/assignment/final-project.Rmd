@@ -16,4 +16,149 @@ editor_options:
   chunk_output_type: console
 ---
 
-Instructions for the final project will go here.
+You made it to the end of our whirlwind tour of data visualization principles! Congratulations!
+
+Now you get to show off all the tools you learned with a beautiful, truthful, narrative visualization.
+
+For your final project, you will take a dataset, explore it, tinker with it, and tell a nuanced story about it using at least three graphs. 
+
+I want this project to be as useful for you and your future career as possible—you'll hopefully want to show off your final project in a portfolio or during job interviews. 
+
+Accordingly, you have some choice in what data you can use for this project. I've found several different high-quality datasets online related to the core MPA/MPP tracks. **You do not have to choose a dataset in your given field** (especially if you're not an MPA or MPP student!) Choose whatever one you are most interested in or will have the most fun with.
+
+## Data from the internet
+
+[Go to this list of data sources](/resource/data/) and find something interesting! The things in the "Data is Plural" newsletter are often especially interesting and fun. Here are some different high-quality datasets that students have worked with before:
+
+### Nonprofit management
+
+- [U.S. Charities and Non-profits](https://www.kaggle.com/crawford/us-charities-and-nonprofits): All of the charities and nonprofits registered with the IRS. This is actually split into six separate files. You can combine them all into one massive national database with `bind_rows()`, or filter the data to include specific states (or a single state). It all depends on the story you're telling. Source: IRS.
+- [Nonprofit Grants 2010 to 2016](https://data.world/causebot/grant-2010-to-2016): Nonprofit grants made in the US as listed in Schedule I of the IRS 990 tax form between 2010 to 2016. Source: IRS.
+
+### Federal, state, and local government management
+
+- [Deadly traffic accidents in the UK (2015)](https://www.kaggle.com/kwullum/deadly-traffic-accidents-in-the-uk-2015): List of all traffic-related deaths in the UK in 2015. Source: [data.gov.uk](https://data.gov.uk/dataset/road-accidents-safety-data/resource/ceb00cff-443d-4d43-b17a-ee13437e9564).
+- [Firefighter Fatalities in the United States](https://www.kaggle.com/fema/firefighter-fatalities): Name, rank, and cause of death for all firefighters killed since 2000. Source: FEMA.
+- [Federal Emergencies and Disasters, 1953–Present](https://www.kaggle.com/fema/federal-disasters): Every federal emergency or disaster declared by the President of the United States since 1953. Source: FEMA.
+- [Global Terrorism Database (1970–2016)](https://www.kaggle.com/START-UMD/gtd): 170,000 terrorist attacks worldwide, 1970-2016. Source: National Consortium for the Study of Terrorism and Responses to Terrorism (START), University of Maryland.
+- [City of Austin 311 Unified Data](https://data.world/cityofaustin/i26j-ai4z): All 311 calls to the City of Austin since 2014. Source: City of Austin.
+
+### Business management
+
+- [515K Hotel Reviews Data in Europe](https://www.kaggle.com/jiashenliu/515k-hotel-reviews-data-in-europe): 515,000 customer reviews and scoring of 1,493 luxury hotels across Europe. Source: Booking.com.
+- [Chase Bank Branch Deposits, 2010–2016](https://www.kaggle.com/chasebank/bank-deposits): Records for every branch of Chase Bank in the United States. This dataset is not quite tidy and will require a little bit of reshaping with `gather()` or `pivot_longer()`, since there are individual columns of deposits per year. Source: Chase Bank. 
+
+
+## Instructions
+
+Here's what you'll need to do:
+
+1. **Download** a dataset and explore it. Many of these datasets are large and will not open (well) in Excel, so you'll need to load the CSV file into R with `read_csv()`. Most of these datasets have nice categorical variables that you can use for grouping and summarizing, and many have time components too, so you can look at trends. Your past problem sets and in-class examples will come in handy here.
+
+2. **Find** a story in the data. Explore that story and make sure it's true and insightful.
+
+3. Use R to **create** multiple graphs to tell the story. You can make as many graphs as you want, but you must use at least **three** different chart types (i.e. don't just make three scatterplots or three maps). 
+
+4. Export these figures as PDF files, place them in Adobe Illustrator (or InDesign or Gravit Designer or Inkscape), and **make** one combined graphic or handout where you tell the complete story. You have a lot of latitude in how you do this. You can make a graphic-heavy one-page handout. You can make something along the lines of the [this](https://www.wired.co.uk/article/nuclear-power-reactors-global), with one big graphic + smaller subgraphics + explanatory text. Just don't make a [goofy infographic](https://medium.com/@kazarnowicz/why-infographics-are-bad-3a2fa49673e2). Whatever you do, the final figure must include all the graphics, must have some explanatory text to help summarize the narrative, and must be well designed.
+
+5. **Export** the final graphic from Illustrator as a PDF and a PNG.
+
+6. **Write** a memo using R Markdown to introduce, frame, and describe your story and figure. [Use this template to get started](/files/your_name_finalproject.Rmd). You should include the following in the memo:
+
+    - Executive summary
+    - Background information and summary of the data
+    - Explanation, description, and code for each individual figure
+    - Explanation and description for the final figure
+    - Final figure should be included as an image (remember `![Caption goes here](path/to/file.png)`)
+
+Remember to follow R Markdown etiquette rules and style—don't have it output extraneous messages or warnings, include summary tables in nice tables, adjust the dimensions for your figures, and remove the placeholder text that's in the template already (i.e. I don't want to see stuff like "Describe and show how you cleaned and reshaped the data" in the final report.)
+
+**You should [download a full example of what a final project might look like](/projects/example_final.zip)** (but don't make your final combined visualization look exactly like this—show some creativity!)
+
+
+## Final deliverables
+
+Upload the following files to iCollege:
+
+1. A memo introducing and describing your final graphic (see full instructions above)
+2. A standalone PDF of your graphic exported from Illustrator
+3. A standalone PNG of your graphic exported from Illustrator
+
+**No late work will be accepted for this project since it's the last project and it counts as your final.**
+
+I will use [this rubric](/files/final-project-rubric.xlsx) to grade the final product:
+
+- [<i class="fas fa-file-excel"></i> `final-project-rubric.xlsx`](/files/final-project-rubric.xlsx)
+
+I am happy to give feedback and help along the way—please don't hesitate to get help! My goal is for you to have a beautiful graphic in the end that you'll want to show off to all your friends, family, neighbors, employers, and strangers on the street—I'm not trying to trip you up or give you trick questions!
+
+And that's it. **You're done!** Go out into the world now and make beautiful, insightful, and truthful graphics.
+
+[**Go forth and make awesomeness.**](https://24ways.org/2010/go-forth-and-make-awesomeness/)
+
+
+## Past examples
+
+[Download a full example of what a final project might look like.](/projects/example_final.zip)
+
+Here are some great examples of student projects from past versions of this class.
+
+### Travel runs in Yellowstone
+
+[<i class="fas fa-file-pdf"></i> Project description][yellowstone-memo]&ensp;
+[<i class="fas fa-file-pdf"></i> Final PDF][yellowstone-pdf]&ensp;
+[<i class="far fa-image"></i> Final PNG][yellowstone-png]
+
+[![Yellowstone travel final project][yellowstone-png]][yellowstone-pdf]
+
+[yellowstone-png]: /files/past-projects/yellowstone-travel/final.png
+[yellowstone-pdf]: /files/past-projects/yellowstone-travel/final.pdf
+[yellowstone-memo]: /files/past-projects/yellowstone-travel/final_memo.pdf
+
+### Firefighter fatalities
+
+[<i class="fas fa-file-pdf"></i> Project description][firefighters-memo]&ensp;
+[<i class="fas fa-file-pdf"></i> Final PDF][firefighters-pdf]&ensp;
+[<i class="far fa-image"></i> Final PNG][firefighters-png]
+
+[![Firefighter fatalities final project][firefighters-png]][firefighters-pdf]
+
+[firefighters-png]: /files/past-projects/firefighters/final.png
+[firefighters-pdf]: /files/past-projects/firefighters/final.pdf
+[firefighters-memo]: /files/past-projects/firefighters/final_memo.pdf
+
+### Scripture use by *The Killers*
+
+[<i class="fas fa-file-pdf"></i> Project description][killers-scripture-memo]&ensp;
+[<i class="fas fa-file-pdf"></i> Final PDF][killers-scripture-pdf]&ensp;
+[<i class="far fa-image"></i> Final PNG][killers-scripture-png]
+
+[![Firefighter fatalities final project][killers-scripture-png]][killers-scripture-pdf]
+
+[killers-scripture-png]: /files/past-projects/killers-scripture/final.png
+[killers-scripture-pdf]: /files/past-projects/killers-scripture/final.pdf
+[killers-scripture-memo]: /files/past-projects/killers-scripture/final_memo.pdf
+
+### Utah nonprofits
+
+[<i class="fas fa-file-pdf"></i> Project description][utah-nonprofits-memo]&ensp;
+[<i class="fas fa-file-pdf"></i> Final PDF][utah-nonprofits-pdf]&ensp;
+[<i class="far fa-image"></i> Final PNG][utah-nonprofits-png]
+
+[![Firefighter fatalities final project][utah-nonprofits-png]][utah-nonprofits-pdf]
+
+[utah-nonprofits-png]: /files/past-projects/utah-nonprofits/final.png
+[utah-nonprofits-pdf]: /files/past-projects/utah-nonprofits/final.pdf
+[utah-nonprofits-memo]: /files/past-projects/utah-nonprofits/final_memo.pdf
+
+### Buckethead
+
+[<i class="fas fa-file-pdf"></i> Project description][buckethead-memo]&ensp;
+[<i class="fas fa-file-pdf"></i> Final PDF][buckethead-pdf]&ensp;
+[<i class="far fa-image"></i> Final PNG][buckethead-png]
+
+[![Firefighter fatalities final project][buckethead-png]][buckethead-pdf]
+
+[buckethead-png]: /files/past-projects/buckethead/final.png
+[buckethead-pdf]: /files/past-projects/buckethead/final.pdf
+[buckethead-memo]: /files/past-projects/buckethead/final_memo.pdf

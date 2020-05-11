@@ -18,5 +18,121 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#instructions">Instructions</a></li>
+<li><a href="#starter-code">Starter code</a></li>
+</ul>
+</div>
 
-<p>Instructions for the first mini project will go here.</p>
+<p>New York City is full of urban wildlife, and rats are one of the city’s most infamous animal mascots. Rats in NYC are plentiful, but they also deliver food, so they’re useful too.</p>
+{{% youtube "PeJUqcbool4" %}}
+<p>NYC keeps incredibly detailed data regarding animal sightings, including rats, and <a href="https://www.kaggle.com/new-york-city/nyc-rat-sightings/data">it makes this data publicly available</a>.</p>
+<p>For this first mini project, you will use <strong>R and ggplot2</strong> to tell an interesting story hidden in the data. You can recreate one of these ugly, less-than-helpful graphs, or create a new story by looking at other variables in the data:</p>
+<p><img src="/img/assignments/rat_examples.png" width="100%" /></p>
+<div id="instructions" class="section level2">
+<h2>Instructions</h2>
+<p>Here’s what you need to do:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Create</strong> a new RStudio project and place it on your computer somewhere. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create two subfolders there named <code>data</code> and <code>output</code>.</p></li>
+<li><p><strong>Download</strong> New York City’s database of rat sightings since 2010:</p>
+<ul>
+<li><p><a href="https://raw.githubusercontent.com/andrewheiss/datavizf18.classes.andrewheiss.com/master/static/data/Rat_Sightings.csv" target="_blank" download><i class="fas fa-file-csv"></i> <code>Rat_Sightings.csv</code></a></p></li>
+<li><p>Place this in the <code>data</code> subfolder you created in step 1. You might need to right click on this link and choose “Save link as…”, since your browser may try to display it as text. The data was originally <a href="https://www.kaggle.com/new-york-city/nyc-rat-sightings/data">uploaded by the City of New York to Kaggle</a>, and is provided with a public domain license.</p></li>
+</ul></li>
+<li><p><strong>Create</strong> a new R Markdown file and save it in your project. In RStudio go to File &gt; New File &gt; R Markdown…, choose the default options, and delete all the placeholder text in the new file except for the metadata at the top, which is between <code>---</code> and <code>---</code>.</p></li>
+<li><p><strong>Verify</strong> that your project folder is structured like this:</p>
+<pre class="text"><code>your-project-name/
+  your-analysis.Rmd
+  your-project-name.Rproj
+  data/
+    Rat_Sightings.csv
+  output/
+    NOTHING</code></pre></li>
+<li><p><strong>Summarize</strong> the data somehow. The raw data has more than 100,000 rows, which means you’ll need to aggregate the data (<code>filter()</code>, <code>group_by()</code>, and <code>summarize()</code> will be your friends). Consider looking at the number of sightings per borough, per year, per dwelling type, etc., or a combination of these, like the change in the number sightings across the 5 boroughs between 2010 and 2016.</p></li>
+<li><p><strong>Create</strong> an appropriate visualization based on the data you summarized.</p></li>
+<li><p><strong>Write</strong> a memo (no word limit) explaining your process. I’m specifically looking for a discussion of the following:</p>
+<ul>
+<li>What was wrong with the original graphic (if you’re fixing one of the original figures)?</li>
+<li>What story are you telling with your new graphic?</li>
+<li>How did you apply the principles of CRAP?</li>
+<li>How did you apply Kieran Healy’s principles of great visualizations or Alberto Cairo’s five qualities of great visualizations?</li>
+</ul></li>
+<li><p><strong>Upload</strong> the following outputs to iCollege:</p>
+<ul>
+<li>A PDF or Word file of your memo with your final code and graphic embedded in it.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This means you’ll need to do all your coding in an R Markdown file and embed your code in chunks.</li>
+<li>A standalone PNG version of your graphic. Use <code>ggsave(plot_name, filename = "output/blah.png", width = XX, height = XX)</code></li>
+<li>A standalone PDF version of your graphic. Use <code>ggsave(plot_name, filename = "output/blah.pdf", width = XX, height = XX)</code></li>
+</ul></li>
+</ol>
+<p>You will be graded based on completion using the standard ✓ system, but I’ll provide comments on how you use R and <strong>ggplot2</strong>, how well you apply the principles of CRAP, <em>The Truthful Art</em>, and <em>Effective Data Visualization</em>, and how appropriate the graph is for the data and the story you’re telling. I will use <a href="/files/mini-project-1-rubric.pdf">this rubric</a> to make comments and provide you with a simulated grade.</p>
+<ul>
+<li><a href="/files/mini-project-1-rubric.pdf"><i class="fas fa-file-pdf"></i> <code>mini-project-1-rubric.pdf</code></a></li>
+</ul>
+<p>For this assignment, I am less concerned with detailed graphic design principles—select appropriate colors, change fonts if you’re brave, and choose a nice ggplot theme and make some adjustments like moving the legend around (<code>theme(legend.position = "bottom")</code>).</p>
+<p><strong>The assignment is due by 11:59 PM on Friday, May 226</strong>.</p>
+<p><strong>Please seek out help when you need it!</strong> You know enough R (and have enough examples of code from class and your readings) to be able to do this. Your project has to be turned in individually, and your visualization should be your own (i.e. if you work with others, don’t all turn in the same graph), but you should work with others! Reach out to me for help too—I’m here to help!</p>
+<p><em>You can do this,</em> and you’ll feel like a budding dataviz witch/wizard when you’re done.</p>
+</div>
+<div id="starter-code" class="section level2">
+<h2>Starter code</h2>
+<p>I’ve provided some starter code below. A couple comments about it:</p>
+<ul>
+<li>By default, <code>read_csv()</code> treats cells that are empty or “NA” as missing values. This rat dataset uses “N/A” to mark missing values, so we need to add that as a possible marker of missingness (hence <code>na = c("", "NA", "N/A")</code>)</li>
+<li>To make life easier, I’ve renamed some of the key variables you might work with. You can rename others if you want.</li>
+<li>I’ve also created a few date-related variables (<code>sighting_year</code>, <code>sighting_month</code>, <code>sighting_day</code>, and <code>sighting_weekday</code>). You don’t have to use them, but they’re there if you need them. The functions that create these, like <code>year()</code> and <code>wday()</code> are part of the <strong>lubridate</strong> library.</li>
+<li>The date/time variables are formatted like <code>04/03/2017 12:00:00 AM</code>, which R is not able to automatically parse as a date when reading the CSV file. You can use the <code>mdy_hms()</code> function in the <strong>lubridate</strong> library to parse dates that are structured as “month-day-year-hour-minute”. There are also a bunch of other iterations of this function, like <code>ymd()</code>, <code>dmy()</code>, etc., for other date formats.</li>
+<li>There’s one row with an unspecified borough, so I filter that out.</li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(lubridate)
+
+rats_raw &lt;- read_csv(&quot;data/Rat_Sightings.csv&quot;, na = c(&quot;&quot;, &quot;NA&quot;, &quot;N/A&quot;))
+
+# If you get an error that says &quot;All formats failed to parse. No formats
+# found&quot;, it&#39;s because the mdy_hms function couldn&#39;t parse the date. The date
+# variable *should* be in this format: &quot;04/03/2017 12:00:00 AM&quot;, but in some
+# rare instances, it might load without the seconds as &quot;04/03/2017 12:00 AM&quot;.
+# If there are no seconds, use mdy_hm() instead of mdy_hms().
+rats_clean &lt;- rats_raw %&gt;%
+  rename(created_date = `Created Date`,
+         location_type = `Location Type`,
+         borough = Borough) %&gt;%
+  mutate(created_date = mdy_hms(created_date)) %&gt;%
+  mutate(sighting_year = year(created_date),
+         sighting_month = month(created_date),
+         sighting_day = day(created_date),
+         sighting_weekday = wday(created_date, label = TRUE, abbr = FALSE)) %&gt;%
+  filter(borough != &quot;Unspecified&quot;)</code></pre>
+<p>You’ll summarize the data with functions from <strong>dplyr</strong>, including stuff like <code>count()</code>, <code>arrange()</code>, <code>filter()</code>, <code>group_by()</code>, <code>summarize()</code>, and <code>mutate()</code>. Here are some examples of ways to summarize the data:</p>
+<pre class="r"><code># See the count of rat sightings by weekday
+rats_clean %&gt;%
+  count(sighting_weekday)
+
+# Assign a summarized data frame to an object to use it in a plot
+rats_by_weekday &lt;- rats_clean %&gt;%
+  count(sighting_weekday, sighting_year)
+
+ggplot(rats_by_weekday, aes(x = fct_rev(sighting_weekday), y = n)) + 
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ sighting_year)
+
+# See the count of rat sightings by weekday and borough
+rats_clean %&gt;%
+  count(sighting_weekday, borough, sighting_year)
+
+# An alternative to count() is to specify the groups with group_by() and then
+# be explicit about how you&#39;re summarizing the groups, such as calculating the
+# mean, standard deviation, or number of observations (we do that here with
+# `n()`).
+rats_clean %&gt;%
+  group_by(sighting_weekday, borough) %&gt;%
+  summarize(n = n())</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>You can approach this in a couple different ways—you can write the memo and then include the full figure and code at the end, <a href="https://rud.is/b/2017/09/18/mapping-fall-foliage-with-sf/">similar to this blog post</a>, or you can write the memo in an incremental way, describing the different steps of creating the figure, ultimately arriving at a clean final figure, <a href="https://rudeboybert.github.io/fivethirtyeight/articles/bechdel.html">like this blog post</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
