@@ -24,12 +24,18 @@ output:
 - <i class="fas fa-external-link-square-alt"></i> [Engaging Readers with Square Pie/Waffle Charts](https://eagereyes.org/blog/2008/engaging-readers-with-square-pie-waffle-charts)
 - <i class="fas fa-external-link-square-alt"></i> [Understanding Pie Charts](https://eagereyes.org/techniques/pie-charts)
 - <i class="fas fa-external-link-square-alt"></i> [Square pie chart beats out the rest in perception study](https://flowingdata.com/2016/07/15/square-pie-chart-beats-out-the-rest-in-perception-study/)
-- TODO: COVID-19 per capita vs. total, etc.
+- <i class="fab fa-twitter"></i> [Twitter thread](https://twitter.com/janinegibson/status/1244519429825802240) from John Burn-Murdoch on why the *Financial Times* uses log scales in their COVID-19 tracking charts
+- <i class="fab fa-twitter"></i> [Tweet](https://twitter.com/jburnmurdoch/status/1238914490772701185) and [Twitter thread](https://twitter.com/jburnmurdoch/status/1242904596856614912) from John Burn-Murdoch on why the *Financial Times* doesn't use population-adjusted numbers in their COVID-19 tracking charts
+- <i class="fab fa-twitter"></i> [Video from the *Financial Times* about the design decisions behind their COVID-19 tracking charts](https://twitter.com/janinegibson/status/1244519429825802240)
+
+### Recommended
+
+- <i class="fas fa-external-link-square-alt"></i> [See how to create your own COVID-19 tracking chart with R](https://robjhyndman.com/hyndsight/logratios-covid19/)
 
 ### Questions to reflect on
 
 - How do these types of visualizations help or hinder our search for truth in data?
-- TODO
+- What do you think of the *Financial Times* explanations of their use of absolute numbers (not per capita numbers) and log scales (not regular scales)? How have these decisions affected your perception of the pandemic? How have they affected others' perceptions?
 
 
 ## Slides
