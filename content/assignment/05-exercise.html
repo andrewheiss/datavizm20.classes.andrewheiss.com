@@ -19,5 +19,49 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#task-1-reflection">Task 1: Reflection</a></li>
+<li><a href="#task-2-the-ugliest-plot-in-the-world">Task 2: The ugliest plot in the world</a></li>
+<li><a href="#turning-everything-in">Turning everything in</a></li>
+</ul>
+</div>
 
-<p>A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.</p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>For this assignment, you’re going to work with data compiled by <a href="https://www.duncangeere.com/">data journalist Duncan Greere</a> related to 48 Soviet dogs who flew as test subjects in USSR’s space program in the 1950s and 60s. <a href="https://airtable.com/universe/expG3z2CFykG1dZsp/sovet-space-dogs">The original data can be found here</a>.</p>
+<p>You’ll need to download one CSV file and put them somewhere on your computer or upload them to RStudio.cloud—preferably in a folder named <code>data</code> in your project folder:</p>
+<ul>
+<li><a href="/projects/05-exercise/data/Dogs-Database.csv"><i class="fas fa-file-csv"></i> <code>Dogs-Database.csv</code></a></li>
+</ul>
+<p>To help you, I’ve created a skeleton R Markdown file with a template for this exercise, along with some code to clean up the data a little. Download that here and include it in your project:</p>
+<ul>
+<li><a href="/projects/05-exercise/05-exercise.Rmd"><i class="fab fa-r-project"></i> <code>05-exercise.Rmd</code></a></li>
+</ul>
+<p>In the end, the structure of your project directory should look something like this:</p>
+<pre class="text"><code>your-project-name\
+  05-exercise.Rmd
+  your-project-name.Rproj
+  data\
+    Dogs-Database.csv</code></pre>
+<p>To check that you put everything in the right places, you can download and unzip this file, which contains everything in the correct structure:</p>
+<ul>
+<li><a href="/projects/05-exercise.zip"><i class="fas fa-file-archive"></i> <code>05-exercise.zip</code></a></li>
+</ul>
+</div>
+<div id="task-1-reflection" class="section level2">
+<h2>Task 1: Reflection</h2>
+<p>Write your reflection for the day’s readings.</p>
+</div>
+<div id="task-2-the-ugliest-plot-in-the-world" class="section level2">
+<h2>Task 2: The ugliest plot in the world</h2>
+<p>For this assignment, you’re going to forget all the wonderful CRAP design principles you just learned and try your hardest to make the ugliest plot in the world. Modify the color scale and change theme elements to make this plot truly hideous.</p>
+</div>
+<div id="turning-everything-in" class="section level2">
+<h2>Turning everything in</h2>
+<p>When you’re all done, click on the “Knit” button at the top of the editing window and create an HTML or Word version (or PDF if you’ve <a href="/resource/install/#install-tinytex">installed <strong>tinytex</strong></a> and you <a href="https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/">followed the instructions here for how to make Cairo fonts work with knitted PDFs</a>) of your document.</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p>
+<p>Include a chunk that uses <code>ggsave()</code> to save the plot to your computer as a PNG file.</p>
+<p>Upload the knitted document and the saved PNG file of your plot to iCollege.</p>
+</div>

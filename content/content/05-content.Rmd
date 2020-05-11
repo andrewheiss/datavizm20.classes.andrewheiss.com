@@ -18,7 +18,16 @@ output:
 
 ## Readings
 
-- TODO
+- <i class="fas fa-book"></i> [Chapter 22](https://serialmentor.com/dataviz/figure-titles-captions.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-external-link-square-alt"></i> [Naomi Robbins, "Are Grid Lines Useful or Chartjunk?"](https://www.forbes.com/sites/naomirobbins/2012/02/22/are-grid-lines-useful-or-chartjunk/#3b49a4044283)
+- <i class="fas fa-external-link-square-alt"></i> [Stephen Few, "Grid Lines in Graphs are Rarely Useful"](http://www.perceptualedge.com/articles/dmreview/grid_lines.pdf)
+- <i class="fas fa-external-link-square-alt"></i> [Henry Wang, "ggplot2 Theme Elements Demonstration"](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+- <i class="fas fa-external-link-square-alt"></i> Glance through the documentation for ggplot's [complete themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) and [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html), especially the examples near the bottom
+
+### Questions to reflect on
+
+- How do the principles of CRAP apply to graph design and other theme elements?
+- Should plots use gridlines? Naomi Robbins says yes; Stephen Few says no—what do you say?
 
 
 ## Slides
