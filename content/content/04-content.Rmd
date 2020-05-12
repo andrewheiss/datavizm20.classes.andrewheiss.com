@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "04-slides"
+slides: "04-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -40,9 +40,76 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Amounts and proportions", "1", TRUE,
+  "Reproducibility", "reproducibility", FALSE,
+  "Amounts", "amounts", FALSE,
+  "Proportions", "proportions", FALSE
+)
+
+slide_tabs(sections, "/slides/04-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP).
+
+- [Introduction](https://www.youtube.com/watch?v=K8wELKhqgn0&list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP)
+- [Reproducibility](https://www.youtube.com/watch?v=pBpNaopKCVw&list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP&)
+- [Amounts](https://www.youtube.com/watch?v=5riA81CcHOY&list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP)
+- [Proportions](https://www.youtube.com/watch?v=3rDH0BWeDIQ&list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP
+
+https://youtu.be/K8wELKhqgn0
+PMAP 8921 • (3) Amounts and Proportions: (0) Introduction
+
+Introduction to the class session on amounts and proportions.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/03-content/
+
+
+https://youtu.be/pBpNaopKCVw
+PMAP 8921 • (3) Amounts and Proportions: (1) Reproducibility
+
+Discussion about the importance of reproducible data analysis practices.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/03-content/
+
+
+https://youtu.be/5riA81CcHOY
+PMAP 8921 • (3) Amounts and Proportions: (2) Amounts
+
+Discussion of best practices for visualizing amounts.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/03-content/
+
+
+https://youtu.be/3rDH0BWeDIQ
+PMAP 8921 • (3) Amounts and Proportions: (3) Proportions
+
+Discussion of best practices for visualizing proportions.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/03-content/
+```

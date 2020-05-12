@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Amounts and proportions</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-11" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Amounts and Proportions
+
+.class-info[
+
+**Session 4**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-1.medium.sp-after-half[Reproducibility]
+
+--
+
+.box-3.medium.sp-after-half[Amounts]
+
+--
+
+.box-5.medium.sp-after-half[Proportions]
+
+
+---
+
+name: reproducibility
+class: center middle section-title section-title-1 animated fadeIn
+
+# Reproducibility
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Why am I making you learn R?
+
+--
+
+.box-inv-1.sp-after[Pivot Tables do the same thing!]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/04/pivot-table.png" alt="Lord of the Rings PivotTable" title="Lord of the Rings PivotTable" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Why am I making you learn R?
+
+&amp;nbsp;
+
+--
+
+.box-inv-1.medium[More powerful]
+
+--
+
+.box-inv-1.medium[Free and open source]
+
+--
+
+.box-inv-1.medium.sp-after[Reproducibility]
+
+---
+
+# Austerity and Excel
+
+.pull-left[
+
+&lt;figure&gt;
+  &lt;img src="img/04/rr-abstract.png" alt="Reinhart and Rogoff abstract" title="Reinhart and Rogoff abstract" width="100%"&gt;
+&lt;/figure&gt;
+
+.box-inv-1[Debt:GDP ratio&lt;br&gt;90%+ → −0.1% growth]
+
+]
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/path-to-prosperity.jpg" alt="The Path to Prosperity 2013 house budget" title="The Path to Prosperity 2013 house budget" width="65%"&gt;
+  &lt;figcaption&gt;Paul Ryan's 2013 House budget resolution&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+???
+
+[2013 House Budget Resolution](https://republicans-budget.house.gov/uploadedfiles/pathtoprosperity2013.pdf)
+
+---
+
+# Austerity and Excel
+
+.pull-left.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/thomas-herndon.jpg" alt="Thomas Herndon" title="Thomas Herndon" width="55%"&gt;
+  &lt;figcaption&gt;Thomas Herndon&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/krugman-allowed.png" alt="Paul Krugman on Excel and reproducibility" title="Paul Krugman on Excel and reproducibility" width="100%"&gt;
+  &lt;figcaption&gt;From &lt;a href="https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html" target="_blank"&gt;Paul Krugman, "The Excel Depression"&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+???
+
+[Paul Krugman on the reproducibility crisis](https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html)
+
+---
+
+# Austerity and Excel
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/04/rr-table1.png" alt="Reinhart Rogoff Table 1" title="Reinhart Rogoff Table 1" width="47%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.box-inv-1[Debt:GDP ratio = 90%+ → 2.2% growth (!!)]
+
+---
+
+# Genes and Excel
+
+.pull-left-3[
+.box-inv-1[Septin 2]
+]
+
+.pull-middle-3[
+.box-inv-1[Membrane-Associated Ring Finger (C3HC4) 1]
+]
+
+.pull-right-3[
+.box-inv-1[2310009E13]
+]
+
+--
+
+.center.sp-after[
+&lt;figure&gt;
+  &lt;img src="img/04/excel-numbers.png" alt="Numbers in Excel" title="Numbers in Excel" width="40%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.center[
+.box-1[20% of genetics papers between 2005–2015 (!!!)]
+]
+
+---
+
+# General guidelines
+
+.box-inv-1.medium[Don't touch the raw data]
+
+.box-1[If you do, explain what you did!]
+
+--
+
+.box-inv-1.medium[Use self-documenting, reproducible code]
+
+.box-1[R Markdown!]
+
+--
+
+.box-inv-1.medium[Use open formats]
+
+.box-1[Use .csv, not .xlsx]
+
+---
+
+# R Markdown in real life
+
+.pull-left.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/airbnb.png" alt="Airbnb's data science tools" title="Airbnb's data science tools" width="100%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://peerj.com/preprints/3182.pdf" target="_blank"&gt;Airbnb, ggplot, and rmarkdown&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right.center[
+
+&amp;nbsp;
+
+&lt;figure&gt;
+  &lt;img src="img/04/uk-long.png" alt="UK Statistics pipeline" title="UK Statistics pipeline" width="100%"&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;img src="img/04/uk-short.png" alt="UK Statistics pipeline, short" title="UK Statistics pipeline, short" width="55%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://dataingovernment.blog.gov.uk/2017/03/27/reproducible-analytical-pipeline/" target="_blank"&gt;The UK's reproducible analysis pipeline&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+]
+
+???
+
+https://peerj.com/preprints/3182.pdf + https://gdsdata.blog.gov.uk/2017/03/27/reproducible-analytical-pipeline/ 
+
+
+---
+
+layout: false
+name: amounts
+class: center middle section-title section-title-3 animated fadeIn
+
+# Amounts
+
+---
+
+layout: true
+class: title title-3
+
+---
+
+# Yay bar plots!
+
+.box-inv-3[We are a lot better at visualizing&lt;br&gt;line lengths than angles and areas]
+
+.pull-left[
+
+&lt;img src="04-slides_files/figure-html/example-pie-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="04-slides_files/figure-html/example-bar-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Oh no bar plots!
+
+.pull-left.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/obamacareenrollment-fncchart.jpg" alt="Fox News Obamacare enrollment" title="Fox News Obamacare enrollment" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/econcharts-education.gif" alt="Obama graduation rate" title="Obama graduation rate" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+???
+
+https://blog.ed.gov/2014/10/progress-on-education-is-helping-fuel-our-economys-growth/ and https://www.mediamatters.org/fox-news/dishonest-fox-charts-obamacare-enrollment-edition and https://twitter.com/ObamaWhiteHouse/status/517743415375974401
+
+---
+
+# Start at zero
+
+.box-inv-3.medium.sp-after[The entire line length matters,&lt;br&gt;so don't truncate it!]
+
+--
+
+.box-3.large.sp-after[Always start at 0]
+
+--
+
+.box-inv-3.sp-after[(Or don't use bars)]
+
+---
+
+# Bar plots and summary statistics
+
+.box-inv-3.medium[\#barbarplots]
+
+.center[
+&lt;video controls&gt;
+  &lt;source src="https://v.kickstarter.com/1589375625_e9ffab5d420ad2feecabffc6e210ff15b769b22b/projects/2453455/video-665338-h264_high.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+]
+
+???
+
+[\#barbarplot Kickstarter campaign](https://www.kickstarter.com/projects/1474588473/barbarplots)
+
+---
+
+# Bar plots and summary statistics
+
+.pull-left[
+
+&lt;img src="04-slides_files/figure-html/animal-weight-bar-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="04-slides_files/figure-html/animal-weight-points-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Show more data with strip plots
+
+.left-code[
+
+```r
+ggplot(animals, 
+       aes(x = animal_type, 
+           y = weight, 
+           color = animal_type)) +
+  geom_point(position = position_jitter(height = 0),
+             size = 1) +
+  labs(x = NULL, y = "Weight") +
+  guides(color = FALSE)
+```
+]
+
+.right-plot[
+![](04-slides_files/figure-html/strip-plot-1.png)
+]
+
+---
+
+# Show more data with beeswarm plots
+
+.left-code[
+
+```r
+library(ggbeeswarm)
+
+ggplot(animals, aes(x = animal_type, 
+                    y = weight, 
+                    color = animal_type)) +
+  geom_beeswarm(size = 1) +
+  # Or try this too:
+  # geom_quasirandom() +
+  labs(x = NULL, y = "Weight") +
+  guides(color = FALSE)
+```
+]
+
+.right-plot[
+![](04-slides_files/figure-html/beeswarm-plot-1.png)
+]
+
+---
+
+# Combine boxplots with points
+
+.left-code[
+
+```r
+ggplot(animals, aes(x = animal_type, 
+                    y = weight, 
+                    color = animal_type)) +
+  geom_boxplot(width = 0.5) +
+  geom_point(position = position_jitter(height = 0), 
+             size = 1, alpha = 0.5) +
+  labs(x = NULL, y = "Weight") +
+  guides(color = FALSE)
+```
+]
+
+.right-plot[
+![](04-slides_files/figure-html/boxplot-plot-1.png)
+]
+
+---
+
+# Combine violins with points
+
+.left-code[
+
+```r
+ggplot(animals, aes(x = animal_type, 
+                    y = weight, 
+                    color = animal_type)) +
+  geom_violin(width = 0.5) +
+  geom_point(position = position_jitter(height = 0), 
+             size = 1, alpha = 0.5) +
+  labs(x = NULL, y = "Weight") +
+  guides(color = FALSE)
+```
+]
+
+.right-plot[
+![](04-slides_files/figure-html/violin-plot-1.png)
+]
+
+---
+
+# Overlapping ridgeplots
+
+.left-code[
+
+```r
+library(ggridges)
+
+ggplot(animals, aes(x = weight, 
+                    y = animal_type, 
+                    fill = animal_type)) +
+  geom_density_ridges() +
+  labs(x = "Weight", y = NULL) +
+  guides(fill = FALSE)
+```
+]
+
+.right-plot[
+![](04-slides_files/figure-html/ridgeplot-plot-1.png)
+]
+
+---
+
+# General rules
+
+.box-inv-3.medium[Bar charts always start at zero]
+
+--
+
+.box-inv-3.medium[Don't use bars for summary statistics.&lt;br&gt;You throw away too much information.]
+
+--
+
+.box-inv-3.medium[The end of the bar is often all that matters]
+
+---
+
+# Lots of alternatives
+
+.box-inv-3.SMALL[We'll use a summarized version of the gapminder dataset as an example]
+
+.left-code.small-code[
+
+
+```r
+library(gapminder)
+gapminder_continents &lt;- gapminder %&gt;% 
+  filter(year == 2007) %&gt;%  # Only look at 2007
+  count(continent) %&gt;%  # Get a count of continents
+  arrange(desc(n)) %&gt;%   # Sort descendingly by count
+  # Make continent into an ordered factor
+  mutate(continent = fct_inorder(continent))
+
+ggplot(gapminder_continents, 
+       aes(x = continent, y = n, fill = continent)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = "Number of countries")
+```
+]
+
+.right-plot[
+
+![](04-slides_files/figure-html/gapminder-bars-1.png)
+
+]
+
+---
+
+# Alternatives: Lollipop charts
+
+.box-inv-3[Since the end of the bar is important, emphasize it the most]
+
+.left-code[
+
+
+```r
+ggplot(gapminder_continents,
+       aes(x = continent, y = n, 
+           color = continent)) +
+  geom_pointrange(aes(ymin = 0, ymax = n)) +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = "Number of countries")
+```
+]
+
+.right-plot[
+
+![](04-slides_files/figure-html/lollipop-1.png)
+
+]
+
+---
+
+# Alternatives: Waffle charts
+
+.box-inv-3[Show the individual observations as squares]
+
+.left-code[
+
+
+```r
+# This has to be installed in a special way--you can't use the Packages panel. 
+# Run this in your console:
+# devtools::install_github("hrbrmstr/waffle")
+library(waffle)
+
+ggplot(gapminder_continents,
+       aes(x = continent, y = n, 
+           fill = continent)) +
+  geom_waffle(aes(values = n),  # geom_waffle() needs a special values aesthetic
+              n_rows = 9,  # It has lots of other options too
+              flip = TRUE) +
+  labs(fill = NULL) +
+  coord_equal() +  # Make all the squares square
+  theme_void()  # Us a completely empty theme
+```
+
+]
+
+.right-plot[
+
+![](04-slides_files/figure-html/waffle-1.png)
+
+]
+
+---
+
+# Alternatives: Heatmaps
+
+.box-inv-3[If exact counts are less important,&lt;br&gt;try a heatmap with `geom_tile()`]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/04/births-heatmap.png" alt="US births heatmap" title="US births heatmap" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+layout: false
+name: proportions
+class: center middle section-title section-title-5 animated fadeIn
+
+# Proportions
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Why proportions?
+
+.box-inv-5.sp-after[Sometimes we want to compare values across&lt;br&gt;a whole population instead of looking at raw counts]
+
+--
+
+.box-inv-5[Only do this when it makes analytical sense!]
+
+--
+
+.box-5[COVID-19 amounts vs. proportions]
+
+---
+
+# Pie charts
+
+.box-inv-5[Perceptual issues with angle and fill space]
+
+--
+
+.box-inv-5[Only okay(ish) if there are a few easily distinguishable categories]
+
+--
+
+.pull-left[
+
+&lt;img src="04-slides_files/figure-html/pie-good-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="04-slides_files/figure-html/pie-bad-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Alternatives
+
+.box-inv-5[Bar plots]
+
+--
+
+.box-inv-5[Any of the alternatives to bar plots]
+
+--
+
+.box-inv-5[Treemaps and mosaic plots&lt;br&gt;(but these can still be really hard to interpret)]
+
+---
+
+# Treemaps and mosaic plots
+
+.pull-left[
+
+.box-inv-5[Treemaps with the [**treemapify**](https://cran.r-project.org/web/packages/treemapify/vignettes/introduction-to-treemapify.html) package]
+
+&lt;figure&gt;
+  &lt;img src="img/04/treemap.png" alt="Treemap" title="Treemap" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+.pull-right[
+
+.box-inv-5[Mosaic plots with the [**ggmosaic**](https://cran.r-project.org/web/packages/ggmosaic/vignettes/ggmosaic.html) package]
+
+&lt;figure&gt;
+  &lt;img src="img/04/mosaic.png" alt="Mosaic" title="Mosaic" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Alternatives
+
+.box-inv-5[Bar plots]
+
+
+.box-inv-5[Any of the alternatives to bar plots]
+
+
+.box-inv-5[Treemaps and mosaic plots&lt;br&gt;(but these can still be really hard to interpret)]
+
+
+.box-inv-5[Specialized figures like parliament plots]
+
+---
+
+# Parliament plots
+
+.box-inv-5[Parliament plots with the [**ggparliament**](https://github.com/RobWHickman/ggparliament) package]
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/04/senate.png" alt="US Senate parliament plot" title="US Senate parliament plot" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/04/parliament.png" alt="UK parliament plot" title="UK parliament plot" width="100%"&gt;
+&lt;/figure&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
