@@ -16,9 +16,628 @@ type: docs
 weight: 4
 editor_options: 
   chunk_output_type: console
+shiny: true
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#manipulating-data-with-dplyr">Manipulating data with <strong>dplyr</strong></a>
+<ul>
+<li><a href="#filtering-with-filter">Filtering with <code>filter()</code></a></li>
+<li><a href="#adding-new-columns-with-mutate">Adding new columns with <code>mutate()</code></a></li>
+<li><a href="#combining-multiple-verbs-with-pipes">Combining multiple verbs with pipes (<code>%&gt;%</code>)</a></li>
+<li><a href="#summarizing-data-by-groups-with-group_by-summarize">Summarizing data by groups with <code>group_by() %&gt;% summarize()</code></a></li>
+<li><a href="#selecting-with-select">Selecting with <code>select()</code></a></li>
+<li><a href="#arranging-data-with-arrange">Arranging data with <code>arrange()</code></a></li>
+<li><a href="#thats-it">That’s it!</a></li>
+</ul></li>
+<li><a href="#changing-colors-shapes-and-sizes-with-scale_">Changing colors, shapes, and sizes, with <code>scale_*()</code></a></li>
+</ul>
+</div>
 
-<p>Interactive code lessons and walkthroughs will go here. This is where you’ll learn all sorts of fun things.</p>
+<p>When you visualize proportions with ggplot, you’ll typically go through a two-step process:</p>
+<ol style="list-style-type: decimal">
+<li>Summarize the data with <strong>dplyr</strong> (typically with a combination of <code>group_by()</code> and <code>summarize()</code>)</li>
+<li>Plot the summarized data</li>
+</ol>
+<div id="manipulating-data-with-dplyr" class="section level2">
+<h2>Manipulating data with <strong>dplyr</strong></h2>
+<p>You had some experience with <strong>dplyr</strong> functions in the RStudio primers, but we’ll briefly review them here.</p>
+<p>There are 6 important verbs that you’ll typically use when working with data:</p>
+<ul>
+<li>Extract rows/cases with <code>filter()</code></li>
+<li>Extract columns/variables with <code>select()</code></li>
+<li>Arrange/sort rows with <code>arrange()</code></li>
+<li>Make new columns/variables with <code>mutate()</code></li>
+<li>Make group summaries with <code>group_by %&gt;% summarize()</code></li>
+</ul>
+<p>Every <strong>dplyr</strong> verb follows the same pattern. The first argument is always a data frame, and the function always returns a data frame:</p>
+<pre><code class='language-r'><code><span style='background-color:pink'>VERB</span>(<span style='background-color:yellow'>DATA_TO_TRANSFORM</span>, <span style='background-color:lightblue'>STUFF_IT_DOES</span>)</code></code></pre>
+<div id="filtering-with-filter" class="section level3">
+<h3>Filtering with <code>filter()</code></h3>
+<p>The <code>filter()</code> function takes two arguments: a data frame to transform, and a set of tests. It will return each row for which the test is TRUE.</p>
+<p>This code, for instance, will look at the <code>gapminder</code> dataset and return all rows where <code>country</code> is equal to “Denmark”:</p>
+<pre><code class='language-r'><code><span style='background-color:pink'>filter</span>(<span style='background-color:yellow'>gapminder</span>, <span style='background-color:lightblue'>country == "Denmark"</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 12 x 6
+##    country continent  year lifeExp     pop gdpPercap
+##    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+##  1 Denmark Europe     1952    70.8 4334000     9692.
+##  2 Denmark Europe     1957    71.8 4487831    11100.
+##  3 Denmark Europe     1962    72.4 4646899    13583.
+##  4 Denmark Europe     1967    73.0 4838800    15937.
+##  5 Denmark Europe     1972    73.5 4991596    18866.
+##  6 Denmark Europe     1977    74.7 5088419    20423.
+##  7 Denmark Europe     1982    74.6 5117810    21688.
+##  8 Denmark Europe     1987    74.8 5127024    25116.
+##  9 Denmark Europe     1992    75.3 5171393    26407.
+## 10 Denmark Europe     1997    76.1 5283663    29804.
+## 11 Denmark Europe     2002    77.2 5374693    32167.
+## 12 Denmark Europe     2007    78.3 5468120    35278.
+</code></pre>
+<p>Notice that there are two equal signs (<code>==</code>). This is because it’s a logical test, similar to greater than (<code>&gt;</code>) or less than (<code>&lt;</code>). When you use a single equal sign, you set an argument (like <code>data = gapminder</code>); when you use two, you are doing a test. There are lots of different ways to do logical tests:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>x &lt; y</code></td>
+<td>Less than</td>
+</tr>
+<tr class="even">
+<td><code>x &gt; y</code></td>
+<td>Greater than</td>
+</tr>
+<tr class="odd">
+<td><code>x == y</code></td>
+<td>Equal to</td>
+</tr>
+<tr class="even">
+<td><code>x &lt;= y</code></td>
+<td>Less than or equal to</td>
+</tr>
+<tr class="odd">
+<td><code>x &gt;= y</code></td>
+<td>Greater than or equal to</td>
+</tr>
+<tr class="even">
+<td><code>x != y</code></td>
+<td>Not equal to</td>
+</tr>
+<tr class="odd">
+<td><code>x %in% y</code></td>
+<td>In (group membership)</td>
+</tr>
+<tr class="even">
+<td><code>is.na(x)</code></td>
+<td>Is missing</td>
+</tr>
+<tr class="odd">
+<td><code>!is.na(x)</code></td>
+<td>Is not missing</td>
+</tr>
+</tbody>
+</table>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Use <code>filter()</code> and logical tests to show:</p>
+<ol style="list-style-type: decimal">
+<li>The data for Canada</li>
+<li>All data for countries in Oceania</li>
+<li>Rows where life expectancy is greater than 82</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-1/" id="learnr-04-lesson-dplyr1" %}}
+<p>You can also use multiple conditions, and these will extract rows that meet every test. By default, if you separate the tests with a comma, R will consider this an “and” test and find rows that are <em>both</em> Denmark and greater than 2000.</p>
+<pre><code class='language-r'><code><span style='background-color:pink'>filter</span>(<span style='background-color:yellow'>gapminder</span>, <span style='background-color:lightblue'>country == "Denmark", year > 2000</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 2 x 6
+##   country continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Denmark Europe     2002    77.2 5374693    32167.
+## 2 Denmark Europe     2007    78.3 5468120    35278.
+</code></pre>
+<p>You can also use “or” with “<code>|</code>” and “not” with “<code>!</code>”:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a &amp; b</code></td>
+<td>and</td>
+</tr>
+<tr class="even">
+<td><code>a | b</code></td>
+<td>or</td>
+</tr>
+<tr class="odd">
+<td><code>!a</code></td>
+<td>not</td>
+</tr>
+</tbody>
+</table>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Use <code>filter()</code> and logical tests to show:</p>
+<ol style="list-style-type: decimal">
+<li>Canada before 1970</li>
+<li>Countries where life expectancy in 2007 is below 50</li>
+<li>Countries where life expectancy in 2007 is below 50 and are not in Africa</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-2/" id="learnr-04-lesson-dplyr2" %}}
+<p>Beware of some common mistakes! You can’t collapse multiple tests into one. Instead, use two separate tests:</p>
+<pre class="r"><code># This won&#39;t work!
+filter(gapminder, 1960 &lt; year &lt; 1980)
+
+# This will work
+filter(gapminder, 1960 &lt; year, year &lt; 1980)</code></pre>
+<p>Also, you can avoid stringing together lots of tests by using the <code>%in%</code> operator, which checks to see if a value is in a list of values.</p>
+<pre class="r"><code># This works, but is tedious
+filter(gapminder, 
+       country == &quot;Mexico&quot; | country == &quot;Canada&quot; | country == &quot;United States&quot;)
+
+# This is more concise and easier to add other countries later
+filter(gapminder, 
+       country %in% c(&quot;Mexico&quot;, &quot;Canada&quot;, &quot;United States&quot;))</code></pre>
+</div>
+<div id="adding-new-columns-with-mutate" class="section level3">
+<h3>Adding new columns with <code>mutate()</code></h3>
+<p>You create new columns with the <code>mutate()</code> function. You can create a single column like this:</p>
+<pre><code class='language-r'><code><span style='background-color:pink'>mutate</span>(<span style='background-color:yellow'>gapminder</span>, <span style='background-color:lightblue'>gdp = gdpPercap * pop</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap          gdp
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.  6567086330.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.  7585448670.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.  8758855797.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.  9648014150.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.  9678553274.
+##  6 Afghanistan Asia       1977    38.4 14880372      786. 11697659231.
+##  7 Afghanistan Asia       1982    39.9 12881816      978. 12598563401.
+##  8 Afghanistan Asia       1987    40.8 13867957      852. 11820990309.
+##  9 Afghanistan Asia       1992    41.7 16317921      649. 10595901589.
+## 10 Afghanistan Asia       1997    41.8 22227415      635. 14121995875.
+## # … with 1,694 more rows
+</code></pre>
+<p>And you can create multiple columns by including a comma-separated list of new columns to create:</p>
+<pre><code class='language-r'><code><span style='background-color:pink'>mutate</span>(<span style='background-color:yellow'>gapminder</span>, <span style='background-color:lightblue'>gdp = gdpPercap * pop</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:lightblue'>pop_mill = round(pop / 1000000)</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 8
+##    country     continent  year lifeExp      pop gdpPercap          gdp pop_mill
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.  6567086330.        8
+##  2 Afghanistan Asia       1957    30.3  9240934      821.  7585448670.        9
+##  3 Afghanistan Asia       1962    32.0 10267083      853.  8758855797.       10
+##  4 Afghanistan Asia       1967    34.0 11537966      836.  9648014150.       12
+##  5 Afghanistan Asia       1972    36.1 13079460      740.  9678553274.       13
+##  6 Afghanistan Asia       1977    38.4 14880372      786. 11697659231.       15
+##  7 Afghanistan Asia       1982    39.9 12881816      978. 12598563401.       13
+##  8 Afghanistan Asia       1987    40.8 13867957      852. 11820990309.       14
+##  9 Afghanistan Asia       1992    41.7 16317921      649. 10595901589.       16
+## 10 Afghanistan Asia       1997    41.8 22227415      635. 14121995875.       22
+## # … with 1,694 more rows
+</code></pre>
+<p>You can also do conditional tests within <code>mutate()</code> using the <code>ifelse()</code> function. This works like the <code>=IFELSE</code> function in Excel. Feed the function three arguments: (1) a test, (2) the value if the test is true, and (3) the value if the test is false:</p>
+<pre><code class='language-r'><code>ifelse(<span style='background-color:#faca7d'>TEST</span>, <span style='background-color:#9bbffa'>VALUE_IF_TRUE</span>, <span style='background-color:#f79b94'>VALUE_IF_FALSE</span>)</code></code></pre>
+<p>We can create a new column that is a binary indicator for whether the country’s row is after 1960:</p>
+<pre><code class='language-r'><code>mutate(gapminder, after_1960 = ifelse(<span style='background-color:#faca7d'>year > 1960</span>, <span style='background-color:#9bbffa'>TRUE</span>, <span style='background-color:#f79b94'>FALSE</span>))</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap after_1960
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt;     
+##  1 Afghanistan Asia       1952    28.8  8425333      779. FALSE     
+##  2 Afghanistan Asia       1957    30.3  9240934      821. FALSE     
+##  3 Afghanistan Asia       1962    32.0 10267083      853. TRUE      
+##  4 Afghanistan Asia       1967    34.0 11537966      836. TRUE      
+##  5 Afghanistan Asia       1972    36.1 13079460      740. TRUE      
+##  6 Afghanistan Asia       1977    38.4 14880372      786. TRUE      
+##  7 Afghanistan Asia       1982    39.9 12881816      978. TRUE      
+##  8 Afghanistan Asia       1987    40.8 13867957      852. TRUE      
+##  9 Afghanistan Asia       1992    41.7 16317921      649. TRUE      
+## 10 Afghanistan Asia       1997    41.8 22227415      635. TRUE      
+## # … with 1,694 more rows
+</code></pre>
+<p>We can also use text labels instead of <code>TRUE</code> and <code>FALSE</code>:</p>
+<pre><code class='language-r'><code>mutate(gapminder, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;after_1960 = ifelse(<span style='background-color:#faca7d'>year > 1960</span>, <span style='background-color:#9bbffa'>"After 1960"</span>, <span style='background-color:#f79b94'>"Before 1960"</span>))</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap after_1960 
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;      
+##  1 Afghanistan Asia       1952    28.8  8425333      779. Before 1960
+##  2 Afghanistan Asia       1957    30.3  9240934      821. Before 1960
+##  3 Afghanistan Asia       1962    32.0 10267083      853. After 1960 
+##  4 Afghanistan Asia       1967    34.0 11537966      836. After 1960 
+##  5 Afghanistan Asia       1972    36.1 13079460      740. After 1960 
+##  6 Afghanistan Asia       1977    38.4 14880372      786. After 1960 
+##  7 Afghanistan Asia       1982    39.9 12881816      978. After 1960 
+##  8 Afghanistan Asia       1987    40.8 13867957      852. After 1960 
+##  9 Afghanistan Asia       1992    41.7 16317921      649. After 1960 
+## 10 Afghanistan Asia       1997    41.8 22227415      635. After 1960 
+## # … with 1,694 more rows
+</code></pre>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Use <code>mutate()</code> to:</p>
+<ol style="list-style-type: decimal">
+<li>Add an <code>africa</code> column that is TRUE if the country is on the African continent</li>
+<li>Add a column for logged GDP per capita</li>
+<li>Add an <code>africa_asia</code> column that says “Africa or Asia” if the country is in Africa or Asia, and “Not Africa or Asia” if it’s not</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-3/" id="learnr-04-lesson-dplyr3" %}}
+</div>
+<div id="combining-multiple-verbs-with-pipes" class="section level3">
+<h3>Combining multiple verbs with pipes (<code>%&gt;%</code>)</h3>
+<p>What if you want to filter to include only rows from 2002 <em>and</em> make a new column with the logged GDP per capita? Doing this requires both <code>filter()</code> and <code>mutate()</code>, so we need to find a way to use both at once.</p>
+<p>One solution is to use intermediate variables for each step:</p>
+<pre><code class='language-r'><code><span style='background-color:#faca7d'>gapminder_2002_filtered</span> <- filter(gapminder, year == 2002)<br><br><span style='background-color:#9bbffa'>gapminder_2002_logged</span> <- mutate(<span style='background-color:#faca7d'>gapminder_2002_filtered</span>, log_gdpPercap = log(gdpPercap))</code></code></pre>
+<p>That works fine, but your environment panel will start getting full of lots of intermediate data frames.</p>
+<p>Another solution is to nest the functions inside each other. Remember that all <strong>dplyr</strong> functions return data frames, so you can feed the results of one into another:</p>
+<pre><code class='language-r'><code><span style='background-color:#faca7d'>filter</span>(<span style='background-color:#9bbffa'>mutate(gapminder, log_gdpPercap = log(gdpPercap))</span>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#faca7d'>year == 2002</span>)</code></code></pre>
+<p>That works too, but it gets <em>really</em> complicated once you have even more functions, and it’s hard to keep track of which function’s arguments go where. I’d avoid doing this entirely.</p>
+<p>One really nice solution is to use a pipe, or <code>%&gt;%</code>. <strong>The pipe takes an object on the left and passes it as the first argument of the function on the right</strong>.</p>
+<pre class="r"><code># gapminder will automatically get placed in the _____ spot
+gapminder %&gt;% filter(_____, country == &quot;Canada&quot;)</code></pre>
+<p>These two lines of code do the same thing:</p>
+<pre><code class='language-r'><code>filter(<span style='background-color:#f79b94'>gapminder</span>, country == "Canada")<br><br><span style='background-color:#f79b94'>gapminder</span> %>% filter(country == "Canada")</code></code></pre>
+<p>Using pipes, you can start with a data frame, pass it to one verb, then pass the output of that verb to the next verb, and so on. <strong>When reading any code with a <code>%&gt;%</code>, it’s easiest to read the <code>%&gt;%</code> as “and then”.</strong> This would read:</p>
+<blockquote>
+<p>Take the <code>gapminder</code> dataset <em>and then</em> filter it so that it only has rows from 2002 <em>and then</em> add a new column with the logged GDP per capita</p>
+</blockquote>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(year == 2002) %&gt;% 
+  mutate(log_gdpPercap = log(gdpPercap))</code></pre>
+<p>Here’s another way to think about pipes more conceptually. This isn’t valid R code, obviously, but imagine you’re going to take yourself, and then wake up, get out of bed, get dressed, and leave the house. Writing that whole process as nested functions would look like this:</p>
+<pre><code class='language-r'><code><span style='color:Coral;underline:text-decoration'>leave_house</span>(<span style='color:Coral;underline:text-decoration'>get_dressed</span>(<span style='color:Coral;underline:text-decoration'>get_out_of_bed</span>(<span style='color:Coral;underline:text-decoration'>wake_up</span>(<span style='background-color:Aquamarine'>me</span>, <span style='color:CornflowerBlue'>time</span> = <span style='background-color:Aquamarine'>"8:00"</span>), <span style='color:CornflowerBlue'>side</span> = <span style='background-color:Aquamarine'>"correct"</span>), <span style='color:CornflowerBlue'>pants</span> = <span style='background-color:Aquamarine'>TRUE</span>, <span style='color:CornflowerBlue'>shirt</span> = <span style='background-color:Aquamarine'>TRUE</span>), <span style='color:CornflowerBlue'>car</span> = <span style='background-color:Aquamarine'>TRUE</span>, <span style='color:CornflowerBlue'>bike</span> = <span style='background-color:Aquamarine'>FALSE</span>)</code></code></pre>
+<p>Instead of nesting everything, we can use pipes to chain these together. This would read</p>
+<blockquote>
+<p>Take myself, <em>and then</em> wake up at 8:00, <em>and then</em> get out of bed on the correct side, <em>and then</em> get dressed with pants and a shirt, <em>and then</em> leave the house in a car</p>
+</blockquote>
+<pre><code class='language-r'><code>me %>% <br>&nbsp;&nbsp;<span style='color:Coral;underline:text-decoration'>wake_up</span>(<span style='color:CornflowerBlue'>time</span> = <span style='background-color:Aquamarine'>"8:00"</span>) %>% <br>&nbsp;&nbsp;<span style='color:Coral;underline:text-decoration'>get_out_of_bed</span>(<span style='color:CornflowerBlue'>side</span> = <span style='background-color:Aquamarine'>"correct"</span>) %>% <br>&nbsp;&nbsp;<span style='color:Coral;underline:text-decoration'>get_dressed</span>(<span style='color:CornflowerBlue'>pants</span> = <span style='background-color:Aquamarine'>TRUE</span>, <span style='color:CornflowerBlue'>shirt</span> = <span style='background-color:Aquamarine'>TRUE</span>) %>% <br>&nbsp;&nbsp;<span style='color:Coral;underline:text-decoration'>leave_house</span>(<span style='color:CornflowerBlue'>car</span> = <span style='background-color:Aquamarine'>TRUE</span>, <span style='color:CornflowerBlue'>bike</span> = <span style='background-color:Aquamarine'>FALSE</span>)</code></code></pre>
+</div>
+<div id="summarizing-data-by-groups-with-group_by-summarize" class="section level3">
+<h3>Summarizing data by groups with <code>group_by() %&gt;% summarize()</code></h3>
+<p>The <code>summarize()</code> verb takes an entire frame and calculates summary information about it. For instance, this will find the average life expectancy for the whole <code>gapminder</code> data:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>summarize</span>(<span style='background-color:lightblue'>mean_life = mean(lifeExp)</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1 x 1
+##   mean_life
+##       &lt;dbl&gt;
+## 1      59.5
+</code></pre>
+<p>You can also make multiple summary variables, just like <code>mutate()</code>, and it will return a column for each:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>summarize</span>(<span style='background-color:lightblue'>mean_life = mean(lifeExp)</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:lightblue'>min_life = min(lifeExp)</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1 x 2
+##   mean_life min_life
+##       &lt;dbl&gt;    &lt;dbl&gt;
+## 1      59.5     23.6
+</code></pre>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Use <code>summarize()</code> to calculate:</p>
+<ol style="list-style-type: decimal">
+<li>The first (minimum) year in the <code>gapminder</code> dataset</li>
+<li>The last (maximum) year in the dataset</li>
+<li>The number of rows in the dataset (use the <a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf"><strong>dplyr</strong> cheatsheet</a>)</li>
+<li>The number of distinct countries in the dataset (use the <a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf"><strong>dplyr</strong> cheatsheet</a>)</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-4/" id="learnr-04-lesson-dplyr4" %}}
+<div class="puzzle">
+<p><strong>Your turn</strong>: Use <code>filter()</code> and <code>summarize()</code> to calculate the median life expectancy on the African continent in 2007:</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-5/" id="learnr-04-lesson-dplyr5" %}}
+<p>Notice that <code>summarize()</code> on its own summarizes the whole dataset, so you only get a single row back. These values are the averages and minimums for the entire data frame. If you group your data into separate subgroups, you can use <code>summarize()</code> to calculate summary statistics for each group. Do this with <code>group_by()</code>.</p>
+<p>The <code>group_by()</code> function puts rows into groups based on values in a column. If you run this:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>group_by</span>(<span style='background-color:lightblue'>continent</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 6
+## # Groups:   continent [5]
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
+</code></pre>
+<p>…you won’t see anything different! R has put the dataset into separate invisible groups behind the scenes, but you haven’t done anything with those groups, so nothing has really happened. If you do things with those groups with <code>summarize()</code>, though, <code>group_by()</code> becomes much more useful.</p>
+<p>For instance, this will take the <code>gapminder</code> data frame, group it by continent, and then summarize it by calculating the number of distinct countries in each group. It will return <em>one row for each group</em>, so there should be a row for each continent:</p>
+<pre class="r"><code>gapminder %&gt;% 
+  group_by(continent) %&gt;% 
+  summarize(n_countries = n_distinct(country)) </code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   continent n_countries
+##   &lt;fct&gt;           &lt;int&gt;
+## 1 Africa             52
+## 2 Americas           25
+## 3 Asia               33
+## 4 Europe             30
+## 5 Oceania             2</code></pre>
+<p>You can calculate multiple summary statistics, as before:</p>
+<pre class="r"><code>gapminder %&gt;% 
+  group_by(continent) %&gt;% 
+  summarize(n_countries = n_distinct(country),
+            avg_life_exp = mean(lifeExp)) </code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   continent n_countries avg_life_exp
+##   &lt;fct&gt;           &lt;int&gt;        &lt;dbl&gt;
+## 1 Africa             52         48.9
+## 2 Americas           25         64.7
+## 3 Asia               33         60.1
+## 4 Europe             30         71.9
+## 5 Oceania             2         74.3</code></pre>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Find the minimum, maximum, and median life expectancy for each continent:</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-6/" id="learnr-04-lesson-dplyr6" %}}
+<div class="puzzle">
+<p><strong>Your turn</strong>: Find the minimum, maximum, and median life expectancy for each continent in 2007 only:</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_04-dplyr-7/" id="learnr-04-lesson-dplyr7" %}}
+<p>Finally, you can group by multiple columns and R will create subgroups for every combination of the groups and return the number of rows of combinations. For instance, we can calculate the average life expectancy by both year and continent and we’ll get 60 rows, since there are 5 continents and 12 years (5 × 12 = 60):</p>
+<pre class="r"><code>gapminder %&gt;% 
+  group_by(continent, year) %&gt;% 
+  summarize(avg_life_exp = mean(lifeExp)) </code></pre>
+<pre><code>## # A tibble: 60 x 3
+## # Groups:   continent [5]
+##    continent  year avg_life_exp
+##    &lt;fct&gt;     &lt;int&gt;        &lt;dbl&gt;
+##  1 Africa     1952         39.1
+##  2 Africa     1957         41.3
+##  3 Africa     1962         43.3
+##  4 Africa     1967         45.3
+##  5 Africa     1972         47.5
+##  6 Africa     1977         49.6
+##  7 Africa     1982         51.6
+##  8 Africa     1987         53.3
+##  9 Africa     1992         53.6
+## 10 Africa     1997         53.6
+## # … with 50 more rows</code></pre>
+</div>
+<div id="selecting-with-select" class="section level3">
+<h3>Selecting with <code>select()</code></h3>
+<p>The last two verbs are far simpler than <code>filter()</code>, <code>mutate()</code>, and <code>group_by() %&gt;% summarize()</code>.</p>
+<p>You can choose specific columns with the <code>select()</code> verb. This will only keep two columns: <code>lifeExp</code> and <code>year</code>:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>select</span>(<span style='background-color:lightblue'>lifeExp, year</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 2
+##    lifeExp  year
+##      &lt;dbl&gt; &lt;int&gt;
+##  1    28.8  1952
+##  2    30.3  1957
+##  3    32.0  1962
+##  4    34.0  1967
+##  5    36.1  1972
+##  6    38.4  1977
+##  7    39.9  1982
+##  8    40.8  1987
+##  9    41.7  1992
+## 10    41.8  1997
+## # … with 1,694 more rows
+</code></pre>
+<p>You can remove specific columns by prefacing the column names with <code>-</code>, like <code>-lifeExp</code>:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>select</span>(<span style='background-color:lightblue'>-lifeExp</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 5
+##    country     continent  year      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952  8425333      779.
+##  2 Afghanistan Asia       1957  9240934      821.
+##  3 Afghanistan Asia       1962 10267083      853.
+##  4 Afghanistan Asia       1967 11537966      836.
+##  5 Afghanistan Asia       1972 13079460      740.
+##  6 Afghanistan Asia       1977 14880372      786.
+##  7 Afghanistan Asia       1982 12881816      978.
+##  8 Afghanistan Asia       1987 13867957      852.
+##  9 Afghanistan Asia       1992 16317921      649.
+## 10 Afghanistan Asia       1997 22227415      635.
+## # … with 1,694 more rows
+</code></pre>
+<p>You can also rename columns using <code>select()</code>. Follow this pattern: <code>select(old_name = new_name)</code>.</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>select</span>(<span style='background-color:lightblue'>year, country, life_expectancy = lifeExp</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 3
+##     year country     life_expectancy
+##    &lt;int&gt; &lt;fct&gt;                 &lt;dbl&gt;
+##  1  1952 Afghanistan            28.8
+##  2  1957 Afghanistan            30.3
+##  3  1962 Afghanistan            32.0
+##  4  1967 Afghanistan            34.0
+##  5  1972 Afghanistan            36.1
+##  6  1977 Afghanistan            38.4
+##  7  1982 Afghanistan            39.9
+##  8  1987 Afghanistan            40.8
+##  9  1992 Afghanistan            41.7
+## 10  1997 Afghanistan            41.8
+## # … with 1,694 more rows
+</code></pre>
+<p>Alternatively, there’s a special <code>rename()</code> verb that will, um, rename, while keeping all the other columns:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>rename</span>(<span style='background-color:lightblue'>life_expectancy = lifeExp</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 6
+##    country     continent  year life_expectancy      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952            28.8  8425333      779.
+##  2 Afghanistan Asia       1957            30.3  9240934      821.
+##  3 Afghanistan Asia       1962            32.0 10267083      853.
+##  4 Afghanistan Asia       1967            34.0 11537966      836.
+##  5 Afghanistan Asia       1972            36.1 13079460      740.
+##  6 Afghanistan Asia       1977            38.4 14880372      786.
+##  7 Afghanistan Asia       1982            39.9 12881816      978.
+##  8 Afghanistan Asia       1987            40.8 13867957      852.
+##  9 Afghanistan Asia       1992            41.7 16317921      649.
+## 10 Afghanistan Asia       1997            41.8 22227415      635.
+## # … with 1,694 more rows
+</code></pre>
+</div>
+<div id="arranging-data-with-arrange" class="section level3">
+<h3>Arranging data with <code>arrange()</code></h3>
+<p>The <code>arrange()</code> verb sorts data. By default it sorts ascendingly, putting the lowest values first:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>arrange</span>(<span style='background-color:lightblue'>lifeExp</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 6
+##    country      continent  year lifeExp     pop gdpPercap
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+##  1 Rwanda       Africa     1992    23.6 7290203      737.
+##  2 Afghanistan  Asia       1952    28.8 8425333      779.
+##  3 Gambia       Africa     1952    30    284320      485.
+##  4 Angola       Africa     1952    30.0 4232095     3521.
+##  5 Sierra Leone Africa     1952    30.3 2143249      880.
+##  6 Afghanistan  Asia       1957    30.3 9240934      821.
+##  7 Cambodia     Asia       1977    31.2 6978607      525.
+##  8 Mozambique   Africa     1952    31.3 6446316      469.
+##  9 Sierra Leone Africa     1957    31.6 2295678     1004.
+## 10 Burkina Faso Africa     1952    32.0 4469979      543.
+## # … with 1,694 more rows
+</code></pre>
+<p>You can reverse that by wrapping the column name with <code>desc()</code>:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <span style='background-color:pink'>arrange</span>(<span style='background-color:lightblue'>desc(lifeExp)</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 6
+##    country          continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;            &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Japan            Asia       2007    82.6 127467972    31656.
+##  2 Hong Kong, China Asia       2007    82.2   6980412    39725.
+##  3 Japan            Asia       2002    82   127065841    28605.
+##  4 Iceland          Europe     2007    81.8    301931    36181.
+##  5 Switzerland      Europe     2007    81.7   7554661    37506.
+##  6 Hong Kong, China Asia       2002    81.5   6762476    30209.
+##  7 Australia        Oceania    2007    81.2  20434176    34435.
+##  8 Spain            Europe     2007    80.9  40448191    28821.
+##  9 Sweden           Europe     2007    80.9   9031088    33860.
+## 10 Israel           Asia       2007    80.7   6426679    25523.
+## # … with 1,694 more rows
+</code></pre>
+<p>You can sort by multiple columns by specifying them in a comma separated list. For example, we can sort by continent and then sort by life expectancy within the continents:</p>
+<pre><code class='language-r'><code><span style='background-color:yellow'>gapminder</span> %>% <br>&nbsp;&nbsp;<span style='background-color:pink'>arrange</span>(<span style='background-color:lightblue'>continent, desc(lifeExp)</span>)</code></code></pre>
+<pre><code>
+## # A tibble: 1,704 x 6
+##    country   continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Reunion   Africa     2007    76.4   798094     7670.
+##  2 Reunion   Africa     2002    75.7   743981     6316.
+##  3 Reunion   Africa     1997    74.8   684810     6072.
+##  4 Libya     Africa     2007    74.0  6036914    12057.
+##  5 Tunisia   Africa     2007    73.9 10276158     7093.
+##  6 Reunion   Africa     1992    73.6   622191     6101.
+##  7 Tunisia   Africa     2002    73.0  9770575     5723.
+##  8 Mauritius Africa     2007    72.8  1250882    10957.
+##  9 Libya     Africa     2002    72.7  5368585     9535.
+## 10 Algeria   Africa     2007    72.3 33333216     6223.
+## # … with 1,694 more rows
+</code></pre>
+</div>
+<div id="thats-it" class="section level3">
+<h3>That’s it!</h3>
+<p>Those are the main verbs you’ll deal with in this class. There are dozens of other really useful ones—check out the <a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf"><strong>dplyr</strong> and <strong>tidyr</strong> cheat sheet</a> for examples.</p>
+</div>
+</div>
+<div id="changing-colors-shapes-and-sizes-with-scale_" class="section level2">
+<h2>Changing colors, shapes, and sizes, with <code>scale_*()</code></h2>
+<p>Recall from session 3 that the grammar of graphics uses a set of layers to define elements of plots:</p>
+<p><img src="/slides/img/03/ggplot-layers@4x.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>In tomorrow’s session, you’ll learn all about the Theme layer. Here we’ll briefly cover the Scales layer, which we use for changing aspects of the different aesthetics, like using logged axes or changing colors or shapes.</p>
+<p>All the functions that deal with scales conveniently follow the same naming pattern:</p>
+<pre><code class='language-r'><code>scale_<span style='background-color:pink'>AESTHETIC</span>_<span style='background-color:yellow'>DETAILS</span>()</code></code></pre>
+<p>Here are some common scale functions:</p>
+<pre><code class='language-r'><code>scale_<span style='background-color:pink'>x</span>_<span style='background-color:yellow'>continuous</span>()<br>scale_<span style='background-color:pink'>y</span>_<span style='background-color:yellow'>reverse</span>()<br>scale_<span style='background-color:pink'>color</span>_<span style='background-color:yellow'>viridis_c</span>()<br>scale_<span style='background-color:pink'>shape</span>_<span style='background-color:yellow'>manual</span>(values = c(19, 13, 15))<br>scale_<span style='background-color:pink'>fill</span>_<span style='background-color:yellow'>manual</span>(values = c("red", "orange", "blue"))</code></code></pre>
+<p>You can see a <a href="https://ggplot2.tidyverse.org/reference/index.html#section-scales">list of all of the possible scale functions here</a>, and you should reference that documentation (and the excellent examples) often when working with these functions.</p>
+<p>As long as you have mapped a variable to an aesthetic with <code>aes()</code>, you can use the <code>scale_*()</code> functions to deal with it. For instance, in this ggplot, we have mapped variables to <code>x</code>, <code>y</code>, and <code>fill</code>, which means we can use those corresponding scale functions to manipulate how those aesthetics are shown. Here we reverse the y-axis (ew, don’t really do this), and we use a discrete viridis color palette:</p>
+<pre class="r"><code>continent_counts &lt;- gapminder %&gt;% 
+  group_by(continent) %&gt;% 
+  summarize(countries = n_distinct(country))
+
+ggplot(continent_counts, aes(x = continent, y = countries, fill = continent)) +
+  geom_col() +
+  scale_y_reverse() +  # lol this is bad; don&#39;t do it in real life
+  scale_fill_viridis_d()</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-continent-counts-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>You can also use different arguments in the scale functions—again, check the documentation for examples. For instance, if we want to use the <a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">plasma palette from the viridis package</a>, we can set that as an option:</p>
+<pre class="r"><code>ggplot(continent_counts, aes(x = continent, y = countries, fill = continent)) +
+  geom_col() +
+  scale_fill_viridis_d(option = &quot;plasma&quot;)</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-continent-plasma-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>That yellow might be too bright and hard to see, so we can tell ggplot to not use the full range of the palette, ending at 90% of the range instead:</p>
+<pre class="r"><code>ggplot(continent_counts, aes(x = continent, y = countries, fill = continent)) +
+  geom_col() +
+  scale_fill_viridis_d(option = &quot;plasma&quot;, end = 0.9)</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-continent-plasma-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Instead of letting R calculate the colors from a general palette, you can also specify your own colors with <code>scale_fill_manual()</code> and feeding it a list of values—generally as <a href="https://www.google.com/search?q=color+picker">hex codes</a> or a name from a <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">list of built-in R colors</a>:</p>
+<pre class="r"><code>ggplot(continent_counts, aes(x = continent, y = countries, fill = continent)) +
+  geom_col() +
+  scale_fill_manual(values = c(&quot;chartreuse4&quot;, &quot;cornsilk4&quot;, &quot;black&quot;, &quot;#fc03b6&quot;, &quot;#5c47d6&quot;))</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-continent-manual-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Scale functions also work for other aesthetics like <code>shape</code> or <code>color</code> or <code>size</code>. For instance, consider this plot, which has all three:</p>
+<pre class="r"><code>gapminder_2007 &lt;- gapminder %&gt;% 
+  filter(year == 2007)
+
+ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10()</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-basic-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can change the colors of the points with <code>scale_color_*()</code>:</p>
+<pre class="r"><code>ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_color_manual(values = c(&quot;chartreuse4&quot;, &quot;cornsilk4&quot;, &quot;black&quot;, &quot;#fc03b6&quot;, &quot;#5c47d6&quot;))</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-colors-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can change the shapes with <code>scale_shape_*()</code>. If you run <code>?pch</code> in your console or search for <code>pch</code> in the help, you can see all the possible shapes.</p>
+<pre class="r"><code>ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_shape_manual(values = c(12, 9, 17, 19, 15))</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-shapes-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>You can change the size with <code>scale_size_*()</code>. Here we make it so the smallest possible size is 1 and the largest is 15:</p>
+<pre class="r"><code>ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_size_continuous(range = c(1, 15))</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-size-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can even do all three at once:</p>
+<pre class="r"><code>ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_color_manual(values = c(&quot;chartreuse4&quot;, &quot;cornsilk4&quot;, &quot;black&quot;, &quot;#fc03b6&quot;, &quot;#5c47d6&quot;)) +
+  scale_shape_manual(values = c(12, 9, 17, 19, 15)) +
+  scale_size_continuous(range = c(1, 15))</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-everything-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Phew. That’s ugly.</p>
+<p>One last thing we can do with scales is format how they show up on the plot. Notice how the population legend uses scientific notation like <code>2.50e+08</code>. This means you need to move the decimal point 8 places to the right, making it <code>250000000</code>. Leaving it in scientific notation isn’t great because it makes it really hard to read and interpret.</p>
+<p>If you load the <strong>scales</strong> library (which is installed as part of <strong>tidyverse</strong> but isn’t automatically loaded), you can use some neat helper functions to reformat the text that shows up in plots. For instance, we can make it so population is formatted as a number with commas every 3 numbers, and the x-axis is formatted as dollars:</p>
+<pre class="r"><code>library(scales)
+
+ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = lifeExp, 
+           color = continent, shape = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10(labels = dollar) +
+  scale_size_continuous(labels = comma)</code></pre>
+<p><img src="/lesson/04-lesson_files/figure-html/plot-health-wealth-scale-labels-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><a href="https://scales.r-lib.org/reference/index.html">Check the documentation for <strong>scales</strong></a> for details about all the labelling functions it has, including dates, percentages, p-values, LaTeX math, etc.</p>
+</div>
