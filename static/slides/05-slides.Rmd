@@ -1,0 +1,290 @@
+---
+title: "Themes"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+library(hrbrthemes)
+```
+
+class: center middle main-title section-title-4
+
+# Themes
+
+.class-info[
+
+**Session 5**
+
+.light[PMAP 8921: Data Visualization with R<br>
+Andrew Young School of Policy Studies<br>
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-5.medium.sp-after-half[CRAP and ggplot]
+
+--
+
+.box-6.medium.sp-after-half[The anatomy of a ggplot theme]
+
+
+---
+
+name: crap-ggplot
+class: center middle section-title section-title-5 animated fadeIn
+
+# CRAP and ggplot
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Universal principles
+
+.box-inv-5[Contrast]
+
+.box-inv-5[Repetition]
+
+.box-inv-5[Alignment]
+
+.box-inv-5.sp-after[Proximity]
+
+--
+
+.box-5.medium[These design principles apply everywhere!]
+
+.box-inv-5.small[Graphic design, art, music, architecture… and graphs!]
+
+---
+
+# Is that gray background okay?
+
+```{r standard-grey, echo=FALSE, fig.dim=c(7, 2.5), out.width="100%"}
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point(size = 2)
+```
+
+--
+
+.box-inv-5[It adds contrast! Some people just don't like it `r emo::ji("shrug")`]
+
+---
+
+# Applying CRAP to ggplot
+
+.box-inv-5.sp-after[We can follow CRAP principles to make big<br>improvements to our plots]
+
+.box-inv-5.sp-after[Claus Wilke's chapter covers lots of<br>these graph-specific principles]
+
+.box-inv-5.medium[We can apply these principles to ggplot plots]
+
+---
+
+# Like this!
+
+.left-code[
+```{r hrbrlight, tidy=FALSE, message=FALSE, fig.show="hide", fig.dim=c(4.8, 3.75), out.width="100%"}
+library(hrbrthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  theme_ipsum_ps()
+```
+]
+
+.right-plot[
+![](`r knitr::fig_chunk("hrbrlight", "png")`)
+]
+
+---
+
+# And this!
+
+.left-code[
+```{r hrbrdark, tidy=FALSE, message=FALSE, fig.show="hide", fig.dim=c(4.8, 3.75), out.width="100%"}
+library(hrbrthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  theme_modern_rc()
+```
+]
+
+.right-plot[
+![](`r knitr::fig_chunk("hrbrdark", "png")`)
+]
+
+---
+
+# Or this!
+
+.left-code[
+```{r economist, tidy=FALSE, message=FALSE, fig.show="hide", fig.dim=c(4.8, 3.75), out.width="100%"}
+library(ggthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  scale_color_economist() +
+  theme_economist()
+```
+]
+
+.right-plot[
+![](`r knitr::fig_chunk("economist", "png")`)
+]
+
+---
+
+# And even this!
+
+.left-code[
+```{r pomological, tidy=FALSE, message=FALSE, fig.show="hide", fig.dim=c(4.8, 3.75), out.width="100%"}
+library(ggpomological)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  scale_color_pomological() +
+  theme_pomological_fancy()
+```
+]
+
+.right-plot[
+![](`r knitr::fig_chunk("pomological", "png")`)
+]
+
+---
+
+# One magic, powerful function
+
+&nbsp;
+
+&nbsp;
+
+.box-inv-5.huge[`theme()`]
+
+---
+
+layout: false
+name: anatomy
+class: center middle section-title section-title-6 animated fadeIn
+
+# The anatomy of<br>a `ggplot()` theme
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# Theme system
+
+.center[
+<figure>
+  <a href="https://henrywang.nl/ggplot2-theme-elements-demonstration/" target="_blank"><img src="img/05/theme_elements-1024x755.png" alt="ggplot theme elements" title="ggplot theme elements" width="65%"></a>
+</figure>
+]
+
+???
+
+By [Henry Wang](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+
+---
+
+# Theme elements
+
+.box-inv-6.medium[Each element in the plot can be targeted]
+
+--
+
+.box-6[Plot title = `plot.title`]
+
+--
+
+.box-6[Grid lines = `panel.grid`]
+
+--
+
+.box-6[Legend background = `legend.background`]
+
+---
+
+# Theme functions
+
+.box-inv-6.medium[Use special functions to<br>manipulate specific elements]
+
+--
+
+.box-6[Text-based things = `element_text()`]
+
+--
+
+.box-6[Rectangular things (backgrounds) = `element_rect()`]
+
+--
+
+.box-6[Line-based things (axis lines, grid lines) = `element_line()`]
+
+--
+
+.box-6[Disable element completely = `element_blank()`]
+
+---
+
+# How to learn `theme()`
+
+.box-inv-6.medium[The `theme()` function has<br>**94** possible arguments(!!!)]
+
+.box-inv-6.small.sp-after[You can get hyper-specific with things like<br>`axis.ticks.length.x.bottom`]
+
+.box-6[The only way to learn how to use `theme()`<br>is to use it and tinker with it]
+
+---
+
+# How to learn `theme()`
+
+&nbsp;
+
+&nbsp;
+
+.box-6.medium[I cannot show you everything]
+
+.box-inv-6[That's why we have the lesson, example, and exercise!]

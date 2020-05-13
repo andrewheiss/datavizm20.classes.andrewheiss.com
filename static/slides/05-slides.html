@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Themes</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-12" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Themes
+
+.class-info[
+
+**Session 5**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-5.medium.sp-after-half[CRAP and ggplot]
+
+--
+
+.box-6.medium.sp-after-half[The anatomy of a ggplot theme]
+
+
+---
+
+name: crap-ggplot
+class: center middle section-title section-title-5 animated fadeIn
+
+# CRAP and ggplot
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Universal principles
+
+.box-inv-5[Contrast]
+
+.box-inv-5[Repetition]
+
+.box-inv-5[Alignment]
+
+.box-inv-5.sp-after[Proximity]
+
+--
+
+.box-5.medium[These design principles apply everywhere!]
+
+.box-inv-5.small[Graphic design, art, music, architecture… and graphs!]
+
+---
+
+# Is that gray background okay?
+
+&lt;img src="05-slides_files/figure-html/standard-grey-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+.box-inv-5[It adds contrast! Some people just don't like it 🤷]
+
+---
+
+# Applying CRAP to ggplot
+
+.box-inv-5.sp-after[We can follow CRAP principles to make big&lt;br&gt;improvements to our plots]
+
+.box-inv-5.sp-after[Claus Wilke's chapter covers lots of&lt;br&gt;these graph-specific principles]
+
+.box-inv-5.medium[We can apply these principles to ggplot plots]
+
+---
+
+# Like this!
+
+.left-code[
+
+```r
+library(hrbrthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  theme_ipsum_ps()
+```
+]
+
+.right-plot[
+![](05-slides_files/figure-html/hrbrlight-1.png)
+]
+
+---
+
+# And this!
+
+.left-code[
+
+```r
+library(hrbrthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  theme_modern_rc()
+```
+]
+
+.right-plot[
+![](05-slides_files/figure-html/hrbrdark-1.png)
+]
+
+---
+
+# Or this!
+
+.left-code[
+
+```r
+library(ggthemes)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  scale_color_economist() +
+  theme_economist()
+```
+]
+
+.right-plot[
+![](05-slides_files/figure-html/economist-1.png)
+]
+
+---
+
+# And even this!
+
+.left-code[
+
+```r
+library(ggpomological)
+
+ggplot(mpg, aes(x = displ, y = hwy, 
+                color = drv)) +
+  geom_point(size = 2) +
+  scale_color_pomological() +
+  theme_pomological_fancy()
+```
+]
+
+.right-plot[
+![](05-slides_files/figure-html/pomological-1.png)
+]
+
+---
+
+# One magic, powerful function
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+.box-inv-5.huge[`theme()`]
+
+---
+
+layout: false
+name: anatomy
+class: center middle section-title section-title-6 animated fadeIn
+
+# The anatomy of&lt;br&gt;a `ggplot()` theme
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# Theme system
+
+.center[
+&lt;figure&gt;
+  &lt;a href="https://henrywang.nl/ggplot2-theme-elements-demonstration/" target="_blank"&gt;&lt;img src="img/05/theme_elements-1024x755.png" alt="ggplot theme elements" title="ggplot theme elements" width="65%"&gt;&lt;/a&gt;
+&lt;/figure&gt;
+]
+
+???
+
+By [Henry Wang](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+
+---
+
+# Theme elements
+
+.box-inv-6.medium[Each element in the plot can be targeted]
+
+--
+
+.box-6[Plot title = `plot.title`]
+
+--
+
+.box-6[Grid lines = `panel.grid`]
+
+--
+
+.box-6[Legend background = `legend.background`]
+
+---
+
+# Theme functions
+
+.box-inv-6.medium[Use special functions to&lt;br&gt;manipulate specific elements]
+
+--
+
+.box-6[Text-based things = `element_text()`]
+
+--
+
+.box-6[Rectangular things (backgrounds) = `element_rect()`]
+
+--
+
+.box-6[Line-based things (axis lines, grid lines) = `element_line()`]
+
+--
+
+.box-6[Disable element completely = `element_blank()`]
+
+---
+
+# How to learn `theme()`
+
+.box-inv-6.medium[The `theme()` function has&lt;br&gt;**94** possible arguments(!!!)]
+
+.box-inv-6.small.sp-after[You can get hyper-specific with things like&lt;br&gt;`axis.ticks.length.x.bottom`]
+
+.box-6[The only way to learn how to use `theme()`&lt;br&gt;is to use it and tinker with it]
+
+---
+
+# How to learn `theme()`
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+.box-6.medium[I cannot show you everything]
+
+.box-inv-6[That's why we have the lesson, example, and exercise!]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

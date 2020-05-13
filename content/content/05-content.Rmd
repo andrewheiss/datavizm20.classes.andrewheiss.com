@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "05-slides"
+slides: "05-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -32,9 +32,76 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Themes", "1", TRUE,
+  "CRAP and ggplot", "crap-ggplot", FALSE,
+  "The anatomy of a ggplot theme", "anatomy", FALSE,
+)
+
+slide_tabs(sections, "/slides/05-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv).
+
+- [Introduction](https://www.youtube.com/watch?v=s9YBf8Rf21s&list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv)
+- [CRAP and ggplot](https://www.youtube.com/watch?v=BQ3wRMAMeBQ&list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv&)
+- [The anatomy of a ggplot theme](https://www.youtube.com/watch?v=V0CzheP9yMc&list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sEsSJ16BKgXPNFcl3y6gjEv
+
+https://youtu.be/s9YBf8Rf21s
+PMAP 8921 • (5) Themes: (0) Introduction
+
+Introduction to the class session on ggplot themes.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/05-content/
+
+
+https://youtu.be/BQ3wRMAMeBQ
+PMAP 8921 • (5) Themes: (1) CRAP and ggplot
+
+Brief discussion about the application of the principles of graphic design to data-based graphs
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/05-content/
+
+
+https://youtu.be/V0CzheP9yMc
+PMAP 8921 • (5) Themes: (2) The anatomy of a ggplot theme
+
+Brief overview of the different parts of a ggplot plot and how to target those elements with specific theme functions
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/05-content/
+
+
+https://youtu.be/9ldrTCUSReM
+PMAP 8921 • (5) Themes: Example
+
+Brief demonstration of how to use ggThemeAssist to modify elements of a ggplot theme
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/05-content/
+  
+See the documentation for ggThemeAssist: https://github.com/calligross/ggthemeassist
+```
