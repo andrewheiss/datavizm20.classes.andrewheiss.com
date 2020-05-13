@@ -83,7 +83,7 @@ You can also watch the playlist (and skip around to different sections) here:
 https://www.youtube.com/playlist?list=PLS6tnpTr39sEdnMYtNP3U3C2AsQZycEyP
 
 https://youtu.be/K8wELKhqgn0
-PMAP 8921 • (3) Amounts and Proportions: (0) Introduction
+PMAP 8921 • (4) Amounts and Proportions: (0) Introduction
 
 Introduction to the class session on amounts and proportions.
 
@@ -91,7 +91,7 @@ Access the slides, code, and other materials at the course website at https://da
 
 
 https://youtu.be/pBpNaopKCVw
-PMAP 8921 • (3) Amounts and Proportions: (1) Reproducibility
+PMAP 8921 • (4) Amounts and Proportions: (1) Reproducibility
 
 Discussion about the importance of reproducible data analysis practices.
 
@@ -99,7 +99,7 @@ Access the slides, code, and other materials at the course website at https://da
 
 
 https://youtu.be/5riA81CcHOY
-PMAP 8921 • (3) Amounts and Proportions: (2) Amounts
+PMAP 8921 • (4) Amounts and Proportions: (2) Amounts
 
 Discussion of best practices for visualizing amounts.
 
@@ -107,9 +107,17 @@ Access the slides, code, and other materials at the course website at https://da
 
 
 https://youtu.be/3rDH0BWeDIQ
-PMAP 8921 • (3) Amounts and Proportions: (3) Proportions
+PMAP 8921 • (4) Amounts and Proportions: (3) Proportions
 
 Discussion of best practices for visualizing proportions.
 
 Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/03-content/
+
+
+https://youtu.be/zrT-ThV6U6M
+PMAP 8921 • (4) Amounts and Proportions: Example
+
+Complete walkthrough of how to visualize amounts and proportions with a bar chart, lollipop chart, strip plot, beeswarm plot, and heatmap using ggplot2 and R
+
+Access the data, code, and other materials at https://datavizm20.classes.andrewheiss.com/example/04-example/
 ```
