@@ -18,5 +18,246 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#live-coding-example">Live coding example</a></li>
+<li><a href="#complete-code">Complete code</a>
+<ul>
+<li><a href="#load-data">Load data</a></li>
+<li><a href="#wrangle-data">Wrangle data</a></li>
+<li><a href="#bar-plot">Bar plot</a></li>
+<li><a href="#lollipop-chart">Lollipop chart</a></li>
+<li><a href="#strip-plot">Strip plot</a></li>
+<li><a href="#beeswarm-plot">Beeswarm plot</a></li>
+<li><a href="#heatmap">Heatmap</a></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>For this example, we’re going to use real world data to demonstrate some different ways to visualize amounts and proportions. We’ll use data from the CDC and the Social Security Administration about the number of daily births in the United States from 1994–2014. <a href="https://fivethirtyeight.com/features/some-people-are-too-superstitious-to-have-a-baby-on-friday-the-13th/">FiveThirtyEight reported a story using this data in 2016</a> and they posted relatively CSV files <a href="https://github.com/fivethirtyeight/data/tree/master/births">on GitHub</a>, so we can download and use those.</p>
+<p>If you want to follow along with this example, you can download the data directly from <a href="https://github.com/fivethirtyeight/data/tree/master/births">GitHub</a> or by using these links (you’ll likely need to right click on these and choose “Save Link As…”):</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_1994-2003_CDC_NCHS.csv"><i class="fas fa-file-csv"></i> <code>US_births_1994-2003_CDC_NCHS.csv</code></a></li>
+<li><a href="https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv"><i class="fas fa-file-csv"></i> <code>US_births_2000-2014_SSA.csv</code></a></li>
+</ul>
+<div id="live-coding-example" class="section level2">
+<h2>Live coding example</h2>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zrT-ThV6U6M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+</div>
+<div id="complete-code" class="section level2">
+<h2>Complete code</h2>
+<p><em>(This is a slightly cleaned up version of the code from the video.)</em></p>
+<div id="load-data" class="section level3">
+<h3>Load data</h3>
+<p>There are two CSV files:</p>
+<ul>
+<li><code>US_births_1994-2003_CDC_NCHS.csv</code> contains U.S. births data for the years 1994 to 2003, as provided by the Centers for Disease Control and Prevention’s National Center for Health Statistics.</li>
+<li><code>US_births_2000-2014_SSA.csv</code> contains U.S. births data for the years 2000 to 2014, as provided by the Social Security Administration.</li>
+</ul>
+<p>Since the two datasets overlap in 2000–2003, we use Social Security Administration data for those years.</p>
+<p>We downloaded the data from GitHub and placed the CSV files in a folder named <code>data</code>. We’ll then load them with <code>read_csv()</code> and combine them into one data frame.</p>
+<pre class="r"><code>library(tidyverse)
+library(scales)   # For nice labels in charts
+
+births_1994_1999 &lt;- read_csv(&quot;data/US_births_1994-2003_CDC_NCHS.csv&quot;) %&gt;% 
+  # Ignore anything after 2000
+  filter(year &lt; 2000)
+
+births_2000_2014 &lt;- read_csv(&quot;data/US_births_2000-2014_SSA.csv&quot;)
+
+births_combined &lt;- bind_rows(births_1994_1999, births_2000_2014)</code></pre>
+</div>
+<div id="wrangle-data" class="section level3">
+<h3>Wrangle data</h3>
+<p>Let’s look at the first few rows of the data to see what we’re working with:</p>
+<pre class="r"><code>head(births_combined)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##    year month date_of_month day_of_week births
+##   &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+## 1  1994     1             1           6   8096
+## 2  1994     1             2           7   7772
+## 3  1994     1             3           1  10142
+## 4  1994     1             4           2  11248
+## 5  1994     1             5           3  11053
+## 6  1994     1             6           4  11406</code></pre>
+<p>The columns for year and births seem straightforward and ready to use. The columns for month and day of the week could be improved if we changed them to text (i.e. January instead of 1; Tuesday instead of 3). To fix this, we can convert these columns to categorical variables, or factors in R. We can also specify that these categories (or factors) are ordered, meaning that Feburary comes after January, etc. Without ordering, R will plot them alphabetically, which isn’t very helpful.</p>
+<p>We’ll make a new dataset named <code>births</code> that’s based on the combined births data, but with some new columns added:</p>
+<pre class="r"><code># The c() function lets us make a list of values
+month_names &lt;- c(&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;,
+                 &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;)
+
+day_names &lt;- c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, 
+               &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;)
+
+births &lt;- births_combined %&gt;% 
+  # Make month an ordered factor, using the month_name list as labels
+  mutate(month = factor(month, labels = month_names, ordered = TRUE)) %&gt;% 
+  mutate(day_of_week = factor(day_of_week, labels = day_names, ordered = TRUE),
+         date_of_month_categorical = factor(date_of_month)) %&gt;% 
+  # Add a column indicating if the day is on a weekend
+  mutate(weekend = ifelse(day_of_week %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;), TRUE, FALSE))
+
+head(births)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##    year month   date_of_month day_of_week births date_of_month_categori… weekend
+##   &lt;dbl&gt; &lt;ord&gt;           &lt;dbl&gt; &lt;ord&gt;        &lt;dbl&gt; &lt;fct&gt;                   &lt;lgl&gt;  
+## 1  1994 January             1 Saturday      8096 1                       TRUE   
+## 2  1994 January             2 Sunday        7772 2                       TRUE   
+## 3  1994 January             3 Monday       10142 3                       FALSE  
+## 4  1994 January             4 Tuesday      11248 4                       FALSE  
+## 5  1994 January             5 Wednesday    11053 5                       FALSE  
+## 6  1994 January             6 Thursday     11406 6                       FALSE</code></pre>
+<p>If you look at the data now, you can see the columns are changed and have different types. <code>year</code> and <code>date_of_month</code> are still numbers, but <code>month</code>, and <code>day_of_week</code> are ordered factors (<code>ord</code>) and <code>date_of_month_categorical</code> is a regular factor (<code>fct</code>). Technically it’s also ordered, but because it’s already alphabetical (i.e. 2 naturally comes after 1), we don’t need to force it to be in the right order.</p>
+<p>Our <code>births</code> data is now clean and ready to go!</p>
+</div>
+<div id="bar-plot" class="section level3">
+<h3>Bar plot</h3>
+<p>First we can look at a bar chart showing the total number of births each day. We need to make a smaller summarized dataset and then we’ll plot it:</p>
+<pre class="r"><code>total_births_weekday &lt;- births %&gt;% 
+  group_by(day_of_week) %&gt;% 
+  summarize(total = sum(births))
+
+ggplot(data = total_births_weekday,
+       mapping = aes(x = day_of_week, y = total, fill = day_of_week)) +
+  geom_col() +
+  # Turn off the fill legend because it&#39;s redundant
+  guides(fill = FALSE)</code></pre>
+<p><img src="/example/04-example_files/figure-html/plot-bar-chart-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>If we fill by day of the week, we get 7 different colors, which is fine (I guess), but doesn’t really help tell a story. The main story here is that there are far fewer births during weekends. If we create a new column that flags if a row is Saturday or Sunday, we can fill by that column instead:</p>
+<pre class="r"><code>total_births_weekday &lt;- births %&gt;% 
+  group_by(day_of_week) %&gt;% 
+  summarize(total = sum(births)) %&gt;% 
+  mutate(weekend = ifelse(day_of_week %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;), TRUE, FALSE))
+
+ggplot(data = total_births_weekday,
+       mapping = aes(x = day_of_week, y = total, fill = weekend)) +
+  geom_col()</code></pre>
+<p><img src="/example/04-example_files/figure-html/plot-bar-chart-weekend-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Neat! Those default colors are kinda ugly, though, so let’s use the principles of preattentive processing and contrast to highlight the weekend bars:</p>
+<pre class="r"><code>ggplot(data = total_births_weekday,
+       mapping = aes(x = day_of_week, y = total, fill = weekend)) +
+  geom_col() +
+  # Use grey and orange
+  scale_fill_manual(values = c(&quot;grey70&quot;, &quot;#f2ad22&quot;)) +
+  # Use commas instead of scientific notation
+  scale_y_continuous(labels = comma) +
+  # Turn off the legend since the title shows what the orange is
+  guides(fill = FALSE) +
+  labs(title = &quot;Weekends are unpopular times for giving birth&quot;,
+       x = NULL, y = &quot;Total births&quot;)</code></pre>
+<p><img src="/example/04-example_files/figure-html/plot-bar-chart-weekend-better-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="lollipop-chart" class="section level3">
+<h3>Lollipop chart</h3>
+<p>Since the ends of the bars are often the most important part of the graph, we can use a lollipop chart to emphasize them. We’ll keep all the same code from our bar chart and make a few changes:</p>
+<ul>
+<li>Color by weekend instead of fill by weekend, since points and lines are colored in ggplot, not filled</li>
+<li>Switch <code>scale_fill_manual()</code> to <code>scale_color_manual()</code> and turn off the <code>color</code> legend in the <code>guides()</code> layer</li>
+<li>Switch <code>geom_col()</code> to <code>geom_pointrange()</code>. The <code>geom_pointrange()</code> layer requires two additional aesthetics: <code>ymin</code> and <code>ymax</code> for the ends of the lines that come out of the point. Here we’ll set <code>ymin</code> to 0 so it starts at the x-axis, and we’ll set <code>ymax</code> to <code>total</code> so it ends at the point.</li>
+</ul>
+<pre class="r"><code>ggplot(data = total_births_weekday,
+       mapping = aes(x = day_of_week, y = total, color = weekend)) +
+  geom_pointrange(aes(ymin = 0, ymax = total),
+                  # Make the lines a little thicker and the dots a little bigger
+                  fatten = 5, size = 1.5) +
+  # Use grey and orange
+  scale_color_manual(values = c(&quot;grey70&quot;, &quot;#f2ad22&quot;)) +
+  # Use commas instead of scientific notation
+  scale_y_continuous(labels = comma) +
+  # Turn off the legend since the title shows what the orange is
+  guides(color = FALSE) +
+  labs(title = &quot;Weekends are unpopular times for giving birth&quot;,
+       x = NULL, y = &quot;Total births&quot;)</code></pre>
+<p><img src="/example/04-example_files/figure-html/plot-lollipop-chart-weekend-better-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="strip-plot" class="section level3">
+<h3>Strip plot</h3>
+<p>However, we want to #barbarplots! (Though they’re arguably okay here, since they show totals and not averages). Let’s show all the data with points. We’ll use the full dataset now, map x to weekday, y to births, and change <code>geom_col()</code> to <code>geom_point()</code>. We’ll tell <code>geom_point()</code> to jitter the points randomly.</p>
+<pre class="r"><code>ggplot(data = births,
+       mapping = aes(x = day_of_week, y = births, color = weekend)) +
+  scale_color_manual(values = c(&quot;grey70&quot;, &quot;#f2ad22&quot;)) +
+  geom_point(size = 0.5, position = position_jitter(height = 0)) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/04-example_files/figure-html/strip-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>There are some interesting points in the low ends, likely because of holidays like Labor Day and Memorial Day (for the Mondays) and Thanksgiving (for the Thursday). If we had a column that indicated whether a day was a holiday, we could color by that and it would probably explain most of those low numbers. Unfortunately we don’t have that column, and it’d be hard to make. Some holidays are constant (Halloween is always October 31), but some aren’t (Thanksgiving is the fourth Thursday in November, so we’d need to find out which November 20-somethingth each year is the fourth Thursday, and good luck doing that at scale).</p>
+</div>
+<div id="beeswarm-plot" class="section level3">
+<h3>Beeswarm plot</h3>
+<p>We can add some structure to these points if we use the <a href="https://github.com/eclarke/ggbeeswarm"><strong>ggbeeswarm</strong> package</a>, with either <code>geom_beeswarm()</code> or <code>geom_quasirandom()</code>. <code>geom_quasirandom()</code> actually works better here since there are so many points—<code>geom_beeswarm()</code> makes the clusters of points way too wide.</p>
+<pre class="r"><code>library(ggbeeswarm)
+
+ggplot(data = births,
+       mapping = aes(x = day_of_week, y = births, color = weekend)) +
+  scale_color_manual(values = c(&quot;grey70&quot;, &quot;#f2ad22&quot;)) +
+  # Make these points suuuper tiny
+  geom_quasirandom(size = 0.0001) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/04-example_files/figure-html/beeswarm-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="heatmap" class="section level3">
+<h3>Heatmap</h3>
+<p>Finally, let’s use something non-traditional to show the average births by day in a somewhat proportional way. We can calculate the average number of births every day and then make a heatmap that fills each square by that average, thus showing the relative differences in births per day.</p>
+<p>To do this, we need to make a summarized data frame with <code>group_by() %&gt;% summarize()</code> to calculate the average number of births by month and day of the month (i.e. average for January 1, January 2, etc.).</p>
+<p>We’ll then make a sort of calendar with date of the month on the x axis, month on the y axis, with heat map squares filled by the daily average. We’ll use <code>geom_tile()</code> to add squares for each day, and then add some extra scale, coordinates, and theme layers to clean up the plot:</p>
+<pre class="r"><code>avg_births_month_day &lt;- births %&gt;% 
+  group_by(month, date_of_month_categorical) %&gt;% 
+  summarize(avg_births = mean(births))
+
+ggplot(data = avg_births_month_day,
+       # By default, the y-axis will have December at the top, so use fct_rev() to reverse it
+       mapping = aes(x = date_of_month_categorical, y = fct_rev(month), fill = avg_births)) +
+  geom_tile() +
+  # Add viridis colors
+  scale_fill_viridis_c(option = &quot;inferno&quot;, labels = comma) + 
+  # Add nice labels
+  labs(x = &quot;Day of the month&quot;, y = NULL,
+       title = &quot;Average births per day&quot;,
+       subtitle = &quot;1994-2014&quot;,
+       fill = &quot;Average births&quot;) +
+  # Force all the tiles to have equal widths and heights
+  coord_equal() +
+  # Use a cleaner theme
+  theme_minimal()</code></pre>
+<p><img src="/example/04-example_files/figure-html/plot-heatmap-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Neat! There are some really interesting trends here. Most obvious, probably, is that very few people are born on New Year’s Day, July 4th, Halloween, Thanksgiving, and Christmas.</p>
+<pre class="r"><code>avg_births_month_day %&gt;% 
+  arrange(avg_births)</code></pre>
+<pre><code>## # A tibble: 366 x 3
+## # Groups:   month [12]
+##    month    date_of_month_categorical avg_births
+##    &lt;ord&gt;    &lt;fct&gt;                          &lt;dbl&gt;
+##  1 December 25                             6601.
+##  2 January  1                              7827.
+##  3 December 24                             8103.
+##  4 July     4                              8825.
+##  5 January  2                              9356.
+##  6 December 26                             9599.
+##  7 November 27                             9770.
+##  8 November 23                             9919.
+##  9 November 25                            10001 
+## 10 October  31                            10030.
+## # … with 356 more rows</code></pre>
+<p>The days with the highest average are in mid-September (lol my birthday is #2), likely because that’s about 9 months after the first week of January. July 7th at #7 is odd and I have no idea why it might be so popular 🤷.</p>
+<pre class="r"><code>avg_births_month_day %&gt;% 
+  arrange(desc(avg_births))</code></pre>
+<pre><code>## # A tibble: 366 x 3
+## # Groups:   month [12]
+##    month     date_of_month_categorical avg_births
+##    &lt;ord&gt;     &lt;fct&gt;                          &lt;dbl&gt;
+##  1 September 9                             12344.
+##  2 September 19                            12285.
+##  3 September 12                            12282.
+##  4 September 17                            12201.
+##  5 September 10                            12190.
+##  6 September 20                            12162.
+##  7 July      7                             12147.
+##  8 September 15                            12126.
+##  9 September 16                            12114.
+## 10 September 18                            12112.
+## # … with 356 more rows</code></pre>
+<p>The funniest trend is the very visible dark column for the 13th of every month. People <em>really</em> don’t want to give birth on the 13th.</p>
+</div>
+</div>
