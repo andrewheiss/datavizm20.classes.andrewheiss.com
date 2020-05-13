@@ -365,7 +365,8 @@ https://blog.ed.gov/2014/10/progress-on-education-is-helping-fuel-our-economys-g
 
 .center[
 <video controls>
-  <source src="https://v.kickstarter.com/1589375625_e9ffab5d420ad2feecabffc6e210ff15b769b22b/projects/2453455/video-665338-h264_high.mp4" type="video/mp4">
+  <source src="https://datavizm20.s3.amazonaws.com/barbarcharts.mp4" type="video/mp4">
+  <figcaption><a href="https://www.kickstarter.com/projects/1474588473/barbarplots" target="_blank">See the original at Kickstarter</a> if the video doesn't work in your browser</figcaption>
 </video>
 ]
 
