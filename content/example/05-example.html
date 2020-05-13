@@ -18,5 +18,206 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#basic-plot">Basic plot</a></li>
+<li><a href="#nice-pre-built-themes">Nice pre-built themes</a></li>
+<li><a href="#bonus-ggthemeassist">Bonus: <strong>ggthemeassist</strong></a></li>
+<li><a href="#saving-plots">Saving plots</a></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>The <a href="/lesson/05-lesson/">lesson for today’s session</a> is a fairly comprehensive introduction to using the <code>theme()</code> function in ggplot, and <a href="https://henrywang.nl/ggplot2-theme-elements-demonstration/">this page by Henry Wang</a> is a good cheat sheet for remembering which theme elements are which on a plot.</p>
+<p>For <a href="/assignment/05-exercise/">your exercise</a>, you’re going to create the world’s ugliest plot. For this example, we’ll use the principles of CRAP to make a great theme.</p>
+<p>I’m going to build the theme semi-incrementally here. Instead of showing how the plot updates with each change in setting, I do most of the updates all at once, with tons of comments explaining what each line does. <strong>Importantly</strong>, I did <em>not</em> write this all at once. When you’re tinkering with themes, you generally start with something like <code>theme_minimal()</code> or <code>theme_bw()</code> and then gradually add new things to <code>theme()</code>, like modifying <code>plot.title</code>, then <code>plot.subtitle</code>, etc. It’s a very iterative process with lots of tinkering. Because of this, <strong>there is no live-coding video for this example</strong>—it would be incredibly long and boring. Instead, look through each of the lines and see what they’re doing.</p>
+<p>For this example, I’m going to use the <code>gapminder</code> dataset that we’ve been using throughout this week. You can get it if you install the <strong>gapminder</strong> package in R, or you can download this CSV file (you may need to right click on it and select “Save As…”):</p>
+<ul>
+<li><a href="/data/gapminder.csv"><i class="fas fa-file-csv"></i> <code>gapminder.csv</code></a></li>
+</ul>
+<p>I’m also going to use the <a href="https://fonts.google.com/specimen/Roboto+Condensed">Roboto Condensed font</a> in the theme. Download and install it on your computer if you don’t have it.</p>
+<div id="basic-plot" class="section level2">
+<h2>Basic plot</h2>
+<p>When I’m creating a theme, I like to use a basic plot with everything that might show up, complete with a title, subtitle, caption, legend, facets, and other elements.</p>
+<pre class="r"><code>library(tidyverse)  # For ggplot, dplyr, and friends
+library(gapminder)  # For gapminder data
+library(scales)     # For nice axis labels
+
+gapminder_filtered &lt;- gapminder %&gt;% 
+  filter(year &gt; 2000)
+
+base_plot &lt;- ggplot(data = gapminder_filtered,
+                    mapping = aes(x = gdpPercap, y = lifeExp, 
+                                  color = continent, size = pop)) +
+  geom_point() +
+  # Use dollars, and get rid of the cents part (i.e. $300 instead of $300.00)
+  scale_x_log10(labels = dollar_format(accuracy = 1)) +
+  # Format with commas
+  scale_size_continuous(labels = comma) +
+  # Use viridis
+  scale_color_viridis_d(option = &quot;plasma&quot;, end = 0.9) +
+  labs(x = &quot;GDP per capita&quot;, y = &quot;Life expectancy&quot;,
+       color = &quot;Continent&quot;, size = &quot;Population&quot;,
+       title = &quot;Here&#39;s a cool title&quot;,
+       subtitle = &quot;And here&#39;s a neat subtitle&quot;,
+       caption = &quot;Source: The Gapminder Project&quot;) +
+  facet_wrap(vars(year))
+
+base_plot</code></pre>
+<p><img src="/example/05-example_files/figure-html/basic-plot-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Now we have <code>base_plot</code> to work with. Here’s what it looks like with <code>theme_minimal()</code> applied to it:</p>
+<pre class="r"><code>base_plot +
+  theme_minimal()</code></pre>
+<p><img src="/example/05-example_files/figure-html/base-minimal-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>That gets rid of the grey background and is a good start, but we can make lots of improvements. First let’s deal with the gridlines. There are too many. We can get rid of the minor gridlines with by setting them to <code>element_blank()</code>:</p>
+<pre class="r"><code>base_plot +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())</code></pre>
+<p><img src="/example/05-example_files/figure-html/theme1-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Next let’s add some typographic contrast. We’ll use Roboto Condensed Regular as the base font. Before trying this, make sure you do the following:</p>
+<p><strong>On macOS</strong>:</p>
+<ul>
+<li>Run <code>capabilities()</code> in your console and verify that <code>TRUE</code> shows up under <code>cairo</code></li>
+<li>If not, download and install <a href="https://www.xquartz.org/">XQuartz</a></li>
+</ul>
+<p><strong>On Windows</strong>:</p>
+<ul>
+<li><p>Run <code>windowsFonts()</code> in your console and you’ll see a list of all the fonts you can use with R. It’s not a very big list.</p>
+<pre class="text"><code>#&gt; $serif
+#&gt; [1] &quot;TT Times New Roman&quot;
+#&gt;
+#&gt; $sans
+#&gt; [1] &quot;TT Arial&quot;
+#&gt; 
+#&gt; $mono
+#&gt; [1] &quot;TT Courier New&quot;</code></pre>
+<p>You can add Roboto Condensed to your current R session by running this in your console:</p>
+<pre class="r"><code>windowsFonts(`Roboto Condensed` = windowsFont(&quot;Roboto Condensed&quot;))</code></pre>
+<p>Now if you run <code>windowsFonts()</code>, you’ll see it in the list:</p>
+<pre class="text"><code>#&gt; $serif
+#&gt; [1] &quot;TT Times New Roman&quot;
+#&gt;
+#&gt; $sans
+#&gt; [1] &quot;TT Arial&quot;
+#&gt; 
+#&gt; $mono
+#&gt; [1] &quot;TT Courier New&quot;
+#&gt;
+#&gt; $`Roboto Condensed`
+#&gt; [1] &quot;Roboto Condensed&quot;</code></pre>
+<p>This only takes effect for your current R session, so if you are knitting a document or if you ever plan on closing RStudio, you’ll need to incorporate this font creation code into your script.</p></li>
+</ul>
+<p>We’ll use the font as the <code>base_family</code> argument. Note how I make it bold with <code>face</code> and change the size with <code>rel()</code>. Instead of manually setting some arbitrary size, I use <code>rel()</code> to resize the text in relation to the <code>base_size</code> argument. Using <code>rel(1.7)</code> means 1.7 × <code>base_size</code>, or 20.4 That will rescale according to whatever <code>base_size</code> is—if I shrink it to <code>base_size = 8</code>, the title will scale down accordingly.</p>
+<pre class="r"><code>plot_with_good_typography &lt;- base_plot +
+  theme_minimal(base_family = &quot;Roboto Condensed&quot;, base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        # Bold, bigger title
+        plot.title = element_text(face = &quot;bold&quot;, size = rel(1.7)),
+        # Plain, slightly bigger subtitle that is grey
+        plot.subtitle = element_text(face = &quot;plain&quot;, size = rel(1.3), color = &quot;grey70&quot;),
+        # Italic, smaller, grey caption that is left-aligned
+        plot.caption = element_text(face = &quot;italic&quot;, size = rel(0.7), 
+                                    color = &quot;grey70&quot;, hjust = 0),
+        # Bold legend titles
+        legend.title = element_text(face = &quot;bold&quot;),
+        # Bold, slightly larger facet titles that are left-aligned for the sake of repetition
+        strip.text = element_text(face = &quot;bold&quot;, size = rel(1.1), hjust = 0),
+        # Bold axis titles
+        axis.title = element_text(face = &quot;bold&quot;),
+        # Add some space above the x-axis title and make it left-aligned
+        axis.title.x = element_text(margin = margin(t = 10), hjust = 0),
+        # Add some space to the right of the y-axis title and make it top-aligned
+        axis.title.y = element_text(margin = margin(r = 10), hjust = 1))
+plot_with_good_typography</code></pre>
+<p><img src="/example/05-example_files/figure-html/theme2-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Whoa. That gets us most of the way there! We have good contrast with the typography, with the strong bold and the lighter regular font (<strong>✓ contrast</strong>). Everything is aligned left (<strong>✓ alignment</strong> and <strong>✓ repetition</strong>). By moving the axis titles a little bit away from the labels, we’ve enhanced proximity, since they were too close together (<strong>✓ proximity</strong>). We repeat grey in both the caption and the subtitle (<strong>✓ repetition</strong>).</p>
+<p>The only thing I don’t like is that the 2002 isn’t quite aligned with the title and subtitle. This is because the facet labels are in boxes along the top of each plot, and in some themes (like <code>theme_grey()</code> and <code>theme_bw()</code>) those facet labels have grey backgrounds. We can turn off the margin in those boxes, or we can add a background, which will then be perfectly aligned with the title and subtitle.</p>
+<pre class="r"><code>plot_with_good_typography +
+  # Add a light grey background to the facet titles, with no borders
+  theme(strip.background = element_rect(fill = &quot;grey90&quot;, color = NA),
+        # Add a thin grey border around all the plots to tie in the facet titles
+        panel.border = element_rect(color = &quot;grey90&quot;, fill = NA))</code></pre>
+<p><img src="/example/05-example_files/figure-html/theme3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>👩‍🍳 💋! That looks great!</p>
+<p>To save ourselves time in the future, we can store this whole thing as an object that we can then reuse on other plots:</p>
+<pre class="r"><code>my_pretty_theme &lt;- theme_minimal(base_family = &quot;Roboto Condensed&quot;, base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        # Bold, bigger title
+        plot.title = element_text(face = &quot;bold&quot;, size = rel(1.7)),
+        # Plain, slightly bigger subtitle that is grey
+        plot.subtitle = element_text(face = &quot;plain&quot;, size = rel(1.3), color = &quot;grey70&quot;),
+        # Italic, smaller, grey caption that is left-aligned
+        plot.caption = element_text(face = &quot;italic&quot;, size = rel(0.7), 
+                                    color = &quot;grey70&quot;, hjust = 0),
+        # Bold legend titles
+        legend.title = element_text(face = &quot;bold&quot;),
+        # Bold, slightly larger facet titles that are left-aligned for the sake of repetition
+        strip.text = element_text(face = &quot;bold&quot;, size = rel(1.1), hjust = 0),
+        # Bold axis titles
+        axis.title = element_text(face = &quot;bold&quot;),
+        # Add some space above the x-axis title and make it left-aligned
+        axis.title.x = element_text(margin = margin(t = 10), hjust = 0),
+        # Add some space to the right of the y-axis title and make it top-aligned
+        axis.title.y = element_text(margin = margin(r = 10), hjust = 1),
+        # Add a light grey background to the facet titles, with no borders
+        strip.background = element_rect(fill = &quot;grey90&quot;, color = NA),
+        # Add a thin grey border around all the plots to tie in the facet titles
+        panel.border = element_rect(color = &quot;grey90&quot;, fill = NA))</code></pre>
+<p>Now we can use it on any plot. Remember that first plot you made in your exercise from session 1 with the <code>cars</code> dataset? Let’s throw this theme on it! (only here the dataset is named <code>mpg</code> instead of <code>cars</code>; the <code>mpg</code> dataset is loaded invisibly whenever you load ggplot)</p>
+<pre class="r"><code>mpg_example &lt;- ggplot(data = mpg, 
+                      mapping = aes(x = displ, y = hwy, color = class)) +
+  geom_point(size = 3) + 
+  scale_color_viridis_d() +
+  facet_wrap(vars(drv)) +
+  labs(x = &quot;Displacement&quot;, y = &quot;Highway MPG&quot;, color = &quot;Car class&quot;,
+       title = &quot;Heavier cars get worse mileage&quot;,
+       subtitle = &quot;Except two-seaters?&quot;,
+       caption = &quot;Here&#39;s a caption&quot;) +
+  my_pretty_theme
+
+mpg_example</code></pre>
+<p><img src="/example/05-example_files/figure-html/mpg-example-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Super neat!</p>
+</div>
+<div id="nice-pre-built-themes" class="section level2">
+<h2>Nice pre-built themes</h2>
+<p>This custom theme we just made is just one iteration of a theme. There are countless ways to tinker with a theme and have it meet the different CRAP principles. People have even published their own themes in different R packages. Check these out to see lots of different examples:</p>
+<ul>
+<li><a href="https://github.com/hrbrmstr/hrbrthemes"><strong>hrbrthemes</strong></a></li>
+<li><a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/"><strong>ggthemes</strong></a></li>
+<li><a href="https://github.com/cttobin/ggthemr"><strong>ggthemr</strong></a></li>
+<li><a href="https://github.com/ricardo-bion/ggtech"><strong>ggtech</strong></a></li>
+<li><a href="https://ryo-n7.github.io/2019-05-16-introducing-tvthemes-package/"><strong>tvthemes</strong></a></li>
+<li><a href="https://www.garrickadenbuie.com/project/ggpomological/"><strong>ggpomological</strong></a> (this one is incredible!)</li>
+</ul>
+<p>Check <a href="https://rfortherestofus.com/2019/08/themes-to-improve-your-ggplot-figures/">this blog post</a> for examples of a bunch of others</p>
+</div>
+<div id="bonus-ggthemeassist" class="section level2">
+<h2>Bonus: <strong>ggthemeassist</strong></h2>
+<p>If you’re intimidated by constantly referring to the documentation and figuring out what little line of code affects which part of the graph, install and check out the <strong>ggthemeassist</strong> package. It provides an interactive menu for manipulating different theme elements, and then generates all the corresponding code, which is really magical.</p>
+<p>Here’s a brief example of how to use it.</p>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/9ldrTCUSReM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+</div>
+<div id="saving-plots" class="section level2">
+<h2>Saving plots</h2>
+<p>If we want to save these plots, we can use <code>ggsave()</code>. For that to work, we need to store the plot as an object, which I already did in the examples above:</p>
+<pre class="r"><code>name_of_plot_object &lt;- ggplot(...)</code></pre>
+<p>We then feed our saved plot object to <code>ggsave()</code> and specify the filename and dimensions we want to use. If we’re using PNG, we don’t need to worry about any extra options. If we’re using PDF, <a href="https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/">we need to tell R to use the Cairo PDF writing engine</a> instead of R’s normal one, since R’s normal one can’t deal with custom fonts.</p>
+<pre class="r"><code># Add my_pretty_theme to the gapminder base_plot and save as an object
+final_gampinder_plot &lt;- base_plot +
+  my_pretty_theme
+
+# Save as PNG and PDF
+ggsave(&quot;fancy_gapminder.png&quot;, final_gampinder_plot,
+       width = 8, height = 5, units = &quot;in&quot;)
+ggsave(&quot;fancy_gapminder.pdf&quot;, final_gampinder_plot,
+       width = 8, height = 5, units = &quot;in&quot;, device = cairo_pdf)
+
+# Save the mpg plot as PNG and PDF
+ggsave(&quot;fancy_mpg.png&quot;, mpg_example,
+       width = 8, height = 5, units = &quot;in&quot;)
+ggsave(&quot;fancy_mpg.pdf&quot;, mpg_example,
+       width = 8, height = 5, units = &quot;in&quot;, device = cairo_pdf)</code></pre>
+</div>
