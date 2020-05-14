@@ -1,0 +1,86 @@
+---
+title: "Exercise 5"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Essential pandemic construction
+
+The New York City Department of Buildings (DOB) maintains [a list of construction sites](https://www1.nyc.gov/assets/buildings/html/essential-active-construction.html) that have been categorized as "essential" during the city's shelter-in-place pandemic order.
+
+## Load and clean data
+
+First we load and clean the data.
+
+```{r load-clean-data, warning=FALSE, message=FALSE}
+# You'll only need the tidyverse library for this exercise
+library(tidyverse)
+
+# Load original data
+essential_raw <- read_csv("~/Downloads/EssentialConstruction.csv")
+
+# Clean the data a little
+# Some of the borough names are in ALL CAPS, so we use str_to_title() to convert
+# everything in the column to title case.
+# We also make BOROUGH and CATEGORY factors (or categorical variables)
+essential <- essential_raw %>% 
+  mutate(BOROUGH = str_to_title(BOROUGH),
+         BOROUGH = factor(BOROUGH),
+         CATEGORY = factor(CATEGORY))
+```
+
+## Approved projects by borough
+
+Right now there's a row for each approved construction site. We need to condense that down to get counts of construction sites by different variables. We can do this by using `group_by()` and `summarize()`
+
+```{r summarize-data-borough}
+essential_by_borough <- essential %>% 
+  group_by(BOROUGH) %>% 
+  summarize(total = n()) %>% 
+  mutate(proportion = total / sum(total))
+```
+
+```{r plot-borough-summary}
+# Add plot with geom_col() here
+```
+
+
+## Approved projects by category
+
+```{r summarize-data-category}
+# Create a summarized dataset of projects by category
+#
+# I won't give you the code for this (big hint though: copy the code for the
+# borough summary and change just one thing)
+```
+
+```{r plot-category-summary}
+# Add a lollipop chart here
+```
+
+
+## Approved projects across borough and category
+
+```{r summarize-data-heatmap}
+# Create a summarized dataset of projects by both borough and category
+#
+# I also won't give you the code to make the summary for the heatmap. You'll
+# need to group by two variables to make the summary. IMPORTANTLY you'll also
+# need to add another group_by() in between summarize() and mutate(), otherwise,
+# R will calculate percentanges in unexepcted groups. 
+#
+# If you want the percentages of categories to add up to 100% in each borough,
+# you'll want to group by borough before calculating the proportion; if you want
+# the percentages of boroughs to add up to 100% in each category, you'll want to
+# group by category
+```
+
+```{r plot-heatmap}
+# Add a heatmap here with geom_tile()
+```
