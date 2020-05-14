@@ -23,7 +23,7 @@ First we load and clean the data.
 library(tidyverse)
 
 # Load original data
-essential_raw <- read_csv("~/Downloads/EssentialConstruction.csv")
+essential_raw <- read_csv("data/EssentialConstruction.csv")
 
 # Clean the data a little
 # Some of the borough names are in ALL CAPS, so we use str_to_title() to convert
