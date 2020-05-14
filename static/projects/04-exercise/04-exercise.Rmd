@@ -73,7 +73,7 @@ essential_by_borough <- essential %>%
 # I also won't give you the code to make the summary for the heatmap. You'll
 # need to group by two variables to make the summary. IMPORTANTLY you'll also
 # need to add another group_by() in between summarize() and mutate(), otherwise,
-# R will calculate percentanges in unexepcted groups. 
+# R will calculate percentages in unexpected groups. 
 #
 # If you want the percentages of categories to add up to 100% in each borough,
 # you'll want to group by borough before calculating the proportion; if you want
