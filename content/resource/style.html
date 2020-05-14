@@ -1,0 +1,193 @@
+---
+title: R style suggestions 
+menu:
+  resource:
+    parent: Resources
+type: docs
+weight: 3
+output:
+  blogdown::html_page:
+      toc: TRUE
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#r-style-conventions">R style conventions</a></li>
+<li><a href="#main-style-things-to-pay-attention-to-for-this-class">Main style things to pay attention to for this class</a>
+<ul>
+<li><a href="#spacing">Spacing</a></li>
+<li><a href="#long-lines">Long lines</a></li>
+<li><a href="#pipes-and-ggplot-layers">Pipes (<code>%&gt;%</code>) and ggplot layers (<code>+</code>)</a></li>
+<li><a href="#comments">Comments</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="r-style-conventions" class="section level2">
+<h2>R style conventions</h2>
+<p>R is fairly forgiving about how you type code (unlike other languages like Python, where miscounting spaces can ruin your code!). All of these things will do exactly the same thing:</p>
+<pre class="r"><code>mpg %&gt;% 
+  filter(cty &gt; 10, class == &quot;compact&quot;)
+
+mpg %&gt;% filter(cty &gt; 10, class == &quot;compact&quot;)
+
+mpg %&gt;% 
+  filter(cty &gt; 10, 
+         class == &quot;compact&quot;)
+
+mpg %&gt;% filter(cty&gt;10, class==&quot;compact&quot;)
+
+filter(mpg,cty&gt;10,class==&quot;compact&quot;)
+
+mpg %&gt;% 
+filter(cty &gt; 10, 
+                        class == &quot;compact&quot;)
+
+filter ( mpg,cty&gt;10,     class==&quot;compact&quot; )</code></pre>
+<p>But you’ll notice that only a few of those iterations (the first three) are easily readable.</p>
+<p>To help improve readability and make it easier to share code with others, there’s <a href="https://style.tidyverse.org/index.html">an unofficial style guide for writing R code</a>. It’s fairly short and just has lots of examples of good and bad ways of writing code (naming variables, dealing with long lines, using proper indentation levels, etc.)—you should glance through it some time.</p>
+<p>RStudio has a built-in way of cleaning up your code. Select some code, press <kbd>ctrl</kbd> + <kbd>i</kbd> (on Windows) or <kbd>⌘</kbd> + <kbd>i</kbd> (on macOS), and R will reformat the code for you. It’s not always perfect, but it’s really helpful for getting indentation right without having to manually hit <kbd>space</kbd> a billion times.</p>
+</div>
+<div id="main-style-things-to-pay-attention-to-for-this-class" class="section level2">
+<h2>Main style things to pay attention to for this class</h2>
+<blockquote>
+<p><em>Important note</em>: I won’t ever grade you on any of this! If you submit something like <code>filter(mpg,cty&gt;10,class=="compact")</code>, I might recommend adding spaces, but it won’t affect your grade or points or anything.</p>
+</blockquote>
+<div id="spacing" class="section level3">
+<h3>Spacing</h3>
+<blockquote>
+<p>See the <a href="https://style.tidyverse.org/syntax.html#spacing">“Spacing” section</a> in the tidyverse style guide.</p>
+</blockquote>
+<p>Put spaces after commas (like in regular English):</p>
+<pre class="r"><code># Good
+filter(mpg, cty &gt; 10)
+
+# Bad
+filter(mpg , cty &gt; 10)
+filter(mpg ,cty &gt; 10)
+filter(mpg,cty &gt; 10)</code></pre>
+<p>Put spaces around operators like <code>+</code>, <code>-</code>, <code>&gt;</code>, <code>=</code>, etc.:</p>
+<pre class="r"><code># Good
+filter(mpg, cty &gt; 10)
+
+# Bad
+filter(mpg, cty&gt;10)
+filter(mpg, cty&gt; 10)
+filter(mpg, cty &gt;10)</code></pre>
+<p>Don’t put spaces around parentheses that are parts of functions:</p>
+<pre class="r"><code># Good
+filter(mpg, cty &gt; 10)
+
+# Bad
+filter (mpg, cty &gt; 10)
+filter ( mpg, cty &gt; 10)
+filter( mpg, cty &gt; 10 )</code></pre>
+</div>
+<div id="long-lines" class="section level3">
+<h3>Long lines</h3>
+<blockquote>
+<p>See the <a href="https://style.tidyverse.org/syntax.html#long-lines">“Long lines” section</a> in the tidyverse style guide.</p>
+</blockquote>
+<p>It’s generally good practice to not have really long lines of code. A good suggestion is to keep lines at a maximum of 80 characters. Instead of counting characters by hand (ew), in RStudio go to “Tools” &gt; “Global Options” &gt; “Code” &gt; “Display” and check the box for “Show margin”. You should now see a really thin line indicating 80 characters. Again, you can go beyond this—that’s fine. It’s just good practice to avoid going too far past it.</p>
+<p>You can add line breaks inside longer lines of code. Line breaks should come after commas, and things like function arguments should align within the function:</p>
+<pre class="r"><code># Good
+filter(mpg, cty &gt; 10, class == &quot;compact&quot;)
+
+# Good
+filter(mpg, cty &gt; 10, 
+       class == &quot;compact&quot;)
+
+# Good
+filter(mpg,
+       cty &gt; 10,
+       class == &quot;compact&quot;)
+
+# Bad
+filter(mpg, cty &gt; 10, class %in% c(&quot;compact&quot;, &quot;pickup&quot;, &quot;midsize&quot;, &quot;subcompact&quot;, &quot;suv&quot;, &quot;2seater&quot;, &quot;minivan&quot;))
+
+# Good
+filter(mpg, 
+       cty &gt; 10, 
+       class %in% c(&quot;compact&quot;, &quot;pickup&quot;, &quot;midsize&quot;, &quot;subcompact&quot;, 
+                    &quot;suv&quot;, &quot;2seater&quot;, &quot;minivan&quot;))</code></pre>
+</div>
+<div id="pipes-and-ggplot-layers" class="section level3">
+<h3>Pipes (<code>%&gt;%</code>) and ggplot layers (<code>+</code>)</h3>
+<p>Put each layer of a ggplot plot on separate lines, with the <code>+</code> at the end of the line, indented with two spaces:</p>
+<pre class="r"><code># Good
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) +
+  geom_point() +
+  geom_smooth() +
+  theme_bw()
+
+# Bad
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) +
+  geom_point() + geom_smooth() +
+  theme_bw()
+
+# Super bad
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) + geom_point() + geom_smooth() + theme_bw()
+
+# Super bad and won&#39;t even work
+ggplot(mpg, aes(x = cty, y = hwy, color = class))
+  + geom_point()
+  + geom_smooth() 
+  + theme_bw()</code></pre>
+<p>Put each step in a dplyr pipeline on separate lines, with the <code>%&gt;%</code> at the end of the line, indented with two spaces:</p>
+<pre class="r"><code># Good
+mpg %&gt;% 
+  filter(cty &gt; 10) %&gt;% 
+  group_by(class) %&gt;% 
+  summarize(avg_hwy = mean(hwy))
+
+# Bad
+mpg %&gt;% filter(cty &gt; 10) %&gt;% group_by(class) %&gt;% 
+  summarize(avg_hwy = mean(hwy))
+
+# Super bad
+mpg %&gt;% filter(cty &gt; 10) %&gt;% group_by(class) %&gt;% summarize(avg_hwy = mean(hwy))
+
+# Super bad and won&#39;t even work
+mpg %&gt;% 
+  filter(cty &gt; 10)
+  %&gt;% group_by(class)
+  %&gt;% summarize(avg_hwy = mean(hwy))</code></pre>
+</div>
+<div id="comments" class="section level3">
+<h3>Comments</h3>
+<blockquote>
+<p>See the <a href="https://style.tidyverse.org/syntax.html#comments">“Comments” section</a> in the tidyverse style guide.</p>
+</blockquote>
+<p>Comments should start with a comment symbol and a single space: <code>#</code></p>
+<pre class="r"><code># Good
+
+#Bad
+
+    #Bad</code></pre>
+<p>If the comment is really short (and won’t cause you to go over 80 characters in the line), you can include it in the same line as the code, separated by at least two spaces (it works with one space, but using a couple can enhance readability):</p>
+<pre class="r"><code>mpg %&gt;% 
+  filter(cty &gt; 10) %&gt;%  # Only rows where cty is 10 +
+  group_by(class) %&gt;%  # Divide into class groups
+  summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group</code></pre>
+<p>You can add extra spaces to get inline comments to align, if you want:</p>
+<pre class="r"><code>mpg %&gt;% 
+  filter(cty &gt; 10) %&gt;%            # Only rows where cty is 10 +
+  group_by(class) %&gt;%             # Divide into class groups
+  summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group</code></pre>
+<p>If the comment is really long, you can break it into multiple lines. RStudio can do this for you if you go to “Code” &gt; “Reflow comment”</p>
+<pre class="r"><code># Good
+# Happy families are all alike; every unhappy family is unhappy in its own way.
+# Everything was in confusion in the Oblonskys’ house. The wife had discovered
+# that the husband was carrying on an intrigue with a French girl, who had been
+# a governess in their family, and she had announced to her husband that she
+# could not go on living in the same house with him. This position of affairs
+# had now lasted three days, and not only the husband and wife themselves, but
+# all the members of their family and household, were painfully conscious of it.
+
+# Bad
+# Happy families are all alike; every unhappy family is unhappy in its own way. Everything was in confusion in the Oblonskys’ house. The wife had discovered that the husband was carrying on an intrigue with a French girl, who had been a governess in their family, and she had announced to her husband that she could not go on living in the same house with him. This position of affairs had now lasted three days, and not only the husband and wife themselves, but all the members of their family and household, were painfully conscious of it.</code></pre>
+<p>Though, if you’re dealing with comments that are <em>that</em> long, consider putting the text in R Markdown instead and having it be actual prose.</p>
+</div>
+</div>

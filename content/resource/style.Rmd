@@ -1,0 +1,216 @@
+---
+title: R style suggestions 
+menu:
+  resource:
+    parent: Resources
+type: docs
+weight: 3
+output:
+  blogdown::html_page:
+      toc: TRUE
+---
+
+## R style conventions
+
+R is fairly forgiving about how you type code (unlike other languages like Python, where miscounting spaces can ruin your code!). All of these things will do exactly the same thing:
+
+```{r eval=FALSE, tidy=FALSE}
+mpg %>% 
+  filter(cty > 10, class == "compact")
+
+mpg %>% filter(cty > 10, class == "compact")
+
+mpg %>% 
+  filter(cty > 10, 
+         class == "compact")
+
+mpg %>% filter(cty>10, class=="compact")
+
+filter(mpg,cty>10,class=="compact")
+
+mpg %>% 
+filter(cty > 10, 
+                        class == "compact")
+
+filter ( mpg,cty>10,     class=="compact" )
+```
+
+But you'll notice that only a few of those iterations (the first three) are easily readable.
+
+To help improve readability and make it easier to share code with others, there's [an unofficial style guide for writing R code](https://style.tidyverse.org/index.html). It's fairly short and just has lots of examples of good and bad ways of writing code (naming variables, dealing with long lines, using proper indentation levels, etc.)—you should glance through it some time.
+
+RStudio has a built-in way of cleaning up your code. Select some code, press <kbd>ctrl</kbd> + <kbd>i</kbd> (on Windows) or <kbd>⌘</kbd> + <kbd>i</kbd> (on macOS), and R will reformat the code for you. It's not always perfect, but it's really helpful for getting indentation right without having to manually hit <kbd>space</kbd> a billion times.
+
+## Main style things to pay attention to for this class
+
+> *Important note*: I won't ever grade you on any of this! If you submit something like `filter(mpg,cty>10,class=="compact")`, I might recommend adding spaces, but it won't affect your grade or points or anything.
+
+### Spacing
+
+> See the ["Spacing" section](https://style.tidyverse.org/syntax.html#spacing) in the tidyverse style guide.
+
+Put spaces after commas (like in regular English):
+
+```{r eval=FALSE}
+# Good
+filter(mpg, cty > 10)
+
+# Bad
+filter(mpg , cty > 10)
+filter(mpg ,cty > 10)
+filter(mpg,cty > 10)
+```
+
+Put spaces around operators like `+`, `-`, `>`, `=`, etc.:
+
+```{r eval=FALSE}
+# Good
+filter(mpg, cty > 10)
+
+# Bad
+filter(mpg, cty>10)
+filter(mpg, cty> 10)
+filter(mpg, cty >10)
+```
+
+Don't put spaces around parentheses that are parts of functions:
+
+```{r eval=FALSE}
+# Good
+filter(mpg, cty > 10)
+
+# Bad
+filter (mpg, cty > 10)
+filter ( mpg, cty > 10)
+filter( mpg, cty > 10 )
+```
+
+### Long lines
+
+> See the ["Long lines" section](https://style.tidyverse.org/syntax.html#long-lines) in the tidyverse style guide.
+
+It's generally good practice to not have really long lines of code. A good suggestion is to keep lines at a maximum of 80 characters. Instead of counting characters by hand (ew), in RStudio go to "Tools" > "Global Options" > "Code" > "Display" and check the box for "Show margin". You should now see a really thin line indicating 80 characters. Again, you can go beyond this—that's fine. It's just good practice to avoid going too far past it.
+
+You can add line breaks inside longer lines of code. Line breaks should come after commas, and things like function arguments should align within the function:
+
+```{r eval=FALSE}
+# Good
+filter(mpg, cty > 10, class == "compact")
+
+# Good
+filter(mpg, cty > 10, 
+       class == "compact")
+
+# Good
+filter(mpg,
+       cty > 10,
+       class == "compact")
+
+# Bad
+filter(mpg, cty > 10, class %in% c("compact", "pickup", "midsize", "subcompact", "suv", "2seater", "minivan"))
+
+# Good
+filter(mpg, 
+       cty > 10, 
+       class %in% c("compact", "pickup", "midsize", "subcompact", 
+                    "suv", "2seater", "minivan"))
+```
+
+### Pipes (`%>%`) and ggplot layers (`+`)
+
+Put each layer of a ggplot plot on separate lines, with the `+` at the end of the line, indented with two spaces:
+
+```{r eval=FALSE}
+# Good
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) +
+  geom_point() +
+  geom_smooth() +
+  theme_bw()
+
+# Bad
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) +
+  geom_point() + geom_smooth() +
+  theme_bw()
+
+# Super bad
+ggplot(mpg, aes(x = cty, y = hwy, color = class)) + geom_point() + geom_smooth() + theme_bw()
+
+# Super bad and won't even work
+ggplot(mpg, aes(x = cty, y = hwy, color = class))
+  + geom_point()
+  + geom_smooth() 
+  + theme_bw()
+```
+
+Put each step in a dplyr pipeline on separate lines, with the `%>%` at the end of the line, indented with two spaces:
+
+```{r eval=FALSE}
+# Good
+mpg %>% 
+  filter(cty > 10) %>% 
+  group_by(class) %>% 
+  summarize(avg_hwy = mean(hwy))
+
+# Bad
+mpg %>% filter(cty > 10) %>% group_by(class) %>% 
+  summarize(avg_hwy = mean(hwy))
+
+# Super bad
+mpg %>% filter(cty > 10) %>% group_by(class) %>% summarize(avg_hwy = mean(hwy))
+
+# Super bad and won't even work
+mpg %>% 
+  filter(cty > 10)
+  %>% group_by(class)
+  %>% summarize(avg_hwy = mean(hwy))
+```
+
+### Comments
+
+> See the ["Comments" section](https://style.tidyverse.org/syntax.html#comments) in the tidyverse style guide.
+
+Comments should start with a comment symbol and a single space: `# `
+
+```{r eval=FALSE}
+# Good
+
+#Bad
+
+    #Bad
+```
+
+If the comment is really short (and won't cause you to go over 80 characters in the line), you can include it in the same line as the code, separated by at least two spaces (it works with one space, but using a couple can enhance readability):
+
+```{r eval=FALSE}
+mpg %>% 
+  filter(cty > 10) %>%  # Only rows where cty is 10 +
+  group_by(class) %>%  # Divide into class groups
+  summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group
+```
+
+You can add extra spaces to get inline comments to align, if you want:
+
+```{r eval=FALSE}
+mpg %>% 
+  filter(cty > 10) %>%            # Only rows where cty is 10 +
+  group_by(class) %>%             # Divide into class groups
+  summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group
+```
+
+If the comment is really long, you can break it into multiple lines. RStudio can do this for you if you go to "Code" > "Reflow comment"
+
+```{r eval=FALSE}
+# Good
+# Happy families are all alike; every unhappy family is unhappy in its own way.
+# Everything was in confusion in the Oblonskys’ house. The wife had discovered
+# that the husband was carrying on an intrigue with a French girl, who had been
+# a governess in their family, and she had announced to her husband that she
+# could not go on living in the same house with him. This position of affairs
+# had now lasted three days, and not only the husband and wife themselves, but
+# all the members of their family and household, were painfully conscious of it.
+
+# Bad
+# Happy families are all alike; every unhappy family is unhappy in its own way. Everything was in confusion in the Oblonskys’ house. The wife had discovered that the husband was carrying on an intrigue with a French girl, who had been a governess in their family, and she had announced to her husband that she could not go on living in the same house with him. This position of affairs had now lasted three days, and not only the husband and wife themselves, but all the members of their family and household, were painfully conscious of it.
+```
+
+Though, if you're dealing with comments that are *that* long, consider putting the text in R Markdown instead and having it be actual prose.
