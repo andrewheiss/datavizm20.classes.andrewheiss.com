@@ -19,15 +19,14 @@ output:
 ## Readings
 
 - <i class="fas fa-book"></i> [Chapter 9](https://serialmentor.com/dataviz/boxplots-violins.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-external-link-square-alt"></i> Mike Bostock, ["Methods of Comparison, Compared"](https://observablehq.com/@mbostock/methods-of-comparison-compared). Explanation of the differences between showing relative differences, absolute differences, and log ratios.
 - <i class="fas fa-external-link-square-alt"></i> [Sparkline theory and practice](https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR). This is a collection of posts by Edward Tufte about sparklines—scroll down a ways and check out his examples, analysis, and critiques.
 - <i class="fas fa-external-link-square-alt"></i> [Time series sparklines](https://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/02-time-series-sparklines-2/)
-- <i class="fas fa-external-link-square-alt"></i> [The bullet graph](http://www.storytellingwithdata.com/blog/2017/5/25/the-bullet-graph)
-- <i class="fas fa-external-link-square-alt"></i> [Lollipop charts](https://uc-r.github.io/lollipop). If you're feeling adventurous (and you should!), do this tutorial as you read it.
+- <i class="fas fa-external-link-square-alt"></i> [Comparisons with lollipop charts](https://uc-r.github.io/lollipop). If you're feeling adventurous (and you should!), do this tutorial as you read it.
 
 ### Questions to reflect on
 
 - These readings all show a ton of new ways to present comparisons. Which ones are your favorite? Which ones didn't quite click with you? In what situations are some more appropriate than others?
-- Do bullet graphs break the rule against double y-axes? Why or why not?
 
 
 ## Slides

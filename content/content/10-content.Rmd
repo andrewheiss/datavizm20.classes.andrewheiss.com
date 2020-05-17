@@ -18,7 +18,26 @@ output:
 
 ## Readings
 
-- TODO
+### Explorable explanations
+
+- <i class="fas fa-trophy"></i> Marcel Salathé and Nicky Case, ["What Happens Next: COVID-19 Futures, Explained with Playable Situations"](https://ncase.me/covid-19/)
+- <i class="fas fa-external-link-square-alt"></i> Brett Victor, ["Explorable Explanations"](http://worrydream.com/ExplorableExplanations/)
+- <i class="fas fa-trophy"></i> Look at [some of the explorable explorations here](https://explorabl.es/)
+- <i class="fas fa-external-link-square-alt"></i> Dragicevic, Jansen, Sarma, Kay, and Chevalier, ["Explorable Multiverse Analyses"](https://explorablemultiverse.github.io/). Use Chrome, open Example 1, scroll to page 2, and click on some of the blue text to change the results of the paper *within the paper itself*. This is magical. R Markdown can't quite get *this* interactive in real-time, but you can knit different versions of a document with slightly different parameters and options.
+
+### Dashboards
+
+- <i class="fas fa-external-link-square-alt"></i> Look at [some of these examples of Shiny apps](https://shiny.rstudio.com/gallery/)
+- <i class="fas fa-external-link-square-alt"></i> Stephanie Evergreen, ["How a Dashboard Changes the Conversation"](https://stephanieevergreen.com/dashboard-conversation/)
+- <i class="fas fa-external-link-square-alt"></i> Stephanie Evergreen, ["The Problem with Dashboards (and a Solution)"](https://stephanieevergreen.com/problem-with-dashboards/)
+- <i class="fas fa-external-link-square-alt"></i> Stephen Few, ["2012 Perceptual Edge Dashboard Design Competition: A Solution of My Own"](https://www.stephen-few.com/blog/2013/01/08/2012-perceptual-edge-dashboard-design-competition-a-solution-of-my-own/)
+- <i class="fas fa-file-pdf"></i> Skim through Stephen Few's [presentation on Information Dashboard Design](http://blogs.ischool.berkeley.edu/i247s12/files/2012/01/Dashboard-Design-Overview-Presentation.pdf)
+- <i class="fab fa-google"></i> Google "dashboard design" and skim through some of the thousands of articles about what makes a good (and bad) dashboard
+
+### Questions to reflect on
+
+- How helpful (or unhelpful) are explorable explanations?
+- Have you seen examples of good dashboards before this class? Bad dashboards? What makes them good or bad?
 
 
 ## Slides
