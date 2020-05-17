@@ -240,6 +240,35 @@ Three column layout
     clear: both;
 }
 
+/*
+Wider pull left/right
+*/
+
+.pull-left-wide {
+    float: left;
+    width: 65%;
+}
+
+.pull-left-narrow {
+    float: left;
+    width: 32%;
+}
+
+.pull-right-wide {
+    float: right;
+    width: 65%;
+}
+
+.pull-right-narrow {
+    float: right;
+    width: 32%;
+}
+
+.pull-right-narrow ~ *,
+.pull-right-wide ~ * {
+    clear: both;
+}
+
 
 /* 
 Slides with title bars at the top
