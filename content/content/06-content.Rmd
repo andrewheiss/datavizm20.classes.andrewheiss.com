@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "06-slides"
+slides: "06-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -35,9 +35,75 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Uncertainty", "1", TRUE,
+  "Communicating uncertainty", "communicating", FALSE,
+  "Visualizing uncertainty", "visualizing", FALSE,
+)
+
+slide_tabs(sections, "/slides/06-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU).
+
+- [Introduction](https://www.youtube.com/watch?v=eZTp8Hninv4&list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU)
+- [Communicating uncertainty](https://www.youtube.com/watch?v=TCQwkwlj4kM&list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU&)
+- [Visualizing uncertainty](https://www.youtube.com/watch?v=X6zPEOPo-2M&list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sFmy596lUElQakCrKDSHUUU
+
+https://youtu.be/eZTp8Hninv4
+PMAP 8921 • (6) Uncertainty: (0) Introduction
+
+Introduction to the class session on uncertainty.
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/06-content/
+
+
+https://youtu.be/TCQwkwlj4kM
+PMAP 8921 • (6) Uncertainty: (1) Communicating uncertainty
+
+Discussion about why uncertainty is both important and difficult to communicate 
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/06-content/
+
+
+https://youtu.be/X6zPEOPo-2M
+PMAP 8921 • (6) Uncertainty: (2) Visualizing uncertainty
+
+Overview of different methods for visualizing uncertainty, including histograms, density plots, ridge plots, box plots, violin plots, and half-versions of all these plots
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/06-content/
+
+
+https://youtu.be/40dW63jTbsk
+PMAP 8921 • (6) Uncertainty: Example
+
+Demonstration of how to create histograms, density plots, ridge plots, box plots, violin plots with ggplot2 and R
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/06-example/
+  
+```

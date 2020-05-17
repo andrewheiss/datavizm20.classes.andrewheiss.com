@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Uncertainty</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-17" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Uncertainty
+
+.class-info[
+
+**Session 6**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after-half[Communicating uncertainty]
+
+--
+
+.box-4.medium.sp-after-half[Visualizing uncertainty]
+
+
+---
+
+name: communicating
+class: center middle section-title section-title-2 animated fadeIn
+
+# Communicating&lt;br&gt;uncertainty
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# The Bay of Pigs
+
+.pull-left-wide[
+&lt;figure&gt;
+  &lt;img src="img/06/bay_of_pigs.jpg" alt="Planning the Bay of Pigs invasion" title="Planning the Bay of Pigs invasion" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right-narrow[
+.box-inv-2[Joint Chiefs said "fair chance of success"]
+
+.box-inv-2[In Pentagon-speak, that meant 3:1 odds of failure]
+
+.box-inv-2[25% chance of success!]
+]
+
+???
+
+When asked by President John F. Kennedy to assess the CIA invasion plan, the U.S. Joint Chiefs of Staff responded that it had a “fair chance” of success. Kennedy took that as a positive assessment. Instead, the Chiefs meant that they judged the chances of success as “3 to 1 against.” But this was never clarified at the time.
+
+Source of story: &lt;https://www.cia.gov/library/center-for-the-study-of-intelligence/csi-publications/books-and-monographs/sherman-kent-and-the-board-of-national-estimates-collected-essays/6words.html&gt;
+
+Chart of perceptions and probabilities: &lt;https://www.cia.gov/library/center-for-the-study-of-intelligence/csi-publications/books-and-monographs/psychology-of-intelligence-analysis/fig18.gif/image.gif&gt;
+
+---
+
+# Misperceptions of probability
+
+.box-inv-2.medium.sp-after[1 in 5 vs. 20%]
+
+--
+
+.center[
+
+&lt;img src="06-slides_files/figure-html/unnamed-chunk-1-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Misperceptions of probability
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/forecast-ut.png" alt="UT Senate 2018 forecast from FiveThirtyEight" title="UT Senate 2018 forecast from FiveThirtyEight" width="90%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+UT Senate 2018 election forecast from FiveThirtyEight
+
+---
+
+# Misperceptions of probability
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/forecast-tx.png" alt="TX Senate 2018 forecast from FiveThirtyEight" title="TX Senate 2018 forecast from FiveThirtyEight" width="90%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+TX Senate 2018 election forecast from FiveThirtyEight
+
+---
+
+# Misperceptions of probability
+
+.box-inv-2.sp-after[Chance of rain = Probability × Area]
+
+--
+
+.pull-left-wide[
+&lt;figure&gt;
+  &lt;img src="img/06/rain@4x.png" alt="ZZZ" title="ZZZ" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right-narrow[
+
+.box-inv-2[100% chance in&lt;br&gt;1/3 of the city]
+
+.box-inv-2[0% chance in&lt;br&gt;2/3 of the city]
+
+.box-inv-2[Chance of rain&lt;br&gt;for city = 33%]
+
+]
+
+???
+
+When it doesn't rain, it doesn't mean the forecast was wrong!
+
+30% chance doesn't mean it’ll rain just 30% hard. Average over tons of simulations. Depends on geographic area
+
+---
+
+# Misperceptions of probability
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/coins.jpg" alt="Stack of coins" title="Stack of coins" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+[Coins](http://www.freestockphotos.biz/stockphoto/8215)
+
+---
+
+# Misperceptions of probability
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/06/maria2.png" alt="Hurricane Maria NOAA" title="Hurricane Maria NOAA" width="100%"&gt;
+  &lt;figcaption&gt;Hurricane Maria map, NOAA&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/06/maria1.png" alt="Hurricane Maria NYT" title="Hurricane Maria NYT" width="100%"&gt;
+  &lt;figcaption&gt;Hurricane Maria map, New York Times&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Or just use a sharpie!
+
+---
+
+# The needle
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/needle.gif" alt="2016 election needle" title="2016 election needle" width="50%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Extra data is implicitly encoded in aesthetics - temporal sequence of ballot counting – how did Amanda Cox defend this?
+
+
+Via https://www.vis4.net/blog/2016/11/jittery-gauges-election-forecast/
+
+---
+
+# The needle
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/06/needle-ga.png" alt="Needle GA-7 2017" title="Needle GA-7 2017" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/06/needle-tweets.png" alt="Twitter reactions to needle" title="Twitter reactions to needle" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+layout: false
+name: visualizing
+class: center middle section-title section-title-4 animated fadeIn
+
+# Visualizing uncertainty
+
+---
+
+layout: true
+class: title title-4
+
+---
+
+# Problems with single numbers
+
+.pull-left[
+
+&lt;img src="06-slides_files/figure-html/animal-weight-bar-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="06-slides_files/figure-html/animal-weight-points-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# More information is always better
+
+.box-inv-4.medium[Avoid visualizing single numbers when you have a whole range or distribution of numbers]
+
+--
+
+.box-4[Uncertainty in single variables]
+
+--
+
+.box-4[Uncertainty across multiple variables]
+
+--
+
+.box-4[Uncertainty in models and simulations]
+
+---
+
+# Histograms
+
+.box-inv-4[Put data into equally spaced buckets (or bins),&lt;br&gt;plot how many rows are in each bucket]
+
+.left-code[
+
+```r
+library(gapminder)
+
+gapminder_2002 &lt;- gapminder %&gt;% 
+  filter(year == 2002)
+
+ggplot(gapminder_2002,
+       aes(x = lifeExp)) +
+  geom_histogram()
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/basic-histogram-1.png)
+]
+
+---
+
+# Histograms: Bin width
+
+.box-inv-4[No official rule for what makes a good bin width]
+
+.pull-left-3[
+.box-4.small[Too narrow:&lt;br&gt;`binwidth = 0.2`]
+
+&lt;img src="06-slides_files/figure-html/hist-too-narrow-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-middle-3[
+.box-4.small[Too wide:&lt;br&gt;`binwidth = 50`]
+
+&lt;img src="06-slides_files/figure-html/hist-too-wide-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right-3[
+.box-4.small[(One type of) just right:&lt;br&gt;`binwidth = 2`]
+
+&lt;img src="06-slides_files/figure-html/hist-just-right-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Histogram tips
+
+.pull-left[
+.box-inv-4.small[Add a border to the bars&lt;br&gt;for readability]
+
+.box-4.tiny[`geom_histogram(..., color = "white")`]
+
+&lt;img src="06-slides_files/figure-html/hist-border-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+.box-inv-4.small[Set the boundary;&lt;br&gt;bucket now 50–55, not 47.5–52.5]
+
+.box-4.tiny[`geom_histogram(..., boundary = 50)`]
+
+&lt;img src="06-slides_files/figure-html/hist-boundary-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Density plots
+
+.box-inv-4[Use calculus to find the probability of each x value]
+
+.left-code[
+
+```r
+ggplot(gapminder_2002,
+       aes(x = lifeExp)) +
+  geom_density(fill = "grey60", 
+               color = "grey30")
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/basic-density-1.png)
+]
+
+---
+
+# Density plots: Kernels and bandwidths
+
+.box-inv-4[Different options for calculus change the plot shape]
+
+.pull-left-3[
+.box-4.small[`bw = 1`]
+
+&lt;img src="06-slides_files/figure-html/gaussian-bw-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-middle-3[
+.box-4.small[`bw = 10`]
+
+&lt;img src="06-slides_files/figure-html/gaussian-bw-10-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right-3[
+.box-4.small[`bw = "nrd0"` &lt;small&gt;(default)&lt;/small&gt;]
+
+&lt;img src="06-slides_files/figure-html/gaussian-bw-auto-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Density plots: Kernels and bandwidths
+
+.box-inv-4[Different options for calculus change the plot shape]
+
+.pull-left-3[
+.box-4.small[`kernel = "gaussian"`]
+
+&lt;img src="06-slides_files/figure-html/gaussian-kernel-gaussian-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-middle-3[
+.box-4.small[`"epanechnikov"`]
+
+&lt;img src="06-slides_files/figure-html/gaussian-kernel-epanechnikov-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right-3[
+.box-4.small[`"rectangular"`]
+
+&lt;img src="06-slides_files/figure-html/gaussian-kernel-rectangular-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Box plots
+
+.box-inv-4[Show specific distributional numbers]
+
+.left-code[
+
+```r
+ggplot(gapminder_2002,
+       aes(x = lifeExp)) +
+  geom_boxplot()
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/basic-boxplot-1.png)
+]
+
+---
+
+# Box plots
+
+&lt;img src="06-slides_files/figure-html/boxplot-explanation-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Violin plots
+
+.box-inv-4[Mirror density plot and flip]
+
+.box-4.small[Often helpful to overlay other things on it]
+
+.left-code[
+
+```r
+ggplot(gapminder_2002,
+       aes(x = "", 
+           y = lifeExp)) +
+  geom_violin() +
+  geom_boxplot(width = 0.1)
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/basic-violin-1.png)
+]
+
+???
+
+&lt;https://xkcd.com/1967/&gt;
+
+---
+
+# Uncertainty across multiple variables
+
+.box-inv-4.medium.sp-after[Visualize the distribution of a&lt;br&gt;single variable across groups]
+
+--
+
+.box-inv-4.medium[Add a `fill` aesthetic or use faceting!]
+
+---
+
+# Multiple histograms
+
+.box-inv-4[Fill with a different variable]
+
+.box-4[This is bad and really hard to read though]
+
+.left-code[
+
+```r
+ggplot(gapminder_2002,
+       aes(x = lifeExp,
+           fill = continent)) +
+  geom_histogram(binwidth = 5, 
+                 color = "white", 
+                 boundary = 50)
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/histogram-fill-1.png)
+]
+
+---
+
+# Multiple histograms
+
+.box-inv-4[Facet with a different variable]
+
+.left-code[
+
+```r
+ggplot(gapminder_2002,
+       aes(x = lifeExp,
+           fill = continent)) +
+  geom_histogram(binwidth = 5, 
+                 color = "white", 
+                 boundary = 50) +
+  guides(fill = FALSE) +
+  facet_wrap(vars(continent))
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/histogram-facet-1.png)
+]
+
+---
+
+# Pyramid histograms
+
+.left-code.small-code[
+
+```r
+gapminder_intervals &lt;- gapminder %&gt;% 
+  filter(year == 2002) %&gt;% 
+  mutate(africa = 
+           ifelse(continent == "Africa", 
+                  "Africa", 
+                  "Not Africa")) %&gt;% 
+  mutate(age_buckets = 
+           cut(lifeExp, 
+               breaks = seq(30, 90, by = 5))) %&gt;% 
+  group_by(africa, age_buckets) %&gt;% 
+  summarize(total = n())
+
+ggplot(gapminder_intervals, 
+       aes(y = age_buckets,
+           x = ifelse(africa == "Africa", 
+                      total, -total),
+           fill = africa)) +
+  geom_col(width = 1, color = "white")
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/gapminder-pyramid-1.png)
+]
+
+???
+
+There's no way to use `geom_histogram()` to do this, but we can fake it with `geom_col()`
+
+---
+
+# Multiple densities: Transparency
+
+.left-code[
+
+```r
+ggplot(filter(gapminder_2002, 
+              continent != "Oceania"),
+       aes(x = lifeExp,
+           fill = continent)) +
+  geom_density(alpha = 0.5)
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/density-fill-1.png)
+]
+
+---
+
+# Multiple densities: Ridge plots
+
+.left-code[
+
+```r
+library(ggridges)
+
+ggplot(filter(gapminder_2002, 
+              continent != "Oceania"),
+       aes(x = lifeExp,
+           fill = continent,
+           y = continent)) +
+  geom_density_ridges()
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/density-ridges-1.png)
+]
+
+---
+
+# Multiple densities: Ridge plots
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/dwnominate.png" alt="DW-NOMINATE of US House by Party" title="DW-NOMINATE of US House by Party" width="65%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Multiple geoms: `gghalves`
+
+.left-code[
+
+```r
+library(gghalves)
+
+ggplot(filter(gapminder_2002, 
+              continent != "Oceania"),
+       aes(y = lifeExp,
+           x = continent,
+           color = continent)) +
+  geom_half_boxplot(side = "l") +
+  geom_half_point(side = "r") 
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/gghalves-1.png)
+]
+
+---
+
+# Multiple geoms: Raincloud plots
+
+.left-code[
+
+```r
+library(gghalves)
+
+ggplot(filter(gapminder_2002, 
+              continent != "Oceania"),
+       aes(y = lifeExp,
+           x = continent,
+           color = continent)) +
+  geom_half_point(side = "l", size = 0.3) + 
+  geom_half_boxplot(side = "l", width = 0.5, 
+                    alpha = 0.3, nudge = 0.1) +
+  geom_half_violin(aes(fill = continent), 
+                   side = "r") +
+  guides(fill = FALSE, color = FALSE) +
+* coord_flip()
+```
+]
+
+.right-plot[
+![](06-slides_files/figure-html/raincloud-1.png)
+]
+
+---
+
+# Uncertainty in model estimates
+
+.box-inv-4[(You'll learn how to make these in the next session)]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/1-coefs-bayes.png" alt="Dissertation CSRE coefficient plot" title="Dissertation CSRE coefficient plot" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Uncertainty in model estimates
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/fig-coefs-h3-bayes.png" alt="INGOs and aid coefficient plot" title="INGOs and aid coefficient plot" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Uncertainty in model estimates
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/results-h1-4.png" alt="Why donors donate halfeye plot" title="Why donors donate halfeye plot" width="75%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Uncertainty in model effects
+
+.box-inv-4[(You'll learn how to make these in the next session)]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/1-ext-pred.png" alt="Dissertation marginal effects plot" title="Dissertation marginal effects plot" width="75%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Uncertainty in model outcomes
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/06/fivethirtyeight-outcomes.png" alt="FiveThirtyEight model outcomes plot" title="FiveThirtyEight model outcomes plot" width="55%"&gt;
+  &lt;figcaption&gt;FiveThirtyEight's 2018 midterms model outcomes plot&lt;/figcaption
+&lt;/figure&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

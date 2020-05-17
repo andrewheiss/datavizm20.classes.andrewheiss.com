@@ -1,0 +1,58 @@
+---
+title: "Exercise 6"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Visualizing uncertainty with gapminder
+
+For this exercise you'll revisit Hans Rosling's gapminder data on health and wealth. Install the **gapminder** package if you haven't already. Also install the **ggridges** and **gghalves** packages.
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)  # For ggplot, dplyr, and friends
+library(gapminder)  # For health/wealth data
+library(ggridges)   # For ridge plots
+library(gghalves)   # For half geoms
+```
+
+## Histograms
+
+Make a histogram of *logged* GDP per capita for 1997 only, across all five continents. 
+
+```{r filter-gapminder-1997}
+# Create a filtered dataset
+```
+
+```{r plot-histogram}
+# Add a histogram here. You'll probably want to fill and facet.
+# You'll also need to add scale_x_log10()
+```
+
+
+## Densities
+
+Make a ridge plot of life expectancy over time, from 1952 to 2007. You'll need to use the full gapminder data, not the 1997-only data.
+
+```{r plot-ridgeplot}
+# Add a ridge plot here
+```
+
+
+## Boxes, violins, and friends
+
+Make a filtered dataset that selects data from only 2007 *and* removes Oceania. Show the distribution of *logged* GDP per capita across the *four* continents using some combination of boxplots and/or violin plots and/or strip plots, either overlaid on top of each other, or using their `geom_half_*()` counterparts from **gghalves**.
+
+```{r filter-gapminder-2007-sans-oceania}
+# Create a filtered dataset
+```
+
+```{r plot-distribution}
+# Add a plot here. You'll want to use either scale_x_log10() or scale_y_log10(),
+# depending on which direction your boxplots/violin plots/etc. go
+```

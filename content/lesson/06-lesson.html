@@ -1,7 +1,7 @@
 ---
 title: "Uncertainty"
 linktitle: "6: Uncertainty"
-date: "2020-05-11"
+date: "2020-05-18"
 class_date: "2020-05-18"
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-syllabus-no-bib.csl
@@ -16,9 +16,116 @@ type: docs
 weight: 6
 editor_options: 
   chunk_output_type: console
+shiny: true
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#histograms">Histograms</a></li>
+<li><a href="#density-plots">Density plots</a></li>
+<li><a href="#boxes-violins-and-dots">Boxes, violins, and dots</a></li>
+</ul>
+</div>
 
-<p>Interactive code lessons and walkthroughs will go here. This is where you’ll learn all sorts of fun things.</p>
+<p>Throughout this lesson, you’ll use the built-in <code>mpg</code> dataset to make histograms, density plots, box plots, violin plots, and other graphics that show uncertainty.</p>
+<p>Sorry if <code>mpg</code> is getting repetitive! For short interactive things like this, it’s easier to use built-in and easy-to-load datasets like <code>mpg</code> and <code>gapminder</code> instead of loading CSV files, hence our constant reuse of the dataset. This is fairly normal too—the majority of examples in R help pages (and in peoples’ blog posts) use things like <code>mpg</code> or<code>gapminder</code>, or even <code>iris</code>, which measures the lengths and widths of a bunch of iris flowers in the 1930s (fun fact! I don’t like using <code>iris</code> because the data was originally used in an article in the <em>Annals of Eugenics</em> (😬) in 1936, and the data was collected to advance eugenics, and <a href="https://armchairecology.blog/iris-dataset/">there’s no good reason to use data like that in 2020</a>.)</p>
+<p>So we work with cars instead of racist flower data.</p>
+<p>The <code>mpg</code> dataset is available in R as soon as you load ggplot2 (or tidyverse). Yu don’t have to run <code>read_csv()</code> or anything—it’s just there in the background already.</p>
+<p>As a reminder, here are the first few rows of the <code>mpg</code> dataset:</p>
+<pre class="r"><code>head(mpg)</code></pre>
+<pre><code>## # A tibble: 6 x 11
+##   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class 
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; 
+## 1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa…
+## 2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa…
+## 3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa…
+## 4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa…
+## 5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa…
+## 6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa…</code></pre>
+<div id="histograms" class="section level2">
+<h2>Histograms</h2>
+<p>When working with histograms, you <em>always</em> need to think about the bin width. Histograms calculate the counts of rows within specific ranges of data, and the shape of the histogram will change depending on how wide or narrow these ranges (or bins, or buckets) are.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Change this code to add a specific bin width for city miles per gallon <code>cty</code> (hint: <code>binwidth</code>). Play around with different widths until you find one that represents the data well.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-1/" id="learnr-06-lesson-uncertainty1" %}}
+<p>By default, histograms are filled with a dark grey color and the bars have no borders. Additionally, R places the center of the bars at specific numbers: if you have a bin width of 5, for instance, a bar will show the range from 7.5 to 12.5 instead of 5-10 or 10-15.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Add a specific bin width</li>
+<li>Add a white border (hint: <code>color</code>)</li>
+<li>Fill with <span style="color: #E16462">#E16462</span></li>
+<li>Make it so the bars start at whole numbers like 10 or 20 (hint: <code>boundary</code>)</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-2/" id="learnr-06-lesson-uncertainty2" %}}
+<p>You can add extra aesthetics to encode additional information about the distribution of variables across categories.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Make a histogram of <code>cty</code> and fill by <code>drv</code> (drive: front, rear, and 4-wheel). Make sure you specify a good bin width.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-3/" id="learnr-06-lesson-uncertainty3" %}}
+<p>That’s too much information! Instead of only filling, you can separate the data into multiple plots.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Make a histogram of <code>cty</code> fill <em>and</em> facet by <code>drv</code>. Make sure you specify a good bin width. Make sure you specify a good bin width.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-4/" id="learnr-06-lesson-uncertainty4" %}}
+</div>
+<div id="density-plots" class="section level2">
+<h2>Density plots</h2>
+<p>When working with density plots <em>in this class</em> you don’t need to worry too much about the calculus behind the scenes that creates the curves. But you can change those settings if you really want.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Fill this density plot with <span style="color: #E16462">#E16462</span></li>
+<li>Add a border (hint: <code>color</code>) using <span style="color: #9C3836">#9C3836</span>, with size = 1</li>
+<li>Change the bandwidth (hint: <code>bw</code>) to 0.5, then 1, then 10</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-5/" id="learnr-06-lesson-uncertainty5" %}}
+<p>Like histograms, you can map other variables onto the plot. It’s often a good idea to make the curves semi-transparent so you can see the different distributions.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Fill this plot using the <code>drv</code> variable</li>
+<li>Make the density plots 50% transparent</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-6/" id="learnr-06-lesson-uncertainty6" %}}
+<p>Even with transparency, it’s often difficult to interpret density plots like this. As an alternative, you can use the <a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html"><strong>ggridges</strong> package</a> to make ridge plots. Look at the <a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html">documentation and examples for <strong>ggridges</strong></a> for lots of details about different plots you can make.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Convert this plot into a ridge plot.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-7/" id="learnr-06-lesson-uncertainty7" %}}
+</div>
+<div id="boxes-violins-and-dots" class="section level2">
+<h2>Boxes, violins, and dots</h2>
+<p>Finally, you can use things like boxplots and violin plots to show the distribution of variables, either by themselves or across categories.</p>
+<p>Box plots show the distribution of a variable by highlighting specific details, like the 25th, 50th (median) and 75th percentile, as well as the assumed minimum, assumed maximum, and outliers:</p>
+<div class="figure">
+<img src="/slides/06-slides_files/figure-html/boxplot-explanation-1.png" alt="" />
+<p class="caption">Anatomy of a boxplot</p>
+</div>
+<p>When making boxplots with ggplot, you need to map the variable of interest to the <code>x</code> aesthetic (or <code>y</code> if you want a vertical boxplot), and you can optionally map a second categorical variable to the <code>y</code> aesthetic (or <code>x</code> if you want a vertical boxplot).</p>
+<p>You can adjust the fill and color of the plot, and you can change what counts as outliers with the <code>coef</code> argument. By default outliers are any point that is beyond the 75th percentile + 1.5 × the interquartile range (or below the 25th percentile + 1.5 × IQR), but that’s adjustable.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Fill the boxplot with <span style="color: #E6AD3C">#E6AD3C</span></li>
+<li>Color the boxplot with <span style="color: #5ABD51">#5ABD51</span></li>
+<li>Change the definition of outliers to be 5 times the IQR</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-8/" id="learnr-06-lesson-uncertainty8" %}}
+<p>You can also use violin plots instead of boxplot, which show the mirrored density distribution. When doing this, it’s often helpful to add other geoms like jittered points to show more of the data</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Do the following</p>
+<ol style="list-style-type: decimal">
+<li>Change this boxplot to use violins instead</li>
+<li>Add jittered points with a jittering width of 0.1 and sized at 0.5</li>
+</ol>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_06-uncertainty-9/" id="learnr-06-lesson-uncertainty9" %}}
+</div>
