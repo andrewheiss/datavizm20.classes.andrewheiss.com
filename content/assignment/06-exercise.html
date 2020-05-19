@@ -23,7 +23,7 @@ editor_options:
 <ul>
 <li><a href="#getting-started">Getting started</a></li>
 <li><a href="#task-1-reflection">Task 1: Reflection</a></li>
-<li><a href="#task-2-task-2-visualizing-uncertainty-with-gapminder">Task 2: Task 2: Visualizing uncertainty with gapminder</a></li>
+<li><a href="#task-2-visualizing-uncertainty-with-gapminder">Task 2: Visualizing uncertainty with gapminder</a></li>
 <li><a href="#turning-everything-in">Turning everything in</a></li>
 </ul>
 </div>
@@ -50,12 +50,13 @@ editor_options:
 <h2>Task 1: Reflection</h2>
 <p>Write your reflection for the day’s readings.</p>
 </div>
-<div id="task-2-task-2-visualizing-uncertainty-with-gapminder" class="section level2">
-<h2>Task 2: Task 2: Visualizing uncertainty with gapminder</h2>
+<div id="task-2-visualizing-uncertainty-with-gapminder" class="section level2">
+<h2>Task 2: Visualizing uncertainty with gapminder</h2>
 <p>Make the following plots and briefly explain what they show:</p>
 <ul>
 <li><p>Make a histogram of <em>logged</em> GDP per capita for 1997 only, across all five continents</p></li>
-<li><p>Make a ridge plot of life expectancy over time, from 1952 to 2007. You’ll need to use the full gapminder data, not the 1997-only data.</p></li>
+<li><p>Make a ridge plot of global life expectancy over time, from 1952 to 2007. You’ll need to use the full gapminder data, not the 1997-only data. Each ridge should show the distribution of the world’s life expectancy for each given year (similar to the <a href="/example/06-example/#density-plots">temperature ridge plot in the example</a>).</p>
+<p>Important note: <code>year</code> will be on the y-axis, but it must be a categorical variable to work with <strong>ggridges</strong>, so you’ll either need to wrap it in <code>as.factor()</code> like <code>aes(..., y = as.factor(year))</code>, or add a new categorical/factor year column to the gapminder dataset with <code>mutate()</code>.</p></li>
 <li><p>Make a filtered dataset that selects data from only 2007 <em>and</em> removes Oceania. Show the distribution of <em>logged</em> GDP per capita across the <em>four</em> continents using some combination of boxplots and/or violin plots and/or strip plots, either overlaid on top of each other, or using their <code>geom_half_*()</code> counterparts from <strong>gghalves</strong>.</p></li>
 </ul>
 <p><a href="/example/06-example/">The example for today’s session</a> will be <em>incredibly</em> helpful for this exercise. Reference it.</p>

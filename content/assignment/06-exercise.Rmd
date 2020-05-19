@@ -47,13 +47,15 @@ To check that you put everything in the right places, you can download and unzip
 Write your reflection for the day's readings.
 
 
-## Task 2: Task 2: Visualizing uncertainty with gapminder
+## Task 2: Visualizing uncertainty with gapminder
 
 Make the following plots and briefly explain what they show:
 
 - Make a histogram of *logged* GDP per capita for 1997 only, across all five continents
 
-- Make a ridge plot of life expectancy over time, from 1952 to 2007. You'll need to use the full gapminder data, not the 1997-only data.
+- Make a ridge plot of global life expectancy over time, from 1952 to 2007. You'll need to use the full gapminder data, not the 1997-only data. Each ridge should show the distribution of the world's life expectancy for each given year (similar to the [temperature ridge plot in the example](/example/06-example/#density-plots)). 
+
+    Important note: `year` will be on the y-axis, but it must be a categorical variable to work with **ggridges**, so you'll either need to wrap it in `as.factor()` like `aes(..., y = as.factor(year))`, or add a new categorical/factor year column to the gapminder dataset with `mutate()`.
 
 - Make a filtered dataset that selects data from only 2007 *and* removes Oceania. Show the distribution of *logged* GDP per capita across the *four* continents using some combination of boxplots and/or violin plots and/or strip plots, either overlaid on top of each other, or using their `geom_half_*()` counterparts from **gghalves**.
 
