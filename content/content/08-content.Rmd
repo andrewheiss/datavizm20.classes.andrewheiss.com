@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "08-slides"
+slides: "08-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -31,9 +31,77 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Comparisons", "1", TRUE,
+  "Visualizing comparisons", "dual-y-axes", FALSE,
+  "Reproducible examples", "correlations", FALSE,
+)
+
+slide_tabs(sections, "/slides/08-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP).
+
+- [Introduction](https://www.youtube.com/watch?v=pwvPAnjEHKk&list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP)
+- [Visualizing comparisons](https://www.youtube.com/watch?v=iJOPwPYxZZE&list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP)
+- [Reproducible examples](https://www.youtube.com/watch?v=Gv1U8IPxiOY&list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP&)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sGAoxtYY1GgHm2ZRQmWeTiP
+
+https://youtu.be/pwvPAnjEHKk
+PMAP 8921 • (8) Comparisons: (0) Introduction
+
+Introduction to the class session on comparisons
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/08-content/
+
+
+https://youtu.be/iJOPwPYxZZE
+PMAP 8921 • (8) Comparisons: (1) The dangers of dual y-axes
+
+Overview of different methods for visualizing comparisons, including bar and lollipop charts, small multiples, sparklines, and bump plots
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/08-content/
+
+
+https://youtu.be/Gv1U8IPxiOY
+PMAP 8921 • (8) Comparisons: (2) Reproducible examples
+
+Discussion of best practices for creating reproducible examples with R when debugging
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/08-content/
+  
+See also "What's a reproducible example and how do I do one?" (https://community.rstudio.com/t/faq-whats-a-reproducible-example-reprex-and-how-do-i-do-one/5219) and "So you've been asked to make a reprex" (https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/)
+
+
+https://youtu.be/
+PMAP 8921 • (8) Comparisons: Example
+
+Demonstration of how to create dual y-axes, scatterplot matrices, coefficient plots, and marginal effects plots with ggplot2 and R
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/08-example/
+  
+```

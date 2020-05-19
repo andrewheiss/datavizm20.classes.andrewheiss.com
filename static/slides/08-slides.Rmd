@@ -1,0 +1,340 @@
+---
+title: "Comparisons"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+set.seed(1234)
+```
+
+class: center middle main-title section-title-4
+
+# Comparisons
+
+.class-info[
+
+**Session 8**
+
+.light[PMAP 8921: Data Visualization with R<br>
+Andrew Young School of Policy Studies<br>
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after-half[Visualizing comparisons]
+
+--
+
+.box-4.medium.sp-after-half[Reproducible examples]
+
+---
+
+layout: false
+name: comparisons
+class: center middle section-title section-title-2 animated fadeIn
+
+# Visualizing comparisons
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Lollipops and bars
+
+.center[
+<figure>
+  <img src="img/08/3-issues-worked-on.png" alt="NGO issues worked on from dissertation" title="NGO issues worked on from dissertation" width="90%">
+</figure>
+]
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/08/life_expectancy_sparklines.png")
+
+???
+
+Source: [FlowingData](https://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/02-time-series-sparklines-2/)
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Small multiples
+
+.center[
+<figure>
+  <img src="img/08/fivethirtyeight-approval.png" alt="Trump approval ratings compared to past presidents" title="Trump approval ratings compared to past presidents" width="75%">
+  <figcaption><a href="https://projects.fivethirtyeight.com/trump-approval-ratings/" target="_blank">FiveThirtyEight, Trump approval ratings</a></figcaption>
+</figure>
+]
+
+???
+
+Source: [FiveThirtyEight](https://projects.fivethirtyeight.com/trump-approval-ratings/)
+
+---
+
+# Small multiples with larger shapes
+
+.center[
+<figure>
+  <img src="img/08/geofacet.png" alt="geofacet package" title="geofacet package" width="65%">
+  <figcaption><code>facet_geo()</code> in the <a href="https://hafen.github.io/geofacet/" target="_blank"><strong>geofacet</strong> package</a></figcaption>
+</figure>
+]
+
+---
+
+# Sparklines
+
+.pull-left-wide[
+<figure>
+  <img src="img/08/sparklines.png" alt="Sparks font project" title="Sparks font project" width="100%">
+</figure>
+]
+
+.pull-right-narrow[
+<figure>
+  <img src="img/08/apple-watch.png" alt="Sparklines on an Apple Watch" title="Sparklines on an Apple Watch" width="100%">
+</figure>
+]
+
+???
+
+In-text sparklines from the now-retired [Sparks project](http://tools.aftertheflood.com/sparks/)
+
+[Apple Watch example](https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR)
+
+---
+
+# Slopegraphs
+
+.center[
+<figure>
+  <img src="img/08/good-stuff-slopegraph.png" alt="Stephanie Evergreen New Year slopegraph" title="Stephanie Evergreen New Year slopegraph" width="35%">
+</figure>
+]
+
+???
+
+Original by [Stephanie Evergreen](https://www.zazzle.com/slopegraph_holiday_card_for_data_nerds-137238378061787506?rf=238910033403516222)
+
+---
+
+# Slopegraphs
+
+.center[
+<figure>
+  <img src="img/08/nyt-slope.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="27%">
+</figure>
+]
+
+???
+
+https://archive.nytimes.com/www.nytimes.com/imagepages/2009/04/06/health/infant_stats.html
+
+---
+
+# Slopegraphs
+
+.pull-left[
+<figure>
+  <img src="img/08/tufte-cancer-table.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="100%">
+</figure>
+]
+
+.pull-right[
+<figure>
+  <img src="img/08/tufte-cancer-slopes.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="100%">
+</figure>
+]
+
+???
+
+https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0000Jr
+
+---
+
+# Bump charts
+
+.center[
+<figure>
+  <img src="img/08/bumps.png" alt="Bump plot of the 2018 medal count" title="Bump plot of the 2018 medal count" width="55%">
+</figure>
+]
+
+???
+
+<https://dominikkoch.github.io/Bump-Chart/>
+
+---
+
+layout: false
+name: reprex
+class: center middle section-title section-title-4 animated fadeIn
+
+# Reproducible examples
+
+---
+
+layout: true
+class: title title-4
+
+---
+
+# This is 100% normal!
+
+.center[
+<figure>
+  <img src="img/08/looking-stuff-up.png" alt="Brandon Rohrer on looking code up" title="Brandon Rohrer on looking code up" width="70%">
+</figure>
+]
+
+???
+
+https://twitter.com/_brohrer_/status/1049388373541089280?s=12
+
+---
+
+# Broken cake
+
+.pull-left[
+<figure>
+  <img src="img/08/cake.jpg" alt="Collapsed cake" title="Collapsed cake" width="100%">
+</figure>
+]
+
+--
+
+.pull-right[
+.box-inv-4[Help! My cake broke!]
+
+.box-4.small[vs.]
+
+.box-inv-4[Help! I followed these<br>6 steps and my cake broke!]
+
+.box-1[Same principle<br>applies to code]
+]
+
+???
+
+https://www.flickr.com/photos/slushpup/3700756035
+
+---
+
+# Reprexes
+
+.box-inv-4.medium.sp-after[**Rep**roducible **ex**ampl**es**]
+
+.box-4[Something anyone can run on their computer<br>to reproduce the problem you're facing]
+
+---
+
+# Debugging and reprexes
+
+.box-inv-4[Simplify your code down to something very basic]
+
+--
+
+.box-inv-4[Add additional things until stuff breaks]
+
+--
+
+.box-inv-4[Use a subset of your data or invent fake data]
+
+--
+
+.box-inv-4[Restart your session and see if it runs in a new session]
+
+--
+
+.box-inv-4.sp-after[Ask the internet for help using your toy example]
+
+--
+
+.box-4[75% of the time you'll find what's wrong as you make the reprex!]
+
+---
+
+# Making datasets with `tribble()`
+
+.pull-left[
+```{r tribble-example}
+my_data <- tribble(
+  ~animal, ~number,
+  "cat", 5,
+  "dog", 4,
+  "bear", 7,
+  "bison", 1
+)
+```
+]
+
+--
+
+.pull-right[
+```{r show-tribble}
+my_data
+```
+]
+
+---
+
+# Example reprex
+
+.small-code[
+```{r example-reprex, eval=FALSE}
+my_data <- tribble(
+  ~animal, ~number,
+  "cat", 5,
+  "dog", 4,
+  "bear", 7,
+  "bison", 1
+)
+
+# This plot has a fill legend, but I want to remove it because it's redundant
+# What's the best way to get rid of the fill?
+ggplot(fake_data, aes(x = animal, y = number, fill = animal)) +
+  geom_col() 
+  # I add something here, but what?
+```
+]

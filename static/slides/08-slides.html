@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Comparisons</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-18" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Comparisons
+
+.class-info[
+
+**Session 8**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after-half[Visualizing comparisons]
+
+--
+
+.box-4.medium.sp-after-half[Reproducible examples]
+
+---
+
+layout: false
+name: comparisons
+class: center middle section-title section-title-2 animated fadeIn
+
+# Visualizing comparisons
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Lollipops and bars
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/3-issues-worked-on.png" alt="NGO issues worked on from dissertation" title="NGO issues worked on from dissertation" width="90%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/08/life_expectancy_sparklines.png")
+
+???
+
+Source: [FlowingData](https://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/02-time-series-sparklines-2/)
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Small multiples
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/fivethirtyeight-approval.png" alt="Trump approval ratings compared to past presidents" title="Trump approval ratings compared to past presidents" width="75%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://projects.fivethirtyeight.com/trump-approval-ratings/" target="_blank"&gt;FiveThirtyEight, Trump approval ratings&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Source: [FiveThirtyEight](https://projects.fivethirtyeight.com/trump-approval-ratings/)
+
+---
+
+# Small multiples with larger shapes
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/geofacet.png" alt="geofacet package" title="geofacet package" width="65%"&gt;
+  &lt;figcaption&gt;&lt;code&gt;facet_geo()&lt;/code&gt; in the &lt;a href="https://hafen.github.io/geofacet/" target="_blank"&gt;&lt;strong&gt;geofacet&lt;/strong&gt; package&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Sparklines
+
+.pull-left-wide[
+&lt;figure&gt;
+  &lt;img src="img/08/sparklines.png" alt="Sparks font project" title="Sparks font project" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right-narrow[
+&lt;figure&gt;
+  &lt;img src="img/08/apple-watch.png" alt="Sparklines on an Apple Watch" title="Sparklines on an Apple Watch" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+In-text sparklines from the now-retired [Sparks project](http://tools.aftertheflood.com/sparks/)
+
+[Apple Watch example](https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR)
+
+---
+
+# Slopegraphs
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/good-stuff-slopegraph.png" alt="Stephanie Evergreen New Year slopegraph" title="Stephanie Evergreen New Year slopegraph" width="35%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Original by [Stephanie Evergreen](https://www.zazzle.com/slopegraph_holiday_card_for_data_nerds-137238378061787506?rf=238910033403516222)
+
+---
+
+# Slopegraphs
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/nyt-slope.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="27%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://archive.nytimes.com/www.nytimes.com/imagepages/2009/04/06/health/infant_stats.html
+
+---
+
+# Slopegraphs
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/08/tufte-cancer-table.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/08/tufte-cancer-slopes.gif" alt="Slopegraph from the NYT" title="Slopegraph from the NYT" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0000Jr
+
+---
+
+# Bump charts
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/bumps.png" alt="Bump plot of the 2018 medal count" title="Bump plot of the 2018 medal count" width="55%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+&lt;https://dominikkoch.github.io/Bump-Chart/&gt;
+
+---
+
+layout: false
+name: reprex
+class: center middle section-title section-title-4 animated fadeIn
+
+# Reproducible examples
+
+---
+
+layout: true
+class: title title-4
+
+---
+
+# This is 100% normal!
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/08/looking-stuff-up.png" alt="Brandon Rohrer on looking code up" title="Brandon Rohrer on looking code up" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://twitter.com/_brohrer_/status/1049388373541089280?s=12
+
+---
+
+# Broken cake
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/08/cake.jpg" alt="Collapsed cake" title="Collapsed cake" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+.box-inv-4[Help! My cake broke!]
+
+.box-4.small[vs.]
+
+.box-inv-4[Help! I followed these&lt;br&gt;6 steps and my cake broke!]
+
+.box-1[Same principle&lt;br&gt;applies to code]
+]
+
+???
+
+https://www.flickr.com/photos/slushpup/3700756035
+
+---
+
+# Reprexes
+
+.box-inv-4.medium.sp-after[**Rep**roducible **ex**ampl**es**]
+
+.box-4[Something anyone can run on their computer&lt;br&gt;to reproduce the problem you're facing]
+
+---
+
+# Debugging and reprexes
+
+.box-inv-4[Simplify your code down to something very basic]
+
+--
+
+.box-inv-4[Add additional things until stuff breaks]
+
+--
+
+.box-inv-4[Use a subset of your data or invent fake data]
+
+--
+
+.box-inv-4[Restart your session and see if it runs in a new session]
+
+--
+
+.box-inv-4.sp-after[Ask the internet for help using your toy example]
+
+--
+
+.box-4[75% of the time you'll find what's wrong as you make the reprex!]
+
+---
+
+# Making datasets with `tribble()`
+
+.pull-left[
+
+```r
+my_data &lt;- tribble(
+  ~animal, ~number,
+  "cat", 5,
+  "dog", 4,
+  "bear", 7,
+  "bison", 1
+)
+```
+]
+
+--
+
+.pull-right[
+
+```r
+my_data
+```
+
+```
+## # A tibble: 4 x 2
+##   animal number
+##   &lt;chr&gt;   &lt;dbl&gt;
+## 1 cat         5
+## 2 dog         4
+## 3 bear        7
+## 4 bison       1
+```
+]
+
+---
+
+# Example reprex
+
+.small-code[
+
+```r
+my_data &lt;- tribble(
+  ~animal, ~number,
+  "cat", 5,
+  "dog", 4,
+  "bear", 7,
+  "bison", 1
+)
+
+# This plot has a fill legend, but I want to remove it because it's redundant
+# What's the best way to get rid of the fill?
+ggplot(fake_data, aes(x = animal, y = number, fill = animal)) +
+  geom_col() 
+  # I add something here, but what?
+```
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
