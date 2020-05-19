@@ -16,4 +16,436 @@ editor_options:
   chunk_output_type: console
 ---
 
-Fully worked out code examples will go here, along with video of me live coding them.
+For this example, we're again going to use historical weather data from [Dark Sky](https://darksky.net/forecast/33.7546,-84.39/us12/en) about wind speed and temperature trends for downtown Atlanta ([specifically `33.754557, -84.390009`](https://www.google.com/maps/place/33°45'16.4"N+84°23'24.0"W/@33.754557,-84.3921977,17z/)) in 2019. I downloaded this data using Dark Sky's (about-to-be-retired-because-they-were-bought-by-Apple) API using the [ **darksky** package](https://github.com/hrbrmstr/darksky).
+
+If you want to follow along with this example, you can download the data below (you'll likely need to right click and choose "Save Link As…"):
+
+- [<i class="fas fa-file-csv"></i> `atl-weather-2019.csv`](/data/atl-weather-2019.csv)
+
+
+## Live coding example
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zfEAmJzfbkE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+## Complete code
+
+*(This is a slightly cleaned up version of the code from the video.)*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, fig.height = 3.6, fig.align = "center")
+set.seed(1234)
+options("digits" = 2, "width" = 150)
+```
+
+### Load and clean data
+
+First, we load the libraries we'll be using:
+
+```{r load-libraries, message=FALSE, warning=FALSE}
+library(tidyverse)  # For ggplot, dplyr, and friends
+library(patchwork)  # For combining ggplot plots
+library(GGally)     # For scatterplot matrices
+library(broom)      # For converting model objects to data frames
+```
+
+Then we load the data with `read_csv()`. Here I assume that the CSV file lives in a subfolder in my project named `data`:
+
+```{r load-data-fake, eval=FALSE}
+weather_atl <- read_csv("data/atl-weather-2019.csv")
+```
+
+```{r load-data-real, include=FALSE, message=FALSE}
+weather_atl <- read_csv(here::here("static", "data", "atl-weather-2019.csv"))
+```
+
+### Legal dual y-axes
+
+It is fine (and often helpful!) to use two y-axes if the two different scales measure the same thing, like counts and percentages, Fahrenheit and Celsius, pounds and kilograms, inches and centimeters, etc.
+
+To do this, you need to add an argument (`sec.axis`) to `scale_y_continuous()` to tell it to use a second axis. This `sec.axis` argument takes a `sec_axis()` function that tells ggplot how to transform the scale. You need to specify a formula or function that defines how the original axis gets transformed. This formula uses a special syntax. It needs to start with a `~`, which indicates that it's a function, and it needs to use `.` to stand in for the original value in the original axis. 
+
+Since the equation for converting Fahrenheit to Celsius is this…
+
+$$
+\text{C} = (32 - \text{F}) \times -\frac{5}{9}
+$$
+
+…we can specify this with code like so (where `.` stands for the Fahrenheit value):
+
+```text
+~ (32 - .) * -5 / 9
+```
+
+Here's a plot of daily high temperatures in Atlanta throughout 2019, with a second axis:
+
+```{r atl-weather-dual-axes}
+ggplot(weather_atl, aes(x = time, y = temperatureHigh)) +
+  geom_line() +
+  scale_y_continuous(sec.axis = sec_axis(trans = ~ (32 - .) * -5/9,
+                                         name = "Celsius")) +
+  labs(x = NULL, y = "Fahrenheit") +
+  theme_minimal()
+```
+
+For fun, we could also convert it to Kelvin, which uses this formula:
+
+$$
+\text{K} = (\text{F} - 32) \times \frac{5}{9} + 273.15
+$$
+
+```{r atl-weather-dual-axes-kelvin}
+ggplot(weather_atl, aes(x = time, y = temperatureHigh)) +
+  geom_line() +
+  scale_y_continuous(sec.axis = sec_axis(trans = ~ (. - 32) * 5/9 + 273.15,
+                                         name = "Kelvin")) +
+  labs(x = NULL, y = "Fahrenheit") +
+  theme_minimal()
+```
+
+### Combining plots
+
+A good alternative to using two y-axes is to use two plots instead. The [**patchwork** package](https://github.com/thomasp85/patchwork) makes this *really* easy to do with R. There are other similar packages that do this, like **cowplot** and **gridExtra**, but I've found that **patchwork** is the easiest to use *and* it actually aligns the different plot elements like axis lines and legends (yay alignment in CRAP!). The [documentation for **patchwork**](https://patchwork.data-imaginist.com/articles/guides/assembly.html) is really great and full of examples—you should check it out to see all the things you can do with it!
+
+To use **patchwork**, we need to (1) save our plots as objects and (2) add them together with `+`.
+
+For instance, is there a relationship between temperature and humidity in Atlanta? We can plot both:
+
+```{r create-temp-humid-plots, message=FALSE}
+# Temperature in Atlanta
+temp_plot <- ggplot(weather_atl, aes(x = time, y = temperatureHigh)) +
+  geom_line() +
+  geom_smooth() +
+  scale_y_continuous(sec.axis = sec_axis(trans = ~ (32 - .) * -5/9,
+                                         name = "Celsius")) +
+  labs(x = NULL, y = "Fahrenheit") +
+  theme_minimal()
+temp_plot
+
+# Humidity in Atlanta
+humidity_plot <- ggplot(weather_atl, aes(x = time, y = humidity)) +
+  geom_line() +
+  geom_smooth() +
+  labs(x = NULL, y = "Humidity") +
+  theme_minimal()
+humidity_plot
+```
+
+Right now, these are two separate plots, but we can combine them with `+` if we load **patchwork**:
+
+```{r patchwork-first, message=FALSE}
+library(patchwork)
+
+temp_plot + humidity_plot
+```
+
+By default, **patchwork** will put these side-by-side, but we can change that with the `plot_layout()` function:
+
+```{r patchwork-vertical, message=FALSE}
+temp_plot + humidity_plot +
+  plot_layout(ncol = 1)
+```
+
+We can also play with other arguments in `plot_layout()`. If we want to make the temperature plot taller and shrink the humidity section, we can specify the proportions for the plot heights. Here, the temperature plot is 70% of the height and the humidity plot is 30%:
+
+```{r patchwork-vertical-resized, message=FALSE}
+temp_plot + humidity_plot +
+  plot_layout(ncol = 1, heights = c(0.7, 0.3))
+```
+
+### Scatterplot matrices
+
+We can visualize the correlations between pairs of variables with the `ggpairs()` function in the **GGally** package. For instance, how correlated are high and low temperatures, humidity, wind speed, and the chance of precipitation? We first make a smaller dataset with just those columns, and then we feed that dataset into `ggpairs()` to see all the correlation information:
+
+```{r ggpairs, fig.width=9, fig.height=6}
+library(GGally)
+
+weather_correlations <- weather_atl %>% 
+  select(temperatureHigh, temperatureLow, humidity, windSpeed, precipProbability)
+
+ggpairs(weather_correlations)
+```
+
+It looks like high and low temperatures are extremely highly positively correlated (r = 0.92). Wind spped and temperature are moderately negatively correlated, with low temperatures having a stronger negative correlation (r = -0.45). There's no correlation whatsoever between low temperatures and the precipitation probability (r = -0.03) or humidity and high temperatures (r = -0.03).
+
+Even though `ggpairs()` doesn't use the standard `ggplot(...) + geom_whatever()` syntax we're familiar with, it does behind the scenes, so you can add regular ggplot layers to it:
+
+```{r ggpairs-layers, eval=FALSE}
+ggpairs(weather_correlations) +
+  labs(title = "Correlations!") +
+  theme_dark()
+```
+
+
+### Correlograms
+
+Scatterplot matrices typically include way too much information to be used in actual publications. I use them when doing my own analysis just to see how different variables are related, but I rarely polish them up for public consumption. In the readings for today, Claus Wilke showed a type of plot called a [*correlogram*](https://serialmentor.com/dataviz/visualizing-associations.html#associations-correlograms) which *is* more appropriate for publication. 
+
+These are essentially heatmaps of the different correlation coefficients. To make these with ggplot, we need to do a little bit of extra data processing, mostly to reshape data into a long, tidy format that we can plot. Here's how.
+
+First we need to build a correlation matrix of the main variables we care about. Ordinarily the `cor()` function in R takes two arguments—x and y—and it will return a single correlation value. If you feed a data frame into `cor()` though, it'll calculate the correlation between each pair of columns
+
+```{r create-cor-mat, width=150}
+# Create a correlation matrix
+things_to_correlate <- weather_atl %>% 
+  select(temperatureHigh, temperatureLow, humidity, windSpeed, precipProbability) %>% 
+  cor()
+
+things_to_correlate
+```
+
+The two halves of this matrix (split along the diagonal line) are identical, so we can remove the lower triangle with this code (which will set all the cells in the lower triangle to `NA`):
+
+```{r remove-lower-tri}
+# Get rid of the lower triangle
+things_to_correlate[lower.tri(things_to_correlate)] <- NA
+things_to_correlate
+```
+
+Finally, in order to plot this, the data needs to be in tidy (or long) format. Here we convert the `things_to_correlate` matrix into a data frame, add a column for the row names, take all the columns and put them into a single column named `measure1`, and take all the correlation numbers and put them in a column named `cor` In the end, we make sure the measure variables are ordered by their order of appearance (otherwise they plot alphabetically and don't make a triangle)
+
+```{r cor-tidy}
+things_to_correlate_long <- things_to_correlate %>% 
+  # Convert from a matrix to a data frame
+  as.data.frame() %>% 
+  # Matrixes have column names that don't get converted to columns when using
+  # as.data.frame(), so this adds those names as a column
+  rownames_to_column("measure2") %>% 
+  # Make this long. Take all the columns except measure2 and put their names in
+  # a column named measure1 and their values in a column named cor
+  pivot_longer(cols = -measure2,
+               names_to = "measure1",
+               values_to = "cor") %>% 
+  # Make a new column with the rounded version of the correlation value
+  mutate(nice_cor = round(cor, 2)) %>% 
+  # Remove rows where the two measures are the same (like the correlation
+  # between humidity and humidity)
+  filter(measure2 != measure1) %>%
+  # Get rid of the empty triangle
+  filter(!is.na(cor)) %>% 
+  # Put these categories in order
+  mutate(measure1 = fct_inorder(measure1),
+         measure2 = fct_inorder(measure2))
+
+things_to_correlate_long
+```
+
+Phew. With the data all tidied like that, we can make a correlogram with a heatmap. This is just like [the heatmap you made in session 4](https://datavizm20.classes.andrewheiss.com/example/04-example/#heatmap), but here we manipulate the fill scale a little so that it's diverging with three colors: a high value, a midpoint value, and a low value.
+
+```{r cor-heatmap, fig.width=5, fig.height=5}
+ggplot(things_to_correlate_long, 
+       aes(x = measure2, y = measure1, fill = cor)) +
+  geom_tile() +
+  geom_text(aes(label = nice_cor)) +
+  scale_fill_gradient2(low = "#E16462", mid = "white", high = "#0D0887",
+                       limits = c(-1, 1)) +
+  labs(x = NULL, y = NULL) +
+  coord_equal() +
+  theme_minimal() +
+  theme(panel.grid = element_blank())
+```
+
+Instead of using a heatmap, we can also use points, which encode the correlation information both as color *and* as size. To do that, we just need to switch `geom_tile()` to `geom_point()` and set the `size = cor` mapping:
+
+```{r cor-points, fig.width=5, fig.height=5}
+ggplot(things_to_correlate_long, 
+       aes(x = measure2, y = measure1, color = cor)) +
+  # Size by the absolute value so that -0.7 and 0.7 are the same size
+  geom_point(aes(size = abs(cor))) +
+  scale_color_gradient2(low = "#E16462", mid = "white", high = "#0D0887",
+                        limits = c(-1, 1)) +
+  scale_size_area(max_size = 15, limits = c(-1, 1), guide = FALSE) +
+  labs(x = NULL, y = NULL) +
+  coord_equal() +
+  theme_minimal() +
+  theme(panel.grid = element_blank())
+```
+
+
+### Simple regression
+
+We can also visualize the relationships between variables using regression. Simple regression is easy to visualize, since you're only working with an X and a Y. For instance, what's the relationship between humidity and high temperatures during the summer?
+
+First, let's filter the data to only look at the summer. We also add a column to scale up the humidity value—right now it's on a scale of 0-1 (for percentages), but when interpreting regression we talk about increases in whole units, so we'd talk about moving from 0% humidity to 100% humidity, which isn't helpful, so instead we multiply everything by 100 so we can talk about moving from 50% humidity to 51% humidity. We also scale up a couple other variables that we'll use in the larger model later.
+
+```{r subset-summer}
+weather_atl_summer <- weather_atl %>% 
+  filter(time >= "2019-05-01", time <= "2019-09-30") %>% 
+  mutate(humidity_scaled = humidity * 100,
+         moonPhase_scaled = moonPhase * 100,
+         precipProbability_scaled = precipProbability * 100,
+         cloudCover_scaled = cloudCover * 100)
+```
+
+Then we can build a simple regression model:
+
+```{r simple-model, message=FALSE}
+model_simple <- lm(temperatureHigh ~ humidity_scaled, 
+                   data = weather_atl_summer)
+
+tidy(model_simple, conf.int = TRUE)
+```
+
+We can interpret these coefficients like so:
+
+- The intercept shows that the average temperature when there's 0% humidity is 104°. There are no days with 0% humidity though, so we can ignore the intercept—it's really just here so that we can draw the line.
+- The coefficient for `humidity_scaled` shows that a one percent increase in humidity is associated with a 0.241° decrease in temperature, on average.
+
+Visualizing this model is simple, since there are only two variables:
+
+```{r plot-simple-model, warning=FALSE}
+ggplot(weather_atl_summer,
+       aes(x = humidity_scaled, y = temperatureHigh)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+And indeed, as humidity increases, temperatures decrease.
+
+### Coefficient plots
+
+But if we use multiple variables in the model, it gets really hard to visualize the results since we're working with multiple dimensions. Instead, we can use coefficient plots to see the individual coefficients in the model.
+
+First, let's build a more complex model:
+
+```{r complex-model}
+model_complex <- lm(temperatureHigh ~ humidity_scaled + moonPhase_scaled + 
+                      precipProbability_scaled + windSpeed + pressure + cloudCover_scaled,
+                    data = weather_atl_summer)
+tidy(model_complex, conf.int = TRUE)
+```
+
+We can interpret these coefficients like so:
+
+- Holding everything else constant, a 1% increase in humidity is associated with a 0.11° decrease in the high temperature, on average, but the effect is not statistically significant
+- Holding everything else constant, a 1% increase in moon visibility is associated with a 0.01° increase in the high temperature, on average, and the effect is not statistically significant
+- Holding everything else constant, a 1% increase in the probability of precipitation is associated with a 0.04° increase in the high temperature, on average, and the effect is not statistically significant
+- Holding everything else constant, a 1 mph increase in the wind speed is associated with a 1.8° decrease in the high temperature, on average, and the effect *is* statistically significant
+- Holding everything else constant, a 1 unit increase in barometric pressure is associated with a 0.15° decrease in the high temperature, on average, and the effect is not statistically significant
+- Holding everything else constant, a 1% increase in cloud cover is associated with a 0.01° decrease in the high temperature, on average, and the effect *is* statistically significant
+- The intercept is pretty useless. It shows that the predicted temperature will be 262° when humidity is 0%, the moon is invisible, there's no chance of precipitation, no wind, no barometric pressure, and no cloud cover. Yikes.
+
+To plot all these things at once, we'll store the results of `tidy(model_complex)` as a data frame, remove the useless intercept, and plot it using `geom_pointrange()`:
+
+```{r coef-plot}
+model_tidied <- tidy(model_complex, conf.int = TRUE) %>% 
+  filter(term != "(Intercept)")
+
+ggplot(model_tidied,
+       aes(x = estimate, y = term)) +
+  geom_vline(xintercept = 0, color = "red", linetype = "dotted") +
+  geom_pointrange(aes(xmin = conf.low, xmax = conf.high)) + 
+  labs(x = "Coefficient estimate", y = NULL) +
+  theme_minimal()
+```
+
+Neat! Now we can see how big these different coefficients are and how close they are to zero. Wind speed has a big significant effect on temperature. The others are all very close to zero.
+
+### Marginal effects plots
+
+Instead of just looking at the coefficients, we can also see the effect of moving different variables up and down like sliders and switches. Remember that regression coefficients allow us to build actual mathematical formulas that predict the value of Y. The coefficients from `model_compex` yield the following big hairy ugly equation:
+
+$$
+\begin{aligned}
+\hat{\text{High temperature}} =& 262 - 0.11 \times \text{humidity_scaled } \\
+& + 0.01 \times \text{moonPhase_scaled } + 0.04 \times \text{precipProbability_scaled } \\
+& - 1.78 \times \text{windSpeed} - 0.16 \times \text{pressure} - 0.095 \times \text{cloudCover_scaled}
+\end{aligned}
+$$
+
+If we plug in values for each of the explanatory variables, we can get the predicted value of high temperature, or $\hat{y}$.
+
+The `augment()` function in the **broom** library allows us to take a data frame of explanatory variable values, plug them into the model equation, and get predictions out. For example, let's set each of the variables to some arbitrary values (50% for humidity, moon phase, chance of rain, and cloud cover; 1000 for pressure, and 1 MPH for wind speed).
+
+```{r newdata-example}
+newdata_example <- tibble(humidity_scaled = 50, moonPhase_scaled = 50, 
+                          precipProbability_scaled = 50, windSpeed = 1, 
+                          pressure = 1000, cloudCover_scaled = 50)
+newdata_example
+```
+
+We can plug these values into the model with `augment()`:
+
+```{r augment-newdata-example}
+# I use select() here because augment() returns columns for all the explanatory
+# variables, and the .fitted column with the predicted value is on the far right
+# and gets cut off
+augment(model_complex, newdata = newdata_example) %>% 
+  select(.fitted, .se.fit)
+```
+
+Given these weather conditions, the predicted high temperature is 96.2°. Now you're an armchair meteorologist!
+
+We can follow the same pattern to show how the predicted temperature changes as specific variables change across a whole range. Here, we create a data frame of possible wind speeds and keep all the other explanatory variables at their means:
+
+```{r newdata-windspeed}
+newdata <- tibble(windSpeed = seq(0, 8, 0.5),
+                  pressure = mean(weather_atl_summer$pressure),
+                  precipProbability_scaled = mean(weather_atl_summer$precipProbability_scaled),
+                  moonPhase_scaled = mean(weather_atl_summer$moonPhase_scaled),
+                  humidity_scaled = mean(weather_atl_summer$humidity_scaled),
+                  cloudCover_scaled = mean(weather_atl_summer$cloudCover_scaled))
+newdata
+```
+
+If we feed this big data frame into `augment()`, we can get the predicted high temperature for each row. We can also use the `.se.fit` column to calculate the 95% confidence interval for each predicted value. We take the standard error, multiply it by -1.96 and 1.96 (or the quantile of the normal distribution at 2.5% and 97.5%), and add that value to the estimate.
+
+```{r predicted-values-windspeed}
+predicted_values <- augment(model_complex, newdata = newdata) %>% 
+  mutate(conf.low = .fitted + (-1.96 * .se.fit),
+         conf.high = .fitted + (1.96 * .se.fit))
+
+predicted_values %>% 
+  select(windSpeed, .fitted, .se.fit, conf.low, conf.high) %>% 
+  head()
+```
+
+Cool! Just looking at the data in the table, we can see that predicted temperature drops as windspeed increases. We can plot this to visualize the effect:
+
+```{r mfx-plot-simple}
+ggplot(predicted_values, aes(x = windSpeed, y = .fitted)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              fill = "#BF3984", alpha = 0.5) + 
+  geom_line(size = 1, color = "#BF3984") +
+  labs(x = "Wind speed (MPH)", y = "Predicted high temperature (F)") +
+  theme_minimal()
+```
+
+We just manipulated one of the model coefficients and held everything else at its mean. We can manipulate multiple variables too and encode them all on the graph. For instance, what is the effect of windspeed *and* cloud cover on the temperature?
+
+We'll follow the same process, but vary both `windSpeed` and `cloudCover_scaled`. Instead of using `tibble()`, we use `exapnd_grid()`, which creates every combination of the variables we specify. Instead of varying cloud cover by every possible value (like from 0 to 100), we'll choose four possible cloud cover types: 0%, 33%, 66%, and 100%. Everything else will be at its mean.
+
+```{r newdata-fancy}
+newdata_fancy <- expand_grid(windSpeed = seq(0, 8, 0.5),
+                             pressure = mean(weather_atl_summer$pressure),
+                             precipProbability_scaled = mean(weather_atl_summer$precipProbability_scaled),
+                             moonPhase_scaled = mean(weather_atl_summer$moonPhase_scaled),
+                             humidity_scaled = mean(weather_atl_summer$humidity_scaled),
+                             cloudCover_scaled = c(0, 33, 66, 100))
+newdata_fancy
+```
+
+Notice now that `windSpeed` repeats four times (0, 0, 0, 0, 0.5, 0.5, etc.), since there are four possible `cloudCover_scaled` values (0, 33, 66, 100). 
+
+We can plot this now, just like before, with wind speed on the x-axis, the predicted temperature on the y-axis, and colored and faceted by cloud cover:
+
+```{r mfx-complex, fig.width=9, fig.height=4}
+predicted_values_fancy <- augment(model_complex, newdata = newdata_fancy) %>% 
+  mutate(conf.low = .fitted + (-1.96 * .se.fit),
+         conf.high = .fitted + (1.96 * .se.fit)) %>% 
+  # Make cloud cover a categorical variable
+  mutate(cloudCover_scaled = factor(cloudCover_scaled))
+
+ggplot(predicted_values_fancy, aes(x = windSpeed, y = .fitted)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = cloudCover_scaled),
+              alpha = 0.5) + 
+  geom_line(aes(color = cloudCover_scaled), size = 1) +
+  labs(x = "Wind speed (MPH)", y = "Predicted high temperature (F)") +
+  theme_minimal() +
+  guides(fill = FALSE, color = FALSE) +
+  facet_wrap(vars(cloudCover_scaled), nrow = 1)
+```
+
+That's so neat! Temperatures go down slightly as cloud cover increases. If we wanted to improve the model, we'd add an interaction term between cloud cover and windspeed so that each line would have a different slope in addition to a different intercept, but that's beyond the scope of this class.

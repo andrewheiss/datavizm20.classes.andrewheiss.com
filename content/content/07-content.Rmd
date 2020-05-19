@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "07-slides"
+slides: "07-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -37,9 +37,85 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Relationships", "1", TRUE,
+  "The dangers of dual y-axes", "dual-y-axes", FALSE,
+  "Visualizing correlations", "correlations", FALSE,
+  "Visualizing regressions", "regression", FALSE,
+)
+
+slide_tabs(sections, "/slides/07-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j).
+
+- [Introduction](https://www.youtube.com/watch?v=GnsuXEI3KoI&list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j)
+- [The dangers of dual y-axes](https://www.youtube.com/watch?v=fhlbFgo5UQU&list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j&)
+- [Visualizing correlations](https://www.youtube.com/watch?v=emMc3qtw3z0&list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j)
+- [Visualizing regressions](https://www.youtube.com/watch?v=FsnM8e6P71g&list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sGarIxAwCcmheAoKaLRGy1j
+
+https://youtu.be/GnsuXEI3KoI
+PMAP 8921 • (7) Relationships: (0) Introduction
+
+Introduction to the class session on relationships
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/07-content/
+
+
+https://youtu.be/fhlbFgo5UQU
+PMAP 8921 • (7) Relationships: (1) The dangers of dual y-axes
+
+Discussion about why dual y-axes are dangerous and how you can avoid them 
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/07-content/
+
+
+https://youtu.be/emMc3qtw3z0
+PMAP 8921 • (7) Relationships: (2) Visualizing correlations
+
+Overview of different methods for visualizing correlations, including scatterplots, scatterplot matrices, and correlograms
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/07-content/
+
+  
+https://youtu.be/FsnM8e6P71g
+PMAP 8921 • (7) Relationships: (3) Visualizing regressions
+
+Overview of different methods for visualizing regresison results, including coefficient plots and marginal effects plots
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/07-content/
+
+
+https://youtu.be/zfEAmJzfbkE
+PMAP 8921 • (7) Relationships: Example
+
+Demonstration of how to create dual y-axes, scatterplot matrices, coefficient plots, and marginal effects plots with ggplot2 and R
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/07-example/
+  
+```

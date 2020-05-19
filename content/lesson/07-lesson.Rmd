@@ -18,4 +18,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+There isn't really a lesson for today, and as we get further into the semester, the need for lessons will continue to decrease. Now that each section is focused on a few specific geoms and how to apply them, you don't need to go through interactive tutorials so much, since you should (hopefully!) be getting the hang of how ggplot works. (IF NOT, please reach out for help on Slack or via e-mail! I'm more than happy and ready to help!)
+
+For the lesson, [read through the code examples in the example](/example/07-example/) to see how to make dual y-axes, scatterplot matrices, coefficient plots, and marginal effects plots.

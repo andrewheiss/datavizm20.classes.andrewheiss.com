@@ -19,5 +19,82 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#task-1-reflection">Task 1: Reflection</a></li>
+<li><a href="#task-2-combining-plots">Task 2: Combining plots</a></li>
+<li><a href="#task-3-visualizing-regression">Task 3: Visualizing regression</a>
+<ul>
+<li><a href="#coefficient-plot">Coefficient plot</a></li>
+<li><a href="#marginal-effects">Marginal effects</a></li>
+</ul></li>
+<li><a href="#bonus-task-correlograms">Bonus task! Correlograms</a></li>
+<li><a href="#turning-everything-in">Turning everything in</a></li>
+</ul>
+</div>
 
-<p>A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.</p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>For this exercise you’ll use precinct-level data from the 2016 presidental election to visualize relationships between variables. This data comes from the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">MIT Election Data and Science Lab</a>.</p>
+<p>You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.</p>
+<ul>
+<li><a href="/projects/07-exercise/data/results_2016.csv"><i class="fas fa-file-csv"></i> <code>results_2016.csv</code></a></li>
+</ul>
+<p><strong>To help you</strong>, I’ve created a skeleton R Markdown file with a template for this exercise, along with some code to help you clean and summarize the data. Download that here and include it in your project:</p>
+<ul>
+<li><a href="/projects/06-exercise/07-exercise.Rmd"><i class="fab fa-r-project"></i> <code>07-exercise.Rmd</code></a></li>
+</ul>
+<p>In the end, the structure of your project directory should look something like this:</p>
+<pre class="text"><code>your-project-name\
+  07-exercise.Rmd
+  your-project-name.Rproj
+  data\
+    results_2016.csv</code></pre>
+<p>To check that you put everything in the right places, you can download and unzip this file, which contains everything in the correct structure:</p>
+<ul>
+<li><a href="/projects/07-exercise.zip"><i class="fas fa-file-archive"></i> <code>07-exercise.zip</code></a></li>
+</ul>
+<p><a href="/example/07-example/">The example for today’s session</a> will be <strong><em>incredibly</em></strong> helpful for this exercise. Reference it.</p>
+<p>Again, you don’t need to make your plots super fancy, but if you’re feeling brave, experiment with adding a <code>labs()</code> layer or changing colors or modifying themes and theme elements.</p>
+<p>You’ll need to insert your own code chunks where needed. Rather than typing them by hand (that’s tedious and you might miscount the number of backticks!), use the “Insert” button at the top of the editing window, or type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS.</p>
+<p><img src="/img/assignments/insert-chunk-button.png" width="19%" /></p>
+</div>
+<div id="task-1-reflection" class="section level2">
+<h2>Task 1: Reflection</h2>
+<p>Write your reflection for the day’s readings.</p>
+</div>
+<div id="task-2-combining-plots" class="section level2">
+<h2>Task 2: Combining plots</h2>
+<p>Make 2–3 plots of anything you want from the <code>results_2016</code> data (histogram, density, boxplot, scatterplot, whatever) and combine them with <strong>patchwork</strong>. Look at <a href="https://patchwork.data-imaginist.com/articles/guides/assembly.html">the documentation</a> to see fancy ways of combining them, like having two rows inside a column.</p>
+</div>
+<div id="task-3-visualizing-regression" class="section level2">
+<h2>Task 3: Visualizing regression</h2>
+<div id="coefficient-plot" class="section level3">
+<h3>Coefficient plot</h3>
+<p>Use the <code>results_2016</code> data to create a model that predicts the percent of Democratic votes in a precinct based on age, race, income, rent, and state (hint: the formula will look like this: <code>percent_dem ~ median_age + percent_white + per_capita_income + median_rent + state</code>)</p>
+<p>Use <code>tidy()</code> in the <strong>broom</strong> package and <code>geom_pointrange()</code> to create a coefficient plot for the model estimates. You’ll have 50 rows for all the states, and that’s excessive for a plot like this, so you’ll want to filter out the state rows. You can do that by adding this:</p>
+<pre class="r"><code>tidy(...) %&gt;%
+  filter(!str_detect(term, &quot;state&quot;))</code></pre>
+<p>The <code>str_detect()</code> function looks for the characters “state” in the term column. The <code>!</code> negates it. This is thus saying “only keep rows where the word ‘state’ is not in the term name”.</p>
+<p>You should also get rid of the intercept (<code>filter(term != "(Intercept)")</code>).</p>
+</div>
+<div id="marginal-effects" class="section level3">
+<h3>Marginal effects</h3>
+<p>Create a new data frame with <code>tibble()</code> that contains a column for the average value for each variable in your model <em>except for one</em>, which you vary. For state, you’ll need to choose a single state. The new dataset should look something like this (though this is incomplete! You’ll need to include all the variables in your model, and you’ll need to vary one using <code>seq()</code>) (like <code>seq(9000, 60000, by = 100)</code> for <code>per_capita_income</code>). The <code>na.rm</code> argument in <code>mean()</code> here makes it so missing values are removed—without it, R can’t calculate the mean and will return <code>NA</code> instead.</p>
+<pre class="r"><code>data_to_predict &lt;- tibble(median_age = mean(results_2016$median_age, na.rm = TRUE),
+                          percent_white = mean(results_2016$percent_white,  na.rm = TRUE),
+                          state = &quot;Georgia&quot;)  # Or whatever</code></pre>
+<p>Use <code>augment()</code> to generate predictions from this dataset using the model you created before. Plot your varied variable on the x-axis, the fitted values (<code>.fitted</code>) on the y-axis, show the relationship with a line, and add a ribbon to show the 95% confidence interval.</p>
+</div>
+</div>
+<div id="bonus-task-correlograms" class="section level2">
+<h2>Bonus task! Correlograms</h2>
+<p><strong>This is entirely optional but might be fun.</strong></p>
+<p>For extra fun times, if you feel like it, create a correlogram heatmap, either with <code>geom_tile()</code> or with points sized by the correlation. Use any variables you want from <code>results_2016</code>.</p>
+</div>
+<div id="turning-everything-in" class="section level2">
+<h2>Turning everything in</h2>
+<p>When you’re all done, click on the “Knit” button at the top of the editing window and create an HTML or Word version (or PDF if you’ve <a href="/resource/install/#install-tinytex">installed <strong>tinytex</strong></a>) of your document. Upload that file to iCollege.</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p>
+</div>

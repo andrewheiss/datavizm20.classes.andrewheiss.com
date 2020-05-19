@@ -1,0 +1,64 @@
+---
+title: "Exercise 7"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Combining plots
+
+```{r load-libraries-data}
+library(tidyverse)
+library(patchwork)
+library(broom)
+
+results_2016 <- read_csv("data/results_2016.csv")
+```
+
+Make 2–3 plots of anything you want from the `results_2016` data (histogram, density, boxplot, scatterplot, whatever) and combine them with **patchwork**. Look at [the documentation](https://patchwork.data-imaginist.com/articles/guides/assembly.html) to see fancy ways of combining them, like having two rows inside a column.
+
+```{r combine-lots}
+# Make some plots and combine them here
+```
+
+# Task 3: Visualizing regression
+
+## Coefficient plot
+
+Use the `results_2016` data to create a model that predicts the percent of Democratic votes in a precinct based on age, race, income, rent, and state (hint: the formula will look like this: `percent_dem ~ median_age + percent_white + per_capita_income + median_rent + state`)
+
+Use `tidy()` in the **broom** package and `geom_pointrange()` to create a coefficient plot for the model estimates. You'll have 50 rows for all the states, and that's excessive for a plot like this, so you'll want to filter out the state rows. You can do that by adding this:
+
+```{r example-filtering, eval=FALSE}
+tidy(...) %>%
+  filter(!str_detect(term, "state"))
+```
+
+The `str_detect()` function looks for the characters "state" in the term column. The `!` negates it. This is thus saying "only keep rows where the word 'state' is not in the term name".
+
+You should also get rid of the intercept (`filter(term != "(Intercept)")`).
+
+
+## Marginal effects
+
+Create a new data frame with `tibble()` that contains a column for the average value for each variable in your model *except for one*, which you vary. For state, you'll need to choose a single state. The new dataset should look something like this (though this is incomplete! You'll need to include all the variables in your model, and you'll need to vary one using `seq()`) (like `seq(9000, 60000, by = 100)` for `per_capita_income`). The `na.rm` argument in `mean()` here makes it so missing values are removed—without it, R can't calculate the mean and will return `NA` instead.
+
+```{r create-new-data, eval=FALSE}
+data_to_predict <- tibble(median_age = mean(results_2016$median_age, na.rm = TRUE),
+                          percent_white = mean(results_2016$percent_white,  na.rm = TRUE),
+                          state = "Georgia")  # Or whatever
+```
+
+Use `augment()` to generate predictions from this dataset using the model you created before. Plot your varied variable on the x-axis, the fitted values (`.fitted`) on the y-axis, show the relationship with a line, and add a ribbon to show the 95% confidence interval.
+
+
+# Bonus task! Correlograms
+
+**This is entirely optional but might be fun.**
+
+For extra fun times, if you feel like it, create a correlogram heatmap, either with `geom_tile()` or with points sized by the correlation. Use any variables you want from `results_2016`.

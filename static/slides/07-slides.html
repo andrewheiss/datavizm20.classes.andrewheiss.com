@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Relationships</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-18" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Relationships
+
+.class-info[
+
+**Session 7**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-5.medium.sp-after-half[The dangers of dual y-axes]
+
+--
+
+.box-1.medium.sp-after-half[Visualizing correlations]
+
+--
+
+.box-6.medium.sp-after-half[Visualizing regressions]
+
+
+
+---
+
+name: dual-y-axes
+class: center middle section-title section-title-5 animated fadeIn
+
+# The dangers of&lt;br&gt;dual y-axes
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Stop eating margarine!
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/chart.png" alt="Spurious correlation between divorce rate and margarine consumption" title="Spurious correlation between divorce rate and margarine consumption" width="100%"&gt;
+  &lt;figcaption&gt;Source: &lt;a href="https://www.tylervigen.com/spurious-correlations" target="_blank"&gt;Tyler Vigen's spurious correlations&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Why not use double y-axes?
+
+.box-inv-5.medium[You have to choose where the y-axes&lt;br&gt;start and stop, which means…]
+
+--
+
+.box-inv-5.medium[…you can force the two trends&lt;br&gt;to line up however you want!]
+
+---
+
+# It even happens in *The Economist!*
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/economist-dogs.png" alt="Dog neck size and weight in The Economist" title="Dog neck size and weight in The Economist" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+&lt;https://medium.economist.com/mistakes-weve-drawn-a-few-8cdd8a42d368&gt;
+
+---
+
+# The rare triple y-axis!
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/triple-y-axis.png" alt="Acemoglu and Restrepo triple y-axis" title="Acemoglu and Restrepo triple y-axis" width="60%"&gt;
+  &lt;figcaption&gt;Source: Daron Acemoglu and Pascual Restrepo, "The Race Between Man and Machine:&lt;br&gt;Implications of Technology for Growth, Factor Shares and Employment"&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Daron Acemoglu and Pascual Restrepo, ["The Race Between Man and Machine:&lt;br&gt;Implications of Technology for Growth, Factor Shares and Employment"](https://economics.mit.edu/files/10866)
+
+---
+
+# When is it legal?
+
+--
+
+.box-inv-5.medium[When the two axes measure the same thing]
+
+--
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/3-operations.png" alt="Lollipop chart with dual y-axes from my dissertation" title="Lollipop chart with dual y-axes from my dissertation" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# When is it legal?
+
+&lt;img src="07-slides_files/figure-html/atl-weather-dual-nice-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Adding a second scale in R
+
+.left-code[
+
+```r
+# From the uncertainty example
+weather_atl &lt;- 
+  read_csv("data/atl-weather-2019.csv")
+
+ggplot(weather_atl, 
+       aes(x = time, y = temperatureHigh)) +
+  geom_line() +
+  geom_smooth() +
+  scale_y_continuous(
+    sec.axis = 
+      sec_axis(trans = ~ (32 - .) * -5/9,
+               name = "Celsius")
+  ) +
+  labs(x = NULL, y = "Fahrenheit")
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/atl-weather-dual-1.png)
+]
+
+---
+
+# Adding a second scale in R
+
+.left-code[
+
+```r
+car_counts &lt;- mpg %&gt;% 
+  group_by(drv) %&gt;% 
+  summarize(total = n())
+
+total_cars &lt;- sum(car_counts$total)
+
+ggplot(car_counts,
+       aes(x = drv, y = total, 
+           fill = drv)) +
+  geom_col() +
+  scale_y_continuous(
+    sec.axis = sec_axis(
+      trans = ~ . / total_cars,
+      labels = scales::percent)
+  ) +
+  guides(fill = FALSE)
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/cars-dual-1.png)
+]
+
+---
+
+# Alternative 1: Use another aesthetic
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/03/gapminder-screenshot.png" alt="Animated gapminder data" title="Animated gapminder data" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Alternative 2: Use multiple plots
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/timeline_HND.png" alt="Honduras anti-trafficking timeline" title="Honduras anti-trafficking timeline" width="65%"&gt;
+  &lt;figcaption&gt;Anti-trafficking policy timeline in Honduras&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Alternative 2: Use multiple plots
+
+.left-code[
+
+```r
+library(patchwork)
+
+temp_plot &lt;- ggplot(weather_atl, 
+                    aes(x = time, 
+                        y = temperatureHigh)) +
+  geom_line() + geom_smooth() +
+  labs(x = NULL, y = "Fahrenheit")
+
+humid_plot &lt;- ggplot(weather_atl, 
+                     aes(x = time, 
+                         y = humidity)) +
+  geom_line() + geom_smooth() +
+  labs(x = NULL, y = "Humidity")
+
+temp_plot + humid_plot +
+  plot_layout(ncol = 1, 
+              heights = c(0.7, 0.3))
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/atl-weather-patchwork-1.png)
+]
+
+
+---
+
+layout: false
+name: correlation
+class: center middle section-title section-title-1 animated fadeIn
+
+# Visualizing correlations
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# What is correlation?
+
+.pull-left-narrow[
+$$
+r_{x, y} = \frac{\operatorname{cov}(x, y)}{\sigma_x \sigma_y}
+$$
+]
+
+.pull-right-wide[
+.box-inv-1.medium[As the value of X goes up,&lt;br&gt;Y tends to go up (or down)&lt;br&gt;a lot/a little/not at all]
+
+.box-1[Says nothing about *how much*&lt;br&gt;Y changes when X changes]
+]
+
+---
+
+# Correlation values
+
+.pull-left[
+&amp;nbsp;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th class="cell-left"&gt;r&lt;/th&gt;
+    &lt;th class="cell-left"&gt;Rough meaning&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;±0.1–0.3&amp;emsp;&lt;/td&gt;
+    &lt;td class="cell-left"&gt;Modest&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;±0.3–0.5&lt;/td&gt;
+    &lt;td class="cell-left"&gt;Moderate&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;±0.5–0.8&lt;/td&gt;
+    &lt;td class="cell-left"&gt;Strong&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;±0.8–0.9&lt;/td&gt;
+    &lt;td class="cell-left"&gt;Very strong&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+&lt;img src="07-slides_files/figure-html/correlation-grid-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Scatterplot matrices
+
+.left-code[
+
+```r
+library(GGally)
+
+cars_smaller &lt;- mtcars %&gt;% 
+  select(mpg, cyl, gear, hp, qsec)
+
+ggpairs(cars_smaller)
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/scatterplot-matrix-1.png)
+]
+
+---
+
+# Correlograms: Heatmaps
+
+&lt;img src="07-slides_files/figure-html/cor-heatmap-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Correlograms: Points
+
+&lt;img src="07-slides_files/figure-html/cor-points-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+layout: false
+name: regression
+class: center middle section-title section-title-6 animated fadeIn
+
+# Visualizing regressions
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# Drawing lines
+
+.pull-left[
+
+&lt;img src="07-slides_files/figure-html/cars-line-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="07-slides_files/figure-html/cars-residuals-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Drawing lines with math
+
+$$
+y = mx + b
+$$
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(y\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;A number&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(x\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;A number&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(m\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;Slope (\(\frac{\text{rise}}{\text{run}}\))&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(b\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;y-intercept&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+
+# Slopes and intercepts
+
+.pull-left[
+
+$$
+y = 2x - 1
+$$
+
+&lt;img src="07-slides_files/figure-html/simple-line-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+$$
+y = -0.5x + 6
+$$
+
+&lt;img src="07-slides_files/figure-html/simple-line-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Drawing lines with stats
+
+$$
+\hat{y} = \beta_0 + \beta_1 x_1 + \varepsilon
+$$
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(y\)&lt;/td&gt;
+    &lt;td class="cell-center"&gt;\(\hat{y}\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;Outcome variable (DV)&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(x\)&lt;/td&gt;
+    &lt;td class="cell-center"&gt;\(x_1\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;Explanatory variable (IV)&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(m\)&lt;/td&gt;
+    &lt;td class="cell-center"&gt;\(\beta_1\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;Slope&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;\(b\)&lt;/td&gt;
+    &lt;td class="cell-center"&gt;\(\beta_0\)&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;y-intercept&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-center"&gt;&amp;emsp;&amp;emsp;&lt;/td&gt;
+    &lt;td class="cell-center"&gt;&amp;emsp;\(\varepsilon\)&amp;emsp;&lt;/td&gt;
+    &lt;td class="cell-left"&gt;&amp;ensp;Error (residuals)&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+
+# Building models in R
+
+
+```r
+name_of_model &lt;- lm(&lt;Y&gt; ~ &lt;X&gt;, data = &lt;DATA&gt;)
+
+summary(name_of_model)  # See model details
+```
+
+--
+
+
+```r
+library(broom)
+
+# Convert model results to a data frame for plotting
+tidy(name_of_model)
+
+# Convert model diagnostics to a data frame
+glance(name_of_model)
+```
+
+---
+
+# Modeling displacement and MPG
+
+.pull-left[
+$$
+\hat{\text{hwy}} = \beta_0 + \beta_1 \text{displ} + \varepsilon
+$$
+
+
+```r
+car_model &lt;- lm(hwy ~ displ,
+                data = mpg)
+```
+
+]
+
+.pull-right[
+
+&lt;img src="07-slides_files/figure-html/cars-line-again-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Modeling displacement and MPG
+
+.small-code[
+
+```r
+tidy(car_model, conf.int = TRUE)
+```
+
+```
+## # A tibble: 2 x 7
+##   term        estimate std.error statistic   p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)    35.7      0.720      49.6 2.12e-125    34.3      37.1 
+## 2 displ          -3.53     0.195     -18.2 2.04e- 46    -3.91     -3.15
+```
+]
+
+--
+
+.small-code[
+
+```r
+glance(car_model)
+```
+
+```
+## # A tibble: 1 x 11
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.587         0.585  3.84      329. 2.04e-46     2  -646. 1297. 1308.
+## # … with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+```
+]
+
+---
+
+# Translating results to math
+
+.pull-left[
+
+.small-code[
+
+```
+## # A tibble: 2 x 2
+##   term        estimate
+##   &lt;chr&gt;          &lt;dbl&gt;
+## 1 (Intercept)    35.7 
+## 2 displ          -3.53
+```
+]
+
+.small[
+$$
+\hat{\text{hwy}} = 35.7 + (-3.53) \times \text{displ} + \varepsilon
+$$
+]
+]
+
+.pull-right[
+
+&lt;img src="07-slides_files/figure-html/cars-line-again-again-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Template for single variables
+
+.box-inv-6.medium[A one unit increase in X is *associated* with&lt;br&gt;a β&lt;sub&gt;1&lt;/sub&gt; increase (or decrease) in Y, on average]
+
+$$
+\hat{\text{hwy}} = \beta_0 + \beta_1 \text{displ} + \varepsilon
+$$
+
+$$
+\hat{\text{hwy}} = 35.7 + (-3.53) \times \text{displ} + \varepsilon
+$$
+
+--
+
+.box-6[This is easy to visualize! It's a line!]
+
+---
+
+# Multiple regression
+
+.box-inv-6[We're not limited to just one explanatory variable!]
+
+--
+
+$$
+\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \varepsilon
+$$
+
+&amp;nbsp;
+
+--
+
+
+```r
+car_model_big &lt;- lm(hwy ~ displ + cyl + drv,
+                    data = mpg)
+```
+
+$$
+\hat{\text{hwy}} = \beta_0 + \beta_1 \text{displ} + \beta_2 \text{cyl} + \beta_3 \text{drv:f} + \beta_4 \text{drv:r} + \varepsilon
+$$
+
+---
+
+# Modeling lots of things and MPG
+
+.small-code[
+
+```r
+tidy(car_model_big, conf.int = TRUE)
+```
+
+```
+## # A tibble: 5 x 7
+##   term        estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)    33.1      1.03      32.1  9.49e-87    31.1     35.1  
+## 2 displ          -1.12     0.461     -2.44 1.56e- 2    -2.03    -0.215
+## 3 cyl            -1.45     0.333     -4.36 1.99e- 5    -2.11    -0.796
+## 4 drvf            5.04     0.513      9.83 3.07e-19     4.03     6.06 
+## 5 drvr            4.89     0.712      6.86 6.20e-11     3.48     6.29
+```
+]
+
+--
+
+$$
+`\begin{aligned}
+\hat{\text{hwy}} =&amp;\ 33.1 + (-1.12) \times \text{displ} + (-1.45) \times \text{cyl} \ + \\
+&amp;(5.04) \times \text{drv:f} + (4.89) \times \text{drv:r} + \varepsilon
+\end{aligned}`
+$$
+
+---
+
+# Sliders and switches
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/slider-switch-plain-80.jpg" alt="Switch and slider" title="Switch and slider" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Sliders and switches
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/07/slider-switch-annotated-80.jpg" alt="Switch and slider" title="Switch and slider" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Template for continuous variables
+
+.box-inv-6[*Holding everything else constant*, a one unit increase in X is *associated* with a β&lt;sub&gt;n&lt;/sub&gt; increase (or decrease) in Y, on average]
+
+$$
+`\begin{aligned}
+\hat{\text{hwy}} =&amp;\ 33.1 + (-1.12) \times \text{displ} + (-1.45) \times \text{cyl} \ + \\
+&amp;(5.04) \times \text{drv:f} + (4.89) \times \text{drv:r} + \varepsilon
+\end{aligned}`
+$$
+
+--
+
+.box-6.small[On average, a one unit increase in cylinders is associated with&lt;br&gt;1.45 lower highway MPG, holding everything else constant]
+
+---
+
+# Template for categorical variables
+
+.box-inv-6[*Holding everything else constant*, Y is β&lt;sub&gt;n&lt;/sub&gt; units larger (or smaller) in X&lt;sub&gt;n&lt;/sub&gt;, compared to X&lt;sub&gt;omitted&lt;/sub&gt;, on average]
+
+$$
+`\begin{aligned}
+\hat{\text{hwy}} =&amp;\ 33.1 + (-1.12) \times \text{displ} + (-1.45) \times \text{cyl} \ + \\
+&amp;(5.04) \times \text{drv:f} + (4.89) \times \text{drv:r} + \varepsilon
+\end{aligned}`
+$$
+
+--
+
+.box-6[On average, front-wheel drive cars have 5.04 higher highway MPG than 4-wheel-drive cars, holding everything else constant]
+
+---
+
+# Good luck visualizng all this!
+
+&amp;nbsp;
+
+.box-inv-6.medium[You can't just draw a line!&lt;br&gt;There are too many moving parts!]
+
+---
+
+# Main problems
+
+--
+
+.box-inv-6[Each coefficient has its own estimate and standard errors]
+
+--
+
+.box-6.sp-after[Solution: Plot the coefficients and&lt;br&gt;their errors with a *coefficient plot*]
+
+--
+
+.box-inv-6[The results change as you move each&lt;br&gt;slider up and down and flip each switch on and off]
+
+--
+
+.box-6[Solution: Plot the *marginal effects* for&lt;br&gt;the coefficients you're interested in]
+
+---
+
+# Coefficient plots
+
+.box-inv-6[Convert the model results to a data frame with `tidy()`]
+
+.small-code[
+
+```r
+car_model_big &lt;- lm(hwy ~ displ + cyl + drv, data = mpg)
+
+car_coefs &lt;- tidy(car_model_big, conf.int = TRUE) %&gt;% 
+  filter(term != "(Intercept)")  # We can typically skip plotting the intercept, so remove it
+car_coefs
+```
+
+```
+## # A tibble: 4 x 7
+##   term  estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 displ    -1.12     0.461     -2.44 1.56e- 2    -2.03    -0.215
+## 2 cyl      -1.45     0.333     -4.36 1.99e- 5    -2.11    -0.796
+## 3 drvf      5.04     0.513      9.83 3.07e-19     4.03     6.06 
+## 4 drvr      4.89     0.712      6.86 6.20e-11     3.48     6.29
+```
+]
+
+---
+
+# Coefficient plots
+
+.box-inv-6[Plot the estimate and confidence intervals with `geom_pointrange()`]
+
+.left-code[
+
+```r
+ggplot(car_coefs,
+       aes(x = estimate, 
+           y = fct_rev(term))) +
+  geom_pointrange(aes(xmin = conf.low, 
+                      xmax = conf.high)) +
+  geom_vline(xintercept = 0, color = "red")
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/coef-plot-cars-1.png)
+]
+
+---
+
+# Marginal effects plots
+
+.box-inv-6[Remember that we interpret individual coefficients&lt;br&gt;while holding the others constant]
+
+.box-6.small.sp-after[We move one slider while leaving all the other sliders and switches alone]
+
+--
+
+.box-inv-6[Same principle applies to visualizing the effect]
+
+--
+
+.box-6.small[Plug a bunch of values into the model and find the predicted outcome]
+
+--
+
+.box-6.small[Plot the values and predicted outcome]
+
+---
+
+# Marginal effects plots
+
+.box-inv-6[Create a data frame of values you want to&lt;br&gt;manipulate and values you want to hold constant]
+
+--
+
+.box-6[Must include all the explanatory variables in the model]
+
+---
+
+# Marginal effects plots
+
+.small-code[
+
+```r
+cars_new_data &lt;- tibble(displ = seq(2, 7, by = 0.1),
+                        cyl = mean(mpg$cyl),
+                        drv = "f")
+
+head(cars_new_data)
+```
+
+```
+## # A tibble: 6 x 3
+##   displ   cyl drv  
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1   2    5.89 f    
+## 2   2.1  5.89 f    
+## 3   2.2  5.89 f    
+## 4   2.3  5.89 f    
+## 5   2.4  5.89 f    
+## 6   2.5  5.89 f
+```
+]
+
+---
+
+# Marginal effects plots
+
+.box-inv-6[Plug each of those rows of data into the model with `augment()`]
+
+.small-code[
+
+```r
+predicted_mpg &lt;- augment(car_model_big, newdata = cars_new_data)
+
+head(predicted_mpg)
+```
+
+```
+## # A tibble: 6 x 5
+##   displ   cyl drv   .fitted .se.fit
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1   2    5.89 f        27.3   0.644
+## 2   2.1  5.89 f        27.2   0.604
+## 3   2.2  5.89 f        27.1   0.566
+## 4   2.3  5.89 f        27.0   0.529
+## 5   2.4  5.89 f        26.9   0.494
+## 6   2.5  5.89 f        26.8   0.460
+```
+]
+
+---
+
+# Marginal effects plots
+
+.box-inv-6[Plot the fitted values for each row]
+
+.box-6.small[Cylinders held at their mean; assumes front-wheel drive]
+
+.left-code[
+
+```r
+ggplot(predicted_mpg,
+       aes(x = displ, y = .fitted)) +
+  geom_ribbon(aes(ymin = .fitted + 
+                    (-1.96 * .se.fit),
+                  ymax = .fitted + 
+                    (1.96 * .se.fit)),
+              fill = "#5601A4", 
+              alpha = 0.5) +
+  geom_line(size = 1, color = "#5601A4")
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/mfx-plot-cars-1.png)
+]
+
+---
+
+# Multiple effects at once
+
+.box-inv-6[We can also move multiple&lt;br&gt;sliders and switches at the same time!]
+
+--
+
+.box-6[What's the marginal effect of increasing displacement&lt;br&gt;across the front-, rear-, and four-wheel drive cars?]
+
+---
+
+# Multiple effects at once
+
+.box-inv-6[Create a new dataset with varying displacement&lt;br&gt;*and* varying drive, holding cylinders at its mean]
+
+.box-6[The `expand_grid()` function does this]
+
+---
+
+# Multiple effects at once
+
+.small-code[
+
+```r
+cars_new_data_fancy &lt;- expand_grid(displ = seq(2, 7, by = 0.1),
+                                   cyl = mean(mpg$cyl),
+                                   drv = c("f", "r", "4"))
+
+head(cars_new_data_fancy)
+```
+
+```
+## # A tibble: 6 x 3
+##   displ   cyl drv  
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1   2    5.89 f    
+## 2   2    5.89 r    
+## 3   2    5.89 4    
+## 4   2.1  5.89 f    
+## 5   2.1  5.89 r    
+## 6   2.1  5.89 4
+```
+]
+
+---
+
+# Multiple effects at once
+
+.box-inv-6[Plug each of those rows of data into the model with `augment()`]
+
+.small-code[
+
+```r
+predicted_mpg_fancy &lt;- augment(car_model_big, newdata = cars_new_data_fancy)
+
+head(predicted_mpg_fancy)
+```
+
+```
+## # A tibble: 6 x 5
+##   displ   cyl drv   .fitted .se.fit
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1   2    5.89 f        27.3   0.644
+## 2   2    5.89 r        27.2   1.14 
+## 3   2    5.89 4        22.3   0.805
+## 4   2.1  5.89 f        27.2   0.604
+## 5   2.1  5.89 r        27.1   1.10 
+## 6   2.1  5.89 4        22.2   0.763
+```
+]
+
+---
+
+# Multiple effects at once
+
+.box-inv-6[Plot the fitted values for each row]
+
+.box-6.small[Cylinders held at their mean; colored/filled by drive]
+
+.left-code[
+
+```r
+ggplot(predicted_mpg_fancy,
+       aes(x = displ, y = .fitted)) +
+  geom_ribbon(aes(ymin = .fitted + 
+                    (-1.96 * .se.fit),
+                  ymax = .fitted + 
+                    (1.96 * .se.fit),
+                  fill = drv),
+              alpha = 0.5) +
+  geom_line(aes(color = drv), size = 1)
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/mfx-plot-cars-fancy-1.png)
+]
+
+---
+
+# Multiple effects at once
+
+.box-inv-6[Plot the fitted values for each row]
+
+.box-6.small[Cylinders held at their mean; colored/filled/facetted by drive]
+
+.left-code[
+
+```r
+ggplot(predicted_mpg_fancy,
+       aes(x = displ, y = .fitted)) +
+  geom_ribbon(aes(ymin = .fitted + 
+                    (-1.96 * .se.fit),
+                  ymax = .fitted + 
+                    (1.96 * .se.fit),
+                  fill = drv),
+              alpha = 0.5) +
+  geom_line(aes(color = drv), size = 1) + 
+* guides(fill = FALSE, color = FALSE) +
+* facet_wrap(vars(drv))
+```
+]
+
+.right-plot[
+![](07-slides_files/figure-html/mfx-plot-cars-fancy-facet-1.png)
+]
+
+---
+
+# Not just OLS!
+
+.box-inv-6[These plots are for an OLS model built with `lm()`]
+
+.pull-left[
+![](07-slides_files/figure-html/coef-plot-cars-1.png)
+]
+
+.pull-right[
+![](07-slides_files/figure-html/mfx-plot-cars-fancy-facet-1.png)
+]
+
+---
+
+# Any type of statistical model
+
+.box-inv-6[The same techniques work for pretty much any model R can run]
+
+--
+
+.box-6.small[Logistic, probit, and multinomial regression (ordered and unordered)]
+
+--
+
+.box-6.small[Multilevel (i.e. mixed and random effects) regression]
+
+--
+
+.box-6.small[Bayesian models&lt;br&gt;&lt;small&gt;(These are extra pretty with the [**tidybayes** package](https://github.com/mjskay/tidybayes))&lt;/small&gt;]
+
+--
+
+.box-6.small.sp-after[Machine learning models]
+
+--
+
+.box-inv-6[If it has coefficients and/or if it makes predictions,&lt;br&gt;you can (and should) visualize it!]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
