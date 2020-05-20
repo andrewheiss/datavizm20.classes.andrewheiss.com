@@ -162,7 +162,7 @@ None of these methods deal with raw facts, though!
 .pull-right[
 <figure>
   <img src="img/01/King_Lear.jpg" alt="King Lear" title="King Lear" width="100%">
-  <figcaption>Ling Lear</figcaption>
+  <figcaption>King Lear</figcaption>
 </figure>
 ]
 
