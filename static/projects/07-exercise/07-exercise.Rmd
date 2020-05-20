@@ -22,7 +22,7 @@ results_2016 <- read_csv("data/results_2016.csv")
 
 Make 2–3 plots of anything you want from the `results_2016` data (histogram, density, boxplot, scatterplot, whatever) and combine them with **patchwork**. Look at [the documentation](https://patchwork.data-imaginist.com/articles/guides/assembly.html) to see fancy ways of combining them, like having two rows inside a column.
 
-```{r combine-lots}
+```{r combine-plots}
 # Make some plots and combine them here
 ```
 
