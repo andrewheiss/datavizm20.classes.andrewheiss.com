@@ -19,7 +19,7 @@ editor_options:
 
 ## Getting started
 
-For this exercise you'll use precinct-level data from the 2016 presidental election to visualize relationships between variables. This data comes from the [MIT Election Data and Science Lab](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ).
+For this exercise you'll use precinct-level data from the 2016 presidential election to visualize relationships between variables. This data comes from the [MIT Election Data and Science Lab](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ).
 
 You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
 
@@ -27,7 +27,7 @@ You should use an RStudio Project to keep your files well organized (either on y
 
 **To help you**, I've created a skeleton R Markdown file with a template for this exercise, along with some code to help you clean and summarize the data. Download that here and include it in your project:
 
-- [<i class="fab fa-r-project"></i> `07-exercise.Rmd`](/projects/06-exercise/07-exercise.Rmd)
+- [<i class="fab fa-r-project"></i> `07-exercise.Rmd`](/projects/07-exercise/07-exercise.Rmd)
 
 In the end, the structure of your project directory should look something like this:
 
