@@ -24,6 +24,16 @@ output:
 - <i class="fas fa-external-link-square-alt"></i> [Time series sparklines](https://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/02-time-series-sparklines-2/)
 - <i class="fas fa-external-link-square-alt"></i> [Comparisons with lollipop charts](https://uc-r.github.io/lollipop). If you're feeling adventurous (and you should!), do this tutorial as you read it.
 
+### Reproducible examples
+
+Reprexes (or reproducible examples) are the best way to (1) get help online and (2) fix issues on your own. 
+
+Making a good reprex is tricky, but it's a very valuable skill to know (regardless of programming language!). Here are some helpful resources for making them:
+
+- <i class="fas fa-external-link-square-alt"></i> [What's a reproducible example (`reprex`) and how do I do one?](https://community.rstudio.com/t/faq-whats-a-reproducible-example-reprex-and-how-do-i-do-one/5219)
+- <i class="fas fa-external-link-square-alt"></i> [So you've been asked to make a reprex](https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/)
+- <i class="fab fa-r-project"></i> [The reprex package](https://reprex.tidyverse.org/index.html)
+
 ### Questions to reflect on
 
 - These readings all show a ton of new ways to present comparisons. Which ones are your favorite? Which ones didn't quite click with you? In what situations are some more appropriate than others?
@@ -41,8 +51,8 @@ source(here::here("R", "slide_tabs.R"))
 sections <- tibble::tribble(
   ~name, ~slide, ~active,
   "Comparisons", "1", TRUE,
-  "Visualizing comparisons", "dual-y-axes", FALSE,
-  "Reproducible examples", "correlations", FALSE,
+  "Visualizing comparisons", "comparisons", FALSE,
+  "Reproducible examples", "reprex", FALSE,
 )
 
 slide_tabs(sections, "/slides/08-slides.html")
@@ -97,10 +107,10 @@ Access the slides, code, and other materials at the course website at https://da
 See also "What's a reproducible example and how do I do one?" (https://community.rstudio.com/t/faq-whats-a-reproducible-example-reprex-and-how-do-i-do-one/5219) and "So you've been asked to make a reprex" (https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/)
 
 
-https://youtu.be/
+https://youtu.be/tCnfTLHtMs8
 PMAP 8921 • (8) Comparisons: Example
 
-Demonstration of how to create dual y-axes, scatterplot matrices, coefficient plots, and marginal effects plots with ggplot2 and R
+Demonstration of how to create small multiples, sparklines, and slopegraphs with ggplot2 and R
 
 Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/08-example/
   

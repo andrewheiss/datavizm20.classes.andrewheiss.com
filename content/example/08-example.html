@@ -18,5 +18,261 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#live-coding-example">Live coding example</a></li>
+<li><a href="#complete-code">Complete code</a>
+<ul>
+<li><a href="#load-and-clean-data">Load and clean data</a></li>
+<li><a href="#small-multiples">Small multiples</a></li>
+<li><a href="#sparklines">Sparklines</a></li>
+<li><a href="#slopegraphs">Slopegraphs</a></li>
+<li><a href="#bump-charts">Bump charts</a></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>For this example, we’re going to use cross-national data, but instead of using the typical <code>gapminder</code> dataset, we’re going to collect data directly from the <a href="https://data.worldbank.org/">World Bank’s Open Data portal</a></p>
+<p>If you want to skip the data downloading, you can download the data below (you’ll likely need to right click and choose “Save Link As…”):</p>
+<ul>
+<li><a href="/data/wdi_raw.csv"><i class="fas fa-file-csv"></i> <code>wdi_raw.csv</code></a></li>
+</ul>
+<div id="live-coding-example" class="section level2">
+<h2>Live coding example</h2>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tCnfTLHtMs8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+</div>
+<div id="complete-code" class="section level2">
+<h2>Complete code</h2>
+<p><em>(This is a slightly cleaned up version of the code from the video.)</em></p>
+<div id="load-and-clean-data" class="section level3">
+<h3>Load and clean data</h3>
+<p>First, we load the libraries we’ll be using:</p>
+<pre class="r"><code>library(tidyverse)  # For ggplot, dplyr, and friends
+library(WDI)        # For getting data from the World Bank
+library(geofacet)   # For map-shaped facets
+library(scales)     # For helpful scale functions like dollar()
+library(ggrepel)    # For non-overlapping labels</code></pre>
+<p>The World Bank has a ton of country-level data at <a href="https://data.worldbank.org/">data.worldbank.org</a>. We can use <a href="https://cran.r-project.org/package=WDI">a package named <strong>WDI</strong></a> (<strong>w</strong>orld <strong>d</strong>evelopment <strong>i</strong>ndicators) to access their servers and download the data directly into R.</p>
+<p>To do this, we need to find the special World Bank codes for specific variables we want to get. These codes come from the URLs of the World Bank’s website. For instance, if you search for “access to electricity” at the World Bank’s website, you’ll find <a href="https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS">this page</a>. If you look at the end of the URL, you’ll see a cryptic code: <code>EG.ELC.ACCS.ZS</code>. That’s the World Bank’s ID code for the “Access to electricity (% of population)” indicator.</p>
+<p>We can feed a list of ID codes to the <code>WDI()</code> function to download data for those specific indicators. We want data from 1995-2015, so we set the start and end years accordingly. The <code>extra=TRUE</code> argument means that it’ll also include other helpful details like region, aid status, etc. Without it, it would only download the indicators we listed.</p>
+<pre class="r"><code>indicators &lt;- c(&quot;SP.DYN.LE00.IN&quot;,  # Life expectancy
+                &quot;EG.ELC.ACCS.ZS&quot;,  # Access to electricity
+                &quot;EN.ATM.CO2E.PC&quot;,  # CO2 emissions
+                &quot;NY.GDP.PCAP.KD&quot;)  # GDP per capita
+
+wdi_raw &lt;- WDI(country = &quot;all&quot;, indicators, extra = TRUE, 
+               start = 1995, end = 2015)
+
+head(wdi_raw)</code></pre>
+<p>Downloading data from the World Bank every time you knit will get tedious and take a long time (plus if their servers are temporarily down, you won’t be able to get the data). It’s good practice to save this raw data as a CSV file and then work with that.</p>
+<pre class="r"><code>write_csv(wdi_raw, &quot;data/wdi_raw.csv&quot;)</code></pre>
+<p>Since we care about reproducibility, we still want to include the code we used to get data from the World Bank, we just don’t want it to actually run. You can include chunks but not run them by setting <code>eval=FALSE</code> in the chunk options. In this little example, we show the code for downloading the data, but we don’t evaluate the chunk. We then include a chunk that loads the data from a CSV file with <code>read_csv()</code>, but we don’t include it (<code>include=FALSE</code>). That way, in the knitted file we see the <code>WDI()</code> code, but in reality it’s loading the data from CSV. Super tricky.</p>
+<pre class="text"><code>I first download data from the World Bank:
+
+```{r get-wdi-data, eval=FALSE}
+wdi_raw &lt;- WDI(...)
+
+write_csv(wdi_raw, &quot;data/wdi_raw.csv&quot;)
+```
+
+```{r load-wdi-data-real, include=FALSE}
+wdi_raw &lt;- read_csv(&quot;data/wdi_raw.csv&quot;)
+```</code></pre>
+<p>Then we clean up the data a little, filtering out rows that aren’t actually countries and renaming the ugly World Bank code columns to actual words:</p>
+<pre class="r"><code>wdi_clean &lt;- wdi_raw %&gt;% 
+  filter(region != &quot;Aggregates&quot;) %&gt;% 
+  select(iso2c, country, year, 
+         life_expectancy = SP.DYN.LE00.IN, 
+         access_to_electricity = EG.ELC.ACCS.ZS, 
+         co2_emissions = EN.ATM.CO2E.PC, 
+         gdp_per_cap = NY.GDP.PCAP.KD, 
+         region, income)
+
+head(wdi_clean)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   iso2c country  year life_expectancy access_to_electricity co2_emissions gdp_per_cap region                income     
+##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;           &lt;dbl&gt;                 &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;                 &lt;chr&gt;      
+## 1 AD    Andorra  2015              NA                   100         NA         41768. Europe &amp; Central Asia High income
+## 2 AD    Andorra  2004              NA                   100          7.36      47033. Europe &amp; Central Asia High income
+## 3 AD    Andorra  2001              NA                   100          7.79      41421. Europe &amp; Central Asia High income
+## 4 AD    Andorra  2002              NA                   100          7.59      42396. Europe &amp; Central Asia High income
+## 5 AD    Andorra  2014              NA                   100          5.83      40790. Europe &amp; Central Asia High income
+## 6 AD    Andorra  1995              NA                   100          6.66      32918. Europe &amp; Central Asia High income</code></pre>
+</div>
+<div id="small-multiples" class="section level3">
+<h3>Small multiples</h3>
+<p>First we can make some small multiples plots and show life expectancy over time for a handful of countries. We’ll make a list of some countries chosen at random while I scrolled through the data, and then filter our data to include only those rows. We then plot life expectancy, faceting by country.</p>
+<pre class="r"><code>life_expectancy_small &lt;- wdi_clean %&gt;%
+  filter(country %in% c(&quot;Argentina&quot;, &quot;Bolivia&quot;, &quot;Brazil&quot;, 
+                        &quot;Belize&quot;, &quot;Canada&quot;, &quot;Chile&quot;))
+
+ggplot(data = life_expectancy_small, 
+       mapping = aes(x = year, y = life_expectancy)) +
+  geom_line(size = 1) +
+  facet_wrap(vars(country))</code></pre>
+<p><img src="/example/08-example_files/figure-html/life-expectancy-small-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Small multiples! That’s all we need to do.</p>
+<p>We can do some fancier things, though. We can make this plot hyper minimalist:</p>
+<pre class="r"><code>ggplot(data = life_expectancy_small, 
+       mapping = aes(x = year, y = life_expectancy)) +
+  geom_line(size = 1) +
+  facet_wrap(vars(country), scales = &quot;free_y&quot;) +
+  theme_void() +
+  theme(strip.text = element_text(face = &quot;bold&quot;))</code></pre>
+<p><img src="/example/08-example_files/figure-html/life-expectancy-small-minimalist-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can do a whole part of a continent (poor Iraq and Syria 😭)</p>
+<pre class="r"><code>life_expectancy_mena &lt;- wdi_clean %&gt;% 
+  filter(region == &quot;Middle East &amp; North Africa&quot;)
+
+ggplot(data = life_expectancy_mena, 
+       mapping = aes(x = year, y = life_expectancy)) +
+  geom_line(size = 1) +
+  facet_wrap(vars(country), scales = &quot;free_y&quot;, nrow = 3) +
+  theme_void() +
+  theme(strip.text = element_text(face = &quot;bold&quot;))</code></pre>
+<p><img src="/example/08-example_files/figure-html/life-expectancy-mena-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can use the <a href="https://hafen.github.io/geofacet/"><strong>geofacet</strong> package</a> to arrange these facets by geography:</p>
+<pre class="r"><code>life_expectancy_eu &lt;- wdi_clean %&gt;% 
+  filter(region == &quot;Europe &amp; Central Asia&quot;)
+
+ggplot(life_expectancy_eu, aes(x = year, y = life_expectancy)) +
+  geom_line(size = 1) +
+  facet_geo(vars(country), grid = &quot;eu_grid1&quot;, scales = &quot;free_y&quot;) +
+  labs(x = NULL, y = NULL, title = &quot;Life expectancy from 1995–2015&quot;,
+       caption = &quot;Source: The World Bank (SP.DYN.LE00.IN)&quot;) +
+  theme_minimal() +
+  theme(strip.text = element_text(face = &quot;bold&quot;),
+        plot.title = element_text(face = &quot;bold&quot;),
+        axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="/example/08-example_files/figure-html/life-expectancy-eu-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Neat!</p>
+</div>
+<div id="sparklines" class="section level3">
+<h3>Sparklines</h3>
+<p>Sparklines are just line charts (or bar charts) that are really really small.</p>
+<pre class="r"><code>india_co2 &lt;- wdi_clean %&gt;% 
+  filter(country == &quot;India&quot;)
+
+plot_india &lt;- ggplot(india_co2, aes(x = year, y = co2_emissions)) +
+  geom_line() +
+  theme_void()
+plot_india</code></pre>
+<p><img src="/example/08-example_files/figure-html/india-spark-1.png" width="96" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;india_co2.pdf&quot;, plot_india, width = 1, height = 0.15, units = &quot;in&quot;)
+ggsave(&quot;india_co2.png&quot;, plot_india, width = 1, height = 0.15, units = &quot;in&quot;)</code></pre>
+<pre class="r"><code>china_co2 &lt;- wdi_clean %&gt;% 
+  filter(country == &quot;China&quot;)
+
+plot_china &lt;- ggplot(china_co2, aes(x = year, y = co2_emissions)) +
+  geom_line() +
+  theme_void()
+plot_china</code></pre>
+<p><img src="/example/08-example_files/figure-html/china-spark-1.png" width="96" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;china_co2.pdf&quot;, plot_china, width = 1, heighlt = 0.15, units = &quot;in&quot;)
+ggsave(&quot;china_co2.png&quot;, plot_china, width = 1, height = 0.15, units = &quot;in&quot;)</code></pre>
+<p>You can then use those saved tiny plots in your text.</p>
+<blockquote>
+<p>Both India <img class="img-inline" src="/example/08-example_files/figure-html/india-spark-1.png" width = "100"/> and China <img class="img-inline" src="/example/08-example_files/figure-html/china-spark-1.png" width = "100"/> have seen increased CO<sub>2</sub> emissions over the past 20 years.</p>
+</blockquote>
+</div>
+<div id="slopegraphs" class="section level3">
+<h3>Slopegraphs</h3>
+<p>We can make a slopegraph to show changes in GDP per capita between two time periods. We need to first filter our WDI to include only the start and end years (here 1995 and 2015). Then, to make sure that we’re using complete data, we’ll get rid of any country that has missing data for either 1995 or 2015. The <code>group_by(...) %&gt;% filter(...) %&gt;% ungroup()</code> pipeline does this, with the <code>!any(is.na(gdp_per_cap))</code> test keeping any rows where any of the <code>gdp_per_cap</code> values are not missing for the whole country.</p>
+<p>We then add a couple special columns for labels. The <code>paste0()</code> function concatenates strings and variables together, so that <code>paste0("2 + 2 = ", 2 + 2)</code> would show “2 + 2 = 4”. Here we make labels that say either “Country name: $GDP” or “$GDP” depending on the year.</p>
+<pre class="r"><code>gdp_south_asia &lt;- wdi_clean %&gt;% 
+  filter(region == &quot;South Asia&quot;) %&gt;% 
+  filter(year %in% c(1995, 2015)) %&gt;% 
+  # Look at each country individually
+  group_by(country) %&gt;%
+  # Remove the country if any of its gdp_per_cap values are missing
+  filter(!any(is.na(gdp_per_cap))) %&gt;%
+  ungroup() %&gt;%
+  # Make year a factor
+  mutate(year = factor(year)) %&gt;% 
+  # Make some nice label columns
+  # If the year is 1995, format it like &quot;Country name: $GDP&quot;. If the year is
+  # 2015, format it like &quot;$GDP&quot;
+  mutate(label_first = ifelse(year == 1995, paste0(country, &quot;: &quot;, dollar(round(gdp_per_cap))), NA),
+         label_last = ifelse(year == 2015, dollar(round(gdp_per_cap, 0)), NA))</code></pre>
+<p>With the data filtered like this, we can plot it by mapping year to the x-axis, GDP per capita to the y-axis, and coloring by country. To make the lines go across the two categorical labels in the x-axis (since we made year a factor/category), we need to also specify the <code>group</code> aesthetic.</p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5)</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-simple-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Cool! We’re getting closer. We can definitely see different slopes, but with 7 different colors, it’s hard to see exactly which country is which. Instead, we can directly label each of these lines with <code>geom_text()</code>:</p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5) +
+  geom_text(aes(label = country)) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-simple-text-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>That gets us a <em>little</em> closer, but the country labels are hard to see, and we could include more information, like the actual values. Remember those <code>label_first</code> and <code>label_last</code> columns we made? Let’s use those instead:</p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5) +
+  geom_text(aes(label = label_first)) +
+  geom_text(aes(label = label_last)) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-simple-text-fancier-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Now we have dollar amounts and country names, but the labels are still overlapping and really hard to read. To fix this, we can make the labels repel away from each other and randomly position in a way that makes them not overlap. The <a href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html"><strong>ggrepel</strong> package</a> lets us do this with <code>geom_text_repel()</code></p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5) +
+  geom_text_repel(aes(label = label_first)) +
+  geom_text_repel(aes(label = label_last)) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-getting-warmer-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Now none of the labels are on top of each other, but the labels are still on top of the lines. Also, some of the labels moved inward and outward along the x-axis, but they don’t need to do that—they just need to shift up and down. We can force the labels to only move up and down by setting the <code>direction = "y"</code> argument, and we can move all the labels to the left or right with the <code>nudge_x</code> argument. The <code>seed</code> argument makes sure that the random label placement is the same every time we run this. It can be whatever number you want—it just has to be a number.</p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5) +
+  geom_text_repel(aes(label = label_first), direction = &quot;y&quot;, nudge_x = -1, seed = 1234) +
+  geom_text_repel(aes(label = label_last), direction = &quot;y&quot;, nudge_x = 1, seed = 1234) +
+  guides(color = FALSE)</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-fancier-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>That’s it! Let’s take the theme off completely, change the colors a little, and it should be perfect.</p>
+<pre class="r"><code>ggplot(gdp_south_asia, aes(x = year, y = gdp_per_cap, group = country, color = country)) +
+  geom_line(size = 1.5) +
+  geom_text_repel(aes(label = label_first), direction = &quot;y&quot;, nudge_x = -1, seed = 1234) +
+  geom_text_repel(aes(label = label_last), direction = &quot;y&quot;, nudge_x = 1, seed = 1234) +
+  guides(color = FALSE) +
+  scale_color_viridis_d(option = &quot;magma&quot;, end = 0.9) +
+  theme_void()</code></pre>
+<p><img src="/example/08-example_files/figure-html/slopegraph-sa-done-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="bump-charts" class="section level3">
+<h3>Bump charts</h3>
+<p>Finally, we can make a bump chart that shows changes in rankings over time. We’ll look at CO<sub>2</sub> emissions in South Asia. First we need to calculate a new variable that shows the rank of each country within each year. We can do this if we group by year and then use the <code>rank()</code> function to rank countries by the <code>co2_emissions</code> column.</p>
+<pre class="r"><code>sa_co2 &lt;- wdi_clean %&gt;% 
+  filter(region == &quot;South Asia&quot;) %&gt;% 
+  filter(year &gt;= 2004, year &lt; 2015) %&gt;% 
+  group_by(year) %&gt;% 
+  mutate(rank = rank(co2_emissions))</code></pre>
+<p>We then plot this with points and lines, reversing the y-axis so 1 is at the top:</p>
+<pre class="r"><code>ggplot(sa_co2, aes(x = year, y = rank, color = country)) +
+  geom_line() +
+  geom_point() +
+  scale_y_reverse(breaks = 1:8)</code></pre>
+<p><img src="/example/08-example_files/figure-html/make-bump-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Afghanistan and Nepal switched around for the number 1 spot, while India dropped from 4 to 6, switching places with Pakistan.</p>
+<p>As with the slopegraph, there are 8 different colors in the legend and it’s hard to line them all up with the different lines, so we can plot the text directly instead. We’ll use <code>geom_text()</code> again. We don’t need to repel anything, since the text should fit in each row just fine. We need to change the <code>data</code> argument in <code>geom_text()</code> though and filter the data to only include one year, otherwise we’ll get labels on every point, which is excessive. We can also adjust the theme and colors to make it cleaner.</p>
+<pre class="r"><code>ggplot(sa_co2, aes(x = year, y = rank, color = country)) +
+  geom_line(size = 2) +
+  geom_point(size = 4) +
+  geom_text(data = filter(sa_co2, year == 2004),
+            aes(label = iso2c, x = 2003.25),
+            fontface = &quot;bold&quot;) +
+  geom_text(data = filter(sa_co2, year == 2014),
+            aes(label = iso2c, x = 2014.75),
+            fontface = &quot;bold&quot;) +
+  guides(color = FALSE) +
+  scale_y_reverse(breaks = 1:8) +
+  scale_x_continuous(breaks = 2004:2014) +
+  scale_color_viridis_d(option = &quot;magma&quot;, begin = 0.2, end = 0.9) +
+  labs(x = NULL, y = &quot;Rank&quot;) +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())</code></pre>
+<p><img src="/example/08-example_files/figure-html/bump-plot-fancier-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If you want to be <em>super</em> fancy, you can use flags instead of country codes, but that’s a little more complicated (you need to install the <a href="https://github.com/rensa/ggflags"><strong>ggflags</strong> package</a>. <a href="https://dominikkoch.github.io/Bump-Chart/">See here for an example</a>.</p>
+</div>
+</div>

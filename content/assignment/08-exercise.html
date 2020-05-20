@@ -19,5 +19,92 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#task-1-reflection">Task 1: Reflection</a></li>
+<li><a href="#task-2-small-multiples">Task 2: Small multiples</a></li>
+<li><a href="#task-3-slopegraphs">Task 3: Slopegraphs</a></li>
+<li><a href="#bonus-task-bump-charts">Bonus task! Bump charts</a></li>
+<li><a href="#turning-everything-in">Turning everything in</a></li>
+<li><a href="#postscript-how-i-got-this-unemployment-data">Postscript: how I got this unemployment data</a></li>
+</ul>
+</div>
 
-<p>A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.</p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>For this exercise you’ll use state-level unemployment data from 2006 to 2016 that comes from the US Bureau of Labor Statistics (if you’re curious, <a href="#postscript-how-i-got-this-unemployment-data">I describe how I built this dataset down below</a>).</p>
+<p>You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.</p>
+<ul>
+<li><a href="/projects/08-exercise/data/unemployment.csv"><i class="fas fa-file-csv"></i> <code>unemployment.csv</code></a></li>
+</ul>
+<p><strong>To help you</strong>, I’ve created a skeleton R Markdown file with a template for this exercise, along with some code to help you clean and summarize the data. Download that here and include it in your project:</p>
+<ul>
+<li><a href="/projects/08-exercise/08-exercise.Rmd"><i class="fab fa-r-project"></i> <code>08-exercise.Rmd</code></a></li>
+</ul>
+<p>In the end, the structure of your project directory should look something like this:</p>
+<pre class="text"><code>your-project-name\
+  08-exercise.Rmd
+  your-project-name.Rproj
+  data\
+    unemployment.csv</code></pre>
+<p>To check that you put everything in the right places, you can download and unzip this file, which contains everything in the correct structure:</p>
+<ul>
+<li><a href="/projects/08-exercise.zip"><i class="fas fa-file-archive"></i> <code>08-exercise.zip</code></a></li>
+</ul>
+<p><a href="/example/08-example/">The example for today’s session</a> will be <strong><em>incredibly</em></strong> helpful for this exercise. Reference it.</p>
+<p>Again, you don’t need to make your plots super fancy, but if you’re feeling brave, experiment with adding a <code>labs()</code> layer or changing colors or modifying themes and theme elements.</p>
+<p>You’ll need to insert your own code chunks where needed. Rather than typing them by hand (that’s tedious and you might miscount the number of backticks!), use the “Insert” button at the top of the editing window, or type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS.</p>
+<p><img src="/img/assignments/insert-chunk-button.png" width="19%" /></p>
+</div>
+<div id="task-1-reflection" class="section level2">
+<h2>Task 1: Reflection</h2>
+<p>Write your reflection for the day’s readings.</p>
+</div>
+<div id="task-2-small-multiples" class="section level2">
+<h2>Task 2: Small multiples</h2>
+<p>Use data from the US Bureau of Labor Statistics (BLS) to show the trends in employment rate for all 50 states between 2006 and 2016. What stories does this plot tell? Which states struggled to recover from the 2008–09 recession?</p>
+<p>Some hints/tips:</p>
+<ul>
+<li><p>You won’t need to filter out any missing rows because the data here is complete—there are no state-year combinations with missing unemployment data.</p></li>
+<li><p>You’ll be plotting 51 facets. You can filter out DC if you want to have a better grid (like 5 × 10), or you can try using <code>facet_geo()</code> from the <strong>geofacet</strong> package to lay out the plots like a map of the US (try this!).</p></li>
+<li><p>Plot the <code>date</code> column along the x-axis, <em>not</em> the <code>year</code> column. If you plot by year, you’ll get weird looking lines (try it for fun?), since these observations are monthly. If you really want to plot by year only, you’ll need to create a different data frame where you group by year and state and calculate the average unemployment rate for each year/state combination (i.e. <code>group_by(year, state) %&gt;% summarize(avg_unemployment = mean(unemployment))</code>)</p></li>
+<li><p>Try mapping other aesthetics onto the graph too. You’ll notice there are columns for region and division—play with those as colors, for instance.</p></li>
+<li><p>This plot might be big, so make sure you adjust <code>fig.width</code> and <code>fig.height</code> in the chunk options so that it’s visible when you knit it. You might also want to used <code>ggsave()</code> to save it with extra large dimensions.</p></li>
+</ul>
+</div>
+<div id="task-3-slopegraphs" class="section level2">
+<h2>Task 3: Slopegraphs</h2>
+<p>Use data from the BLS to create a slopegraph that compares the unemployment rate in January 2006 with the unemployment rate in January 2009, either for all 50 states at once (good luck with that!) or for a specific region or division. Make sure the plot doesn’t look too busy or crowded in the end.</p>
+<p>What story does this plot tell? Which states in the US (or in the specific region you selected) were the most/least affected the Great Recession?</p>
+<p>Some hints/tips:</p>
+<ul>
+<li><p>You should use <code>filter()</code> to only select rows where the year is 2006 or 2009 (i.e. <code>filter(year %in% c(2006, 2009)</code>) and to select rows where the month is January (<code>filter(month == 1)</code> or <code>filter(month_name == "January")</code>)</p></li>
+<li><p>In order for the year to be plotted as separate categories on the x-axis, it needs to be a factor, so use <code>mutate(year = factor(year))</code> to convert it.</p></li>
+<li><p>To make ggplot draw lines between the 2006 and 2009 categories, you need to include <code>group = state</code> in the aesthetics.</p></li>
+</ul>
+</div>
+<div id="bonus-task-bump-charts" class="section level2">
+<h2>Bonus task! Bump charts</h2>
+<p><strong>This is entirely optional but might be fun.</strong></p>
+<p>For extra fun times, if you feel like it, create a bump chart showing something from the unemployment data (perhaps the top 10 states or bottom 10 states in unemployment?) Adapt the code in the <a href="/example/08-example/">example for today’s session</a>.</p>
+<p>If you do this, plotting 51 lines is going to be a huge mess. But filtering the data is also a bad idea, because states could drop in and out of the top/bottom 10 over time, and we don’t want to get rid of them. Instead, you can zoom in on a specific range of data in your plot with <code>coord_cartesian(ylim = c(1, 10))</code>, for instance.</p>
+</div>
+<div id="turning-everything-in" class="section level2">
+<h2>Turning everything in</h2>
+<p>When you’re all done, click on the “Knit” button at the top of the editing window and create an HTML or Word version (or PDF if you’ve <a href="/resource/install/#install-tinytex">installed <strong>tinytex</strong></a>) of your document. Upload that file to iCollege.</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p>
+</div>
+<div id="postscript-how-i-got-this-unemployment-data" class="section level2">
+<h2>Postscript: how I got this unemployment data</h2>
+<p>For the curious, <a href="/files/get_bls_data.R">here’s the code I used</a> to download the unemployment data from the BLS.</p>
+<p>And to pull the curtain back and show how much googling is involved in data visualization (and data analysis and programming in general), here was my process for getting this data:</p>
+<ol style="list-style-type: decimal">
+<li>I thought “I want to have students show variation in something domestic over time” and then I googled “us data by state”. Nothing really came up (since it was an exceedingly vague search in the first place), but some results mentioned unemployment rates, so I figured that could be cool.</li>
+<li>I googled “unemployment statistics by state over time” and found that the BLS keeps statistics on this. I clicked on the <a href="https://www.bls.gov/data/">“Data Tools” link in their main navigation bar</a>, clicked on “Unemployment”, and then clicked on the “Multi-screen data search” button for the Local Area Unemployment Statistics (LAUS).</li>
+<li>I walked through the multiple screens and got excited that I’d be able to download all unemployment stats for all states for a ton of years, BUT THEN the final page had links to 51 individual Excel files, which was dumb.</li>
+<li>So I went back to Google and searched for “download bls data r” and found a few different packages people have written to do this. The first one I clicked on was <a href="https://github.com/keberwein/blscrapeR"><code>blscrapeR</code> at GitHub</a>, and it looked like it had been updated recently, so I went with it.</li>
+<li>I followed the examples in the <code>blscrapeR</code> package and downloaded data for every state.</li>
+</ol>
+<p>Another day in the life of doing modern data science. I had no idea people had written R packages to access BLS data, but there are like 3 packages out there! After a few minutes of tinkering, I got it working and it’s super magic.</p>
+</div>

@@ -18,4 +18,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+Like yesterday, there isn't really a lesson today. You're not learning how to use any new functions—you're learning how to apply the geoms you already know in cool and exciting ways. But don't worry! You'll have a lesson for session 9!
+
+For the lesson, [read through the code examples in the example](/example/08-example/) to see how to make small multiples, sparklines, geofacets, and slopegraphs.

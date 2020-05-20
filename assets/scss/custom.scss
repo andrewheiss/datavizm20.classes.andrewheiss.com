@@ -246,3 +246,10 @@ div.warning:before {
     content: "\f071";
     left: 14px;
 }
+
+.img-inline {
+    display: inline-block;
+    height: auto;
+    max-width: 100%;
+    margin: 0 !important;
+}

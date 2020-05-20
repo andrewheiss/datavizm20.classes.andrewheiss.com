@@ -1,0 +1,60 @@
+---
+title: "Exercise 8"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(broom)
+
+unemployment <- read_csv("data/unemployment.csv")
+```
+
+
+# Task 2: Small multiples
+
+Use data from the US Bureau of Labor Statistics (BLS) to show the trends in employment rate for all 50 states between 2006 and 2016. 
+
+**What stories does this plot tell? Which states struggled to recover from the 2008–09 recession?**
+
+Some hints/tips:
+
+- You won't need to filter out any missing rows because the data here is complete—there are no state-year combinations with missing unemployment data.
+
+- You'll be plotting 51 facets. You can filter out DC if you want to have a better grid (like 5 × 10), or you can try using `facet_geo()` from the [**geofacet** package](https://hafen.github.io/geofacet/) to lay out the plots like a map of the US (try this!).
+
+- Plot the `date` column along the x-axis, *not* the `year` column. If you plot by year, you'll get weird looking lines (try it for fun?), since these observations are monthly. If you really want to plot by year only, you'll need to create a different data frame where you group by year and state and calculate the average unemployment rate for each year/state combination (i.e. `group_by(year, state) %>% summarize(avg_unemployment = mean(unemployment))`)
+
+- Try mapping other aesthetics onto the graph too. You'll notice there are columns for region and division—play with those as colors, for instance.
+
+- This plot might be big, so make sure you adjust `fig.width` and `fig.height` in the chunk options so that it's visible when you knit it. You might also want to use `ggsave()` to save it with extra large dimensions.
+
+```{r small-multiples}
+# Do stuff here
+```
+
+
+# Task 3: Slopegraphs
+
+Use data from the BLS to create a slopegraph that compares the unemployment rate in January 2006 with the unemployment rate in January 2009, either for all 50 states at once (good luck with that!) or for a specific region or division. Make sure the plot doesn't look too busy or crowded in the end.
+
+**What story does this plot tell? Which states in the US (or in the specific region you selected) were the most/least affected the Great Recession?**
+
+Some hints/tips:
+
+- You should use `filter()` to only select rows where the year is 2006 or 2009 (i.e. `filter(year %in% c(2006, 2009)`) and to select rows where the month is January (`filter(month == 1)` or `filter(month_name == "January")`)
+
+- In order for the year to be plotted as separate categories on the x-axis, it needs to be a factor, so use `mutate(year = factor(year))` to convert it.
+
+- To make ggplot draw lines between the 2006 and 2009 categories, you need to include `group = state` in the aesthetics.
+
+```{r slopegraph}
+# Do stuff here
+```
