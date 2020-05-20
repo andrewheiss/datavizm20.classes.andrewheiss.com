@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "09-slides"
+slides: "09-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -24,9 +24,85 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Annotations", "1", TRUE,
+  "Fretting the little things", "little-things", FALSE,
+  "Text in plots", "text", FALSE,
+  "Seeds", "seeds", FALSE,
+)
+
+slide_tabs(sections, "/slides/09-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD).
+
+- [Introduction](https://www.youtube.com/watch?v=1c51k2tmjBI&list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD)
+- [Fretting the little things](https://www.youtube.com/watch?v=6p4K5_6KU9k&list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD)
+- [Text in plots](https://www.youtube.com/watch?v=fdR78oXb_fI&list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD&)
+- [Seeds](https://www.youtube.com/watch?v=lV_Qak75E6I&list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD&)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{example include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sG4NCNqLqHhIE7khPgrdRJD
+
+https://youtu.be/1c51k2tmjBI
+PMAP 8921 • (9) Annotations: (0) Introduction
+
+Introduction to the class session on annotations
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/09-content/
+
+
+https://youtu.be/6p4K5_6KU9k
+PMAP 8921 • (9) Annotations: (1) Fretting the little things
+
+Discussion of why it's important to fret about little details when designing plots and how little tweaks can enhance the accessibility and usability of your plots
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/09-content/
+
+
+https://youtu.be/fdR78oXb_fI
+PMAP 8921 • (9) Annotations: (2) Text in plots
+
+Overview and examples of three main ways of adding text to ggplot plots in R
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/09-content/
+  
+
+https://youtu.be/lV_Qak75E6I
+PMAP 8921 • (9) Annotations: (3) Seeds
+
+Discussion of what seeds are and why they're important when dealing with pseudorandom numbers in R and ggplot2
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/09-content/
+
+
+https://youtu.be/
+PMAP 8921 • (9) Annotations: Example
+
+Demonstration of how to create small multiples, sparklines, and slopegraphs with ggplot2 and R
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/09-example/
+
+```
