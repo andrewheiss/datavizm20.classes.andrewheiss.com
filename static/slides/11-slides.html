@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Time</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-23" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Time
+
+.class-info[
+
+**Session 11**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-5.medium.sp-after[Axis issues]
+
+--
+
+.box-3.medium.sp-after[Visualizing time]
+
+--
+
+.box-1.medium[Starting, ending,&lt;br&gt;and decomposing time]
+
+---
+
+layout: false
+name: interactive-graphs
+class: center middle section-title section-title-5 animated fadeIn
+
+# Axis issues
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Is truncating the y-axis misleading?
+
+&lt;img src="11-slides_files/figure-html/truncation-yes-no-1.png" width="864" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Don't be too extreme!
+
+.box-inv-5.medium[It is actually more legal to&lt;br&gt;truncate the y-axis than you might think!]
+
+--
+
+.box-5[When small movements matter]
+
+--
+
+.box-5[When the scale itself is distorted]
+
+--
+
+.box-5[When zero values are impossible]
+
+---
+
+# When is it okay to truncate?
+
+.box-inv-5[When small movements matter]
+
+--
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/11/us_gdp_us_gdp_chartbuilder-3.png" alt="GDP not truncated, from Quartz" title="GDP not truncated, from Quartz" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/11/us_gdp_us_gdp_chartbuilder-2.png" alt="GDP truncated, from Quartz" title="GDP truncated, from Quartz" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Stock prices too
+
+https://qz.com/418083/its-ok-not-to-start-your-y-axis-at-zero/
+
+---
+
+# When is it okay to truncate?
+
+.box-inv-5[When the scale itself is distorted]
+
+--
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/11/uber-sign.jpg" alt="Sign in an Uber car about rating system" title="Sign in an Uber car about rating system" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/11/uber-scale.jpg" alt="Internal rating system at Uber" title="Internal rating system at Uber" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.buzzfeed.com/carolineodonovan/the-fault-in-five-stars
+
+http://www.businessinsider.com/leaked-charts-show-how-ubers-driver-rating-system-works-2015-2
+
+
+---
+
+# When is it okay to truncate?
+
+.box-inv-5[When zero values are impossible]
+
+--
+
+.pull-left[
+&lt;figure&gt;
+  &lt;img src="img/11/oral_temperature_sara_bob_chartbuilder.png" alt="Temperature not truncated, from Quartz" title="Temperature not truncated, from Quartz" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right[
+&lt;figure&gt;
+  &lt;img src="img/11/oral_temperature_sara_bob_chartbuilder-1.png" alt="Temperature truncated, from Quartz" title="Temperature truncated, from Quartz" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://qz.com/418083/its-ok-not-to-start-your-y-axis-at-zero/
+
+---
+
+# Never on bar charts
+
+.pull-left.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/obamacareenrollment-fncchart.jpg" alt="Fox News Obamacare enrollment" title="Fox News Obamacare enrollment" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+--
+
+.pull-right.center[
+
+&lt;figure&gt;
+  &lt;img src="img/04/econcharts-education.gif" alt="Obama graduation rate" title="Obama graduation rate" width="100%"&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Zero is okay too!
+
+.box-inv-5.medium[Just because you don't *have to* start at 0&lt;br&gt;doesn't mean you should *never* start at 0]
+
+.box-5.small.sp-after[It's often a good idea!]
+
+---
+
+# Keep axis scales consistent
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/fox-co-covid-cases.jpg" alt="FOX Colorado affiliate graph with COVID-19 cases" title="FOX Colorado affiliate graph with COVID-19 cases" width="55%"&gt;
+  &lt;figcaption&gt;FOX affiliate in Colorado reporting on COVID-19 cases&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+http://freerangestats.info/blog/2020/04/06/crazy-fox-y-axis
+
+---
+
+# Keep axis scales consistent
+
+&amp;nbsp;
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/08fig21.jpg" alt="Good and bad treatment of missing values in x-axis" title="Good and bad treatment of missing values in x-axis" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Alberto Cairo, *The Truthful Art*, chapter 8, figure 8.21
+
+---
+
+# Don’t impute across categories
+
+.pull-left[
+&lt;img src="11-slides_files/figure-html/likert-imputation-bad-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="11-slides_files/figure-html/likert-good-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+layout: false
+name: interactive-graphs
+class: center middle section-title section-title-3 animated fadeIn
+
+# Visualizing time
+
+---
+
+layout: true
+class: title title-3
+
+---
+
+# Showing changes over time
+
+.box-inv-3[Time is just a variable that can be mapped to an aesthetic]
+
+--
+
+.box-inv-3[Can be used as `x`, `y`, `color`, `fill`, `facet`, and even animation]
+
+--
+
+.box-inv-3.sp-after[Can use all sorts of `geom` s:&lt;br&gt;lines, columns, points, heatmaps, densities, maps, etc.]
+
+--
+
+.box-3[In general, follow reading conventions to show time progression:]
+
+.box-3.medium[→ &amp; ↓]
+
+---
+
+# Time on x-axis + `geom_line/col()`
+
+.pull-left[
+&lt;img src="11-slides_files/figure-html/covid-unemp-claims-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/11/nyt_2020-05-09.jpg" alt="Front page of the NYT, May 9, 2020" title="Front page of the NYT, May 9, 2020" width="50%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://static01.nyt.com/images/2020/05/09/nytfrontpage/scan.pdf" target="_blank"&gt;Front page of the New York Times&lt;/a&gt;, May 9, 2020&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Monthly change in jobs since end of WWII
+
+The New York Times front page, May 9, 2020
+
+https://www.nytimes.com/issue/todayspaper/2020/05/09/todays-new-york-times
+
+https://static01.nyt.com/images/2020/05/09/nytfrontpage/scan.pdf
+
+---
+
+# Time on x-axis + `geom_tile()`
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/08fig28.jpg" alt="Heat map by Jorge Camões" title="Heat map by Jorge Camões" title="Heat map by Jorge Camões" title="Heat map by Jorge Camões" width="65%"&gt;
+  &lt;figcaption&gt;Figure 8.28 in Alberto Cairo's &lt;i&gt;The Truthful Art&lt;/i&gt;: Heat map by Jorge Camões&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Alberto Cairo, *The Truthful Art*, chapter 8, figure 8.28
+
+---
+
+# Time on y-axis + `geom_density()`
+
+&lt;img src="11-slides_files/figure-html/density-ridges-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Time in animation + `geom_point()`
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/03/rosling-tedx.jpg" alt="Hans Rosling" title="Hans Rosling" width="65%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Source: [New York Times](https://www.nytimes.com/2017/02/09/world/europe/hans-rosling-dead-statistician.html)
+
+---
+
+# Time in maps
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/08fig30.jpg" alt="Map by Jorge Camões" title="Map by Jorge Camões" width="50%"&gt;
+  &lt;figcaption&gt;Figure 8.30 in Alberto Cairo's &lt;i&gt;The Truthful Art&lt;/i&gt;: Map of the spread of Walmart by Jorge Camões&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+Alberto Cairo, *The Truthful Art*, chapter 8, figure 8.30
+
+---
+
+# Time in `geom_col()` + small multiples
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/us-cities-kitchen-counter-cropped.png" alt="ZZZ" title="ZZZ" width="100%"&gt;
+  &lt;figcaption&gt;Kieran Healy, &lt;a href="https://kieranhealy.org/blog/archives/2020/05/21/the-kitchen-counter-observatory/" target="_blank"&gt;“The Kitchen Counter Observatory”&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://kieranhealy.org/blog/archives/2020/05/21/the-kitchen-counter-observatory/
+
+---
+
+# Don't go wild with time mapping!
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/covid-conversation-spiral.png" alt="Change in COVID death rates" title="Change in COVID death rates" width="65%"&gt;
+  &lt;figcaption&gt;&lt;a href="https://theconversation.com/three-graphs-that-show-a-global-slowdown-in-covid-19-deaths-135756" target="_blank"&gt;Tornado plot&lt;/a&gt;: When a curve crosses the left of the central axis, the number of deaths per day falls&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://theconversation.com/three-graphs-that-show-a-global-slowdown-in-covid-19-deaths-135756
+
+---
+
+# Interpreting tornado plots
+
+&lt;img src="11-slides_files/figure-html/tornado-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+
+http://www.bewitched.com/demo/tornado/tornado.html
+
+http://www.dannydorling.org/books/SLOWDOWN/Illustrations.html
+
+---
+
+# Better with multiple plots
+
+.pull-left[
+&lt;img src="11-slides_files/figure-html/unemp-inflation-path-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="11-slides_files/figure-html/unemp-inflation-good-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+layout: false
+name: interactive-graphs
+class: center middle section-title section-title-1 animated fadeIn
+
+# Starting, ending,&lt;br&gt;and decomposing time
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# ∞
+
+.box-inv-1.medium[You always have to choose&lt;br&gt;a start and end point]
+
+
+.box-inv-1[Start and end at reasonable times that&lt;br&gt;help maintain the context of the story]
+
+
+
+---
+
+# Measles vaccine was pretty effective!
+
+&lt;img src="11-slides_files/figure-html/measles-partial-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+???
+
+Data sources listed here: 
+
+https://commons.m.wikimedia.org/wiki/File:Measles_US_1938-2019.png
+
+I used [this big PDF table from the CDC](https://web.archive.org/web/20190120205018/https://www.cdc.gov/vaccines/pubs/pinkbook/downloads/appendices/e/reported-cases.pdf), used some random online PDF → CSV converter, and cleaned up the data by hand in Excel:
+
+---
+
+# Measles vaccine was *incredible*!
+
+&lt;img src="11-slides_files/figure-html/measles-full-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Seasonality
+
+.box-inv-1[Don't mistake seasonality for actual trends]
+
+
+
+.pull-left[
+
+&lt;img src="11-slides_files/figure-html/seasonality-zoomed-in-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="11-slides_files/figure-html/seasonality-zoomed-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Decomposition
+
+&lt;img src="11-slides_files/figure-html/retail-decomposition-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Birthday decomposition
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/11/bda_cover.png" alt="Bayesian Data Analysis cover" title="Bayesian Data Analysis cover" width="45%"&gt;
+  &lt;figcaption&gt;Cover of Andrew Gelman, et al., &lt;i&gt;Bayesian Data Analysis&lt;/i&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+http://www.stat.columbia.edu/~gelman/book/
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
