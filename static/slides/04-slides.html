@@ -4,7 +4,7 @@
     <title>Amounts and proportions</title>
     <meta charset="utf-8" />
     <meta name="author" content="Andrew Heiss" />
-    <meta name="date" content="2020-05-13" />
+    <meta name="date" content="2020-05-21" />
     <script src="libs/header-attrs-2.1/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
@@ -531,7 +531,7 @@ ggplot(gapminder_continents,
        aes(x = continent, y = n, 
            color = continent)) +
   geom_pointrange(aes(ymin = 0, ymax = n)) +
-  guides(fill = FALSE) +
+  guides(color = FALSE) +
   labs(x = NULL, y = "Number of countries")
 ```
 ]
@@ -565,7 +565,7 @@ ggplot(gapminder_continents,
               flip = TRUE) +
   labs(fill = NULL) +
   coord_equal() +  # Make all the squares square
-  theme_void()  # Us a completely empty theme
+  theme_void()  # Use a completely empty theme
 ```
 
 ]

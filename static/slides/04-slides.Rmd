@@ -581,7 +581,7 @@ ggplot(gapminder_continents,
        aes(x = continent, y = n, 
            color = continent)) +
   geom_pointrange(aes(ymin = 0, ymax = n)) +
-  guides(fill = FALSE) +
+  guides(color = FALSE) +
   labs(x = NULL, y = "Number of countries")
 ```
 ]
@@ -614,7 +614,7 @@ ggplot(gapminder_continents,
               flip = TRUE) +
   labs(fill = NULL) +
   coord_equal() +  # Make all the squares square
-  theme_void()  # Us a completely empty theme
+  theme_void()  # Use a completely empty theme
 ```
 
 ]
