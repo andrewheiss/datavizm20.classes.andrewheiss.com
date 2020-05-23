@@ -17,6 +17,173 @@ editor_options:
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
+<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#live-coding-example">Live coding example</a></li>
+<li><a href="#complete-code">Complete code</a>
+<ul>
+<li><a href="#get-and-clean-data">Get and clean data</a></li>
+<li><a href="#creating-a-basic-interactive-chart">Creating a basic interactive chart</a></li>
+<li><a href="#modifying-the-tooltip">Modifying the tooltip</a></li>
+<li><a href="#including-more-information-in-the-tooltip">Including more information in the tooltip</a></li>
+<li><a href="#making-a-dashboard-with-flexdashboard">Making a dashboard with <strong>flexdashboard</strong></a></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>For this example we’ll use data from the <a href="https://data.worldbank.org/">World Bank</a> once again, which we download using the <a href="https://cran.r-project.org/web/packages/WDI/index.html"><strong>WDI</strong> package</a>.</p>
+<p>If you want to skip the data downloading, you can download the data below (you’ll likely need to right click and choose “Save Link As…”):</p>
+<ul>
+<li><a href="/data/wdi_parl.csv"><i class="fas fa-file-csv"></i> <code>wdi_parl.csv</code></a></li>
+</ul>
+<div id="live-coding-example" class="section level2">
+<h2>Live coding example</h2>
+<p>There is no video for this one, since it really only involves feeding a few ggplot plots fed into <code>ggplotly()</code>.</p>
+</div>
+<div id="complete-code" class="section level2">
+<h2>Complete code</h2>
+<div id="get-and-clean-data" class="section level3">
+<h3>Get and clean data</h3>
+<p>First, we load the libraries we’ll be using:</p>
+<pre class="r"><code>library(tidyverse)  # For ggplot, dplyr, and friends
+library(WDI)        # Get data from the World Bank
+library(scales)     # For nicer label formatting
+library(plotly)     # For easy interactive plots</code></pre>
+<pre class="r"><code>indicators &lt;- c(&quot;SP.POP.TOTL&quot;,     # Population
+                &quot;SG.GEN.PARL.ZS&quot;,  # Proportion of seats held by women in national parliaments (%)
+                &quot;NY.GDP.PCAP.KD&quot;)  # GDP per capita
+
+wdi_parl_raw &lt;- WDI(country = &quot;all&quot;, indicators, extra = TRUE, 
+                    start = 2000, end = 2019)</code></pre>
+<p>Then we clean the data by removing non-country countries and renaming some of the columns.</p>
+<pre class="r"><code>wdi_clean &lt;- wdi_parl_raw %&gt;% 
+  filter(region != &quot;Aggregates&quot;) %&gt;% 
+  select(iso2c, iso3c, country, year, 
+         population = SP.POP.TOTL,
+         prop_women_parl = SG.GEN.PARL.ZS, 
+         gdp_per_cap = NY.GDP.PCAP.KD, 
+         region, income)</code></pre>
+</div>
+<div id="creating-a-basic-interactive-chart" class="section level3">
+<h3>Creating a basic interactive chart</h3>
+<p>Let’s make a chart that shows the distribution of the proportion of women in national parliaments in 2019, by continent. We’ll use a strip plot with jittered points.</p>
+<p>First we need to make a regular static plot with ggplot:</p>
+<pre class="r"><code>wdi_2019 &lt;- wdi_clean %&gt;% 
+  filter(year == 2019) %&gt;% 
+  drop_na(prop_women_parl) %&gt;% 
+  # Scale this down from 0-100 to 0-1 so that scales::percent() can format it as
+  # an actual percent
+  mutate(prop_women_parl = prop_women_parl / 100)
+
+static_plot &lt;- ggplot(wdi_2019, 
+                      aes(y = fct_rev(region), x = prop_women_parl, color = region)) +
+  geom_point(position = position_jitter(width = 0, height = 0.15, seed = 1234)) +
+  guides(color = FALSE) +
+  scale_x_continuous(labels = percent) +
+  # I used https://medialab.github.io/iwanthue/ to generate these colors
+  scale_color_manual(values = c(&quot;#425300&quot;, &quot;#e680ff&quot;, &quot;#01bd71&quot;, &quot;#ff3aad&quot;,
+                                &quot;#9f3e00&quot;, &quot;#0146bf&quot;, &quot;#671d56&quot;)) +
+  labs(x = &quot;% women in parliament&quot;, y = NULL, caption = &quot;Source: The World Bank&quot;) +
+  theme_bw()
+static_plot</code></pre>
+<p><img src="/example/10-example_files/figure-html/strip-plot-basic-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Great! That looks pretty good.</p>
+<p>To make it interactive, <em>all we have to do</em> is feed the <code>static_plot</code> object into <code>ggplotly()</code>. That’s it.</p>
+<pre class="r"><code>ggplotly(static_plot)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:400px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/example/10-example_files/figure-html//widgets/widget_strip-plot-basic-interactive-real.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Not <em>everything</em> translates over to JavaScript—the caption is gone now, and the legend is back (which is fine, I guess, since the legend is interactive). But still, this is magic.</p>
+</div>
+<div id="modifying-the-tooltip" class="section level3">
+<h3>Modifying the tooltip</h3>
+<p>Right now, the default tooltip you see when you hover over the points includes the actual proportion of women in parliament for each point, along with the continent, which is neat, but it’d be great if we could see the country name too. The tooltip picks up the information to include from the variables we use in <code>aes()</code>, and we never map the <code>country</code> column to any aesthetic, so it doesn’t show up.</p>
+<p>To get around this, we can add a new aesthetic for country to the points. Instead of using one of the real ggplot aesthetics like <code>color</code> or <code>fill</code>, we’ll use a fake one called <code>text</code> (we can call it whatever we want! <code>asdf</code> would also work). ggplot has no idea how to do anything with the <code>text</code> aesthetic, and it’ll give you a warning, but that’s okay. The static plot looks the same:</p>
+<pre class="r"><code>static_plot_toolip &lt;- ggplot(wdi_2019, 
+                             aes(y = fct_rev(region), x = prop_women_parl, color = region)) +
+  geom_point(aes(text = country),
+             position = position_jitter(width = 0, height = 0.15, seed = 1234)) +
+  guides(color = FALSE) +
+  scale_x_continuous(labels = percent) +
+  # I used https://medialab.github.io/iwanthue/ to generate these colors
+  scale_color_manual(values = c(&quot;#425300&quot;, &quot;#e680ff&quot;, &quot;#01bd71&quot;, &quot;#ff3aad&quot;,
+                                &quot;#9f3e00&quot;, &quot;#0146bf&quot;, &quot;#671d56&quot;)) +
+  labs(x = &quot;% women in parliament&quot;, y = NULL, caption = &quot;Source: The World Bank&quot;) +
+  theme_bw()</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: text</code></pre>
+<pre class="r"><code>static_plot_toolip</code></pre>
+<p><img src="/example/10-example_files/figure-html/strip-plot-text-aes-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Now we can tell plotly to use this fake <code>text</code> aesthetic for the tooltip:</p>
+<pre class="r"><code>ggplotly(static_plot_toolip, tooltip = &quot;text&quot;)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:400px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/example/10-example_files/figure-html//widgets/widget_strip-plot-text-interactive-real.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Now we should just see the country names in the tooltips!</p>
+</div>
+<div id="including-more-information-in-the-tooltip" class="section level3">
+<h3>Including more information in the tooltip</h3>
+<p>We have country names, but we lost the values in the x-axis. Rwanda has the highest proportion of women in parliament, but what’s the exact number? It’s somewhere above 60%, but that’s all we can see now.</p>
+<p>To fix this, we can make a new column in the data with all the text we want to include in the tooltip. We’ll use <code>paste0()</code> to combine text and variable values to make the tooltip follow this format:</p>
+<pre class="text"><code>Name of country
+X% women in parliament</code></pre>
+<p>Let’s add a new column with <code>mutate()</code>. A couple things to note here:</p>
+<ul>
+<li><p>The <code>&lt;br&gt;</code> is HTML code for a line break</p></li>
+<li><p>We use the <code>percent()</code> function to format numbers as percents. The <code>accuracy</code> argument tells R how many decimal points to use. If we used <code>1</code>, it would say 12%; if we used <code>0.01</code>, it would say 12.08%; etc.</p></li>
+</ul>
+<pre class="r"><code>wdi_2019 &lt;- wdi_clean %&gt;% 
+  filter(year == 2019) %&gt;% 
+  drop_na(prop_women_parl) %&gt;% 
+  # Scale this down from 0-100 to 0-1 so that scales::percent() can format it as
+  # an actual percent
+  mutate(prop_women_parl = prop_women_parl / 100) %&gt;% 
+  mutate(fancy_label = paste0(country, &quot;&lt;br&gt;&quot;, 
+                              percent(prop_women_parl, accuracy = 0.1), 
+                              &quot; women in parliament&quot;))</code></pre>
+<p>Let’s check to see if it worked:</p>
+<pre class="r"><code>wdi_2019 %&gt;% select(country, prop_women_parl, fancy_label) %&gt;% head()</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   country              prop_women_parl fancy_label                                      
+##   &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                                            
+## 1 Andorra                        0.5   Andorra&lt;br&gt;50.0% women in parliament             
+## 2 United Arab Emirates           0.225 United Arab Emirates&lt;br&gt;22.5% women in parliament
+## 3 Afghanistan                    0.279 Afghanistan&lt;br&gt;27.9% women in parliament         
+## 4 Antigua and Barbuda            0.111 Antigua and Barbuda&lt;br&gt;11.1% women in parliament 
+## 5 Albania                        0.295 Albania&lt;br&gt;29.5% women in parliament             
+## 6 Armenia                        0.242 Armenia&lt;br&gt;24.2% women in parliament</code></pre>
+<p>Now instead of using <code>text = country</code> we’ll use <code>text = fancy_label</code> to map that new column onto the plot. Again, this won’t be visible in the static plot (and you’ll get a warning), but it will show up in the interactive plot.</p>
+<pre class="r"><code>static_plot_toolip_fancy &lt;- ggplot(wdi_2019, 
+                                   aes(y = fct_rev(region), 
+                                       x = prop_women_parl, 
+                                       color = region)) +
+  geom_point(aes(text = fancy_label),
+             position = position_jitter(width = 0, height = 0.15, seed = 1234)) +
+  guides(color = FALSE) +
+  scale_x_continuous(labels = percent) +
+  # I used https://medialab.github.io/iwanthue/ to generate these colors
+  scale_color_manual(values = c(&quot;#425300&quot;, &quot;#e680ff&quot;, &quot;#01bd71&quot;, &quot;#ff3aad&quot;,
+                                &quot;#9f3e00&quot;, &quot;#0146bf&quot;, &quot;#671d56&quot;)) +
+  labs(x = &quot;% women in parliament&quot;, y = NULL, caption = &quot;Source: The World Bank&quot;) +
+  theme_bw()</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: text</code></pre>
+<pre class="r"><code>ggplotly(static_plot_toolip_fancy, tooltip = &quot;text&quot;)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:400px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/example/10-example_files/figure-html//widgets/widget_strip-plot-text-interactive-fancy-real.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Perfect!</p>
+<p>Finally, if we want to save this plot as a standalone self-contained HTML file, we can use the <code>saveWidget()</code> function from the <strong>htmlwidgets</strong> package.</p>
+<pre class="r"><code># This is like ggsave, but for interactive HTML plots
+interactive_plot &lt;- static_plot_toolip_fancy
+
+htmlwidgets::saveWidget(interactive_plot, &quot;fancy_plot.html&quot;)</code></pre>
+</div>
+<div id="making-a-dashboard-with-flexdashboard" class="section level3">
+<h3>Making a dashboard with <strong>flexdashboard</strong></h3>
+<p>The <a href="https://rmarkdown.rstudio.com/flexdashboard/">documentation for <strong>flexdashboard</strong> is so great and complete</a> that I’m not going to include a full example here. There is also a brief overview in <a href="https://bookdown.org/yihui/rmarkdown/dashboards.html">chapter 5 of the official R Markdown book</a>. You can also watch <a href="https://www.youtube.com/watch?v=_oDfBVr9wmQ">this really quick video here</a>. She uses a package called <strong>dimple</strong> instead of <strong>plotly</strong>, which doesn’t work with ggplot like <code>ggplotly()</code>, so <em>ignore her code</em> about <code>dimple()</code> and use your <code>ggplotly()</code> skills instead. You can search YouTube for a bunch of other short tutorial videos, too.</p>
+<p>The quickest and easiest way to get started is to install the <strong>flexdashboard</strong> package and then in RStudio go to File &gt; New File… &gt; R Markdown… &gt; From Template &gt; Flexdashboard:</p>
+<p><img src="/img/examples/flexdashboard-template.png" width="60%" style="display: block; margin: auto;" /></p>
+<p>That will give you an empty dashboard with three chart areas spread across two columns. Put static or dynamic graphs in the different chart areas, knit, and you’ll be good to go!</p>
+<p>If you’re interested in making the dashboard reactive with Shiny-like elements, <a href="https://www.andrewheiss.com/blog/2020/01/01/flexdashboard-dynamic-data/">check out this tutorial</a>.</p>
+</div>
+</div>

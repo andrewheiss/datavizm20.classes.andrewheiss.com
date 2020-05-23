@@ -1,0 +1,30 @@
+---
+title: "Exercise 10"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Interactive plots
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(plotly)
+
+# Load data here
+```
+
+Do the following:
+
+1. Make a plot. Any kind of plot will do (though it might be easiest to work with `geom_point()`).
+
+2. Make the plot interactive with `ggplotly()`. 
+
+3. Make sure the hovering tooltip is more informative than the default.
+
+Good luck and have fun!

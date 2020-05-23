@@ -18,4 +18,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+Again, there's no lesson for this. The only way to learn how to use `ggplotly()` and create dashboards with **flexdashboard** is to try them out in RStudio, not in a mini browser-based R session here.
+
+So [head over to the exercise](/assignment/10-exercise/) to get started!

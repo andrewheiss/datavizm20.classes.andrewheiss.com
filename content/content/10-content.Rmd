@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "10-slides"
+slides: "10-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -42,9 +42,66 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Interactivity", "1", TRUE,
+  "Making interactive graphs", "interactive-graphs", FALSE,
+  "Sharing content", "sharing-content", FALSE
+)
+
+slide_tabs(sections, "/slides/10-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe).
+
+- [Introduction](https://www.youtube.com/watch?v=L6BGy0-0X-w&list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe)
+- [Making interactive graphics](https://www.youtube.com/watch?v=gyVFhQNCp80&list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe)
+- [Sharing content](https://www.youtube.com/watch?v=lubDKJhlx9g&list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe&)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sHxE_PbXWE2RC0mpN6syYhe
+
+https://youtu.be/L6BGy0-0X-w
+PMAP 8921 • (10) Interactivity: (0) Introduction
+
+Introduction to the class session on interactivity
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/10-content/
+
+
+https://youtu.be/gyVFhQNCp80
+PMAP 8921 • (10) Interactivity: (1) Making interactive graphics
+
+Discussion of how to make interactive graphs in R with plotly (with ggplotly()), with flexdashboard, and with Shiny
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/10-content/
+
+
+https://youtu.be/lubDKJhlx9g
+PMAP 8921 • (10) Interactivity: (2) Sharing content
+
+Discussion of how to share knitted R Markdown documents through RPubs and other online services
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/10-content/
+```
