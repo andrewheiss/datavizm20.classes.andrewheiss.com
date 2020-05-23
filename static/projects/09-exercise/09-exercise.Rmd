@@ -1,0 +1,36 @@
+---
+title: "Exercise 9"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Annotations
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+# Load data here
+```
+
+Do the following:
+
+1. Make a plot. Any kind of plot will do (though it might be easiest to work with `geom_point()`).
+
+2. Label (some or all of) the points using one of `geom_text()`, `geom_label()`, `geom_text_repel()`, or `geom_label_repel()`. You might need to make a new indicator variable so that you only highlight a few of the points instead of all of them.
+
+3. Add *at least two each** the following annotations somewhere on the plot using `annotate()`:
+
+    - **Text**
+    - **An arrow** (make a curved arrow for bonus fun)
+    - **A rectangle**
+    
+    You can add more if you want, but those three are the minimum. Try to incorporate the annotations into the design of the plot rather than just placing them wherever.
+
+Good luck and have fun!
+

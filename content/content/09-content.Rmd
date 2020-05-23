@@ -98,10 +98,10 @@ Discussion of what seeds are and why they're important when dealing with pseudor
 Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/09-content/
 
 
-https://youtu.be/
+https://youtu.be/gMSMsOy7KF0
 PMAP 8921 • (9) Annotations: Example
 
-Demonstration of how to create small multiples, sparklines, and slopegraphs with ggplot2 and R
+Demonstration of how to create add text, shape, and arrow annotations to a ggplot, as well as enhance minor graphical elements and use ggtext to style text
 
 Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/09-example/
 

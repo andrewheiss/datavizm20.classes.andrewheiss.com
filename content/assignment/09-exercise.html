@@ -19,5 +19,59 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#task-1-reflection">Task 1: Reflection</a></li>
+<li><a href="#task-2-annotations">Task 2: Annotations</a></li>
+<li><a href="#turning-everything-in">Turning everything in</a></li>
+</ul>
+</div>
 
-<p>A few short exercises (1–3) will go here. These will let you practice the things you just learned in the lecture and lesson.</p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>For this exercise, you’ll use whatever data you want to make a plot and add annotations to it. Use a dataset from a past exercise, use one of the built-in datasets like <code>mpg</code> or <code>gapminder</code> from the <strong>gapminder</strong> package, download stuff from the World Bank using the <strong>WDI</strong> package, or use something from <a href="/resource/data/">this list of datasets</a>.</p>
+<p>You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.</p>
+<p><strong>To help you</strong>, I’ve created a skeleton R Markdown file with a template for this exercise, along with some code to help you clean and summarize the data. Download that here and include it in your project:</p>
+<ul>
+<li><a href="/projects/09-exercise/09-exercise.Rmd"><i class="fab fa-r-project"></i> <code>09-exercise.Rmd</code></a></li>
+</ul>
+<p>In the end, the structure of your project directory should look something like this:</p>
+<pre class="text"><code>your-project-name\
+  09-exercise.Rmd
+  your-project-name.Rproj
+  data\
+    WHATEVER.csv</code></pre>
+<p>To check that you put everything in the right places, you can download and unzip this file, which contains everything in the correct structure:</p>
+<ul>
+<li><a href="/projects/09-exercise.zip"><i class="fas fa-file-archive"></i> <code>09-exercise.zip</code></a></li>
+</ul>
+<p>The <a href="https://ggplot2.tidyverse.org/reference/annotate.html">documentation for <code>annotate()</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_text.html"><code>geom_text()</code> and <code>geom_label()</code></a>, and <a href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html"><code>geom_text_repel()</code> and <code>geom_label_repel()</code></a> will be incredibly helpful for this exercise. <a href="/example/09-example/">The example for today’s session</a> is also helpful for seeing annotations in real life.</p>
+<p>Again, you don’t need to make your plots super fancy (except for these annotations), but if you’re feeling brave, experiment with changing colors or modifying themes and theme elements.</p>
+<p>You’ll need to insert your own code chunks where needed. Rather than typing them by hand (that’s tedious and you might miscount the number of backticks!), use the “Insert” button at the top of the editing window, or type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS.</p>
+<p><img src="/img/assignments/insert-chunk-button.png" width="19%" /></p>
+</div>
+<div id="task-1-reflection" class="section level2">
+<h2>Task 1: Reflection</h2>
+<p>Write your reflection for the day’s readings.</p>
+</div>
+<div id="task-2-annotations" class="section level2">
+<h2>Task 2: Annotations</h2>
+<p>Do the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make a plot. Any kind of plot will do (though it might be easiest to work with <code>geom_point()</code>).</p></li>
+<li><p>Label (some or all of) the points using one of <code>geom_text()</code>, <code>geom_label()</code>, <code>geom_text_repel()</code>, or <code>geom_label_repel()</code>. You might need to make a new indicator variable so that you only highlight a few of the points instead of all of them. <a href="hslides/09-slides.html#29">See this slide for an example</a>, as well as <a href="/example/09-example/">the complete example plot on the example page</a> for today’s session.</p></li>
+<li><p>Add *at least two each** the following annotations somewhere on the plot using <code>annotate()</code>:</p>
+<ul>
+<li><strong>Text</strong></li>
+<li><strong>An arrow</strong> (look at <a href="https://www.r-graph-gallery.com/233-add-annotations-on-ggplot2-chart.html">this page</a>, or search for “arrow” <a href="https://ggplot2-book.org/annotations.html">on this page</a> for examples). Make a curved arrow for bonus fun.</li>
+<li><strong>A rectangle</strong></li>
+</ul>
+<p>You can add more if you want, but those three are the minimum. Try to incorporate the annotations into the design of the plot rather than just placing them wherever.</p></li>
+</ol>
+</div>
+<div id="turning-everything-in" class="section level2">
+<h2>Turning everything in</h2>
+<p>When you’re all done, click on the “Knit” button at the top of the editing window and create an HTML or Word version (or PDF if you’ve <a href="/resource/install/#install-tinytex">installed <strong>tinytex</strong></a>) of your document. Upload that file to iCollege.</p>
+<p><img src="/img/assignments/knit-button.png" width="30%" /></p>
+</div>
