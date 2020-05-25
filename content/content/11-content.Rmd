@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "11-slides"
+slides: "11-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -46,9 +46,83 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Time", "1", TRUE,
+  "Axis issues", "axis-issues", FALSE,
+  "Visualizing time", "visualizing-time", FALSE,
+  "Starting, ending, and decomposing time", "decomposing", FALSE
+)
+
+slide_tabs(sections, "/slides/11-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1).
+
+- [Introduction](https://www.youtube.com/watch?v=nBVnR_bT8j0&list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1)
+- [Axis issues](https://www.youtube.com/watch?v=yuBMJF0ncyI&list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1)
+- [Visualizing time](https://www.youtube.com/watch?v=EGTUsCjpAQw&list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1)
+- [Starting, ending, and decomposing time](https://www.youtube.com/watch?v=xP6rvggkk9w&list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1&)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sG0DXT1Bvx0-hQkHrWBABa1
+
+https://youtu.be/nBVnR_bT8j0
+PMAP 8921 • (11) Time: (0) Introduction
+
+Introduction to the class session on visualizing time
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/11-content/
+
+
+https://youtu.be/yuBMJF0ncyI
+PMAP 8921 • (11) Time: (1) Axis issues
+
+Discussion of when it's okay and not okay to truncate axes
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/11-content/
+
+
+https://youtu.be/EGTUsCjpAQw
+PMAP 8921 • (11) Time: (2) Visualizing time
+
+Discussion of different methods for visualizing trends in time
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/11-content/
+  
+  
+https://youtu.be/xP6rvggkk9w
+PMAP 8921 • (11) Time: (3) Starting, ending, and decomposing time
+
+Discussion of the importance of choosing good start and end points when visualizing time + the need to watch out for seasonality and other underlying trends in your data
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/11-content/
+
+https://youtu.be/ObnRqO4zTY8
+PMAP 8921 • (11) Time: Example
+
+Demonstration of how to use the tidyquant package in R to plot changes in time with ggplot2 using data from the US Federal Reserve
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/11-example/
+```

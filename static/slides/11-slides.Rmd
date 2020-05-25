@@ -82,7 +82,7 @@ class: title title-inv-7
 ---
 
 layout: false
-name: interactive-graphs
+name: axis-issues
 class: center middle section-title section-title-5 animated fadeIn
 
 # Axis issues
@@ -318,7 +318,7 @@ ggplot(fake_survey, aes(x = response, y = count)) +
 ---
 
 layout: false
-name: interactive-graphs
+name: visualizing-time
 class: center middle section-title section-title-3 animated fadeIn
 
 # Visualizing time
@@ -592,7 +592,7 @@ plot_inflation / plot_unempl
 ---
 
 layout: false
-name: interactive-graphs
+name: decomposing
 class: center middle section-title section-title-1 animated fadeIn
 
 # Starting, ending,<br>and decomposing time

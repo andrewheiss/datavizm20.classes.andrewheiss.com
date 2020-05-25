@@ -1,0 +1,27 @@
+---
+title: "Exercise 11"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Visualizing time
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+# Load data here
+```
+
+Do the following:
+
+1. Load some time-related data
+
+2. Make a plot to show how that data changes over time.
+
+3. Explain why you chose to visualize the data the way you did.
