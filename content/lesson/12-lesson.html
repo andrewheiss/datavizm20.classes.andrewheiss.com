@@ -16,9 +16,368 @@ type: docs
 weight: 12
 editor_options: 
   chunk_output_type: console
+shiny: true
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#combining-datasets-vertically">Combining datasets vertically</a></li>
+<li><a href="#combining-datasets-horizontally">Combining datasets horizontally</a></li>
+<li><a href="#inner_join"><code>inner_join()</code></a></li>
+<li><a href="#left_join"><code>left_join()</code></a></li>
+<li><a href="#common-column-names">Common column names</a></li>
+<li><a href="#right_join"><code>right_join()</code></a></li>
+</ul>
+</div>
 
-<p>Interactive code lessons and walkthroughs will go here. This is where you’ll learn all sorts of fun things.</p>
+<p>There <em>is</em> a short lesson today! You’ll learn the basics of joining two different datasets together, both vertically and horizontally.</p>
+<p>There are a few imaginary datasets I’ve created for you to play with:</p>
+<pre class="r"><code>x</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##      id some_variable
+##   &lt;dbl&gt; &lt;chr&gt;        
+## 1     1 x1           
+## 2     2 x2           
+## 3     3 x3</code></pre>
+<pre class="r"><code>y</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##      id some_other_variable
+##   &lt;dbl&gt; &lt;chr&gt;              
+## 1     1 y1                 
+## 2     2 y2                 
+## 3     4 y4</code></pre>
+<pre class="r"><code>national_data</code></pre>
+<pre><code>## # A tibble: 9 x 5
+##   state  year unemployment inflation population
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 GA     2018          5         2          100
+## 2 GA     2019          5.3       1.8        200
+## 3 GA     2020          5.2       2.5        300
+## 4 NC     2018          6.1       1.8        350
+## 5 NC     2019          5.9       1.6        375
+## 6 NC     2020          5.3       1.8        400
+## 7 CO     2018          4.7       2.7        200
+## 8 CO     2019          4.4       2.6        300
+## 9 CO     2020          5.1       2.5        400</code></pre>
+<pre class="r"><code>national_data_2019</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   state unemployment inflation population
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 GA             5.3       1.8        200
+## 2 NC             5.9       1.6        375
+## 3 CO             4.4       2.6        300</code></pre>
+<pre class="r"><code>national_libraries</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   state  year libraries schools
+##   &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 CO     2018       230     470
+## 2 CO     2019       240     440
+## 3 CO     2020       270     510
+## 4 NC     2018       200     610
+## 5 NC     2019       210     590
+## 6 NC     2020       220     530</code></pre>
+<pre class="r"><code>national_libraries_2019</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   state libraries schools
+##   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 CO          240     440
+## 2 NC          210     590</code></pre>
+<pre class="r"><code>puerto_rico_data</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   state unemployment population  year
+##   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+## 1 PR             3.1        150  2018
+## 2 PR             3.2        250  2019
+## 3 PR             3.3        350  2020</code></pre>
+<pre class="r"><code>state_regions</code></pre>
+<pre><code>## # A tibble: 51 x 2
+##    region    state
+##    &lt;chr&gt;     &lt;chr&gt;
+##  1 West      AK   
+##  2 South     AL   
+##  3 South     AR   
+##  4 West      AZ   
+##  5 West      CA   
+##  6 West      CO   
+##  7 Northeast CT   
+##  8 South     DC   
+##  9 South     DE   
+## 10 South     FL   
+## # … with 41 more rows</code></pre>
+<div id="combining-datasets-vertically" class="section level2">
+<h2>Combining datasets vertically</h2>
+<p>Recall from the <a href="/assignment/03-exercise/">Lord of the Rings data in exercise 3</a> that you had to combine three different CSV files into dataset. You used <code>bind_rows()</code> to stack each of these on top of each other.</p>
+<pre class="r"><code>lotr &lt;- bind_rows(fellowship, tt, rotk)</code></pre>
+<p>That worked well because each of the individual data frames had the same columns in them, and R was able to line up the matching columns. If columns were missing, R would have placed <code>NA</code> in the appropriate locations.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Combine <code>national_data</code> and <code>puerto_rico_data</code> into a single dataset named <code>us_data</code> using <code>bind_rows</code>. Pay attention to what happens with the inflation column. Also notice that the columns in the Puerto Rico data are in a different order.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_12-joining-1/" id="learnr-12-lesson-joining1" %}}
+</div>
+<div id="combining-datasets-horizontally" class="section level2">
+<h2>Combining datasets horizontally</h2>
+<p>Binding rows vertically is the easiest way to combine two datasets, but most often you won’t be doing that. You’ll only do this if you’re combining datasets that come from the same source, like if a state offers separate CSV files of the same data for each county.</p>
+<p>In most cases, though, you’ll need to combine completely different datasets, bringing one or more columns from one into another. With vertical combining, R needs column names with the same names in order to figure out where the data lines up. With horizontal combining, R needs values inside one or more columns to be the same in order to figure out where the data lines up.</p>
+<p>There is technically a function named <code>bind_cols()</code>, but you’ll rarely want to use it. It doesn’t attempt to match any rows—it just glues two datasets together:</p>
+<pre class="r"><code>bind_cols(national_data, 
+          # Repeat PR 3 times so that it has the same number of rows as national_data
+          bind_rows(puerto_rico_data, puerto_rico_data, puerto_rico_data))</code></pre>
+<pre><code>## # A tibble: 9 x 9
+##   state  year unemployment inflation population state1 unemployment1 population1
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 GA     2018          5         2          100 PR               3.1         150
+## 2 GA     2019          5.3       1.8        200 PR               3.2         250
+## 3 GA     2020          5.2       2.5        300 PR               3.3         350
+## 4 NC     2018          6.1       1.8        350 PR               3.1         150
+## 5 NC     2019          5.9       1.6        375 PR               3.2         250
+## 6 NC     2020          5.3       1.8        400 PR               3.3         350
+## 7 CO     2018          4.7       2.7        200 PR               3.1         150
+## 8 CO     2019          4.4       2.6        300 PR               3.2         250
+## 9 CO     2020          5.1       2.5        400 PR               3.3         350
+## # … with 1 more variable: year1 &lt;dbl&gt;</code></pre>
+<p>That’s… not great.</p>
+<p>Instead, we need to use a function that is more careful about bringing in data. Fortunately there are a few good options:</p>
+<ul>
+<li><code>inner_join()</code></li>
+<li><code>left_join()</code></li>
+<li><code>right_join()</code></li>
+</ul>
+<p>The <strong>most</strong> helpful way of understanding these different functions <a href="https://github.com/gadenbuie/tidyexplain#mutating-joins">is to go here and stare at the animations for a little while</a> to see which pieces of which dataset go where. (There are lots of others, like <code>full_join()</code>, <code>semi_join()</code>, and <code>anti_join()</code>, and they have helpful animations, but I rarely use those.)</p>
+<p>For each of these functions, <strong>you need at least one common ID column in both datasets</strong> in order for R to know where things line up.</p>
+<p>Let’s practice how these all work and see what the differences between them are.</p>
+</div>
+<div id="inner_join" class="section level2">
+<h2><code>inner_join()</code></h2>
+<p>First, <a href="https://github.com/gadenbuie/tidyexplain#inner-join" target="_blank">go to this page in a new tab</a> and stare at the mesmerizing animation.</p>
+<p>Let’s look at two datasets, <code>x</code> and <code>y</code>:</p>
+<pre class="r"><code>x</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##      id some_variable
+##   &lt;dbl&gt; &lt;chr&gt;        
+## 1     1 x1           
+## 2     2 x2           
+## 3     3 x3</code></pre>
+<pre class="r"><code>y</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##      id some_other_variable
+##   &lt;dbl&gt; &lt;chr&gt;              
+## 1     1 y1                 
+## 2     2 y2                 
+## 3     4 y4</code></pre>
+<p>Both datasets have an <code>id</code> column that is the same across each (though the values aren’t necessarily the same). Because there’s a shared column, we can join these two based on that column.</p>
+<p>If we use <code>inner_join()</code>, the resulting dataset will only keep the rows from the first where there are matching values from the second:</p>
+<pre class="r"><code>inner_join(x, y, by = &quot;id&quot;)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##      id some_variable some_other_variable
+##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;              
+## 1     1 x1            y1                 
+## 2     2 x2            y2</code></pre>
+<p>Notice how it got rid of the row with <code>id = 3</code> from the first and the row with <code>id = 4</code> from the second.</p>
+<p>You can also write this with pipes, which is really common when working with <strong>dplyr</strong>:</p>
+<pre class="r"><code>x %&gt;% 
+  inner_join(y, by = &quot;id&quot;)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##      id some_variable some_other_variable
+##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;              
+## 1     1 x1            y1                 
+## 2     2 x2            y2</code></pre>
+<p>Let’s say we have two datasets: <code>national_data_2019</code> and <code>national_libraries_2019</code>:</p>
+<pre class="r"><code>national_data_2019</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   state unemployment inflation population
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 GA             5.3       1.8        200
+## 2 NC             5.9       1.6        375
+## 3 CO             4.4       2.6        300</code></pre>
+<pre class="r"><code>national_libraries_2019</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   state libraries schools
+##   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 CO          240     440
+## 2 NC          210     590</code></pre>
+<p>We want to bring the libraries and schools columns into the general national data. Notice how both datasets have a state column.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Create a new dataset named <code>combined_data</code> that uses <code>inner_join()</code> to merge <code>national_data_2019</code> and <code>national_libraries_2019</code>.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_12-joining-2/" id="learnr-12-lesson-joining2" %}}
+</div>
+<div id="left_join" class="section level2">
+<h2><code>left_join()</code></h2>
+<p>Again, <a href="https://github.com/gadenbuie/tidyexplain#left-join" target="_blank">go to this page in a new tab</a> and stare at the animation.</p>
+<p>Left joining is less destructive than inner joining. With left joining, any rows in the first dataset that don’t have matches in the second <em>don’t</em> get thrown away and instead are filled with <code>NA</code>:</p>
+<pre class="r"><code>left_join(x, y, by = &quot;id&quot;)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##      id some_variable some_other_variable
+##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;              
+## 1     1 x1            y1                 
+## 2     2 x2            y2                 
+## 3     3 x3            &lt;NA&gt;</code></pre>
+<p>Notice how the row with <code>id = 4</code> from the second dataset is gone, but the row with <code>id = 3</code> from the first is still there, with <code>NA</code> for <code>some_other_variable</code>.</p>
+<p>I find this much more useful when combining data. I often have a larger dataset with all the main variables I care about, perhaps with every combination of country and year over 20 years and 180 countries. If I find another dataset I want to join, and it has missing data for some of the years or countries, I don’t want the combined data to throw away all the rows from the main big dataset that don’t match! I still want those!</p>
+<p><em>(<a href="https://stats.andrewheiss.com/canary-ngos/01_get-merge-data.html#final_clean_combined_data">Look at this for a real life example</a>: I create a dataset I name <code>panel_skeleton</code> that is just all the combinations of countries and years (Afghanistan 1990, Afghanistan 1991, etc.), and then I bring in all sorts of other datasets that match the same countries and years. When there aren’t matches, nothing in the skeleton gets thrown away—R just adds missing values instead.)</em></p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Create a new dataset named <code>combined_data</code> that uses <code>left_join()</code> to merge <code>national_data_2019</code> and <code>national_libraries_2019</code>.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_12-joining-5/" id="learnr-12-lesson-joining5" %}}
+<p>Left joining is also often surprisingly helpful for recoding lots of variables. Right now in our fake national data, we have a column for state, but it would be nice if we could have a column for region so we could facet or fill or color by region in a plot. Hunting around on the internet, you find this dataset that has a column for state and a column for abbreviations:</p>
+<pre class="r"><code>state_regions</code></pre>
+<pre><code>## # A tibble: 51 x 2
+##    region    state
+##    &lt;chr&gt;     &lt;chr&gt;
+##  1 West      AK   
+##  2 South     AL   
+##  3 South     AR   
+##  4 West      AZ   
+##  5 West      CA   
+##  6 West      CO   
+##  7 Northeast CT   
+##  8 South     DC   
+##  9 South     DE   
+## 10 South     FL   
+## # … with 41 more rows</code></pre>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Create a new dataset named <code>national_data_with_region</code> that uses <code>left_join()</code> to combine <code>national_data_2019</code> with <code>state_regions</code>.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_12-joining-3/" id="learnr-12-lesson-joining3" %}}
+<p>Because <code>left_join()</code> only keeps rows from the second dataset that match the first, we don’t actually bring in all 50 rows from the <code>state_regions</code> data—only the rows that match the first dataset (<code>national_data_2019</code>) come over. We could have done with if some massive recoding (<code>mutate(region = ifelse(state == "GA" | state == "NC", "South", ifelse(state == "CO"), "West", NA))</code>), but that’s awful. Left joining is far easier here.</p>
+<p>You can also join by multiple columns. So far we’ve been working with just <code>national_data_2019</code>, but if you look at <code>national_data</code>, you’ll see there are rows for different years across these states:</p>
+<pre class="r"><code>national_data</code></pre>
+<pre><code>## # A tibble: 9 x 5
+##   state  year unemployment inflation population
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 GA     2018          5         2          100
+## 2 GA     2019          5.3       1.8        200
+## 3 GA     2020          5.2       2.5        300
+## 4 NC     2018          6.1       1.8        350
+## 5 NC     2019          5.9       1.6        375
+## 6 NC     2020          5.3       1.8        400
+## 7 CO     2018          4.7       2.7        200
+## 8 CO     2019          4.4       2.6        300
+## 9 CO     2020          5.1       2.5        400</code></pre>
+<p>Previously, we’ve been specifying the ID column with <code>by = "state"</code>, but now we have two ID columns: <code>state</code> and <code>year</code>. We can specify both with <code>by = c("state", "year")</code>.</p>
+<div class="puzzle">
+<p><strong>Your turn</strong>: Create a new dataset named <code>national_data_combined</code> that uses <code>left_join()</code> to combine <code>national_data</code> with <code>national_libraries</code> by state and year.</p>
+</div>
+{{% learnr url="https://andrewheiss.shinyapps.io/datavizm20_12-joining-4/" id="learnr-12-lesson-joining4" %}}
+<p>If one dataset has things like state and year, but another only has state, <code>left_join()</code> will still work, but it will only join where the state is the same. For instance, here’s what happens when we join the region data to the yearly national data:</p>
+<pre class="r"><code>national_data_with_region &lt;- national_data %&gt;% 
+  left_join(state_regions, by = &quot;state&quot;)
+national_data_with_region</code></pre>
+<pre><code>## # A tibble: 9 x 6
+##   state  year unemployment inflation population region
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt; 
+## 1 GA     2018          5         2          100 South 
+## 2 GA     2019          5.3       1.8        200 South 
+## 3 GA     2020          5.2       2.5        300 South 
+## 4 NC     2018          6.1       1.8        350 South 
+## 5 NC     2019          5.9       1.6        375 South 
+## 6 NC     2020          5.3       1.8        400 South 
+## 7 CO     2018          4.7       2.7        200 West  
+## 8 CO     2019          4.4       2.6        300 West  
+## 9 CO     2020          5.1       2.5        400 West</code></pre>
+<p>The “South” region gets added to every row where the state is “GA” and “NC”, even though those rows only appear once in <code>state_regions</code>. <code>left_join()</code> will still match all the values even if states are repeated. Magic!</p>
+</div>
+<div id="common-column-names" class="section level2">
+<h2>Common column names</h2>
+<p>So far, the column names in both datasets have been the same, which has greatly simplified life. In fact, if the columns have the same name, we can technically leave out the <code>by</code> argument and R will guess:</p>
+<pre class="r"><code>national_data %&gt;% 
+  left_join(national_libraries)</code></pre>
+<pre><code>## Joining, by = c(&quot;state&quot;, &quot;year&quot;)</code></pre>
+<pre><code>## # A tibble: 9 x 7
+##   state  year unemployment inflation population libraries schools
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 GA     2018          5         2          100        NA      NA
+## 2 GA     2019          5.3       1.8        200        NA      NA
+## 3 GA     2020          5.2       2.5        300        NA      NA
+## 4 NC     2018          6.1       1.8        350       200     610
+## 5 NC     2019          5.9       1.6        375       210     590
+## 6 NC     2020          5.3       1.8        400       220     530
+## 7 CO     2018          4.7       2.7        200       230     470
+## 8 CO     2019          4.4       2.6        300       240     440
+## 9 CO     2020          5.1       2.5        400       270     510</code></pre>
+<p>It’s good practice to be specific about the columns you want and actually use <code>by</code>, but I will often run <code>left_join()</code> without it and then copy the message that it generates (“<code>by = c("state", "year")</code>”) and paste it into my code.</p>
+<p>But what if the column names don’t match? Let’s rename the state column in our state/region table for fun:</p>
+<pre class="r"><code>state_regions_different &lt;- state_regions %&gt;% 
+  rename(ST = state)
+state_regions_different</code></pre>
+<pre><code>## # A tibble: 51 x 2
+##    region    ST   
+##    &lt;chr&gt;     &lt;chr&gt;
+##  1 West      AK   
+##  2 South     AL   
+##  3 South     AR   
+##  4 West      AZ   
+##  5 West      CA   
+##  6 West      CO   
+##  7 Northeast CT   
+##  8 South     DC   
+##  9 South     DE   
+## 10 South     FL   
+## # … with 41 more rows</code></pre>
+<p>Now watch what happens when we try to join the datasets:</p>
+<pre class="r"><code>national_data %&gt;% 
+  left_join(state_regions_different)</code></pre>
+<pre><code>## Error: `by` required, because the data sources have no common variables</code></pre>
+<p>There are no common variables, so we get an error. The <code>state</code> and <code>ST</code> columns really are common variables, but R doesn’t know that.</p>
+<p>We have two options:</p>
+<ol style="list-style-type: decimal">
+<li>Rename one of the columns so it matches (either change <code>state</code> to <code>ST</code> or change <code>ST</code> to <code>state</code>)</li>
+<li>Tell <code>left_join()</code> which columns are the same</li>
+</ol>
+<p>We can do option two by modifying the <code>by</code> argument like so:</p>
+<pre class="r"><code>national_data %&gt;% 
+  left_join(state_regions_different, by = c(&quot;state&quot; = &quot;ST&quot;))</code></pre>
+<pre><code>## # A tibble: 9 x 6
+##   state  year unemployment inflation population region
+##   &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt; 
+## 1 GA     2018          5         2          100 South 
+## 2 GA     2019          5.3       1.8        200 South 
+## 3 GA     2020          5.2       2.5        300 South 
+## 4 NC     2018          6.1       1.8        350 South 
+## 5 NC     2019          5.9       1.6        375 South 
+## 6 NC     2020          5.3       1.8        400 South 
+## 7 CO     2018          4.7       2.7        200 West  
+## 8 CO     2019          4.4       2.6        300 West  
+## 9 CO     2020          5.1       2.5        400 West</code></pre>
+</div>
+<div id="right_join" class="section level2">
+<h2><code>right_join()</code></h2>
+<p>Once again, <a href="https://github.com/gadenbuie/tidyexplain#right-join" target="_blank">go to this page in a new tab</a> and watch the animation.</p>
+<p><code>right_join()</code> works exactly like <code>left_join()</code>, but in reverse. The <em>second</em> dataset is the base data. Any rows in the second dataset that don’t match in the first will be kept, and any rows from the first that don’t match will get thrown away.</p>
+<p>Watch what happens if we right join <code>national_data</code> and <code>state_regions</code>:</p>
+<pre class="r"><code>national_data %&gt;% 
+  right_join(state_regions, by = &quot;state&quot;)</code></pre>
+<pre><code>## # A tibble: 57 x 6
+##    state  year unemployment inflation population region   
+##    &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;    
+##  1 AK       NA         NA        NA           NA West     
+##  2 AL       NA         NA        NA           NA South    
+##  3 AR       NA         NA        NA           NA South    
+##  4 AZ       NA         NA        NA           NA West     
+##  5 CA       NA         NA        NA           NA West     
+##  6 CO     2018          4.7       2.7        200 West     
+##  7 CO     2019          4.4       2.6        300 West     
+##  8 CO     2020          5.1       2.5        400 West     
+##  9 CT       NA         NA        NA           NA Northeast
+## 10 DC       NA         NA        NA           NA South    
+## # … with 47 more rows</code></pre>
+<p>Yikes. R kept all the rows in <code>state_regions</code>, brought in the columns from <code>national_data</code> and filled most of the new columns with <code>NA</code>, and then repeated Colorado (and NC and GA) three times for each of the years from <code>national_data</code>. That’s a mess.</p>
+<p>If we reverse the order, we’ll get the correct merged data:</p>
+<pre class="r"><code>state_regions %&gt;% 
+  right_join(national_data, by = &quot;state&quot;)</code></pre>
+<pre><code>## # A tibble: 9 x 6
+##   region state  year unemployment inflation population
+##   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 South  GA     2018          5         2          100
+## 2 South  GA     2019          5.3       1.8        200
+## 3 South  GA     2020          5.2       2.5        300
+## 4 South  NC     2018          6.1       1.8        350
+## 5 South  NC     2019          5.9       1.6        375
+## 6 South  NC     2020          5.3       1.8        400
+## 7 West   CO     2018          4.7       2.7        200
+## 8 West   CO     2019          4.4       2.6        300
+## 9 West   CO     2020          5.1       2.5        400</code></pre>
+<p>I rarely use <code>right_join()</code> because I find it more intuitive to just use <code>left_join()</code> since in my head, I’m taking a dataset and stacking columns onto the end of it. If you want to right join instead, neat—just remember to order things correctly.</p>
+</div>

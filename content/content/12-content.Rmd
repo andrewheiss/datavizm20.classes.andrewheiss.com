@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "12-slides"
+slides: "12-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -41,9 +41,83 @@ It looks like this is a lot of reading, but lots of these are short videos or tw
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Space", "1", TRUE,
+  "Maps and truth", "maps-truth", FALSE,
+  "Putting data on maps", "data-on-maps", FALSE,
+  "GIS in R with sf", "gis-sf", FALSE
+)
+
+slide_tabs(sections, "/slides/12-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U).
+
+- [Introduction](https://www.youtube.com/watch?v=fOpsbd6-PzU&list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U)
+- [Maps and truth](https://www.youtube.com/watch?v=acP8mwyLNt0&list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U)
+- [Putting data on maps](https://www.youtube.com/watch?v=OqKdU0qzfjA&list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U)
+- [GIS in R with sf](https://www.youtube.com/watch?v=qbrnzSRPyb0&list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U&)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sGd_PCE07nym2Df9120FW1U
+
+https://youtu.be/fOpsbd6-PzU
+PMAP 8921 • (12) Space: (0) Introduction
+
+Introduction to the class session on visualizing space and geography
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/12-content/
+
+
+https://youtu.be/acP8mwyLNt0
+PMAP 8921 • (12) Space: (1) Maps and truth
+
+Discussion of how not to lie with maps and different projections can distort or enhance the truth
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/12-content/
+
+  
+https://youtu.be/OqKdU0qzfjA
+PMAP 8921 • (12) Space: (2) Putting data on maps
+
+Discussion of different methods for visualizing data in maps
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/12-content/
+  
+  
+https://youtu.be/qbrnzSRPyb0
+PMAP 8921 • (12) Space: (3) GIS in R with sf
+
+Brief overview of key GIS concepts + how to use the sf package in R to make maps
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/12-content/
+  
+https://youtu.be/Opzwtegvuv4
+PMAP 8921 • (12) Time: Example
+
+Demonstration of how to use the sf and ggplot2 packages in R to plot shapefiles and make maps
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/12-example/
+```

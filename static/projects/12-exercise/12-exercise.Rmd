@@ -1,0 +1,44 @@
+---
+title: "Exercise 12"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: World map
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(sf)
+
+# Load and clean internet user data
+internet_users <- read_csv("data/share-of-individuals-using-the-internet-1990-2015.csv") %>%
+  # Rename country code column to ISO_A3 so it matches what's in the Natural Earth shapefile
+  rename(users = `Individuals using the Internet (% of population) (% of population)`,
+         ISO_A3 = Code)
+
+# Load world shapefile from Natural Earth
+# https://www.naturalearthdata.com/downloads/110m-cultural-vectors/
+world_shapes <- read_sf("data/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp")
+```
+
+```{r combine-shapefile-internet-users}
+# Only look at 2015
+users_2015 <- internet_users %>%
+  filter(Year == 2015)
+
+users_map <- world_shapes %>%
+  left_join(users_2015, by = "ISO_A3") %>%
+  filter(ISO_A3 != "ATA")  # No internet in Antarctica. Sorry penguins.
+```
+
+Make a map showing the proportion of individuals in each country that had access to the internet in 2015.
+
+```{r plot-2015-internet-uses}
+# TODO: Make a map of internet users with ggplot() + geom_sf()
+```

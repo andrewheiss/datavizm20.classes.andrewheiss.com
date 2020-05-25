@@ -16,4 +16,635 @@ editor_options:
   chunk_output_type: console
 ---
 
-Fully worked out code examples will go here, along with video of me live coding them.
+## Shapefiles
+
+Shapefiles are special types of data that include information about geography, such as points (latitude, longitude), paths (a bunch of connected latitudes and longitudes) and areas (a bunch of connected latitudes and longitudes that form a complete shape). Nowadays, most government agencies provide shapefiles for their jurisdictions. For global mapping data, you can use the Natural Earth project:
+
+- [Natural Earth](https://www.naturalearthdata.com/)
+- [US Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html)
+- [Georgia GIS Clearinghouse](https://data.georgiaspatial.org/) (requires a free account; the interface is *incredibly* clunky)
+- [Atlanta Regional Council](https://opendata.atlantaregional.com/)
+- [Fulton County GIS Portal](https://gisdata.fultoncountyga.gov/)
+- [City of Atlanta, Department of City Planning](https://dcp-coaplangis.opendata.arcgis.com/)
+
+
+## Projections and coordinate reference systems
+
+As you read in this week's readings, projections matter a lot for maps. You can convert your geographic data between different coordinate systems (or projections)^[TECHNICALLY coordinate systems and projection systems [are different things](https://gis.stackexchange.com/a/149751/56265), but I'm not a geographer and I don't care that much about the nuance.] fairly easily with **sf**. You can use `coord_sf(crs = XXXX)` to convert coordinate reference systems (CRS) as you plot, or use `st_transform()` to convert data frames to a different CRS.
+
+There are standard indexes of more than 4,000 of these projections (!!!) at [spatialreference.org](http://spatialreference.org/) or at [epsg.io](https://epsg.io/). Here are some common ones:
+
+- [54002](http://spatialreference.org/ref/esri/54002/): Equidistant cylindrical projection for the world^[This is essentially the [Gall-Peters projection](https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection) from [the West Wing clip](https://www.youtube.com/watch?v=vVX-PrBRtTY).]
+- [54004](http://spatialreference.org/ref/esri/54004/): Mercator projection for the world
+- [54008](http://spatialreference.org/ref/esri/54008/): Sinusoidal projection for the world
+- [54009](http://spatialreference.org/ref/esri/54009/): Mollweide projection for the world
+- [54030](http://spatialreference.org/ref/esri/54030/): Robinson projection for the world^[This is my favorite world projection.]
+- [4326](http://spatialreference.org/ref/epsg/4326/): WGS 84: DOD GPS coordinates (standard -180 to 180 system)
+- [4269](http://spatialreference.org/ref/epsg/4269/): NAD 83: Relatively common projection for North America
+- [102003](http://spatialreference.org/ref/esri/102003/): Albers projection specifically for the contiguous United States
+
+Alternatively, instead of using these index numbers, you can use any of the names listed [here](https://proj.org/operations/projections/index.html), such as:
+
+- `"+proj=merc"`: Mercator
+- `"+proj=robin"`: Robinson
+- `"+proj=moll"`: Mollweide 
+- `"+proj=aeqd"`: Azimuthal Equidistant
+- `"+proj=cass"`: Cassini-Soldner
+
+
+## Shapefiles to download
+
+I use a lot of different shapefiles in this example. To save you from having to go find and download each individual one, you can download this zip file:
+
+- [<i class="fas fa-file-archive"></i> `shapefiles.zip`](https://datavizm20.s3.amazonaws.com/shapefiles.zip)
+
+Unzip this and put all the contained folders in a folder named `data` if you want to follow along. **You don't need to follow along!**
+
+Your project should be structured like this:
+
+```text
+your-project-name\
+  some-name.Rmd
+  your-project-name.Rproj
+  data\
+    cb_2018_us_county_5m\
+      ...
+      cb_2018_us_county_5m.shp
+      ...
+    cb_2018_us_state_20m\
+    ne_10m_admin_1_states_provinces\
+    ne_10m_lakes\
+    ne_10m_rivers_lake_centerlines\
+    ne_10m_rivers_north_america\
+    ne_110m_admin_0_countries\
+    schools_2009\
+```
+
+These shapefiles all came from these sources:
+
+- <i class="far fa-map"></i> **World map**: [110m "Admin 0 - Countries" from Natural Earth](https://www.naturalearthdata.com/downloads/110m-cultural-vectors/)
+- <i class="far fa-map"></i> **US states**: [20m 2018 state boundaries from the US Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html)
+- <i class="far fa-map"></i> **US counties**: [5m 2018 county boundaries from the US Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html)
+- <i class="far fa-map"></i> **US states high resolution**: [10m "Admin 1 – States, Provinces" from Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/)
+- <i class="far fa-map"></i> **Global rivers**: [10m "Rivers + lake centerlines" from Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/)
+- <i class="far fa-map"></i> **North American rivers**: [10m "Rivers + lake centerlines, North America supplement" from Natural Earth](https://www.naturalearthdata.com/downloads/10m-physical-vectors/)
+- <i class="far fa-map"></i> **Global lakes**: [10m "Lakes + Reservoirs" from Natural Earth](https://www.naturalearthdata.com/downloads/10m-physical-vectors/)
+- <i class="far fa-map"></i> **Georgia K–12 schools, 2009**: ["Georgia K-12 Schools" from the Georgia Department of Education](https://data.georgiaspatial.org/index.asp?body=preview&dataId=41516) *(you must be logged in to access this)*
+
+
+## Live coding example
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Opzwtegvuv4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+## Complete code
+
+*(This is a slightly cleaned up version of the code from the video.)*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, fig.height = 3.6, fig.align = "center")
+set.seed(1234)
+options("digits" = 2, "width" = 150)
+```
+
+### Load and look at data
+
+First we'll load the libraries we're going to use:
+
+```{r load-libraries, message=FALSE, warning=FALSE}
+library(tidyverse)  # For ggplot, dplyr, and friends
+library(sf)         # For GIS magic
+```
+
+Next we'll load all the different shapefiles we downloaded using `read_sf()`: 
+
+```{r load-shapefiles-fake, eval=FALSE}
+# Download "Admin 0 – Countries" from
+# https://www.naturalearthdata.com/downloads/110m-cultural-vectors/
+world_map <- read_sf("data/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp")
+
+# Download cb_2018_us_state_20m.zip under "States" from
+# https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+us_states <- read_sf("data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp")
+
+# Download cb_2018_us_county_5m.zip under "County" from
+# https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+us_counties <- read_sf("data/cb_2018_us_county_5m/cb_2018_us_county_5m.shp")
+
+# Download "Admin 1 – States, Provinces" from
+# https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
+us_states_hires <- read_sf("data/ne_10m_admin_1_states_provinces/ne_10m_admin_1_states_provinces.shp")
+
+# Download "Rivers + lake centerlines" from
+# https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+rivers_global <- read_sf("data/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_centerlines.shp")
+
+# Download "Rivers + lake centerlines, North America supplement" from
+# https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+rivers_na <- read_sf("data/ne_10m_rivers_north_america/ne_10m_rivers_north_america.shp")
+
+# Download "Lakes + Reservoirs" from
+# https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+lakes <- read_sf("data/ne_10m_lakes/ne_10m_lakes.shp")
+
+# Download from https://data.georgiaspatial.org/index.asp?body=preview&dataId=41516
+# after creating an account and logging in
+ga_schools <- read_sf(file.path("data", "schools_2009", "DOE Schools 2009.shp"))
+```
+
+```{r load-shapefiles-real, include=FALSE}
+world_map <- read_sf(here::here("static", "data", 
+                                "ne_110m_admin_0_countries", 
+                                "ne_110m_admin_0_countries.shp"))
+
+us_states <- read_sf(here::here("static", "data",
+                                "cb_2018_us_state_20m",
+                                "cb_2018_us_state_20m.shp"))
+
+us_states_hires <- read_sf(here::here("static", "data",
+                                      "ne_10m_admin_1_states_provinces",
+                                      "ne_10m_admin_1_states_provinces.shp"))
+
+us_counties <- read_sf(here::here("static", "data",
+                                  "cb_2018_us_county_5m",
+                                  "cb_2018_us_county_5m.shp"))
+
+rivers_global <- read_sf(here::here("static", "data",
+                                    "ne_10m_rivers_lake_centerlines",
+                                    "ne_10m_rivers_lake_centerlines.shp"))
+
+rivers_na <- read_sf(here::here("static", "data",
+                                "ne_10m_rivers_north_america",
+                                "ne_10m_rivers_north_america.shp"))
+
+lakes <- read_sf(here::here("static", "data", "ne_10m_lakes",
+                            "ne_10m_lakes.shp"))
+
+ga_schools <- read_sf(here::here("static", "data","schools_2009", 
+                                 "DOE Schools 2009.shp"))
+```
+
+### Basic plotting
+
+If you look at the `world_map` dataset in RStudio, you'll see it's just a standard data frame with 177 rows and 95 columns. The last column is the magical `geometry` column with the latitude/longitude details for the borders for every country. RStudio only shows you 50 columns at a time in the RStudio viewer, so you'll need to move to the next page of columns with the » button in the top left corner.
+
+Because this is just a data frame, we can do all our normal dplyr things to it. Let's get rid of Antarctica, since it takes up a big proportion of the southern hemisphere:
+
+```{r world-sans-ata}
+world_sans_antarctica <- world_map %>% 
+  filter(ISO_A3 != "ATA")
+```
+
+Ready to plot a map? Here's all you need to do:
+
+```{r map-super-basic}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica)
+```
+
+If you couldn't tell from the lecture, I'm completely blown away by how amazingly easy this every time I plot a map :)
+
+Because this a regular ggplot geom, all our regular aesthetics and themes and everything work:
+
+```{r map-super-basic-filled}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica, 
+          fill = "#669438", color = "#32481B", size = 0.25) +
+  theme_void()
+```
+
+The Natural Earth dataset happens to come with some columns with a coloring scheme with 7–13 colors (`MAPCOLOR7`, `MAPCOLOR9`, etc.) so that no countries with a shared border share a color. We can fill by that column:
+
+```{r map-super-basic-filled-7}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica, 
+          aes(fill = as.factor(MAPCOLOR7)),
+          color = "#401D16", size = 0.25) +
+  scale_fill_viridis_d(option = "plasma") +
+  guides(fill = FALSE) +
+  theme_void()
+```
+
+### World map with different projections
+
+Changing projections is trivial: add a `coord_sf()` layer where you specify the CRS you want to use.
+
+Here's Robinson (yay):
+
+```{r map-basic-robinson}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica, 
+          fill = "#669438", color = "#32481B", size = 0.25) +
+  coord_sf(crs = 54030) +  # Robinson
+  # Or use the name instead of the number
+  # coord_sf(crs = "+proj=robin")
+  theme_void()
+```
+
+Here's sinusoidal:
+
+```{r map-basic-sinusoidal}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica, 
+          fill = "#669438", color = "#32481B", size = 0.25) +
+  coord_sf(crs = 54008) +  # Sinusoidal
+  theme_void()
+```
+
+And here's Mercator (ewww):
+
+```{r map-basic-mercator}
+ggplot() + 
+  geom_sf(data = world_sans_antarctica, 
+          fill = "#669438", color = "#32481B", size = 0.25) +
+  coord_sf(crs = 3785) +  # Mercator
+  # Or use the name instead of the number
+  # coord_sf(crs = "+proj=merc")
+  theme_void()
+```
+
+
+### US map with different projections
+
+This same process works for any shapefile. The map of the US can also be projected differently—two common projections are NAD83 and Albers. We'll take the `us_states` dataset, remove Alaska, Hawaii, and Puerto Rico (they're so far from the rest of the lower 48 states that they make an unusable map—if you want to include them, it's easiest to plot them as separate plots and use **patchwork** to stitch them together), and plot it.
+
+```{r us-nad83}
+lower_48 <- us_states %>% 
+  filter(!(NAME %in% c("Alaska", "Hawaii", "Puerto Rico")))
+
+ggplot() + 
+  geom_sf(data = lower_48, fill = "#192DA1", color = "white", size = 0.25) +
+  coord_sf(crs = 4269) +  # NAD83
+  theme_void()
+```
+
+```{r us-albers}
+ggplot() + 
+  geom_sf(data = lower_48, fill = "#192DA1", color = "white", size = 0.25) +
+  coord_sf(crs = 102003) +  # Albers
+  theme_void()
+```
+
+### Individual states
+
+Again, because these shapefiles are really just fancy data frames, we can filter them with normal dplyr functions. Let's plot just Georgia:
+
+```{r georgia-only}
+only_georgia <- lower_48 %>% 
+  filter(NAME == "Georgia")
+
+ggplot() +
+  geom_sf(data = only_georgia, fill = "#EC8E55") +
+  theme_void()
+```
+
+We can also use a different projection. If we look at [spatialreference.org](https://spatialreference.org/ref/epsg/), there's [a version of NAD83 that's focused specifically on Georgia](https://spatialreference.org/ref/epsg/2239/). 
+
+```{r georgia-only-projection}
+ggplot() +
+  geom_sf(data = only_georgia, fill = "#EC8E55") +
+  theme_void() +
+  coord_sf(crs = 2239)  # NAD83 focused on Georgia
+```
+
+There's one small final issue though: we're missing all the Atlantic islands in the southeast like Cumberland Island and Amelia Island. That's because we're using the Census's low resolution (20m) data. That's fine for the map of the whole country, but if we're looking at a single state, we probably want better detail in the borders. We can use the Census's high resolution (500k) data, but even then it doesn't include the islands for whatever reason, but [Natural Earth has high resolution US state data](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/) that *does* have the islands, so we can use that:
+
+```{r georgia-only-hires}
+only_georgia_high <- us_states_hires %>% 
+  filter(iso_3166_2 == "US-GA")
+
+ggplot() +
+  geom_sf(data = only_georgia_high, fill = "#EC8E55") +
+  theme_void() +
+  coord_sf(crs = 2239)  # NAD83 focused on Georgia
+```
+
+Perfect.
+
+
+### Plotting multiple shapefile layers
+
+The state shapefiles from the Census Bureau only include state boundaries. If we want to see counties in Georgia, we need to download and load the Census's county shapefiles (which we did above). We can then add a second `geom_sf()` layer for the counties.
+
+First we need to filter the county data to only include Georgia counties. The counties data doesn't include a column with the state name or state abbreviation, but it does include a column named `STATEFP`, which is the [state FIPS code](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code). Looking at `lower_48` we can see that the state FIPS code for Georgia is 13, so we use that to filter.
+
+```{r get-ga-counties}
+ga_counties <- us_counties %>% 
+  filter(STATEFP == 13)
+```
+
+Now we can plot just the counties:
+
+```{r ga-counties-only}
+ggplot() +
+  geom_sf(data = ga_counties) +
+  theme_void()
+```
+
+Technically we can just draw the county boundaries instead of layer the state boundary + the counties, since the borders of the counties make up the border of the state. But there's an advantage to including both: we can use different aesthetics on each, like adding a thicker border on the state:
+
+```{r ga-counties-in-state}
+ggplot() +
+  geom_sf(data = only_georgia_high, color = "#EC8E55", size = 3) +
+  geom_sf(data = ga_counties, fill = "#A5D46A", color = "white") +
+  theme_void()
+```
+
+It's also useful if we want to only show some counties, like metropolitan Atlanta:
+
+```{r atl-counties-in-state}
+atl_counties <- ga_counties %>% 
+  filter(NAME %in% c("Cherokee", "Clayton", "Cobb", "DeKalb", "Douglas",
+                     "Fayette", "Fulton", "Gwinnett", "Henry", "Rockdale"))
+ggplot() +
+  geom_sf(data = only_georgia_high, fill = "#EC8E55") +
+  geom_sf(data = atl_counties, fill = "#A5D46A", color = "white") +
+  theme_void()
+```
+
+### Plotting multiple shapefile layers when some are bigger than the parent shape
+
+So far we've been able to filter out states and counties that we don't want to plot using `filter()`, which works because the shapefiles have geometry data for each state or county. But what if you're plotting stuff that doesn't follow state or county boundaries, like freeways, roads, rivers, or lakes? 
+
+At the beginning we loaded a shapefile for all large and small rivers in the US. Look at the first few rows of `rivers_na`:
+
+```{r head-river-small}
+head(rivers_na)
+```
+
+The first row is the whole Colorado river, which flows through seven states. We can't just use `filter()` to only select some parts of it based on states.
+
+Here's what happens if we combine our Georgia map with rivers and lakes:
+
+```{r ga-rivers-bad}
+ggplot() +
+  geom_sf(data = only_georgia, fill = "#EC8E55") +
+  geom_sf(data = rivers_na) +
+  theme_void()
+```
+
+It plots Georgia, and it's filled with orange, but it also plots every single river in North America. Oops.
+
+We need to do a little GIS work to basically use `only_georgia` as a cookie cutter and keep only the rivers that are contained in the `only_georgia` boundaries. Fortunately, there's a function in the **sf** package that does this: `st_intersection()`. Feed it two shapefile datasets and it will select the parts of the second that fall within the boundaries of the first:
+
+```{r ga-cut-rivers-nope, error=TRUE}
+ga_rivers_na <- st_intersection(only_georgia, rivers_na)
+```
+
+Oh no! An error! It's complaining that the reference systems used in these two datasets don't match. We can check the CRS with `st_crs()`:
+
+```{r check-crs}
+st_crs(only_georgia)
+st_crs(rivers_na)
+```
+
+The Georgia map uses 4269 ([or NAD83](https://epsg.io/4269)), while the rivers map uses 4326 (or [the GPS system of latitude and longitude](https://epsg.io/4326)). We need to convert one of them to make them match. It doesn't matter which one.
+
+```{r ga-cut-rivers-yep}
+only_georgia_4326 <- only_georgia %>% 
+  st_transform(crs = 4326)
+
+ga_rivers_na <- st_intersection(only_georgia_4326, rivers_na)
+```
+
+You'll get an ominous warning, but you should be okay—it's just because flattening globes into flat planes is hard, and the cutting [might not be 100% accurate](https://github.com/r-spatial/sf/issues/493), but it'll be close enough for our mapping purposes.
+
+Now we can plot our state shape and the truncated rivers:
+
+```{r ga-rivers-good}
+ggplot() +
+  geom_sf(data = only_georgia, fill = "#EC8E55") +
+  geom_sf(data = ga_rivers_na) +
+  theme_void()
+```
+
+Hey! It worked! Let's put all the rivers and lakes on at once and make it a little more artsy. We'll use the high resolution Georgia map too, which conveniently already matches the CRS of the rivers and lakes:
+
+```{r ga-all-water, warning=FALSE, message=FALSE, fig.width=10, fig.height=6}
+ga_rivers_na <- st_intersection(only_georgia_high, rivers_na)
+ga_rivers_global <- st_intersection(only_georgia_high, rivers_global)
+ga_lakes <- st_intersection(only_georgia_high, lakes)
+
+ggplot() +
+  geom_sf(data = only_georgia_high, 
+          color = "black", size = 0.1, fill = "black") +
+  geom_sf(data = ga_rivers_global, size = 0.3, color = "grey80") +
+  geom_sf(data = ga_rivers_na, size = 0.15, color = "grey80") +
+  geom_sf(data = ga_lakes, size = 0.3, fill = "grey80", color = NA) +
+  coord_sf(crs = 4269) +  # NAD83
+  theme_void()
+```
+
+Heck yeah. That's a great map. This is basically what [Kieran Healy did here](https://kieranhealy.org/prints/rivers/), but he used [even more detailed shapefiles from the US Geological Survey](https://www.usgs.gov/core-science-systems/ngp/national-hydrography).
+
+
+### Plotting schools in Georgia
+
+Shapefiles are not limited to just lines and areas—they can also contain points. I made a free account at the Georgia GIS Clearinghouse, searched for "schools" and found a shapefile of all the K–12 schools in 2009. [This is the direct link to the page](https://data.georgiaspatial.org/index.asp?body=preview&dataId=41516), but it only works if you're logged in to their system. [This is the official metadata for the shapefile](https://data.georgiaspatial.org/data/statewide/other/schools_2009.html), which you can see if you're not logged in, but you can't download anything. It's a dumb system and other states are a lot better at offering their GIS data (like, [here's a shapefile of all of Utah's schools and libraries](https://gis.utah.gov/data/society/schools-libraries/) as of 2017, publicly accessible without an account).
+
+We loaded the shapefile up at the top, but now let's look at it:
+
+```{r}
+head(ga_schools)
+```
+
+We have a bunch of columns like `GRADES` that has a list of what grades are included in the school, and `TOTAL`, which I'm guessing is the number of students. Let's map it!
+
+If we add a `geom_sf()` layer just for `ga_schools`, it'll plot a bunch of points:
+
+```{r plot-ga-schools-initial}
+ggplot() +
+  geom_sf(data = ga_schools)
+```
+
+One of these rows is wildly miscoded and ended up Indonesia! If you sort by the `geometry` column in RStudio, you'll see that it's most likely Allatoona High School in Cobb County (id = 22097). The coordinates are different from all the others, and it has no congressional district information. Let's remove it.
+
+```{r plot-ga-schools-fixed}
+ga_schools_fixed <- ga_schools %>% 
+  filter(ID != 22097)
+
+ggplot() +
+  geom_sf(data = ga_schools_fixed)
+```
+
+That's better. However, all we're plotting now are the points—we've lost the state and/or county boundaries. Let's include those:
+
+```{r plot-ga-schools-borders}
+ggplot() +
+  geom_sf(data = only_georgia_high) +
+  geom_sf(data = ga_schools_fixed) +
+  theme_void()
+```
+
+We're getting closer. We have some issues with overplotting, so let's shrink the points down and make them a little transparent:
+
+```{r plot-ga-schools-shrunk}
+ggplot() +
+  geom_sf(data = only_georgia_high) +
+  geom_sf(data = ga_schools_fixed, size = 0.5, alpha = 0.5) +
+  theme_void()
+```
+
+Neat. One last thing we can do is map the `TOTAL` column to the color aesthetic and color the points by how many students attend each school:
+
+```{r plot-ga-schools-color}
+ggplot() +
+  geom_sf(data = only_georgia_high) +
+  geom_sf(data = ga_schools_fixed, aes(color = TOTAL), size = 0.75, alpha = 0.5) +
+  scale_color_viridis_c() +
+  theme_void()
+```
+
+Most schools appear to be under 1,000 students, except for a cluster in Gwinnett County north of Atlanta. Its high schools have nearly 4,000 students each!
+
+```{r show-biggest-schools}
+ga_schools_fixed %>% 
+  select(COUNTY, SCHOOLNAME, TOTAL) %>% 
+  arrange(desc(TOTAL)) %>% 
+  head()
+```
+
+
+### Making your own geoencoded data
+
+So, plotting shapefiles with `geom_sf()` is magical because **sf** deals with all of the projection issues for us automatically and it figures out how to plot all the latitude and longitude data for us automatically. But lots of data *doesn't* some as shapefiles. The [rats data from mini project 1](/assignment/01-mini-project/), for instance, has two columns indicating the latitude and longitude of each rat sighting, but those are stored as just numbers. If we try to use `geom_sf()` with the rat data, it won't work. We need that magical `geometry` column.
+
+Fortunately, if we have latitude and longitude information, we can make our own `geometry` column. 
+
+Let's say we want to mark some cities on our map of Georgia. We can make a mini dataset using `tribble()`. I found these points from Google Maps: right click anywhere in Google Maps, select "What's here?", and you'll see the exact coordinates for that spot.
+
+```{r mini-cities}
+ga_cities <- tribble(
+  ~city, ~lat, ~long,
+  "Atlanta", 33.748955, -84.388099,
+  "Athens", 33.950794, -83.358884,
+  "Savannah", 32.113192, -81.089350
+)
+ga_cities
+```
+
+This is just a normal dataset, and the `lat` and `long` columns are just numbers. R doesn't know that those are actually geographic coordinates. This is similar to the rats data, or any other data that has columns for latitude and longitude.
+
+We can convert those two columns to the magic `geometry` column with the `st_as_sf()` function. We have to define two things in the function: which coordinates are the longitude and latitude, and what CRS the coordinates are using. Google Maps uses [4326, or the GPS system](http://spatialreference.org/ref/epsg/4326/), so we specify that:
+
+```{r mini-cities-convert}
+ga_cities_geometry <- ga_cities %>% 
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+ga_cities_geometry
+```
+
+The longitude and latitude columns are gone now, and we have a single magical `geometry` column. That means we can plot it with `geom_sf()`:
+
+```{r ga-with-cities}
+ggplot() +
+  geom_sf(data = only_georgia_high, fill = "#EC8E55") +
+  geom_sf(data = ga_cities_geometry, size = 3) +
+  theme_void()
+```
+
+We can use `geom_sf_label()` (or `geom_sf_text()`) to add labels in the correct locations too. It will give you a warning, but you can ignore it—again, it's complaining that the positioning might not be 100% accurate because of issues related to taking a globe and flattening it. It's fine.
+
+```{r ga-with-cities-text, warning=FALSE, fig.width=10, fig.height=6}
+ggplot() +
+  geom_sf(data = only_georgia_high, fill = "#EC8E55") +
+  geom_sf(data = ga_cities_geometry, size = 3) +
+  geom_sf_label(data = ga_cities_geometry, aes(label = city),
+                nudge_y = 0.2) +
+  theme_void()
+```
+
+### Plotting other data on maps
+
+So far we've just plotted whatever data the shapefile creators decided to include and publish in their data. But what if you want to visualize some other variable on a map? We can do this by combining our shapefile data with any other kind of data, as long as the two have a shared column. For instance, we can make a choropleth map of life expectancy with data from the World Bank.
+
+First, let's grab some data from the World Bank for just 2015:
+
+```{r get-wdi, eval=FALSE}
+library(WDI)  # For getting data from the World Bank
+
+indicators <- c("SP.DYN.LE00.IN")  # Life expectancy
+
+wdi_raw <- WDI(country = "all", indicators, extra = TRUE, 
+               start = 2015, end = 2015)
+```
+
+```{r save-wdi, eval=FALSE, include=FALSE}
+write_csv(wdi_raw, here::here("static", "data", "wdi_lifeexp_2015.csv"))
+```
+
+```{r load-wdi, include=FALSE}
+wdi_raw <- read_csv(here::here("static", "data", "wdi_lifeexp_2015.csv"))
+```
+
+Let's see what we got:
+
+```{r head-wdi-raw}
+head(wdi_raw)
+```
+
+We have a bunch of columns here, but we care about two in particular: life expectancy, and the ISO3 code. This three-letter code is a standard system for identifying countries ([see the full list here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)), and that column will let us combine this World Bank data with the global shapefile, which also has a column for the ISO3 code.
+
+*(We also have columns for the latitude and longitude for each capital, so we could theoretically convert those to a `geometry` column with `st_as_sf()` and plot world capitals, which would be neat, but we won't do that now.)*
+
+Let's clean up the WDI data and shrink it down substantially:
+
+```{r clean-wdi}
+wdi_clean_small <- wdi_raw %>% 
+  select(life_expectancy = SP.DYN.LE00.IN, iso3c)
+wdi_clean_small
+```
+
+Next we need to merge this tiny dataset into the `world_map_sans_antarctica` shapefile data we were using earlier. To do this we'll use a function named `left_join()`. We feed two data frames into `left_join()`, and R will keep all the rows from the first and include all the columns from both the first and the second wherever the two datasets match with one specific column. That's wordy and weird—[stare at this animation here](https://github.com/gadenbuie/tidyexplain#left-join) for a few seconds to see what's really going to happen. We're essentially going to append the World Bank data to the end of the world shapefiles and line up rows that have matching ISO3 codes. The ISO3 column is named `ISO_A3` in the shapefile data, and it's named `iso3c` in the WDI data, so we tell `left_join()` that those are the same column:
+
+```{r combine-map-wdi}
+world_map_with_life_expectancy <- world_sans_antarctica %>% 
+  left_join(wdi_clean_small, by = c("ISO_A3" = "iso3c"))
+```
+
+If you look at this dataset in RStudio now and look at the last column, you'll see the WDI life expectancy right next to the magic `geometry` column.
+
+We technically didn't need to shrink the WDI data down to just two columns—had we left everything else, all the WDI columns would have come over to the `world_sans_antarctica`, including columns for region and income level, etc. But I generally find it easier and cleaner to only merge in the columns I care about instead of making massive datasets with a billion extra columns.
+
+Now that we have a column for life expectancy, we can map it to the fill aesthetic and fill each country by 2015 life expectancy:
+
+```{r world-life-exp-2015, fig.width=10, fig.height=6}
+ggplot() + 
+  geom_sf(data = world_map_with_life_expectancy, 
+          aes(fill = life_expectancy),
+          size = 0.25) +
+  coord_sf(crs = 54030) +  # Robinson
+  scale_fill_viridis_c(option = "viridis") +
+  labs(fill = "Life expectancy") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+
+Voila! Global life expectancy in 2015!
+
+---
+
+*(Sharp-eyed readers will notice that France and Norway are grayed out because they're missing data. That's because the `ISO_A3` code in the Natural Earth data is missing for both France and Norway for whatever reason, so the WDI data didn't merge with those rows. To fix that, we can do some manual recoding before joining in the WDI data)*
+
+```{r world-life-exp-2015-fixed, fig.width=10, fig.height=6}
+world_sans_antarctica_fixed <- world_sans_antarctica %>% 
+  mutate(ISO_A3 = case_when(
+    # If the country name is Norway or France, redo the ISO3 code
+    ADMIN == "Norway" ~ "NOR",
+    ADMIN == "France" ~ "FRA",
+    # Otherwise use the existing ISO3 code
+    TRUE ~ ISO_A3
+  )) %>% 
+  left_join(wdi_clean_small, by = c("ISO_A3" = "iso3c"))
+
+ggplot() + 
+  geom_sf(data = world_sans_antarctica_fixed, 
+          aes(fill = life_expectancy),
+          size = 0.25) +
+  coord_sf(crs = 54030) +  # Robinson
+  scale_fill_viridis_c(option = "viridis") +
+  labs(fill = "Life expectancy") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
