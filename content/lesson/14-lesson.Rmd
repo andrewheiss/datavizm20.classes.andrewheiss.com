@@ -18,4 +18,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+There's no lesson for this session. In your exercise today you'll export a plot from ggplot, open it in a vector editor like [Illustrator](https://www.adobe.com/products/illustrator.html), [Inkscape](https://inkscape.org/), or [Gravit Designer](https://www.designer.io/en/), and make it extra pretty and well-designed. The best way to learn this is by actually doing it.
+
+So head over to [the example](/example/14-example/) to see how it's done, or [the exercise](/assignment/14-exercise/) to get started!

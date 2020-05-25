@@ -18,4 +18,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-Interactive code lessons and walkthroughs will go here. This is where you'll learn all sorts of fun things.
+There's no lesson for this session. You made it to the end of the course! Congratulations!
