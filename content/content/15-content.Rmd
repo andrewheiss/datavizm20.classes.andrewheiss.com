@@ -26,14 +26,10 @@ output:
 
 ### Questions to reflect on
 
-**Important!** The memo for this last week is a little different. Write **150–200** words about the storytelling readings, and then write **400ish** words exploring a few of these summative questions:
-
-- What is truth?
-- How do we find truth?
-- Are facts truth?
-- What's the difference between content and form?
-- Does beauty matter when describing truth?
-- How does any of this philosophical humanities stuff relate to data visualization?
+- Why are stories so powerful?
+- How are stories related to truth?
+- Is it ethical to emphasize certain aspects of the facts in data more than others? How do you decide which facts to use to convince audiences?
+- When you're telling a story about data, you're inherently manipulating audience emotions. Is that okay?
 
 
 ## Slides
