@@ -97,6 +97,11 @@ figcaption {
   background-size: cover;
 }
 
+.bg-90 {
+  background-size: 90%;
+  background-position-y: 30%;
+}
+
 .bg-y-75 {
   background-position-y: 75%;
 }

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Text</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-25" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Text
+
+.class-info[
+
+**Session 13**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-6.medium.sp-after[Qualitative text-based data]
+
+--
+
+.box-5.medium.sp-after[Crash course in&lt;br&gt;computational linguistics]
+
+---
+
+layout: false
+name: text-data
+class: center middle section-title section-title-6 animated fadeIn
+
+# Qualitative text-based data
+
+---
+
+layout: true
+class: title title-6
+
+---
+
+# Free responses
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/free-responses.png" alt="Free responses from a survey" title="Free responses from a survey" width="70%"&gt;
+  &lt;figcaption&gt;Typical free responses from a survey&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# y tho?
+
+&amp;nbsp;
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/word-cloud.png" alt="Bad word cloud" title="Bad word cloud" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Some cases are okay
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/email-word-cloud.jpg" alt="What Happened? word cloud" title="What Happened? word cloud" width="45%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://twitter.com/s_soroka/status/907941270735278085
+
+---
+
+# Word clouds for grownups
+
+.box-inv-6[Count words, but in fancier ways]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/cover.png" alt="Tidy text mining with R" title="Tidy text mining with R" width="30%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.tidytextmining.com/
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/13/he-she-julia.png")
+
+???
+
+https://pudding.cool/2017/08/screen-direction/
+
+---
+
+layout: false
+class: bg-90
+background-image: url("img/13/minimap-1.png")
+
+???
+
+https://juliasilge.com/blog/song-lyrics-across/
+
+---
+
+layout: false
+name: computational-linguistics
+class: center middle section-title section-title-5 animated fadeIn
+
+# Crash course in&lt;br&gt;computational linguistics
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Core concepts and techniques
+
+--
+
+.box-inv-5[Tokens, lemmas, and parts of speech]
+
+--
+
+.box-inv-5[Sentiment analysis]
+
+--
+
+.box-inv-5[tf-idf]
+
+--
+
+.box-inv-5[Topics and LDA]
+
+--
+
+.box-inv-5[Fingerprinting]
+
+---
+
+# Regular text
+
+.small-code[
+
+```
+THE BOY WHO LIVED　　Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to
+say that they were perfectly normal, thank you very much. They were the last people you'd
+expect to be involved in anything strange or mysterious, because they just didn't hold
+with such nonsense.　　Mr. Dursley was the director of a firm called Grunnings, which made
+drills. He was a big, beefy man with hardly any neck, although he did have a very large
+mustache. Mrs. Dursley was thin and blonde and had nearly twice the usual amount of neck,
+which came in very useful as she spent so much of her time craning over garden fences,
+spying on the neighbors. The Dursleys had a small son called Dudley and in their opinion
+there was no finer boy anywhere.　　The Dursleys had everything they wanted, but they also
+had a secret, and their greatest fear was that somebody would discover it. They didn't
+think they could bear it if anyone found out about the Potters. Mrs. Potter was Mrs.
+Dursley's sister, but they hadn't met for several years; in fact, Mrs. Dursley pretended
+she didn't have a sister, because her sister and her good-for-nothing husband were as
+unDursleyish as it was possible to be. The Dursleys shuddered to think what the neighbors
+would say if the Potters a... 
+```
+]
+
+---
+
+# Tidy text
+
+.box-inv-5[One row for each text element]
+
+.box-5.small[Can be chapter, page, verse, etc.]
+
+.small-code[
+
+```
+# A tibble: 6 x 3
+  chapter book                       text                                                 
+    &lt;int&gt; &lt;chr&gt;                      &lt;chr&gt;                                                
+1       1 Harry Potter and the Phil… "THE BOY WHO LIVED　　Mr. and Mrs. Dursley, of number …
+2       2 Harry Potter and the Phil… "THE VANISHING GLASS　　Nearly ten years had passed si…
+3       3 Harry Potter and the Phil… "THE LETTERS FROM NO ONE　　The escape of the Brazilia…
+4       4 Harry Potter and the Phil… "THE KEEPER OF THE KEYS　　BOOM. They knocked again. D…
+5       5 Harry Potter and the Phil… "DIAGON ALLEY　　Harry woke early the next morning. Al…
+6       6 Harry Potter and the Phil… "THE JOURNEY FROM PLATFORM NINE AND THREE-QUARTERS　　…
+```
+]
+
+---
+
+# Tokens
+
+.box-inv-5[Split the text into even smaller parts]
+
+.box-5.small[Paragraph, line, verse, sentence, n-gram, word, letter, etc.]
+
+.pull-left.small-code[
+
+```
+# A tibble: 6 x 3
+  word  chapter book           
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;          
+1 the         1 Harry Potter...
+2 boy         1 Harry Potter...
+3 who         1 Harry Potter...
+4 lived       1 Harry Potter...
+5 mr          1 Harry Potter...
+6 and         1 Harry Potter...
+```
+]
+
+--
+
+.pull-right.small-code[
+
+```
+# A tibble: 6 x 3
+  bigram    chapter book           
+  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;          
+1 the boy         1 Harry Potter...
+2 boy who         1 Harry Potter...
+3 who lived       1 Harry Potter...
+4 lived mr        1 Harry Potter...
+5 mr and          1 Harry Potter...
+6 and mrs         1 Harry Potter...
+```
+]
+
+---
+
+# Stop words
+
+.box-inv-5[Common words that we can generally ignore]
+
+.center.small-code[
+
+```
+# A tibble: 1,149 x 2
+   word        lexicon
+   &lt;chr&gt;       &lt;chr&gt;  
+ 1 a           SMART  
+ 2 a's         SMART  
+ 3 able        SMART  
+ 4 about       SMART  
+ 5 above       SMART  
+ 6 according   SMART  
+ 7 accordingly SMART  
+ 8 across      SMART  
+ 9 actually    SMART  
+10 after       SMART  
+# … with 1,139 more rows
+```
+]
+
+---
+
+# Token frequency: words
+
+&lt;img src="13-slides_files/figure-html/hp-words-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Token frequency: n-grams
+
+&lt;img src="13-slides_files/figure-html/hp-bigrams-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Token frequency: n-gram ratios
+
+&lt;img src="13-slides_files/figure-html/hp-se-she-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Parts of speech
+
+
+
+
+
+.small-code[
+
+```
+# A tibble: 50 x 11
+   doc_id   sid   tid token  token_with_ws lemma upos  xpos  feats     tid_source relation
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   
+ 1      1     1     1 THE    THE           the   DET   DT    Definite…          2 det     
+ 2      1     1     2 BOY    BOY           Boy   NOUN  NN    Number=S…         18 nsubj   
+ 3      1     1     3 WHO    WHO           who   PRON  WP    PronType…          4 nsubj   
+ 4      1     1     4 LIVED  LIVED　　     live  VERB  VBD   Mood=Ind…          2 acl:rel…
+ 5      1     1     5 Mr.    Mr.           Mr.   PROPN NNP   Number=S…          4 xcomp   
+ 6      1     1     6 and    and           and   CCONJ CC    &lt;NA&gt;               7 cc      
+ 7      1     1     7 Mrs.   Mrs.          Mrs.  PROPN NNP   Number=S…          5 conj    
+ 8      1     1     8 Dursl… Dursley       Durs… PROPN NNP   Number=S…          7 flat    
+ 9      1     1     9 ,      ,             ,     PUNCT ,     &lt;NA&gt;               5 punct   
+10      1     1    10 of     of            of    ADP   IN    &lt;NA&gt;              11 case    
+# … with 40 more rows
+```
+]
+
+.box-inv-5.small[These use the [Penn part of speech tags](https://cs.nyu.edu/grishman/jet/guide/PennPOS.html)]
+
+---
+
+# Parts of speech frequency
+
+.pull-left-3.small-code[
+.box-inv-5.small[Verbs]
+
+
+```
+# A tibble: 1,557 x 2
+   lemma     n
+   &lt;chr&gt; &lt;dbl&gt;
+ 1 say     920
+ 2 get     440
+ 3 have    417
+ 4 go      384
+ 5 look    380
+ 6 be      310
+ 7 know    310
+ 8 see     303
+ 9 think   230
+10 do      227
+# … with 1,547 more rows
+```
+]
+
+--
+
+.pull-middle-3.small-code[
+.box-inv-5.small[Nouns]
+
+
+```
+# A tibble: 2,852 x 2
+   lemma          n
+   &lt;chr&gt;      &lt;dbl&gt;
+ 1 Harry       1315
+ 2 Ron          423
+ 3 Hagrid       258
+ 4 Professor    167
+ 5 Snape        154
+ 6 Hermione     153
+ 7 Dumbledore   144
+ 8 time         138
+ 9 Dudley       136
+10 uncle        122
+# … with 2,842 more rows
+```
+]
+
+--
+
+.pull-right-3.small-code[
+.box-inv-5.small[Adjectives &amp; adverbs]
+
+
+```
+# A tibble: 1,240 x 2
+   lemma     n
+   &lt;chr&gt; &lt;dbl&gt;
+ 1 back    223
+ 2 so      215
+ 3 just    180
+ 4 when    178
+ 5 very    171
+ 6 now     166
+ 7 then    165
+ 8 all     147
+ 9 how     136
+10 there   123
+# … with 1,230 more rows
+```
+]
+
+---
+
+# Artsy stuff
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/closeup.jpg" alt="Alice in Wonderland punctuation by Nicholas Rougeux" title="Alice in Wonderland punctuation by Nicholas Rougeux" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+[*Between the Words*](https://www.c82.net/work/?id=347) by Nicholas Rougeux
+
+---
+
+# Sentiment analysis
+
+.pull-left-3.small-code[
+
+```r
+get_sentiments("bing")
+```
+
+```
+# A tibble: 6,786 x 2
+   word        sentiment
+   &lt;chr&gt;       &lt;chr&gt;    
+ 1 2-faces     negative 
+ 2 abnormal    negative 
+ 3 abolish     negative 
+ 4 abominable  negative 
+ 5 abominably  negative 
+ 6 abominate   negative 
+ 7 abomination negative 
+ 8 abort       negative 
+ 9 aborted     negative 
+10 aborts      negative 
+# … with 6,776 more rows
+```
+]
+
+--
+
+.pull-middle-3.small-code[
+
+```r
+get_sentiments("afinn")
+```
+
+```
+# A tibble: 2,477 x 2
+   word       value
+   &lt;chr&gt;      &lt;dbl&gt;
+ 1 abandon       -2
+ 2 abandoned     -2
+ 3 abandons      -2
+ 4 abducted      -2
+ 5 abduction     -2
+ 6 abductions    -2
+ 7 abhor         -3
+ 8 abhorred      -3
+ 9 abhorrent     -3
+10 abhors        -3
+# … with 2,467 more rows
+```
+]
+
+--
+
+.pull-right-3.small-code[
+
+```r
+get_sentiments("nrc")
+```
+
+```
+# A tibble: 13,901 x 2
+   word        sentiment
+   &lt;chr&gt;       &lt;chr&gt;    
+ 1 abacus      trust    
+ 2 abandon     fear     
+ 3 abandon     negative 
+ 4 abandon     sadness  
+ 5 abandoned   anger    
+ 6 abandoned   fear     
+ 7 abandoned   negative 
+ 8 abandoned   sadness  
+ 9 abandonment anger    
+10 abandonment fear     
+# … with 13,891 more rows
+```
+]
+
+---
+
+&lt;img src="13-slides_files/figure-html/hp-net-sentiment-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# tf-idf
+
+.box-inv-5[Term frequency-inverse document frequency]
+
+.box-5.small[How important a term is compared to the rest of the documents]
+
+$$
+`\begin{aligned}
+tf &amp;= \frac{n_{\text{term}}}{n_{\text{terms in document}}} \\
+idf(\text{term}) &amp;= \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)} \\
+tf\text{-}idf(\text{term}) &amp;= tf(\text{term}) \times idf(\text{term})
+\end{aligned}`
+$$
+
+---
+
+# tf-idf
+
+&lt;img src="13-slides_files/figure-html/hp-tf-idf-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Topic modeling
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/13/laurel-thatcher-ulrich.jpg" alt="Laurel Thatcher Ulrich" title="Laurel Thatcher Ulrich" width="55%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/13/midwifes-tale.jpg" alt="A Midwife's Tale" title="A Midwife's Tale" width="55%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://commons.wikimedia.org/wiki/File:Laurel_Thatcher_Ulrich_(32803708014).jpg
+
+https://commons.wikimedia.org/wiki/File:A_Midwife%27s_Tale_by_Laurel_Thatcher_Ulrich.jpg
+
+---
+
+# Latent Dirichlet Allocation (LDA)
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/LDA.png" alt="Latent Dirichlet Allocation" title="Latent Dirichlet Allocation" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Clusters of related words
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th class="cell-left"&gt;Topic label&lt;/th&gt;
+    &lt;th class="cell-left"&gt;Topic words&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Midwifery&lt;/td&gt;
+    &lt;td class="cell-left"&gt;birth safe morn receivd calld left cleverly pm labour …&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Church&lt;/td&gt;
+    &lt;td class="cell-left"&gt;meeting attended afternoon reverend worship …&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Death&lt;/td&gt;
+    &lt;td class="cell-left"&gt;day yesterday informd morn years death expired …&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Gardening&lt;/td&gt;
+    &lt;td class="cell-left"&gt;gardin sett worked clear beens corn warm planted …&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Shopping&lt;/td&gt;
+    &lt;td class="cell-left"&gt;lb made brot bot tea butter sugar carried …&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="cell-left"&gt;Illness&lt;/td&gt;
+    &lt;td class="cell-left"&gt;unwell sick gave dr rainy easier care head neighbor …&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+???
+
+https://www.cameronblevins.org/posts/topic-modeling-martha-ballards-diary/
+
+http://journalofdigitalhumanities.org/2-1/topic-modeling-a-basic-introduction-by-megan-r-brett/
+
+---
+
+# Track topics over time
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/13/coldweatherbymonth.png" alt="Cold weather by month" title="Cold weather by month" width="100%"&gt;
+  &lt;figcaption&gt;Cold weather topic by month&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/13/emotionbyyear.png" alt="Emotion by year" title="Emotion by year" width="100%"&gt;
+  &lt;figcaption&gt;Emotion topic over time&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.cameronblevins.org/posts/topic-modeling-martha-ballards-diary/
+
+---
+
+# State of the Union addresses
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/sotu.png" alt="State of the Union topics over time" title="State of the Union topics over time" width="37%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://cran.r-project.org/web/packages/cleanNLP/vignettes/state-of-union.html
+
+---
+
+# Fingerprinting
+
+.box-inv-5[Analyze richness or uniqueness of a document]
+
+.box-5[Punctuation patterns, vocabulary choices, sentence length]
+
+.box-5[Hapax legomenon]
+
+---
+
+# Sentence length
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/fingerprint-sentence.png" alt="Sentence length heatmaps" title="Sentence length heatmaps" width="75%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://kops.uni-konstanz.de/bitstream/handle/123456789/5492/Literature_Fingerprinting.pdf
+
+
+---
+
+# Hapax legomena
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/fingerprint-hapax.png" alt="Hapax heatmaps" title="Hapax heatmaps" width="75%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Verse length
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/13/fingerprint-verse.png" alt="Verse length heatmaps" title="Verse length heatmaps" width="40%"&gt;
+&lt;/figure&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
