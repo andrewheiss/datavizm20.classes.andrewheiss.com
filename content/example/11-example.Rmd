@@ -301,7 +301,7 @@ ggplot(unemployment_claims_only, aes(x = date, y = price)) +
   labs(y = "Initial unemployment claims",
        x = NULL,
        title = "Initial unemployment claims",
-       subtitle = "Weeky data",
+       subtitle = "Weekly data",
        caption = "Source: US Employment and Training Administration and FRED") +
   theme_bw(base_family = "Roboto Condensed") +
   theme(plot.title = element_text(face = "bold"))
