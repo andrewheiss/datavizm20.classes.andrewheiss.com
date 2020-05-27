@@ -265,6 +265,9 @@ ggplot() +
   theme_void()
 ```
 
+:::warning
+**Note**: Sometimes Windows doesn't like using the raw number like `coord_sf(crs = 54030)`. If you get an error about a missing or unknown CRS, there are two workarounds: find and look up the name abbreviation like `coord_sf(crs = "+proj=robin")`, or add the prefix "ESRI" like `coord_sf(crs = "ESRI:54030")`
+:::
 
 ### US map with different projections
 

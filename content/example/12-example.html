@@ -213,6 +213,9 @@ ga_schools &lt;- read_sf(file.path(&quot;data&quot;, &quot;schools_2009&quot;, &
   # coord_sf(crs = &quot;+proj=merc&quot;)
   theme_void()</code></pre>
 <p><img src="/example/12-example_files/figure-html/map-basic-mercator-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="warning">
+<p><strong>Note</strong>: Sometimes Windows doesn’t like using the raw number like <code>coord_sf(crs = 54030)</code>. If you get an error about a missing or unknown CRS, there are two workarounds: find and look up the name abbreviation like <code>coord_sf(crs = "+proj=robin")</code>, or add the prefix “ESRI” like <code>coord_sf(crs = "ESRI:54030")</code></p>
+</div>
 </div>
 <div id="us-map-with-different-projections" class="section level3">
 <h3>US map with different projections</h3>
