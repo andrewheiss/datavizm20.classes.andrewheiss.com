@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "13-slides"
+slides: "13-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -35,6 +35,7 @@ output:
 <li><i class="fas fa-book"></i> Look through some of the chapters in Julia Silge and David Robinson, <a href="https://www.tidytextmining.com/"><em>Tidy Text Mining</em></a><span class="citation"><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></span> (but <em>definitely</em> don’t read them all! You just need to get a taste of what modern text analysis looks like.)</li>
 <li>A bunch of (really) short things:
 <ul>
+<li><i class="fas fa-external-link-square-alt"></i> Evangeline Reynolds, <a href="https://evangelinereynolds.netlify.app/post/federalist-papers/">“Federalist Papers”</a></li>
 <li><i class="fas fa-external-link-square-alt"></i> Julia Silge, <a href="https://pudding.cool/2017/08/screen-direction/">“She Giggles, He Gallops”</a></li>
 <li><i class="fas fa-external-link-square-alt"></i> Abby Ohlheiser, <a href="https://www.washingtonpost.com/news/the-intersect/wp/2016/05/28/these-are-the-words-most-associated-with-men-and-women-according-to-facebook-status-updates/">“These are the words most associated with men and women, according to Facebook status updates”</a></li>
 <li><i class="fas fa-external-link-square-alt"></i> <a href="http://annkemery.com/qual-dataviz/">Six Ideas for Displaying Qualitative Data</a></li>
@@ -56,11 +57,56 @@ output:
 </div>
 <div id="slides" class="section level2">
 <h2>Slides</h2>
-<p>Slides go here</p>
+<p>The slides for today’s lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.</p>
+{{% slide-buttons %}}
+<ul class="nav nav-tabs" id="slide-tabs" role="tablist">
+<li class="nav-item">
+<a class="nav-link active" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="true">Text</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" id="qualitative-textbased-data-tab" data-toggle="tab" href="#qualitative-textbased-data" role="tab" aria-controls="qualitative-textbased-data" aria-selected="false">Qualitative text-based data</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" id="crash-course-in-computational-linguistics-tab" data-toggle="tab" href="#crash-course-in-computational-linguistics" role="tab" aria-controls="crash-course-in-computational-linguistics" aria-selected="false">Crash course in computational linguistics</a>
+</li>
+</ul>
+<div id="slide-tabs" class="tab-content">
+<div id="text" class="tab-pane fade show active" role="tabpanel" aria-labelledby="text-tab">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="/slides/13-slides.html#1">
+</iframe>
+</div>
+</div>
+<div id="qualitative-textbased-data" class="tab-pane fade" role="tabpanel" aria-labelledby="qualitative-textbased-data-tab">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="/slides/13-slides.html#text-data">
+</iframe>
+</div>
+</div>
+<div id="crash-course-in-computational-linguistics" class="tab-pane fade" role="tabpanel" aria-labelledby="crash-course-in-computational-linguistics-tab">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="/slides/13-slides.html#computational-linguistics">
+</iframe>
+</div>
+</div>
+</div>
+<div class="fyi">
+<p><strong>Fun fact</strong>: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.</p>
+</div>
 </div>
 <div id="videos" class="section level2">
 <h2>Videos</h2>
-<p>Videos go here.</p>
+<p>Videos for each section of the lecture are <a href="https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj">available at this YouTube playlist</a>.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=FEzCQ2k3zyI&amp;list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj">Introduction</a></li>
+<li><a href="https://www.youtube.com/watch?v=o6I49HotNOc&amp;list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj">Qualitative text-based data</a></li>
+<li><a href="https://www.youtube.com/watch?v=Pdo7G9keXRM&amp;list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj">Crash course in computational linguistics</a></li>
+</ul>
+<p>You can also watch the playlist (and skip around to different sections) here:</p>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
 </div>
 <div class="footnotes">
 <hr />

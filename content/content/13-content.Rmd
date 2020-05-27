@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "13-slides"
+slides: "13-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -20,6 +20,7 @@ output:
 
 - <i class="fas fa-book"></i> Look through some of the chapters in Julia Silge and David Robinson, [*Tidy Text Mining*](https://www.tidytextmining.com/) [@SilgeRobinson:2017] (but *definitely* don't read them all! You just need to get a taste of what modern text analysis looks like.)
 - A bunch of (really) short things:
+    - <i class="fas fa-external-link-square-alt"></i> Evangeline Reynolds, ["Federalist Papers"](https://evangelinereynolds.netlify.app/post/federalist-papers/)
     - <i class="fas fa-external-link-square-alt"></i> Julia Silge, ["She Giggles, He Gallops"](https://pudding.cool/2017/08/screen-direction/)
     - <i class="fas fa-external-link-square-alt"></i> Abby Ohlheiser, ["These are the words most associated with men and women, according to Facebook status updates"](https://www.washingtonpost.com/news/the-intersect/wp/2016/05/28/these-are-the-words-most-associated-with-men-and-women-according-to-facebook-status-updates/)
     - <i class="fas fa-external-link-square-alt"></i> [Six Ideas for Displaying Qualitative Data](http://annkemery.com/qual-dataviz/)
@@ -38,9 +39,74 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Text", "1", TRUE,
+  "Qualitative text-based data", "text-data", FALSE,
+  "Crash course in computational linguistics", "computational-linguistics", FALSE
+)
+
+slide_tabs(sections, "/slides/13-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj).
+
+- [Introduction](https://www.youtube.com/watch?v=FEzCQ2k3zyI&list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj)
+- [Qualitative text-based data](https://www.youtube.com/watch?v=o6I49HotNOc&list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj)
+- [Crash course in computational linguistics](https://www.youtube.com/watch?v=Pdo7G9keXRM&list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj
+
+https://youtu.be/FEzCQ2k3zyI
+PMAP 8921 • (13) Text: (0) Introduction
+
+Introduction to the class session on visualizing text
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/13-content/
+
+
+https://youtu.be/o6I49HotNOc
+PMAP 8921 • (13) Text: (1) Qualitative text-based data
+
+Discussion of why it's hard to visualize text-based data and why word clouds aren't the greatest solution
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/13-content/
+
+  
+https://youtu.be/Pdo7G9keXRM
+PMAP 8921 • (13) Text: (2) Crash course in computational linguistics
+
+Overview of concepts in computational linguistics and other methods for analyzing large corpora of text
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/13-content/
+  
+
+https://youtu.be/YeyZp8Dw55g
+PMAP 8921 • (13) Text: Example
+
+Demonstration of how to use the tidytext and ggplot2 packages in R to visualize text
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/13-example/
+```

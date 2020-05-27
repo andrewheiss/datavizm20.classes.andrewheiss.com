@@ -6,6 +6,7 @@ class_date: "2020-05-28"
 output:
   blogdown::html_page:
     toc: true
+    toc_depth: 4
 menu:
   example:
     parent: Examples
@@ -18,5 +19,598 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#live-coding-example">Live coding example</a></li>
+<li><a href="#complete-code">Complete code</a>
+<ul>
+<li><a href="#get-data">Get data</a></li>
+<li><a href="#clean-data">Clean data</a></li>
+<li><a href="#tokens-and-word-counts">Tokens and word counts</a>
+<ul>
+<li><a href="#single-words">Single words</a></li>
+<li><a href="#bigrams">Bigrams</a></li>
+</ul></li>
+<li><a href="#bigrams-and-probability">Bigrams and probability</a></li>
+<li><a href="#term-frequency-inverse-document-frequency-tf-idf">Term frequency-inverse document frequency (tf-idf)</a></li>
+<li><a href="#sentiment-analysis">Sentiment analysis</a></li>
+<li><a href="#neat-extra-stuff">Neat extra stuff</a>
+<ul>
+<li><a href="#part-of-speech-tagging">Part of speech tagging</a></li>
+<li><a href="#topic-modeling-and-fingerprinting">Topic modeling and fingerprinting</a></li>
+<li><a href="#text-features">Text features</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<p>For this example, we’re going to use the text of <em>Little Women</em> by Louisa May Alcott and four Shakespearean tragedies (<em>Romeo and Juliet</em>, <em>King Lear</em>, <em>Macbeth</em>, and <em>Hamlet</em>) to explore how to do some basic text visualization.</p>
+<p>You can follow along if you want, but <strong>don’t feel like you have too</strong>. This is mostly just to give you a taste of different methods for visualizing text. It’s by no means comprehensive, but it is well annotated and commented and should (hopefully) be easy to follow.</p>
+<p>If you want to play with part-of-speech tagging, you can download an already-tagged version of <em>Little Women</em> here (you’ll likely need to right click and choose “Save Link As…”):</p>
+<ul>
+<li><a href="/data/little_women_tagged.csv"><i class="fas fa-file-csv"></i> <code>little_women_tagged.csv</code></a></li>
+</ul>
+<p>If you want to see other examples of text visualizations with the <strong>tidytext</strong> package, check out some of these:</p>
+<ul>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://rstudio-pubs-static.s3.amazonaws.com/300624_8260952d1f0346969e65f41a97006bf5.html">Harry Potter Sentiment Analysis for Beginners</a> (this uses <a href="https://github.com/bradleyboehmke/harrypotter">the <strong>harrypotter</strong> package</a>, which you can install from GitHub (not from CRAN))</li>
+<li><i class="fas fa-external-link-square-alt"></i> Peer Christensen <a href="https://peerchristensen.netlify.app/post/fair-is-foul-and-foul-is-fair-a-tidytext-entiment-analysis-of-shakespeare-s-tragedies/">“Fair is foul, and foul is fair: a tidytext sentiment analysis of Shakespeare’s tragedies”</a></li>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.andrewheiss.com/blog/2018/12/26/tidytext-pos-john/">“Tidy text, parts of speech, and unique words in the Bible”</a></li>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.andrewheiss.com/blog/2018/12/28/tidytext-pos-arabic/">“Tidy text, parts of speech, and unique words in the Qur’an”</a></li>
+</ul>
+<div id="live-coding-example" class="section level2">
+<h2>Live coding example</h2>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YeyZp8Dw55g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+</div>
+<div id="complete-code" class="section level2">
+<h2>Complete code</h2>
+<p><em>(This is a highly cleaned up version of the code from the video.)</em></p>
+<div id="get-data" class="section level3">
+<h3>Get data</h3>
+<p>First, as always, we’ll load the libraries we’ll be using:</p>
+<pre class="r"><code>library(tidyverse)   # For ggplot, dplyr, etc.
+library(tidytext)    # For neat text things
+library(gutenbergr)  # For downloading books from Project Gutenberg</code></pre>
+<p>We’re going to use the <strong>gutenbergr</strong> package to download some books directly from Project Gutenberg. The IDs for these books come from the URLs at their website. For instance, <a href="https://www.gutenberg.org/ebooks/514"><em>Little Women</em> is book #514</a>. We’ll store these books as `*_raw* and then clean them up later.</p>
+<pre class="r"><code># 514 Little Women
+little_women_raw &lt;- gutenberg_download(514, meta_fields = &quot;title&quot;)
+
+# 1524 - Hamlet
+# 1532 - King Lear
+# 1533 - Macbeth
+# 1513 - Romeo and Juliet
+tragedies_raw &lt;- gutenberg_download(c(1524, 1532, 1533, 1513),
+                                    meta_fields = &quot;title&quot;)</code></pre>
+<p>If you won’t want to redownload the books every time you knit (you don’t), you can do the same trick we’ve used for <a href="/example/08-example/">WDI</a> and <a href="/example/11-example/">FRED data</a>. Put the actual code for getting the books in a chunk with <code>eval=FALSE</code> on it and run it manually in RStudio when you want to get the data. Then you can write the downloaded data as a CSV file, and then load it invisibly from the CSV file when you knit:</p>
+<pre class="text"><code>I first download data from Project Gutenberg:
+
+```{r get-book, eval=FALSE}
+books_raw &lt;- gutenberg_download(...)
+
+write_csv(books_raw, &quot;data/books_raw.csv&quot;)
+```
+
+```{r load-book-data-real, include=FALSE}
+books_raw &lt;- read_csv(&quot;data/books_raw.csv&quot;)
+```</code></pre>
+</div>
+<div id="clean-data" class="section level3">
+<h3>Clean data</h3>
+<p>The data you get from Project Gutenberg comes in a tidy format, with a column for the book id, a column for the title, and a column for text. Sometimes this text column will be divided by lines in the book; sometimes it might be an entire page or paragraph or chapter. It all depends on how the book is formatted at Project Gutenberg.</p>
+<p>Here’s what the start of our <code>little_women_raw</code> data looks like:</p>
+<pre class="r"><code>head(little_women_raw)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   gutenberg_id text              title       
+##          &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;       
+## 1          514 LITTLE WOMEN      Little Women
+## 2          514 &lt;NA&gt;              Little Women
+## 3          514 &lt;NA&gt;              Little Women
+## 4          514 by                Little Women
+## 5          514 &lt;NA&gt;              Little Women
+## 6          514 Louisa May Alcott Little Women</code></pre>
+<p>If we look at the data in RStudio, we can see that the actual book doesn’t start until row 70 (the first 69 rows are the table of contents and other parts of the front matter).</p>
+<p>It would be nice if we had a column that indicated what chapter each line is in, since we could then group by chapter and look at patterns within chapters. Since the data doesn’t come with a chapter column, we have to make one ourselves using a fun little trick. Each chapter in the book starts with “CHAPTER ONE” or “CHAPTER TWO”, with “chapter” in ALL CAPS. We can make a variable named <code>chapter_start</code> that will be true if a line starts with “CHAPTER” and false if not. Then we can use the <code>cumsum()</code> function to take the cumulative sum of this column, which will increment up one number ever time there’s a new chapter, thus creating a helpful chapter column.</p>
+<pre class="r"><code># Clean up Little Women
+little_women &lt;- little_women_raw %&gt;% 
+  # The actual book doesn&#39;t start until line 70
+  slice(70:n()) %&gt;% 
+  # Get rid of rows where text is missing
+  drop_na(text) %&gt;% 
+  # Chapters start with CHAPTER X, so mark if each row is a chapter start
+  # cumsum() calculates the cumulative sum, so it&#39;ll increase every time there&#39;s
+  # a new chapter and automatically make chapter numbers
+  mutate(chapter_start = str_detect(text, &quot;^CHAPTER&quot;),
+         chapter_number = cumsum(chapter_start)) %&gt;% 
+  # Get rid of these columns
+  select(-gutenberg_id, -title, -chapter_start)
+
+head(little_women)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   text                                                                        chapter_number
+##   &lt;chr&gt;                                                                                &lt;int&gt;
+## 1 &quot;CHAPTER ONE&quot;                                                                            1
+## 2 &quot;PLAYING PILGRIMS&quot;                                                                       1
+## 3 &quot;\&quot;Christmas won&#39;t be Christmas without any presents,\&quot; grumbled Jo, lying&quot;              1
+## 4 &quot;on the rug.&quot;                                                                            1
+## 5 &quot;\&quot;It&#39;s so dreadful to be poor!\&quot; sighed Meg, looking down at her old&quot;                   1
+## 6 &quot;dress.&quot;                                                                                 1</code></pre>
+<p>The data from Shakespeare is similarly messy, with just three columns:</p>
+<pre class="r"><code>head(tragedies_raw)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   gutenberg_id text                   title           
+##          &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;           
+## 1         1513 ROMEO AND JULIET       Romeo and Juliet
+## 2         1513 &lt;NA&gt;                   Romeo and Juliet
+## 3         1513 by William Shakespeare Romeo and Juliet
+## 4         1513 &lt;NA&gt;                   Romeo and Juliet
+## 5         1513 &lt;NA&gt;                   Romeo and Juliet
+## 6         1513 &lt;NA&gt;                   Romeo and Juliet</code></pre>
+<p>The initial text sometimes isn’t the actual text of the book. If you look at the beginning of <em>Hamlet</em>, for instance, there’s a bunch of introductory stuff from editors and transcribers. In real life, we’d want to find a systematic way to get rid of that (perhaps by looking at how many introductory rows there are in each of the four plays and removing those rows), but for now, we’ll just live with it and pretend Shakespeare wrote these notes. 🤷</p>
+<p>We could also figure out a systematic way to indicate acts and scenes, but that’s tricky, so we won’t for this example. (<a href="https://peerchristensen.netlify.app/post/fair-is-foul-and-foul-is-fair-a-tidytext-entiment-analysis-of-shakespeare-s-tragedies/">This guy did though!</a>)</p>
+<p>Now that we have tidy text data, let’s do stuff with it!</p>
+</div>
+<div id="tokens-and-word-counts" class="section level3">
+<h3>Tokens and word counts</h3>
+<div id="single-words" class="section level4">
+<h4>Single words</h4>
+<p>One way we can visualize text is to look at word frequencies and find the most common words. This is even more important when looking across documents.</p>
+<p>Right now the text we have is tidy, but it is based on lines of text, not words. In order to count words correctly, we need each token (or text element, whether it be a word or bigram or paragraph or whatever) to be in its own row. The <code>unnest_tokens()</code> functions from <strong>tidytext</strong> does this for us. The first argument is the name of the column we want to create; the second argument is the name of the column we want to split into tokens.</p>
+<p>Let’s just work with the Shakespeare tragedies:</p>
+<pre class="r"><code>tragedies_words &lt;- tragedies_raw %&gt;% 
+  drop_na(text) %&gt;% 
+  unnest_tokens(word, text)
+
+head(tragedies_words)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   gutenberg_id title            word       
+##          &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;      
+## 1         1513 Romeo and Juliet romeo      
+## 2         1513 Romeo and Juliet and        
+## 3         1513 Romeo and Juliet juliet     
+## 4         1513 Romeo and Juliet by         
+## 5         1513 Romeo and Juliet william    
+## 6         1513 Romeo and Juliet shakespeare</code></pre>
+<p>Now that we have words, we can filter and count the words. Here’s what’s happening in this next chunk:</p>
+<ul>
+<li>We use <code>anti_join()</code> to remove all common stop words like “a” and “the” that are listed in the <code>stop_words</code> dataset that is loaded when you load <strong>tidytext</strong></li>
+<li>We count how many times each word appears in each title/play</li>
+<li>We only keep the top 15 words</li>
+</ul>
+<pre class="r"><code>top_words_tragedies &lt;- tragedies_words %&gt;% 
+  # Remove stop words
+  anti_join(stop_words) %&gt;% 
+  # Get rid of old timey words and stage directions
+  filter(!(word %in% c(&quot;thou&quot;, &quot;thy&quot;, &quot;haue&quot;, &quot;thee&quot;, 
+                      &quot;thine&quot;, &quot;enter&quot;, &quot;exeunt&quot;, &quot;exit&quot;))) %&gt;% 
+  # Count all the words in each play
+  count(title, word, sort = TRUE) %&gt;% 
+  # Keep top 15 in each play
+  group_by(title) %&gt;% 
+  top_n(15) %&gt;% 
+  ungroup() %&gt;% 
+  # Make the words an ordered factor so they plot in order
+  mutate(word = fct_inorder(word))
+top_words_tragedies</code></pre>
+<pre><code>## # A tibble: 63 x 3
+##    title                     word        n
+##    &lt;chr&gt;                     &lt;fct&gt;   &lt;int&gt;
+##  1 Hamlet, Prince of Denmark ham       358
+##  2 Romeo and Juliet          romeo     296
+##  3 Macbeth                   macbeth   282
+##  4 The Tragedy of King Lear  lear      230
+##  5 Hamlet, Prince of Denmark lord      223
+##  6 Hamlet, Prince of Denmark king      197
+##  7 Romeo and Juliet          juliet    178
+##  8 The Tragedy of King Lear  kent      174
+##  9 Romeo and Juliet          nurse     149
+## 10 Romeo and Juliet          capulet   145
+## # … with 53 more rows</code></pre>
+<p>Now we can plot these results, facetting and filling by title:</p>
+<pre class="r"><code>ggplot(top_words_tragedies, aes(y = fct_rev(word), x = n, fill = title)) + 
+  geom_col() + 
+  guides(fill = FALSE) +
+  labs(y = &quot;Count&quot;, x = NULL, 
+       title = &quot;15 most frequent words in four Shakespearean tragedies&quot;) +
+  facet_wrap(vars(title), scales = &quot;free_y&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/example/13-example_files/figure-html/plot-top-words-tragedies-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>These results aren’t terribly surprising. “lear” is the most common word in <em>King Lear</em>, “macbeth” is the most common word in <em>Macbeth</em>, and so on. But the results are still really neat! This is a wordcloud for grownups!</p>
+<p>(Sharp-eyed readers will notice that the words aren’t actually in perfect order! That’s because some common words are repeated across the plays, like “lord” and “sir”. However, each category in a factor can only have one possible position in the orer, so because “lord” is the second most common word in <em>Hamlet</em> it also appears as #2 in <em>Macbeth</em> and <em>King Lear</em>. You can fix this with the <code>reorder_within()</code> function in <strong>tidytext</strong>—see <a href="https://juliasilge.com/blog/reorder-within/">Julia Silge’s tutorial here</a> for how to use it.)</p>
+</div>
+<div id="bigrams" class="section level4">
+<h4>Bigrams</h4>
+<p>We can also look at pairs of words instead of single words. To do this, we need to change a couple arguments in <code>unnest_tokens()</code>, but otherwise everything else stays the same. In order to remove stopwords, we need to split the bigram column into two columns (<code>word1</code> and <code>word2</code>) with <code>separate()</code>, filter each of those columns, and then combine the word columns back together as <code>bigram</code> with <code>unite()</code></p>
+<pre class="r"><code>tragedies_bigrams &lt;- tragedies_raw %&gt;% 
+  drop_na(text) %&gt;% 
+  # n = 2 here means bigrams. We could also make trigrams (n = 3) or any type of n-gram
+  unnest_tokens(bigram, text, token = &quot;ngrams&quot;, n = 2) %&gt;% 
+  # Split the bigrams into two words so we can remove stopwords
+  separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;% 
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word) %&gt;% 
+  filter(!word1 %in% c(&quot;thou&quot;, &quot;thy&quot;, &quot;thine&quot;, &quot;enter&quot;, &quot;exeunt&quot;, &quot;exit&quot;),
+         !word2 %in% c(&quot;thou&quot;, &quot;thy&quot;, &quot;thine&quot;, &quot;enter&quot;, &quot;exeunt&quot;, &quot;exit&quot;)) %&gt;% 
+  # Put the two word columns back together
+  unite(bigram, word1, word2, sep = &quot; &quot;)
+tragedies_bigrams</code></pre>
+<pre><code>## # A tibble: 14,237 x 3
+##    gutenberg_id title            bigram             
+##           &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              
+##  1         1513 Romeo and Juliet william shakespeare
+##  2         1513 Romeo and Juliet shakespeare persons
+##  3         1513 Romeo and Juliet persons represented
+##  4         1513 Romeo and Juliet represented escalus
+##  5         1513 Romeo and Juliet escalus prince     
+##  6         1513 Romeo and Juliet verona paris       
+##  7         1513 Romeo and Juliet nobleman kinsman   
+##  8         1513 Romeo and Juliet prince montague    
+##  9         1513 Romeo and Juliet montague heads     
+## 10         1513 Romeo and Juliet capulet romeo      
+## # … with 14,227 more rows</code></pre>
+<pre class="r"><code>top_bigrams &lt;- tragedies_bigrams %&gt;% 
+  # Count all the bigrams in each play
+  count(title, bigram, sort = TRUE) %&gt;% 
+  # Keep top 15 in each play
+  group_by(title) %&gt;% 
+  top_n(15) %&gt;% 
+  ungroup() %&gt;% 
+  # Make the bigrams an ordered factor so they plot in order
+  mutate(bigram = fct_inorder(bigram))</code></pre>
+<pre><code>## Selecting by n</code></pre>
+<pre class="r"><code>ggplot(top_bigrams, aes(y = fct_rev(bigram), x = n, fill = title)) + 
+  geom_col() + 
+  guides(fill = FALSE) +
+  labs(y = &quot;Count&quot;, x = NULL, 
+       title = &quot;15 most frequent bigrams in four Shakespearean tragedies&quot;) +
+  facet_wrap(vars(title), scales = &quot;free&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/example/13-example_files/figure-html/top-bigrams-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There are some neat trends here. “Lord Hamlet” is the most common pair of words in <em>Hamlet</em> (not surprisingly), but in Macbeth the repeated “knock knock” (the first non-name repeated pair) is a well-known plot point and reoccurring symbolic theme throughout the play.</p>
+</div>
+</div>
+<div id="bigrams-and-probability" class="section level3">
+<h3>Bigrams and probability</h3>
+<p>We can replicate the <a href="https://pudding.cool/2017/08/screen-direction/">“She Giggles, He Gallops”</a> idea by counting the bigrams that match “he X” and “she X”.</p>
+<p>The log ratio idea shows how much more likely a word is compared to its counterpart (so “he that” is about 5 more likely to appear than “she that”. In this graph, I replaced the x-axis labels with “2x” and “4x”, but without those, you get numbers like 1, 2, and 3 (or -1, -2, -3)). To convert those logged ratio numbers into the multiplicative version (i.e. 2x instead of 1), raise 2 to the power of the log ratio. If the log ratio is 3, the human-readable version is <span class="math inline">\(2^3\)</span>, or 8 times.</p>
+<pre class="r"><code># Take the log of 8:
+log2(8)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code># Reverse log of 3:
+2^3</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>The only text wizardry here is tokenizing the words. Pretty much the rest of all this code is just <strong>dplyr</strong> mutating, filtering, and counting:</p>
+<pre class="r"><code>pronouns &lt;- c(&quot;he&quot;, &quot;she&quot;)
+
+bigram_he_she_counts &lt;- tragedies_raw %&gt;%
+  drop_na(text) %&gt;% 
+  # Split into bigrams
+  unnest_tokens(bigram, text, token = &quot;ngrams&quot;, n = 2) %&gt;%
+  # Find counts of bigrams
+  count(bigram, sort = TRUE) %&gt;%
+  # Split the bigram column into two columns
+  separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;%
+  # Only choose rows where the first word is he or she
+  filter(word1 %in% pronouns) %&gt;%
+  count(word1, word2, wt = n, sort = TRUE) %&gt;% 
+  rename(total = n)
+
+word_ratios &lt;- bigram_he_she_counts %&gt;%
+  # Look at each of the second words
+  group_by(word2) %&gt;%
+  # Only choose rows where the second word appears more than 10 times
+  filter(sum(total) &gt; 10) %&gt;%
+  ungroup() %&gt;%
+  # Spread out the word1 column so that there&#39;s a column named &quot;he&quot; and one named &quot;she&quot;
+  spread(word1, total, fill = 0) %&gt;%
+  # Add 1 to each number so that logs work (just in case any are zero)
+  mutate_if(is.numeric, ~(. + 1) / sum(. + 1)) %&gt;%
+  # Create a new column that is the logged ratio of the she counts to he counts
+  mutate(logratio = log2(she / he)) %&gt;%
+  # Sort by that ratio
+  arrange(desc(logratio))
+
+# Rearrange this data so it&#39;s plottable
+plot_word_ratios &lt;- word_ratios %&gt;%
+  # This gets the words in the right order---we take the absolute value, select
+  # only rows where the log ratio is bigger than 0, and then take the top 15 words
+  mutate(abslogratio = abs(logratio)) %&gt;%
+  group_by(logratio &lt; 0) %&gt;%
+  top_n(15, abslogratio) %&gt;%
+  ungroup() %&gt;%
+  mutate(word = reorder(word2, logratio)) 
+
+# Finally we plot this
+ggplot(plot_word_ratios, aes(y = word, x = logratio, color = logratio &lt; 0)) +
+  geom_segment(aes(y = word, yend = word,
+                   x = 0, xend = logratio), 
+               size = 1.1, alpha = 0.6) +
+  geom_point(size = 3.5) +
+  labs(x = &quot;How much more/less likely&quot;, y = NULL) +
+  scale_color_discrete(name = &quot;&quot;, labels = c(&quot;More &#39;she&#39;&quot;, &quot;More &#39;he&#39;&quot;)) +
+  scale_x_continuous(breaks = seq(-3, 3),
+                     labels = c(&quot;8x&quot;, &quot;4x&quot;, &quot;2x&quot;,
+                                &quot;Same&quot;, &quot;2x&quot;, &quot;4x&quot;, &quot;8x&quot;)) +
+  theme_bw() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/example/13-example_files/figure-html/bigrams-he-she-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Shakespeare doesn’t use a lot of fancy verbs in his plays, so we’re left with incredibly common verbs like “should” and “comes” and “was”. Oh well.</p>
+</div>
+<div id="term-frequency-inverse-document-frequency-tf-idf" class="section level3">
+<h3>Term frequency-inverse document frequency (tf-idf)</h3>
+<p>We can determine which words are the most unique for each book/document in our corpus using by calculating the tf-idf (term frequency-inverse document frequency) score for each term. The tf-idf is the product of the term frequency and the inverse document frequency:</p>
+<p><span class="math display">\[
+\begin{aligned}
+tf(\text{term}) &amp;= \frac{n_{\text{term}}}{n_{\text{terms in document}}} \\
+idf(\text{term}) &amp;= \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)} \\
+tf\text{-}idf(\text{term}) &amp;= tf(\text{term}) \times idf(\text{term})
+\end{aligned}
+\]</span></p>
+<p>Fortunately you don’t need to remember that formula. The <code>bind_tf_idf()</code> function will calculate this for you. Remember, the higher the tf-idf number, the more unique the term is in the document, but these numbers are meaningless and unitless—you can’t convert them to a percentage or anything.</p>
+<p>Here are the most unique words in these four tragedies, compared to all the tragedies:</p>
+<pre class="r"><code>tragedy_words &lt;- tragedies_raw %&gt;% 
+  drop_na() %&gt;% 
+  # Split into word tokens
+  unnest_tokens(word, text) %&gt;% 
+  # Remove stop words and old timey words
+  anti_join(stop_words) %&gt;% 
+  filter(!word %in% c(&quot;thou&quot;, &quot;thy&quot;, &quot;haue&quot;, &quot;thee&quot;, 
+                      &quot;thine&quot;, &quot;enter&quot;, &quot;exeunt&quot;, &quot;exit&quot;)) %&gt;% 
+  count(title, word, sort = TRUE)
+
+# Add the tf-idf values to the counts
+tragedy_tf_idf &lt;- tragedy_words %&gt;% 
+  bind_tf_idf(word, title, n)
+
+# Get the top 10 uniquest words
+tragedy_tf_idf_plot &lt;- tragedy_tf_idf %&gt;% 
+  arrange(desc(tf_idf)) %&gt;% 
+  group_by(title) %&gt;% 
+  top_n(10) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(word = fct_inorder(word))
+
+ggplot(tragedy_tf_idf_plot, 
+       aes(y = fct_rev(word), x = tf_idf, fill = title)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = &quot;tf-idf&quot;, y = NULL) +
+  facet_wrap(~ title, scales = &quot;free&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/example/13-example_files/figure-html/tf-idf-tragedies-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Not surprisingly, the most unique words for each play happen to be the names of the characters in those plays.</p>
+</div>
+<div id="sentiment-analysis" class="section level3">
+<h3>Sentiment analysis</h3>
+<p>In the video, I plotted the sentiment of <em>Little Women</em> across the book, but it wasn’t a very interesting plot. We’ll try with Shakespeare here instead.</p>
+<p>At its core, sentiment analysis involves looking at a big list of words for how negative or positive they are. Some sentiment dictionaries mark if a word is “negative” or “positive”; some give words a score from -3 to 3; some give different emotions like “sadness” or “anger”. You can see what the different dictionaries look like with <code>get_sentiments()</code></p>
+<pre class="r"><code>get_sentiments(&quot;afinn&quot;)  # Scoring system</code></pre>
+<pre><code>## # A tibble: 2,477 x 2
+##    word       value
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 abandon       -2
+##  2 abandoned     -2
+##  3 abandons      -2
+##  4 abducted      -2
+##  5 abduction     -2
+##  6 abductions    -2
+##  7 abhor         -3
+##  8 abhorred      -3
+##  9 abhorrent     -3
+## 10 abhors        -3
+## # … with 2,467 more rows</code></pre>
+<pre class="r"><code># get_sentiments(&quot;bing&quot;)  # Negative/positive
+# get_sentiments(&quot;nrc&quot;)  # Specific emotions
+# get_sentiments(&quot;loughran&quot;)  # Designed for financial statements; positive/negative</code></pre>
+<p>Here we split the Shakespearean tragedies into words, join a sentiment dictionary to it, and use <strong>dplyr</strong> data wrangling to calculate the net number positive words in each chapter. Had we used the AFINN library, we could calculate the average sentiment per chapter, since AFINN uses a scoring system instead of negative/positive labels. Or we could’ve used the NRC library, which has specific emotions like trust and fear.</p>
+<pre class="r"><code>tragedy_words &lt;- tragedies_raw %&gt;% 
+  drop_na() %&gt;% 
+  # Split into word tokens
+  unnest_tokens(word, text) %&gt;% 
+  # Remove stop words and old timey words
+  anti_join(stop_words) %&gt;% 
+  filter(!word %in% c(&quot;thou&quot;, &quot;thy&quot;, &quot;haue&quot;, &quot;thee&quot;, 
+                      &quot;thine&quot;, &quot;enter&quot;, &quot;exeunt&quot;, &quot;exit&quot;))
+
+# Join the sentiment dictionary 
+tragedy_sentiment &lt;- tragedy_words %&gt;% 
+  inner_join(get_sentiments(&quot;bing&quot;))
+tragedy_sentiment</code></pre>
+<pre><code>## # A tibble: 7,736 x 4
+##    gutenberg_id title            word       sentiment
+##           &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;    
+##  1         1513 Romeo and Juliet dignity    positive 
+##  2         1513 Romeo and Juliet fair       positive 
+##  3         1513 Romeo and Juliet grudge     negative 
+##  4         1513 Romeo and Juliet break      negative 
+##  5         1513 Romeo and Juliet unclean    negative 
+##  6         1513 Romeo and Juliet fatal      negative 
+##  7         1513 Romeo and Juliet overthrows negative 
+##  8         1513 Romeo and Juliet death      negative 
+##  9         1513 Romeo and Juliet strife     negative 
+## 10         1513 Romeo and Juliet fearful    negative 
+## # … with 7,726 more rows</code></pre>
+<p>We can look at these sentiments a few different ways. First we can get a count of total positive and negative words in the four books. We can see that in all four, there are more negative words than positive ones (they’re tragdies, after all):</p>
+<pre class="r"><code>tragedy_sentiment_plot &lt;- tragedy_sentiment %&gt;% 
+  count(title, sentiment)
+
+ggplot(tragedy_sentiment_plot, aes(x = sentiment, y = n, fill = title, alpha = sentiment)) +
+  geom_col(position = position_dodge()) +
+  scale_alpha_manual(values = c(0.5, 1)) +
+  facet_wrap(vars(title)) +
+  theme_bw()</code></pre>
+<p><img src="/example/13-example_files/figure-html/shakespeare-sentiment-plot-bars-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Perhaps more usefully, we can divide each of the plays into groups of 100 lines, and then get the net sentiment of each group (number of positive words − number of negative words). By splitting the data into groups of lines, we can show a more granular view of the progression of the plot. To do this we make a column that indicates the row number, and then we use the special <code>%/%</code> operator to perform integer division, which essentially lops off the decimal point when dividing numbers: 150/100 normally is 1.5, but in integer divison, it is 1. This is a helpful trick for putting rows 1-99 in one group, then rows 100-199 in another group, etc.</p>
+<pre class="r"><code>tragedies_split_into_lines &lt;- tragedy_sentiment %&gt;% 
+  # Divide lines into groups of 100
+  mutate(line = row_number(),
+         line_chunk = line %/% 100) %&gt;% 
+  # Get a count of postiive and negative words in each 100-line chunk in each play
+  count(title, line_chunk, sentiment) %&gt;% 
+  # Convert the sentiment column into two columns named &quot;positive&quot; and &quot;negative&quot;
+  pivot_wider(names_from = sentiment, values_from = n) %&gt;% 
+  # Calculate net sentiment
+  mutate(sentiment = positive - negative)
+
+ggplot(tragedies_split_into_lines,
+       aes(x = line_chunk, y = sentiment, fill = sentiment)) +
+  geom_col() +
+  scale_fill_viridis_c(option = &quot;magma&quot;, end = 0.9) +
+  facet_wrap(vars(title), scales = &quot;free_x&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/example/13-example_files/figure-html/shakespeare-sentiment-plot-lines-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Neat. They’re all really sad and negative, except for the beginning of Romeo and Juliet where the two lovers meet and fall in love. Then everyone dies later.</p>
+</div>
+<div id="neat-extra-stuff" class="section level3">
+<h3>Neat extra stuff</h3>
+<p>None of this stuff was in the video, but it’s useful to know and see how to do it. It all generally comes from the <a href="https://www.tidytextmining.com/"><em>Tidy Text Mining</em> book</a> by Julia Silge and David Robinson</p>
+<div id="part-of-speech-tagging" class="section level4">
+<h4>Part of speech tagging</h4>
+<p>R has no way of knowing if words are nouns, verbs, or adjectives. You can algorithmically predict what part of speech each word is using a part-of-speech tagger, like <a href="https://spacy.io/"><strong>spaCy</strong></a> or <a href="https://nlp.stanford.edu/">Stanford’s Natural Langauge Processing (NLP) library</a>.</p>
+<p>These are external programs that are not written in R and don’t naturally communicate with R (spaCy is written in Python; Stanford’s CoreNLP is written in Java). There is a helpful R package named <strong>cleanNLP</strong> that helps you interact with these programs from within R, whis is super helpful. <strong>cleanNLP</strong> also comes with its own R-only tagger so you don’t need to install anything with Python or Java (however, it’s not as powerful as either spaCy, which is faster, and doesn’t deal with foreign languages like Arabic and Chinese like Stanford’s NLP library).</p>
+<p>You can see other examples of part-of-speech tagging (along with instructions for how to install spaCy and coreNLP) here:</p>
+<ul>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.andrewheiss.com/blog/2018/12/26/tidytext-pos-john/">“Tidy text, parts of speech, and unique words in the Bible”</a></li>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.andrewheiss.com/blog/2018/12/28/tidytext-pos-arabic/">“Tidy text, parts of speech, and unique words in the Qur’an”</a></li>
+</ul>
+<p>Here’s the general process for tagging (or “annotating”) text with the <strong>cleanNLP</strong> package:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make a dataset where one column is the id (line number, chapter number, book+chapter, etc.), and another column is the text itself.</p></li>
+<li><p>Initialize the NLP tagger. You can use any of these:</p>
+<ul>
+<li><code>cnlp_init_udpipe()</code>: Use an R-only tagger that should work without installing anything extra (a little slower than the others, but requires no extra steps!)</li>
+<li><code>cnlp_init_spacy()</code>: Use spaCy (if you’ve installed it on your computer with Python)</li>
+<li><code>cnlp_init_corenlp()</code>: Use Stanford’s NLP library (if you’ve installed it on your computer with Java)</li>
+</ul></li>
+<li><p>Feed the data frame from step 1 into the <code>cnlp_annotate()</code> function and wait.</p></li>
+<li><p>Save the tagged data on your computer so you don’t have to re-tag it every time.</p></li>
+</ol>
+<p>Here’s an example using the <em>Little Women</em> data:</p>
+<pre class="r"><code># For the tagger to work, each row needs to be unique, which means we need to
+# combine all the text into individual chapter-based rows. This takes a little
+# bit of text-wrangling with dplyr:
+little_women_to_tag &lt;- little_women %&gt;% 
+  # Group by chapter number
+  group_by(chapter_number) %&gt;% 
+  # Take all the rows in each chapter and collapse them into a single cell
+  nest(data = c(text)) %&gt;% 
+  ungroup() %&gt;% 
+  # Look at each individual cell full of text lines and paste them together into
+  # one really long string of text per chapter
+  mutate(text = map_chr(data, ~paste(.$text, collapse = &quot; &quot;))) %&gt;% 
+  # Get rid of this column
+  select(-data)
+little_women_to_tag</code></pre>
+<pre><code>## # A tibble: 47 x 2
+##    chapter_number text                                                                                                                                
+##             &lt;int&gt; &lt;chr&gt;                                                                                                                               
+##  1              1 &quot;CHAPTER ONE PLAYING PILGRIMS \&quot;Christmas won&#39;t be Christmas without any presents,\&quot; grumbled Jo, lying on the rug. \&quot;It&#39;s so dread…
+##  2              2 &quot;CHAPTER TWO A MERRY CHRISTMAS Jo was the first to wake in the gray dawn of Christmas morning. No stockings hung at the fireplace, …
+##  3              3 &quot;CHAPTER THREE THE LAURENCE BOY \&quot;Jo!  Jo!  Where are you?\&quot; cried Meg at the foot of the garret stairs. \&quot;Here!\&quot; answered a husky…
+##  4              4 &quot;CHAPTER FOUR BURDENS \&quot;Oh, dear, how hard it does seem to take up our packs and go on,\&quot; sighed Meg the morning after the party, f…
+##  5              5 &quot;CHAPTER FIVE BEING NEIGHBORLY \&quot;What in the world are you going to do now, Jo?\&quot; asked Meg one snowy afternoon, as her sister came…
+##  6              6 &quot;CHAPTER SIX BETH FINDS THE PALACE BEAUTIFUL The big house did prove a Palace Beautiful, though it took some time for all to get in…
+##  7              7 &quot;CHAPTER SEVEN AMY&#39;S VALLEY OF HUMILIATION \&quot;That boy is a perfect cyclops, isn&#39;t he?\&quot; said Amy one day, as Laurie clattered by on…
+##  8              8 &quot;CHAPTER EIGHT JO MEETS APOLLYON \&quot;Girls, where are you going?\&quot; asked Amy, coming into their room one Saturday afternoon, and find…
+##  9              9 &quot;CHAPTER NINE MEG GOES TO VANITY FAIR \&quot;I do think it was the most fortunate thing in the world that those children should have the…
+## 10             10 &quot;CHAPTER TEN THE P.C. AND P.O. As spring came on, a new set of amusements became the fashion, and the lengthening days gave long af…
+## # … with 37 more rows</code></pre>
+<p>Notice how there’s now a row for each chapter, and the whole chapter is contained in the <code>text</code> column. With the data in this format, we can annotate it. It takes about 3 minutes to run this on my 2016 MacBook Pro with the R-only udpipe tagger (and only 30 seconds if I use the spaCy tagger). Notice how I immediately save the tagged tokens as a CSV file after so I don’t have to do it again.</p>
+<pre class="r"><code>library(cleanNLP)
+
+# Use the built-in R-based tagger
+cnlp_init_udpipe()
+
+little_women_tagged &lt;- cnlp_annotate(little_women_to_tag, 
+                                     text_name = &quot;text&quot;, 
+                                     doc_name = &quot;chapter_number&quot;)
+
+write_csv(little_women_tagged$token, &quot;little_women_tagged.csv&quot;)</code></pre>
+<p>Here’s what the tagged text looks like:</p>
+<pre class="r"><code>little_women_tagged</code></pre>
+<pre><code>## # A tibble: 232,093 x 10
+##    doc_id   sid   tid token       token_with_ws lemma       upos  xpos  tid_source relation
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   
+##  1      1     1     1 &quot;CHAPTER&quot;   &quot;CHAPTER&quot;     &quot;chapter&quot;   NOUN  NN             4 nmod    
+##  2      1     1     2 &quot;ONE&quot;       &quot;ONE&quot;         &quot;one&quot;       NUM   CD             1 nummod  
+##  3      1     1     3 &quot;PLAYING&quot;   &quot;PLAYING&quot;     &quot;playing&quot;   NOUN  NN             4 compound
+##  4      1     1     4 &quot;PILGRIMS&quot;  &quot;PILGRIMS&quot;    &quot;pilgrims&quot;  NOUN  NN             0 root    
+##  5      1     1     5 &quot;\&quot;&quot;        &quot;\&quot;&quot;          &quot;\&quot;&quot;        PUNCT ``             4 punct   
+##  6      1     2     1 &quot;Christmas&quot; &quot;Christmas&quot;   &quot;Christmas&quot; PROPN NNP            4 nsubj   
+##  7      1     2     2 &quot;wo&quot;        &quot;wo&quot;          &quot;will&quot;      VERB  MD             4 aux     
+##  8      1     2     3 &quot;n&#39;t&quot;       &quot;n&#39;t&quot;         &quot;not&quot;       PART  RB             4 neg     
+##  9      1     2     4 &quot;be&quot;        &quot;be&quot;          &quot;be&quot;        AUX   VB             0 root    
+## 10      1     2     5 &quot;Christmas&quot; &quot;Christmas&quot;   &quot;Christmas&quot; PROPN NNP            4 attr    
+## # … with 232,083 more rows</code></pre>
+<p>There are a bunch of new columns like <code>lemma</code> (or the base stemmed word), and <code>upos</code> and <code>pos</code> for the different parts of speech. These use the <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">Penn Treebank codes</a>.</p>
+<p>Now that everything is tagged, we can do any grouping and summarizing and filtering we want. We could find the most common verbs, or the most common nouns or proper names, for instance. Here’s a fun plot that shows the proportion of mentions of the four main characters (Meg, Jo, Beth, and Amy) in each chapter.</p>
+<pre class="r"><code># Find all proper nouns
+proper_nouns &lt;- little_women_tagged %&gt;% 
+  filter(upos == &quot;PROPN&quot;)
+
+main_characters_by_chapter &lt;- proper_nouns %&gt;% 
+  # Find only Meg, Jo, Beth, and Amy
+  filter(lemma %in% c(&quot;Meg&quot;, &quot;Jo&quot;, &quot;Beth&quot;, &quot;Amy&quot;)) %&gt;% 
+  # Group by chapter and character name
+  group_by(doc_id, lemma) %&gt;% 
+  # Get the count of mentions
+  summarize(n = n()) %&gt;% 
+  # Make a new column named &quot;name&quot; that is an ordered factor of the girls&#39; names
+  mutate(name = factor(lemma, levels = c(&quot;Meg&quot;, &quot;Jo&quot;, &quot;Beth&quot;, &quot;Amy&quot;), ordered = TRUE)) %&gt;% 
+  # Rename this so it&#39;s called chapter
+  rename(chapter = doc_id) %&gt;% 
+  # Group by chapter
+  group_by(chapter) %&gt;% 
+  # Calculate the proportion of each girl&#39;s mentions in each chapter
+  mutate(prop = n / sum(n)) %&gt;% 
+  ungroup() %&gt;% 
+  # Make a cleaner chapter name column
+  mutate(chapter_name = paste(&quot;Chapter&quot;, chapter)) %&gt;% 
+  mutate(chapter_name = fct_inorder(chapter_name))
+main_characters_by_chapter</code></pre>
+<pre><code>## # A tibble: 177 x 6
+##    chapter lemma     n name    prop chapter_name
+##      &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;ord&gt;  &lt;dbl&gt; &lt;fct&gt;       
+##  1       1 Amy      23 Amy   0.195  Chapter 1   
+##  2       1 Beth     26 Beth  0.220  Chapter 1   
+##  3       1 Jo       43 Jo    0.364  Chapter 1   
+##  4       1 Meg      26 Meg   0.220  Chapter 1   
+##  5       2 Amy      13 Amy   0.197  Chapter 2   
+##  6       2 Beth     12 Beth  0.182  Chapter 2   
+##  7       2 Jo       21 Jo    0.318  Chapter 2   
+##  8       2 Meg      20 Meg   0.303  Chapter 2   
+##  9       3 Amy       2 Amy   0.0202 Chapter 3   
+## 10       3 Beth      2 Beth  0.0202 Chapter 3   
+## # … with 167 more rows</code></pre>
+<p>And here’s the polished plot:</p>
+<pre class="r"><code>ggplot(main_characters_by_chapter, aes(x = prop, y = 1, fill = fct_rev(name))) + 
+  geom_col(position = position_stack()) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_fill_viridis_d(option = &quot;plasma&quot;, end = 0.9, name = NULL) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(x = NULL, y = NULL,
+       title = &quot;Proportion of mentions of each\nLittle Woman per chapter&quot;,
+       subtitle = &quot;Jo basically dominates the last third of the book&quot;) +
+  facet_wrap(vars(chapter_name), nrow = 6) +
+  theme_bw(base_family = &quot;Roboto Condensed&quot;) +
+  theme(legend.position = &quot;top&quot;,
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        strip.background = element_rect(fill = &quot;white&quot;),
+        legend.text = element_text(face = &quot;bold&quot;, size = rel(1)),
+        plot.title = element_text(face = &quot;bold&quot;, hjust = 0.5, size = rel(1.7)),
+        plot.subtitle = element_text(hjust = 0.5, size = rel(1.1)))</code></pre>
+<p><img src="/example/13-example_files/figure-html/lw-props-plot-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="topic-modeling-and-fingerprinting" class="section level4">
+<h4>Topic modeling and fingerprinting</h4>
+<p>If you want to see some examples of topic modeling with Latent Dirichlet Allocation (LDA) or text fingerprinting based on sentence length and counts of hapax legomena (<a href="https://kops.uni-konstanz.de/bitstream/handle/123456789/5492/Literature_Fingerprinting.pdf">based on this article</a>), see these examples from a previous version of this class: <a href="https://datavizf18.classes.andrewheiss.com/class/11-class/#topic-modeling">topic modeling</a> and <a href="https://datavizf18.classes.andrewheiss.com/class/11-class/#fingerprinting">fingerprinting</a></p>
+</div>
+<div id="text-features" class="section level4">
+<h4>Text features</h4>
+<p>Finally, you can use <a href="https://github.com/mkearney/textfeatures">the <strong>textfeatures</strong> package</a> to find all sorts of interesting numeric statistics about text, like the number of exclamation points, commas, digits, characters per word, uppercase letters, lowercase letters, and more!</p>
+</div>
+</div>
+</div>

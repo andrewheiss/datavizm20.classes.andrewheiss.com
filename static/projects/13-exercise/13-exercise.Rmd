@@ -1,0 +1,26 @@
+---
+title: "Exercise 13"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Word frequencies
+
+Download 4+ books by some author on [Project Gutenberg](http://www.gutenberg.org/). Jane Austen, Victor Hugo, Emily Brontë, Lucy Maud Montgomery, Arthur Conan Doyle, Mark Twain, Henry David Thoreau, Fyodor Dostoyevsky, Leo Tolstoy. Anyone. Just make sure it's all from the same author.
+
+Make these two plots and describe what each tell about your author's books:
+
+1. Top 10 most frequent words *in each book*
+2. Top 10 most unique words *in each book* (i.e. tf-idf)
+
+```{r load-libraries-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+```

@@ -397,7 +397,7 @@ hp_to_tag <- hp %>%
   mutate(book_chapter = paste0(book, "_", chapter))
 
 # This took like 15-20 minutes for the whole HP series (!!!)
-hp_pos <- cnlp_annotate(hp, text_name = "text", doc_name = "book_chapter")
+hp_pos <- cnlp_annotate(hp_to_tag, text_name = "text", doc_name = "book_chapter")
 saveRDS(hp_pos, "~/Desktop/hp_pos.rds")
 
 hp1_pos_terms <- hp_pos$token %>% 
