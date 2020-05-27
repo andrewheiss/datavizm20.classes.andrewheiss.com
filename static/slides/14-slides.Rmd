@@ -1,0 +1,131 @@
+---
+title: "Enhancing graphics"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+set.seed(1234)
+```
+
+class: center middle main-title section-title-4
+
+# Enhancing graphics
+
+.class-info[
+
+**Session 14**
+
+.light[PMAP 8921: Data Visualization with R<br>
+Andrew Young School of Policy Studies<br>
+May 2020]
+
+]
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Typical publication workflow
+
+.box-inv-5[Create plot in R and ggplot2]
+
+--
+
+.box-inv-5.sp-after[Export plot as a vector]
+
+--
+
+.box-inv-5[Edit the vector in an external program<br>to make it match in-house style<br>(or just be fancy and well-designed in general)]
+
+--
+
+.box-5.small[*or*]
+
+--
+
+.box-inv-5[Extract parts of the vector for use in Javascript for interactivity]
+
+---
+
+# In-house styles
+
+.pull-left[
+<figure>
+  <img src="img/14/Sawchik-MLBCatcher-0522-1.png" alt="FiveThirtyEight graph of catcher hitting trends" title="FiveThirtyEight graph of catcher hitting trends" width="100%">
+</figure>
+]
+
+--
+
+.pull-right[
+<figure>
+  <img src="img/14/nyt-covid-deaths.png" alt="NYT graph of undercounted COVID-19 deaths" title="NYT graph of undercounted COVID-19 deaths" width="100%">
+</figure>
+]
+
+???
+
+https://www.nytimes.com/interactive/2020/05/05/us/coronavirus-death-toll-us.html
+
+https://fivethirtyeight.com/features/catcher-is-baseballs-most-endangered-position/
+
+---
+
+# Hot dogs
+
+.center[
+<figure>
+  <img src="img/14/hot-dogs.gif" alt="Hot Dog Eating Contest" title="Hot Dog Eating Contest" width="100%">
+</figure>
+]
+
+---
+
+# This is all changing though!
+
+.box-inv-5[This was made 100% in R and ggplot!]
+
+.center[
+<figure>
+  <img src="img/14/build-pretty-plot-1.png" alt="CO2 emissions rankings" title="CO2 emissions rankings" width="65%">
+</figure>
+]
+
+---
+
+# The way of the future
+
+.box-inv-5.medium[**patchwork** and **ggtext**<br>are removing the need to edit<br>graphs by hand in Illustrator]
+
+--
+
+.box-inv-5.small.sp-after[You can replicate an entire in-house graphic style with R alone nowadays]
+
+--
+
+.box-5[Interactivity not quite at the same level,<br>but it's getting there with **plotly**]

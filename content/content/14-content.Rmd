@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "14-slides"
+slides: "14-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -20,14 +20,59 @@ output:
 
 - <i class="fas fa-book"></i> [Chapter 14](https://serialmentor.com/dataviz/proportional-ink.html), [Chapter 15](https://serialmentor.com/dataviz/overlapping-points.html), [Chapter 16](https://serialmentor.com/dataviz/color-pitfalls.html), [Chapter 22](https://serialmentor.com/dataviz/avoid-line-drawings.html), and [Chapter 23](https://serialmentor.com/dataviz/no-3d.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
 - <i class="fas fa-book"></i> [Chapter 8](http://socviz.co/refineplots.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
-- Browse through recent visualizations at [The Pudding](https://pudding.cool/) ([like this one!](https://pudding.cool/2018/08/pockets/)), [FiveThirtyEight](https://fivethirtyeight.com/), [Vox](https://www.vox.com/), [Christopher Ingraham's articles at the Washington Post](https://www.washingtonpost.com/people/christopher-ingraham/?utm_term=.3bfc09eea703), [WSJ Graphics](https://graphics.wsj.com/), and the [New York Times's TheUpshot](https://www.nytimes.com/section/upshot). Most (if not all) of these graphics were made in R and exported for enhancement in Illustrator or [D3](https://d3js.org/).
+- Browse through recent visualizations at [The Pudding](https://pudding.cool/) ([like this one!](https://pudding.cool/2018/08/pockets/)), [FiveThirtyEight](https://fivethirtyeight.com/), [Vox](https://www.vox.com/), [Christopher Ingraham's articles at the Washington Post](https://www.washingtonpost.com/people/christopher-ingraham/?utm_term=.3bfc09eea703), [WSJ Graphics](https://graphics.wsj.com/), and the [New York Times's TheUpshot](https://www.nytimes.com/section/upshot). Most (if not all) of these graphics were made in R (or something similar) and exported for enhancement in Illustrator or [D3](https://d3js.org/).
 
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Enhancing graphics", "1", TRUE
+)
+
+slide_tabs(sections, "/slides/14-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj).
+
+- [Enhancing graphics](https://www.youtube.com/watch?v=ZnajGmnaC78&list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj
+
+https://youtu.be/ZnajGmnaC78
+PMAP 8921 • (14) Enhancing graphics
+
+Discussion of a typical statistics-to-publication-worthy-graphics workflow using R, ggplot, and Illustrator, and how recent R packages like patchwork and ggtext make it so you don't need Illustrator to make minor graphic design enhancements of your plots
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/14-content/
+
+
+https://youtu.be/L-tUSEMWrgE
+PMAP 8921 • (14) Enhancing graphics: Example
+
+Demonstration of how to export a ggplot plot from R as a PDF or SVG and edit it in Illustrator or Gravit Designer
+
+Download the data and see the polished code at https://datavizm20.classes.andrewheiss.com/example/14-example/
+```

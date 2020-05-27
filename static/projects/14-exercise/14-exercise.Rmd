@@ -1,0 +1,53 @@
+---
+title: "Exercise 14"
+author: "Put your name here"
+date: "Put the date here"
+output: html_document
+---
+
+# Task 1: Reflection
+
+Put your reflection here
+
+
+# Task 2: Enhanced plot
+
+When you knit this document, you will create and save a basic bar chart of hot dog eating contest winners. You will then open the resulting file in Illustrator or Gravit Designer. Open the PDF in Illustrator; open the SVG in Gravit Designer.
+
+Be sure that you save your file in Illustrator or Gravit Designer **with a different name**. You don't want to accidentally overwrite all your enhancements and updates when you knit this document. That would be so sad.
+
+```{r make-and-save-hot-dog-plot}
+library(tidyverse)
+library(svglite)
+
+hotdogs <- read_csv("data/hot-dog-contest-winners.csv") %>%
+  rename(dogs = `Dogs eaten`, record = `New record`) %>%
+  mutate(record = factor(record))
+
+# Change the colors here if you want
+# (or anything else if you want too)
+plot_hotdogs <- ggplot(hotdogs, 
+                       aes(x = Year, y = dogs, fill = record)) + 
+  geom_col() + 
+  scale_fill_manual(values = c("grey80", "#FC7300")) +
+  scale_x_continuous(breaks = seq(1980, 2010, 2), 
+                     expand = c(0, 0)) +
+  scale_y_continuous(breaks = seq(0, 70, 10), 
+                     expand = c(0, 0)) +
+  guides(fill = FALSE) +
+  labs(y = "Hot dogs and buns", x = NULL) +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "transparent", colour = NA),
+        plot.background = element_rect(fill = "transparent", colour = NA),
+        axis.ticks.x = element_line(size = 0.25),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(size = 0.5, linetype = "dashed"),
+        panel.grid.minor = element_blank())
+
+# Change the dimensions here if you want
+ggsave(plot_hotdogs, filename = "hotdogs.pdf", device = cairo_pdf,
+       width = 7, height = 4, units = "in", bg = "transparent")
+
+ggsave(plot_hotdogs, filename = "hotdogs.svg",
+       width = 7, height = 4, units = "in", bg = "transparent")
+```

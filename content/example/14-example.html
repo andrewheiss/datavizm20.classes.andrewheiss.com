@@ -18,5 +18,42 @@ editor_options:
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#why-enhance-graphics">Why enhance graphics?</a></li>
+<li><a href="#enhancing-graphics-in-2020">Enhancing graphics in 2020</a></li>
+<li><a href="#abbreviated-example">Abbreviated example</a></li>
+</ul>
+</div>
 
-<p>Fully worked out code examples will go here, along with video of me live coding them.</p>
+<div id="why-enhance-graphics" class="section level2">
+<h2>Why enhance graphics?</h2>
+<p>The content from today isn’t really code-based at all. Instead, you’re learning about how to take a plot from R and make it <em>fancy</em> in a vector editing program like Illustrator, Gravit Designer, or Inkscape.</p>
+<p>This concept comes from a common workflow in the real world, where organizations like news outlets, think tanks, research centers, or nonprofits will publish highly polished plots in annual reports, magazines, and other types of publications. These graphics often have to follow specific in-house style guidelines and use specific colors and fonts and other design elements. Even if you don’t work for a place with in-house style guides, you’ll often want to make some edits to your plots by hand after you create them.</p>
+<p>The general workflow goes like this:</p>
+<ol style="list-style-type: decimal">
+<li>Create a plot in R and ggplot</li>
+<li>Export that plot as a vector image (either a PDF or an SVG)</li>
+<li>Edit and enhance the vector image in a vector editor, like Adobe Illustrator</li>
+<li>Export the polished version from Illustrator as either a PDF or PNG (or both)</li>
+</ol>
+<p>Big data-focused organizations have been using a process like this for years. Nathan Yau describes this whole process in his 2011 book <a href="http://book.flowingdata.com/"><em>Visualize This</em></a> and the book contains a bunch of tutorials to help you learn how create something in R, export it, and edit it in Illustrator.</p>
+<p>For instance, in his first chapter, he guides you through the process of creating the skeleton of this chart in R, exporting it as a PDF, and adding all the titles and annotations and arrows and extra lines in Illustrator (<a href="https://flowingdata.com/2008/07/03/nathans-annual-hot-dog-eating-contest-kobayashi-vs-chestnut/">original post from 2008</a>):</p>
+<p><img src="/img/assignments/hot-dogs.gif" width="100%" /></p>
+</div>
+<div id="enhancing-graphics-in-2020" class="section level2">
+<h2>Enhancing graphics in 2020</h2>
+<p>In 2011, that was the best possible workflow because ggplot couldn’t deal with subtitles, captions, repelled labels, embedded fonts, and differently-styled text (like <strong>bold</strong> in the middle of a title). Illustrator was the only way to do this stuff.</p>
+<p>Nowadays in 2020, though, you can do nearly all of this annotating and enhancing with packages like <strong>ggtext</strong> and <strong>patchwork</strong> and <strong>ggrepel</strong>. You can almost perfectly replicate in-house style guides with the <code>theme()</code> function and put text and arrows and labels and text boxes wherever you want with <code>annotate()</code>. It’s a brave exciting new world.</p>
+<p>You still can’t do everything with R. ggplot can’t create fancy font ligatures like “ﬁ” in words that have an “f” followed by an “i”, and it can’t handle automatic hyphenation and full text justification, among other limitations. But these are the minorest of graphic design issues (and <a href="https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/">the ggplot team is working on them</a>!).</p>
+<p><em>That all said</em>, it’s still often faster and easier to make edits to your graphs in Illustrator rather than fight with a reluctant <code>annotate()</code> layer that just won’t put an arrow exactly where you want. And <strong>ggtext</strong> is so new (it’s not on CRAN yet) that lots of people haven’t heard of it yet. This is all cutting edge stuff.</p>
+<p>So it’s still a good idea to understand how to follow the standard workflow of exporting from R and enhancing in Illustrator.</p>
+</div>
+<div id="abbreviated-example" class="section level2">
+<h2>Abbreviated example</h2>
+<p>In this video I use the code for the hot dog plot that I provide in today’s assignment to create a plot, export it, and make edits to it both in Illustrator and <a href="https://www.designer.io/en/">Gravit Designer</a>. It’s not a complete example at all, but I show you the general process for adding text and lines and editing plot elements.</p>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/L-tUSEMWrgE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+</div>
