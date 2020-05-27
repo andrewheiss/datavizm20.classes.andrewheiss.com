@@ -10,3 +10,4 @@ resources/_gen/*
 temp_figs/*
 
 static/slides/*.pdf
+static/example/10-example_files/figure-html/widgets/*
