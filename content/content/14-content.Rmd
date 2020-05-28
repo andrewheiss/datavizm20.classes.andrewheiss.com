@@ -47,19 +47,19 @@ slide_tabs(sections, "/slides/14-slides.html")
 
 ## Videos
 
-Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj).
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sFmumDMzu8ZXSo2zwLN5Q2H).
 
-- [Enhancing graphics](https://www.youtube.com/watch?v=ZnajGmnaC78&list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj)
+- [Enhancing graphics](https://www.youtube.com/watch?v=ZnajGmnaC78&list=PLS6tnpTr39sFmumDMzu8ZXSo2zwLN5Q2H)
 
 You can also watch the playlist (and skip around to different sections) here:
 
 <div class="embed-responsive embed-responsive-16by9">
-<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sFmumDMzu8ZXSo2zwLN5Q2H" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 
 ```{cat include=FALSE}
-https://www.youtube.com/playlist?list=PLS6tnpTr39sG6yMnZ9sDFwMPusGHGtOYj
+https://www.youtube.com/playlist?list=PLS6tnpTr39sFmumDMzu8ZXSo2zwLN5Q2H
 
 https://youtu.be/ZnajGmnaC78
 PMAP 8921 • (14) Enhancing graphics
