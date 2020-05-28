@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Truth, beauty, and data revisited</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Heiss" />
+    <meta name="date" content="2020-05-28" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ath-slides.css" type="text/css" />
+    <link rel="stylesheet" href="css/ath-inferno-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center middle main-title section-title-4
+
+# Truth, beauty,&lt;br&gt;and data revisited
+
+.class-info[
+
+**Session 15**
+
+.light[PMAP 8921: Data Visualization with R&lt;br&gt;
+Andrew Young School of Policy Studies&lt;br&gt;
+May 2020]
+
+]
+
+---
+
+name: outline
+class: title title-inv-7
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after[Telling stories with data]
+
+--
+
+.box-5.medium[Curiosity]
+
+---
+
+layout: false
+name: telling-stories
+class: center middle section-title section-title-2 animated fadeIn
+
+# Telling stories with data
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Truth is beautiful
+
+.box-inv-2.medium[Truth ≠ facts]
+
+.box-inv-2.medium.sp-after[Truth comes from aesthetic&lt;br&gt;combination of content and form]
+
+.box-2.medium[Facts require beauty to be true]
+
+---
+
+# Art
+
+.box-inv-2.large[Art is how we translate core,&lt;br&gt;essential **content** (or truth!) to different **forms**&lt;br&gt;for specific **audiences**.]
+
+---
+
+# Stories as art
+
+.box-inv-2.large[**Stories** are an *art form* for&lt;br&gt;translating core, essential **content**&lt;br&gt;to different **forms**&lt;br&gt;for specific **audiences**.]
+
+---
+
+# Every story is the same
+
+.center[
+&lt;iframe width="800" height="450" src="https://www.youtube.com/embed/LuD2Aa0zFiA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+]
+
+???
+
+Will Schoder, "Every Story is the Same", https://www.youtube.com/watch?v=LuD2Aa0zFiA
+
+---
+
+# Heroes
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/1019px-Heroesjourney.svg.png" alt="The Hero's Journey" title="The Hero's Journey" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/story-cycle.png" alt="The Story Cycle" title="The Story Cycle" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://commons.wikimedia.org/wiki/File:Heroesjourney.svg
+
+5:35 from Will Schoder, "Every Story is the Same", https://www.youtube.com/watch?v=LuD2Aa0zFiA
+
+---
+
+# You are not the hero
+
+&amp;nbsp;
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/bad-slides.png" alt="Bad slides" title="Bad slides" width="100%"&gt;
+  &lt;figcaption&gt;From Cole Nussbaumer Knaflic, &lt;i&gt;Storytelling with Data: A Data Visualization Guide for Business Professionals&lt;/i&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Should you tell stories though?
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/pro-storytelling.png" alt="Storytelling" title="Storytelling" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/against-storytelling.png" alt="Against storytelling" title="Against storytelling" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.nature.com/articles/nmeth.2699
+
+https://www.nature.com/articles/nmeth.2571
+
+
+
+---
+
+# Possible pitfalls
+
+.pull-left[
+.box-inv-2.medium[Manipulation]
+
+.box-2.small[Don't lie or manipulate data]
+
+&amp;nbsp;
+
+.box-inv-2.medium[Misinterpretation]
+
+.box-2.small[Temper expectations]
+]
+
+.pull-right[
+.box-inv-2.medium[Ethos]
+
+.box-2.small[Credentials ≠ ethos]
+
+&amp;nbsp;
+
+.box-inv-2.medium[Equity]
+
+.box-2.small[Don't dumb down]
+
+.box-2.small[Amplify underrepresented voices]
+
+]
+
+---
+
+layout: false
+class: center middle section-title-inv section-title-inv-2
+
+# Manipulation
+
+---
+
+class: center middle
+
+&lt;figure&gt;
+  &lt;img src="img/15/tal-story.png" alt="This American Life" title="This American Life" width="100%"&gt;
+&lt;/figure&gt;
+
+???
+
+https://www.thisamericanlife.org/555/the-incredible-rarity-of-changing-your-mind
+
+---
+
+class: bg-full
+background-image: url("img/15/lacour-story.png")
+
+???
+
+[The Case of the Amazing Gay-Marriage Data: How a Grad Student Uncovered a Huge Fraud](https://slate.com/culture/2015/06/gay-marriage-study-faked-how-grad-student-david-broockman-uncovered-a-huge-scientific-fraud.html)
+
+---
+
+&amp;nbsp;
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/broockman-kalla.png" alt="Irregularities in LaCour" title="Irregularities in LaCour" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/broockman-kalla-truth.png" alt="Durably reducing transphobia" title="Durably reducing transphobia" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://dx.doi.org/10.1126/science.aad9713
+
+---
+
+class: title title-2
+
+# Manipulation
+
+--
+
+.box-inv-2.medium.sp-after[Don't lie]
+
+--
+
+.box-inv-2.medium[Emphasize the story,&lt;br&gt;but make full data available]
+
+---
+
+class: center middle section-title-inv section-title-inv-2
+
+# Misrepresentation
+
+---
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/outliers.jpg" alt="Outliers" title="Outliers" width="50%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+.box-2.medium[**10,000 hours**]
+
+.box-inv-2["the magic number&lt;br&gt;of greatness"]
+]
+
+--
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/deliberate-practice.png" alt="Deliberate practice" title="Deliberate practice" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://doi.org/10.1037/0033-295X.100.3.363
+
+https://graphics8.nytimes.com/images/blogs/freakonomics/pdf/DeliberatePractice(PsychologicalReview).pdf
+
+---
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/training-history.png" alt="Training history" title="Training history" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+.box-inv-2[“[A] popularized but simplistic view of our work, which suggests that anyone who has accumulated sufficient number of hours of practice in a given domain will automatically become an expert and a champion.”]
+]
+
+
+--
+
+.center[
+.box-2[10,000 is average&amp;ensp;•&amp;ensp;Quality matters&amp;ensp;•&amp;ensp;There are other factors]
+]
+
+
+???
+
+https://bjsm.bmj.com/content/47/9/533.long
+
+---
+
+class: title title-2
+
+# Misinterpretation
+
+--
+
+.box-inv-2.medium.sp-after[Be narrative, but not too narrative]
+
+--
+
+.box-inv-2.medium[Temper expectations]
+
+---
+
+class: center middle section-title-inv section-title-inv-2
+
+# Ethos
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Who can talk about science?
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/bill-nye.png" alt="Bill Nye" title="Bill Nye" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/if-i-understood-you.jpg" alt="If I Understood You, Would I Have This Look on My Face?" title="If I Understood You, Would I Have This Look on My Face?" width="60%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+[Resources for telling stories with data](/example/15-example/#telling-stories-with-data)
+
+---
+
+# Science communication
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/emily-graslie.jpg" alt="Emily Graslie" title="Emily Graslie" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+http://www.emilygraslie.com/
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/podcasts.png" alt="Sciency podcasts" title="Sciency podcasts" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# Ethos
+
+--
+
+.box-inv-2.medium.sp-after[Credentials do not make an expert]
+
+--
+
+.box-inv-2.medium.sp-after[Credentials do not *not* make an expert]
+
+--
+
+.box-inv-2.medium[Credentials ≠ ethos]
+
+---
+
+layout: false
+class: center middle section-title-inv section-title-inv-2
+
+# Equity
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# Dumbing down vs. translation
+
+.center[
+&lt;iframe width="800" height="450" src="https://www.youtube.com/embed/opqIa5Jiwuw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+]
+
+???
+
+Wired, "Neuroscientist Explains One Concept in 5 Levels of Difficulty", https://www.youtube.com/watch?v=opqIa5Jiwuw
+
+Alvin Stone, ["The arrogance of 'dumbing it down'"](https://www.linkedin.com/pulse/arrogance-dumbing-down-alvin-stone/)
+
+---
+
+# Translation
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/walter-benjamin.jpg" alt="Walter Benjamin" title="Walter Benjamin" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+.pull-right[
+.box-inv-2[“…the task of the translator consists in finding that intended effect upon the language into which he is translating which produces in it the echo of the original”]
+
+.box-2.small[Walter Benjamin,&lt;br&gt;*The Task of the Translator*]
+]
+
+???
+
+https://en.wikipedia.org/wiki/Walter_Benjamin#/media/File:Walter_Benjamin_vers_1928.jpg
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/15/up-goer-five@3x.png")
+
+???
+
+https://xkcd.com/1133/
+
+---
+
+class: center middle
+
+&lt;figure&gt;
+  &lt;img src="img/15/dilbert.png" alt="Dilbert on sexism" title="Dilbert on sexism" width="100%"&gt;
+&lt;/figure&gt;
+
+???
+
+https://slate.com/human-interest/2014/04/how-to-explain-bitcoin-to-y-our-mom-the-new-york-times-thinks-mothers-are-idiots.html
+
+https://geekfeminism.wikia.org/wiki/So_simple,_your_mother_could_do_it
+
+---
+
+class: center middle
+
+&lt;figure&gt;
+  &lt;img src="img/15/caseyjohnston.png" alt="Casey Johnston mansplained" title="Casey Johnston mansplained" width="60%"&gt;
+&lt;/figure&gt;
+
+???
+
+https://twitter.com/caseyjohnston/status/541246857385893888
+
+https://twitter.com/tsancio/status/541284790314762240
+
+---
+
+class: bg-full
+background-image: url("img/15/gender-citation-gap.png")
+
+???
+
+Women engineers publish their papers in journals with higher impact factors than their male peers, but their work receives lower recognition (fewer citations) from the scientific community
+
+---
+
+class: bg-full
+background-image: url("img/15/news-gender-balance.png")
+
+???
+
+http://www.womensmediacenter.com/reports/whotalks-cable-news-analysts-gender-in-2016-presidential-election-project-t
+28% overall average
+
+---
+
+.pull-left.center[
+&lt;figure&gt;
+  &lt;img src="img/15/waks.png" alt="Women Also Know Stuff" title="Women Also Know Stuff" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://womenalsoknowstuff.com/
+
+https://twitter.com/LGBTscholars
+
+https://twitter.com/POCalsoknow
+
+https://twitter.com/AWPARocks
+
+--
+
+.pull-right.center[
+&lt;figure&gt;
+  &lt;img src="img/15/others-know-stuff.png" alt="Other 'know stuff' accounts" title="Other 'know stuff' accounts" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/gbat.png" alt="Gender Balance Assessment Tool" title="Gender Balance Assessment Tool" width="85%"&gt;
+&lt;/figure&gt;
+]
+
+.box-2[https://jlsumner.shinyapps.io/syllabustool/]
+
+---
+
+class: title title-2
+
+# Equity
+
+--
+
+.box-inv-2.medium.sp-after-half[Don't dumb down your findings]
+
+--
+
+.box-inv-2.medium.sp-after-half[You are a translator]
+
+--
+
+.box-inv-2.medium.sp-after-half[Treat audience with respect]
+
+--
+
+.box-inv-2.medium[Amplify underrepresented voices]
+
+---
+
+layout: false
+name: curiosity
+class: center middle section-title section-title-5 animated fadeIn
+
+# Curiosity
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# How do I keep learning R?
+
+.box-inv-5.medium[What class should I take next?]
+
+.box-inv-5.medium[What book should I read next?]
+
+---
+
+# How do I keep learning R?
+
+.box-inv-5.medium[~~What class should I take next?~~]
+
+.box-inv-5.medium.sp-after[~~What book should I read next?~~]
+
+--
+
+.box-5.large[Be curious!]
+
+---
+
+# Teaching yourself
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/katiemack-tweet.png" alt="@AstroKatie on googling" title="@AstroKatie on googling" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+
+???
+
+https://twitter.com/AstroKatie/status/1071442842873159681
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/15/slate-coding.png")
+
+???
+
+https://slate.com/human-interest/2018/12/against-teaching-kids-to-code-creativity-problem-solving.html
+
+---
+
+class: bg-full
+background-image: url("img/15/slate-coding-text.png")
+
+
+???
+
+https://slate.com/human-interest/2018/12/against-teaching-kids-to-code-creativity-problem-solving.html
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Two secrets to master R
+
+--
+
+.box-inv-5.large.sp-after[1: Find excuses to use it]
+
+--
+
+.box-inv-5.large[2: Share and work in public]
+
+---
+
+layout: false
+class: center middle section-title-inv section-title-inv-5
+
+# Find excuses to use R
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Playing with R
+
+--
+
+.box-inv-5.medium[Little exploration projects]
+
+--
+
+.box-inv-5.medium[\#TidyTuesday]
+
+--
+
+.box-inv-5.medium[Data play time]
+
+--
+
+.box-inv-5.medium[Actual projects]
+
+---
+
+layout: false
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/mini-projects.png" alt="Mini projects folder" title="Mini projects folder" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/top_5.png" alt="Most aggressive characters in Harry Potter" title="Most aggressive characters in Harry Potter" width="70%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://github.com/andrewheiss/Harry-Potter-aggression
+
+---
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/walks_2014.png" alt="2014 family walks" title="2014 family walks" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/plot_authors.png" alt="Rachel 2014 books" title="Rachel 2014 books" width="80%"&gt;
+&lt;/figure&gt;
+]
+
+---
+
+layout: false
+class: center middle section-title-inv section-title-inv-5
+
+# Radical transparency &amp;&lt;br&gt;public work
+
+---
+
+class: middle
+
+.box-5.medium[How we normally think of our work and goals]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/sharing-normal.png" alt="How we normally think of our work and goals" title="How we normally think of our work and goals" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://rstudio.com/resources/rstudioconf-2019/the-unreasonable-effectiveness-of-public-work/
+
+---
+
+class: middle
+
+.box-5.medium[How we should think of our work and goals]
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/sharing-good.png" alt="How we should think of our work and goals" title="How we should think of our work and goals" width="100%"&gt;
+  &lt;figcaption&gt;David Robinson, &lt;a href="https://rstudio.com/resources/rstudioconf-2019/the-unreasonable-effectiveness-of-public-work/" target="_blank"&gt;The unreasonable effectiveness of public work"&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://rstudio.com/resources/rstudioconf-2019/the-unreasonable-effectiveness-of-public-work/
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# Benefits of working in public
+
+--
+
+.box-inv-5[Build reputation]
+
+--
+
+.box-inv-5[Learn more]
+
+--
+
+.box-inv-5[Grow the community]
+
+--
+
+.box-inv-5[Early feedback on ideas]
+
+--
+
+.box-inv-5[Validation]
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/15/blog-rejection-map.png")
+
+???
+
+https://www.andrewheiss.com/blog/2018/12/17/academic-job-market-visualized/
+
+---
+
+class: bg-full
+background-image: url("img/15/blog-rejection-website.png")
+
+???
+
+https://www.andrewheiss.com/blog/2018/12/17/academic-job-market-visualized/
+
+---
+
+class: bg-full
+background-image: url("img/15/blog-rejection-github.png")
+
+???
+
+https://www.andrewheiss.com/blog/2018/12/17/academic-job-market-visualized/
+
+---
+
+layout: true
+class: title title-5
+
+---
+
+# How to work in public
+
+--
+
+.box-inv-5.medium[Tweet, blog, and meet people]
+
+--
+
+.box-inv-5.medium[Play with data in public]
+
+--
+
+.box-inv-5.medium[Teach concepts (for yourself too!)]
+
+---
+
+# Communities
+
+--
+
+.box-inv-5.medium[\#rstats]
+
+--
+
+.box-inv-5.medium[R User Groups]
+
+--
+
+.box-inv-5.medium[\#rladies]
+
+--
+
+.box-inv-5.medium[Rmd websites, blogdown, bookdown]
+
+---
+
+# Play with data in public
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/blog-polity.png" alt="Blog post on Polity IV data" title="Blog post on Polity IV data" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.andrewheiss.com/blog/2017/08/26/quickly-play-with-polity-iv-and-oecd-data-and-see-the-danger-of-us-democracy/
+
+---
+
+layout: false
+class: bg-full
+background-image: url("img/15/blog-nlp.png")
+
+???
+
+https://www.andrewheiss.com/blog/2018/12/26/tidytext-pos-john/
+
+https://www.andrewheiss.com/blog/2018/12/28/tidytext-pos-arabic/
+
+---
+
+class: title title-5
+
+# Teach a concept
+
+.center[
+&lt;figure&gt;
+  &lt;img src="img/15/blog-diff-means.png" alt="Blog post on finding the difference in means" title="Blog post on finding the difference in means" width="100%"&gt;
+&lt;/figure&gt;
+]
+
+???
+
+https://www.andrewheiss.com/blog/2019/01/29/diff-means-half-dozen-ways/
+
+---
+
+class: bg-full
+background-image: url("img/15/blog-chidi.png")
+
+???
+
+https://www.andrewheiss.com/blog/2019/02/16/algebra-calculus-r-yacas/
+
+---
+
+layout: false
+class: center middle section-title section-title-5 animated fadeIn
+
+# You are all expert&lt;br&gt;enough now.
+
+---
+
+class: center middle section-title section-title-5 animated fadeIn
+
+# Go make&lt;br&gt;beautiful things!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

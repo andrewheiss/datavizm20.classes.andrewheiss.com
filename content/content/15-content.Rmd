@@ -10,7 +10,7 @@ menu:
 type: docs
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-# slides: "15-slides"
+slides: "15-slides"
 output:
   blogdown::html_page:
     toc: true
@@ -20,6 +20,7 @@ output:
 
 - <i class="fas fa-book"></i> Chapter 12 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
 - <i class="fas fa-book"></i> [Chapter 26](https://serialmentor.com/dataviz/telling-a-story.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-file-pdf"></i> Martin Krzywinski and Alberto Cairo, ["Storytelling"](https://www.nature.com/articles/nmeth.2571.pdf)
 - <i class="fab fa-youtube"></i> Ben Wellington, ["Making data mean more through storytelling"](https://www.youtube.com/watch?v=6xsvGYIxJok)
 - <i class="fab fa-vimeo"></i> Jonathan Schwabish, ["Better Data Communication,"](https://vimeo.com/230757062) National Bureau of Economic Research
 - <i class="fas fa-external-link-square-alt"></i> [Why People Make Bad Charts (and What to Do When it Happens)](https://flowingdata.com/2018/06/28/why-people-make-bad-charts-and-what-to-do-when-it-happens/)
@@ -34,9 +35,66 @@ output:
 
 ## Slides
 
-Slides go here
+The slides for today's lesson are available online as an HTML file. Use the buttons below to open the slides either as an interactive website or as a static PDF (for printing or storing for later). You can also click in the slides below and navigate through them with your left and right arrow keys.
+
+`r blogdown::shortcode("slide-buttons")`
+
+```{r show-slide-tabs, echo=FALSE, results="asis"}
+source(here::here("R", "slide_tabs.R"))
+
+sections <- tibble::tribble(
+  ~name, ~slide, ~active,
+  "Truth, beauty, and data revisited", "1", TRUE,
+  "Telling stories with data", "telling-stories", FALSE,
+  "Curiosity", "curiosity", FALSE
+)
+
+slide_tabs(sections, "/slides/15-slides.html")
+```
+
+:::fyi
+**Fun fact**: If you type <kbd>?</kbd> (or <kbd>shift</kbd> + <kbd>/</kbd>) while going through the slides, you can see a list of special slide-specific commands.
+:::
 
 
 ## Videos
 
-Videos go here.
+Videos for each section of the lecture are [available at this YouTube playlist](https://www.youtube.com/playlist?list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt).
+
+- [Introduction](https://www.youtube.com/watch?v=TDP_G1RiUmQ&list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt)
+- [Telling stories with data](https://www.youtube.com/watch?v=UyVJlbZjwhY&list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt)
+- [Curiosity](https://www.youtube.com/watch?v=KHfF8zdxWzM&list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt)
+
+You can also watch the playlist (and skip around to different sections) here:
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+```{cat include=FALSE}
+https://www.youtube.com/playlist?list=PLS6tnpTr39sFYqZMtanRbtB1dKRBN2Rzt
+
+https://youtu.be/TDP_G1RiUmQ
+PMAP 8921 • (15) Truth, beauty, and data revisited: (0) Introduction
+
+Introduction to the final class session
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/15-content/
+
+
+https://youtu.be/UyVJlbZjwhY
+PMAP 8921 • (15) Truth, beauty, and data revisited: (1) Telling stories with data
+
+Discussion of why it's important to tell stories with data and how to avoid major pitfalls related to manipulation, misinterpretation, ethos, and equity
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/15-content/
+
+  
+https://youtu.be/KHfF8zdxWzM
+PMAP 8921 • (15) Truth, beauty, and data revisited: (2) Curiosity
+
+Discussion of how to continue to learn R by embracing your curiosity and working in public
+
+Access the slides, code, and other materials at the course website at https://datavizm20.classes.andrewheiss.com/content/15-content/
+```

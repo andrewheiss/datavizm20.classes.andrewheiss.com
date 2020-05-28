@@ -1,6 +1,6 @@
 ---
-title: "Truth, beauty, and data revisited"
-linktitle: "15: Truth, beauty, and data revisited"
+title: "Sharing R output online"
+linktitle: "15: Sharing R output online"
 date: "2020-06-01"
 class_date: "2020-06-01"
 output:
@@ -16,4 +16,76 @@ editor_options:
   chunk_output_type: console
 ---
 
-Fully worked out code examples will go here, along with video of me live coding them.
+## Publishing your stuff online
+
+### Quickest and easiest way: RPubs
+
+The easiest way to get a knitted R Markdown onto the internet is to use [RPubs](https://rpubs.com/). We talked about this in [session 10](/slides/10-slides.html#sharing-content), and you used it to turn in [exercise 10](/assignment/10-exercise/). After knitting an HTML document in RStudio, click on the "Publish" button in the top right corner to upload the document to the RPubs server and get a URL that you can share with others:
+
+```{r knit-button, echo=FALSE, out.width="30%"}
+knitr::include_graphics("/slides/img/10/publish-document.png", error = FALSE)
+```
+
+You don't have to set up a web server or anything—it's all pretty automatic and seamless.
+
+
+### Great for standalone projects: R Markdown websites
+
+If you have something slightly more complex, like a collection of R Markdown files that do related things, it's easy to stitch them all together in an [R Markdown website](https://rmarkdown.rstudio.com/lesson-13.html). RStudio supports these automatically—after telling RStudio to consider an RStudio project to be a website, it will knit all the `.Rmd` files in the root of your project directory every time you click on the "Build Website" button. 
+
+RStudio generates a standalone folder named `public` with static HTML pages of all your knitted documents. You then have to put that folder on the internet somewhere, either on a web server you have access to, or a free service like [Netlify](https://www.netlify.com/).
+
+See [this page for complete documentation](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html), or follow these tutorials by [Lucy D'Agostino McGowan](https://livefreeordichotomize.com/2017/08/08/how-to-make-an-rmarkdown-website/) and [Emily Zabor](https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html).
+
+These websites are especially helpful for standalone projects like research papers and reports. I've had students do their master's capstone projects with these, with specific pages for their introduction, literature review, data cleaning, exploratory data analysis, modeling, and results.
+
+I typically make a website for each of my research projects and will include pages with IRB details, copies of survey experiments, data cleaning, results, and so on. Here are some examples:
+
+- [NGO Crackdowns and Philanthropy](https://stats.andrewheiss.com/ngo-crackdowns-philanthropy/)
+- [Are Donors Really Responding?](https://stats.andrewheiss.com/donors-ngo-restrictions/)
+- [The Power of Ranking](https://stats.andrewheiss.com/edb-social-pressure/)
+- [Constraint Closure](https://stats.andrewheiss.com/constraint-closure/)
+
+You can also make really neat small websites like [Desirée De Leon's Teacup Giraffes](https://tinystats.github.io/teacups-giraffes-and-statistics/index.html) for teaching basic statistics.
+
+
+### More complex blogs and websites: blogdown
+
+If you want more control (i.e. total control) over the HTML output and the structure of a website, you can use a package named [**blogdown**](https://bookdown.org/yihui/blogdown/structure-of-the-book.html) to convert R Markdown files into an entire website. This course website is built with **blogdown**: you can see [all the underlying R Markdown files at GitHub](https://github.com/andrewheiss/datavizm20.classes.andrewheiss.com).
+
+Like R Markdown websites, blogdown generates a complete static version of the knitted website and puts it in a folder named `public`. You're then responsible for putting that somewhere on the internet, either on your own server or by using a free hosting service like [Netlify](https://www.netlify.com/).
+
+Blogdown is [incredibly well documented](https://bookdown.org/yihui/blogdown/), and there are lots of tutorials for how to get started. [Alison Hill's tutorial here is the best place to get started](https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/)—follow it and you'll have a basic blog completely free.
+
+
+### Books, dissertations, and theses: bookdown
+
+If you don't want to create a website, you can use a package named [**bookdown**](https://bookdown.org/) to stitch a collection of R Markdown files into a PDF, Word, or HTML book. (You could even put all your exercises from this class into a single book!). **bookdown** is [incredibly well documented](https://bookdown.org/yihui/bookdown/) too (as a **bookdown** book), and you can get familiar with it fairly quickly. 
+
+[Dozens of real-world books](https://bookdown.org/home/archive/), dissertations, and theses have been written with **bookdown**, including both [Claus Wilke's](https://serialmentor.com/dataviz/) and [Kieran Healy's](https://socviz.co/) books from this course. Because of the magic of Markdown, you can create parallel HTML and PDF versions of your book and post one type of output on the internet and print and bind the other one.
+
+
+### Slides: xaringan
+
+R Markdown isn't just for PDF, Word, and HTML documents. You can also make slides! All the slides for this course were made in R Markdown with a package named **xaringan**. You can see [the documentation here](https://bookdown.org/yihui/rmarkdown/xaringan.html), and see [the main example presentation here](https://slides.yihui.org/xaringan/). You can also [see all the R Markdown files I wrote to create the slides for this class here](https://github.com/andrewheiss/datavizm20.classes.andrewheiss.com/tree/master/static/slides).
+
+
+### Code: GitHub and GitHub gists
+
+And finally, if you want to share code (and keep track of versions of your code), [GitHub](https://github.com/) is one of the best places for that. Posting your code at places like GitHub lets other people see and borrow and adapt and make suggestions to your code. You can see [all my different repositories and projects here](https://github.com/andrewheiss/), for example.
+
+[Jenny Bryan has a useful **bookdown** website](https://happygitwithr.com/) explaining how to get started, and GitHub itself [has excellent materials for learning how to use git](https://guides.github.com/activities/hello-world/).
+
+If you don't want to go through the process of creating a full-blown git repository, GitHub also lets you make "gists", which are single shareable files of code. ([See all mine here for examples](https://gist.github.com/andrewheiss)). Gists are excellent ways to share reproducible examples (or [reprexes](https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/)), and the [**reprex** package](https://reprex.tidyverse.org/) in R generates output that you can paste directly into a new gist for sharing (see [this one, for instance, which I used to show someone how to run and plot logistic regression with R](https://gist.github.com/andrewheiss/5ea439fae38e61419858ce9b5c2027cd)).
+
+
+## Telling stories with data
+
+If you're interested in learning more about data storytelling and science communication, check out these resources:
+
+- <i class="fas fa-university"></i> [BUSM 491R: Telling Stories with Data](https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/) (BYU, Fall 2017)
+- <i class="fas fa-book"></i> Cole Nussbaumer Knaflic, [*Storytelling with Data: A Data Visualization Guide for Business Professionals*](https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257) (Hoboken, New Jersey: John Wiley & Sons, Inc., 2015).
+- <i class="fas fa-book"></i> Alan Alda, [*If I Understood You, Would I Have This Look on My Face? My Adventures in the Art and Science of Relating and Communicating*](https://www.amazon.com/Understood-Would-Have-This-Look/dp/0812989147) (New York: Random House, 2017). 
+- <i class="fas fa-book"></i> Nancy Duarte, [*Resonate: Present Visual Stories That Transform Audiences*](https://www.amazon.com/Resonate-Present-Stories-Transform-Audiences/dp/0470632011) (Hoboken, New Jersey: John Wiley & Sons, Inc., 2010).
+- <i class="fab fa-youtube"></i> ["Understanding the way scientists speak,"](http://www.msnbc.com/morning-joe/watch/understanding-the-way-scientists-speak-27745859874) MSNBC Morning Joe, 2013-04-24
+- <i class="fab fa-youtube"></i> ["Improvisation for Scientists: Workshops by Alan Alda and the Center for Communicating Science,"](https://www.youtube.com/watch?v=JtdyA7SibG8) Stony Brook Journalism, 2010-03-23

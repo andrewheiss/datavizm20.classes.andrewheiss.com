@@ -172,7 +172,8 @@ Main title and section title slides
   bottom: calc(0% + 0.5em);
 }
 
-.section-title h1 {
+.section-title h1,
+.section-title-inv h1 {
   color: #FFFFFF;
   font-size: 2.3em;
   line-height: 1.3;
@@ -397,66 +398,80 @@ Coloring and inverse coloring in title bars and content boxes
   background-color: #FCCE25;
 }
 
-.box-inv-1 {
+.box-inv-1,
+.section-title-inv-1 {
   background-color: #B2B1F9;
 }
 
-.box-inv-2 {
+.box-inv-2,
+.section-title-inv-2 {
   background-color: #CBB5FF;
 }
 
-.box-inv-3 {
+.box-inv-3,
+.section-title-inv-3 {
   background-color: #EFB3FF;
 }
 
-.box-inv-4 {
+.box-inv-4,
+.section-title-inv-4 {
   background-color: #FFC0DC;
 }
 
-.box-inv-5 {
+.box-inv-5,
+.section-title-inv-5 {
   background-color: #FFD0CF;
 }
 
-.box-inv-6 {
+.box-inv-6,
+.section-title-inv-6 {
   background-color: #FFDFD1;
 }
 
-.box-inv-7 {
+.box-inv-7,
+.section-title-inv-7 {
   background-color: #FFF0D4;
 }
 
 .box-inv-1,
-.title-inv-1 h1 {
+.title-inv-1 h1,
+.section-title-inv-1 h1 {
   color: #0D0887;
 }
 
 .box-inv-2,
-.title-inv-2 h1 {
+.title-inv-2 h1,
+.section-title-inv-2 h1 {
   color: #5601A4;
 }
 
 .box-inv-3,
-.title-inv-3 h1 {
+.title-inv-3 h1,
+.section-title-inv-3 h1 {
   color: #900DA4;
 }
 
 .box-inv-4,
-.title-inv-4 h1 {
+.title-inv-4 h1,
+.section-title-inv-4 h1 {
   color: #BF3984;
 }
 
 .box-inv-5,
-.title-inv-5 h1 {
+.title-inv-5 h1,
+.section-title-inv-5 h1 {
   color: #E16462;
 }
 
 .box-inv-6,
-.title-inv-6 h1 {
+.title-inv-6 h1,
+.section-title-inv-6 h1 {
   color: #F89441;
 }
 
 .box-inv-7,
-.title-inv-7 h1 {
+.title-inv-7 h1,
+.section-title-inv-7 h1 {
   color: #FCCE25;
 }
 
